@@ -2,6 +2,7 @@ from typing import List, Dict, Any
 from services.openai_service import OpenAIService
 from services.logging_service import log_info, log_error, log_tool_call, log_warning
 from services.tools.final_answer import FinalAnswerTool
+from services.utils import format_tools_for_prompt
 import json
 
 class Agent:
@@ -25,7 +26,7 @@ class Agent:
             raise
 
     async def plan(self, message: str) -> Dict[str, any]:
-        formatted_tools = self._format_tools_for_prompt()
+        formatted_tools = format_tools_for_prompt(self.tools_mapping)
 
         system_message = f"""Given the task description, current context, and key findings, determine the SINGLE NEXT STEP to take.
         
@@ -62,22 +63,6 @@ class Agent:
         log_info(f"📝 Plan created: {response}", style="bold cyan")
         return json.loads(response)
     
-    def _format_tools_for_prompt(self) -> str:
-        """Formats the available tools into a string for the prompt"""
-        tool_descriptions = []
-        for tool in self.tools_mapping.values():
-            desc = f"Tool: {tool.name}\n"
-            desc += f"Description: {tool.description}\n"
-            desc += "Required parameters:\n"
-            for param, param_desc in tool.required_params.items():
-                desc += f"- {param}: {param_desc}\n"
-            if hasattr(tool, 'optional_params'):
-                desc += "Optional parameters:\n"
-                for param, param_desc in tool.optional_params.items():
-                    desc += f"- {param}: {param_desc}\n"
-            tool_descriptions.append(desc)
-        return "\n".join(tool_descriptions)
-
     async def execute(self, next_step: Dict[str, any]) -> dict[str, Any] | Any:
         try:
             tool_name = next_step.get("tool_name")
