@@ -1,11 +1,11 @@
 from typing import List, Dict
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 class OpenAIService:
     def __init__(self, api_key: str):
-        self.client = OpenAI(api_key=api_key)
+        self.client = AsyncOpenAI(api_key=api_key)
     
-    def completion(self, model: str, messages: List[Dict[str, str]], json_mode: bool = False) -> str:
+    async def completion(self, model: str, messages: List[Dict[str, str]], json_mode: bool = False) -> str:
         """
         Get completion from OpenAI API
         
@@ -17,7 +17,7 @@ class OpenAIService:
         Returns:
             Model response as string
         """
-        response = self.client.chat.completions.create(
+        response = await self.client.chat.completions.create(
             model=model,
             messages=messages,
             response_format={"type": "json_object"} if json_mode else {"type": "text"}
