@@ -1,6 +1,6 @@
 from typing import List, Dict
 from services.openai_service import OpenAIService
-from services.logging_service import log_info, log_error, log_tool_call
+from services.logging_service import log_info, log_error, log_tool_call, log_warning
 from services.tools.final_answer import FinalAnswerTool
 import json
 
