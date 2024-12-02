@@ -19,14 +19,18 @@ def format_tools_for_prompt(tools_mapping: dict) -> str:
     """
     tool_descriptions = []
     for tool in tools_mapping.values():
-        desc = f"Tool: {tool.name}\n"
-        desc += f"Description: {tool.description}\n"
-        desc += "Required parameters:\n"
+        desc = "<tool>\n"
+        desc += f"  <name>{tool.name}</name>\n"
+        desc += f"  <description>{tool.description}</description>\n"
+        desc += "  <required_parameters>\n"
         for param, param_desc in tool.required_params.items():
-            desc += f"- {param}: {param_desc}\n"
+            desc += f"    <param name='{param}'>{param_desc}</param>\n"
+        desc += "  </required_parameters>\n"
         if hasattr(tool, 'optional_params'):
-            desc += "Optional parameters:\n"
+            desc += "  <optional_parameters>\n"
             for param, param_desc in tool.optional_params.items():
-                desc += f"- {param}: {param_desc}\n"
+                desc += f"    <param name='{param}'>{param_desc}</param>\n"
+            desc += "  </optional_parameters>\n"
+        desc += "</tool>"
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)
