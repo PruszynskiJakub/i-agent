@@ -7,7 +7,7 @@ class OpenAIService:
         self.client = AsyncOpenAI(api_key=api_key)
         self.logger = LoggingService()
     
-    async def completion(self, model: str, messages: List[Dict[str, str]], json_mode: bool = False) -> str:
+    async def completion(self, messages: List[Dict[str, str]], model: str = "gpt-4o-mini", json_mode: bool = False) -> str:
         """
         Get completion from OpenAI API
         

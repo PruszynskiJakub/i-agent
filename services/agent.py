@@ -22,7 +22,22 @@ class Agent:
         """
         self.logger.log_input(message)
         
-        # Create system message with tools information
+        response = await self.plan(message)
+        result = await self.execute(response)
+        
+        self.logger.log_output(result)
+        return result
+
+    async def plan(self, message: str) -> str:
+        """
+        Create system message and get initial response from LLM
+        
+        Args:
+            message: User message to process
+            
+        Returns:
+            LLM response containing tool selection and parameters
+        """
         tools_description = "\n".join([f"- {tool.name}: {tool.description}" for tool in self.tools])
         system_message = f"""You are a helpful AI assistant. You have access to the following tools:
 
@@ -41,11 +56,18 @@ class Agent:
             {"role": "user", "content": message}
         ]
         
-        response = await self.service.completion(
-            messages=messages
-        )
+        return await self.service.completion(messages=messages)
+
+    async def execute(self, response: str) -> str:
+        """
+        Execute the appropriate tool based on the response
         
-        # Parse tool usage
+        Args:
+            response: Response from the LLM
+            
+        Returns:
+            Result from tool execution or raw response if no tool format is found
+        """
         try:
             response_json = json.loads(response)
             tool_name = response_json.get("tool")
@@ -54,12 +76,10 @@ class Agent:
             # Find and execute the appropriate tool
             for tool in self.tools:
                 if tool.name == tool_name:
-                    result = await tool.run(tool_params)
-                    self.logger.log_output(result)
-                    return result
+                    return await tool.run(tool_params)
+                    
         except json.JSONDecodeError:
             pass  # Handle the case where the response is not valid JSON
-
+            
         # If no tool format is found, return the raw response
-        self.logger.log_output(response)
         return response
