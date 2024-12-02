@@ -1,8 +1,12 @@
 import asyncio
 import os
+from dotenv import load_dotenv
 from services.openai_service import OpenAIService
 
 async def main():
+    # Load environment variables from .env file
+    load_dotenv()
+    
     # Initialize OpenAI service with API key from environment
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
