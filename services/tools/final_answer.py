@@ -7,7 +7,7 @@ from services.tools.agent_tool import AgentTool
 
 class FinalAnswerTool(AgentTool):
     name = "final_answer"
-    description = "Use this tool to provide your final answer to the user"
+    description = "MUST be used as the final tool. Use to provide the final answer to the user, communicate results, or inform about limitations, missing data, or inability to complete the task."
     required_params = {
         "query": "The original user query",
     }
