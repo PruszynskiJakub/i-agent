@@ -1,8 +1,11 @@
+import logging
+
 class LoggingService:
-    @staticmethod
-    def log_input(message: str):
-        print(f"⬆️  {message}")
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+    
+    def log_input(self, message: str):
+        self.logger.info(f"⬆️  {message}")
         
-    @staticmethod
-    def log_output(message: str):
-        print(f"⬇️  {message}")
+    def log_output(self, message: str):
+        self.logger.info(f"⬇️  {message}")
