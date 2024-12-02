@@ -5,10 +5,10 @@ from services.tools.final_answer import FinalAnswerTool
 import json
 
 class Agent:
-    def __init__(self, service: OpenAIService):
+    def __init__(self, service: OpenAIService, tools: List = None):
         self.service = service
         self.logger = LoggingService()
-        self.tools = [FinalAnswerTool()]
+        self.tools = tools or [FinalAnswerTool()]
         
     async def run(self, message: str, model: str = "gpt-3.5-turbo") -> str:
         """

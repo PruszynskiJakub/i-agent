@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 from services.openai_service import OpenAIService
 from services.agent import Agent
+from services.tools.final_answer import FinalAnswerTool
 
 async def main():
     # Configure logging
@@ -22,8 +23,11 @@ async def main():
         logging.error("Please set OPENAI_API_KEY environment variable")
         return
         
+    # Define tools to use
+    tools = [FinalAnswerTool()]
+    
     service = OpenAIService(api_key)
-    agent = Agent(service)
+    agent = Agent(service, tools=tools)
     
     try:
         response = await agent.run("Say hello in a creative way")
