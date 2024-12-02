@@ -1,6 +1,7 @@
 from typing import Dict
 
 from services.openai_service import OpenAIService
+from services.prompts.answer import answer_prompt
 from services.tools.agent_tool import AgentTool
 
 
@@ -27,12 +28,7 @@ class FinalAnswerTool(AgentTool):
         messages = [
             {
                 "role": "system",
-                "content": (
-                    "You are a helpful assistant. Here is the context you should use "
-                    "to answer the user's question:\n\n"
-                    f"{params.get("context", "No context provided")}\n\n"
-                    "Generate a clear and concise answer based solely on this context."
-                )
+                "content": answer_prompt(params.get("context", "No context provided"))
             },
             {
                 "role": "user",
