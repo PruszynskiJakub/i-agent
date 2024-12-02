@@ -14,6 +14,6 @@ class BaseTool(ABC):
         pass
     
     @abstractmethod
-    async def run(self, input_text: str) -> str:
+    async def run(self, input_data: dict) -> dict:
         """Execute the tool's action"""
         pass

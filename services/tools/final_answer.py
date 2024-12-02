@@ -9,5 +9,5 @@ class FinalAnswerTool(BaseTool):
     def description(self) -> str:
         return "Use this tool to provide your final answer to the user"
     
-    async def run(self, input_text: str) -> str:
-        return input_text
+    async def run(self, input_data: dict) -> dict:
+        return input_data
