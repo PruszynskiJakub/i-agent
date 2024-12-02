@@ -1,11 +1,9 @@
 from typing import List, Dict
 from openai import AsyncOpenAI
-from services.logging_service import LoggingService
 
 class OpenAIService:
     def __init__(self, api_key: str):
         self.client = AsyncOpenAI(api_key=api_key)
-        self.logger = LoggingService()
     
     async def completion(self, messages: List[Dict[str, str]], model: str = "gpt-4o-mini", json_mode: bool = False) -> str:
         """

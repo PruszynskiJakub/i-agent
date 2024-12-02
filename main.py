@@ -1,26 +1,19 @@
 import asyncio
 import os
-import logging
 from dotenv import load_dotenv
 from services.openai_service import OpenAIService
 from services.agent import Agent
 from services.tools.final_answer import FinalAnswerTool
+from services.logging_service import setup_logging, log_error, log_info
 
 async def main():
-    # Configure logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(message)s',
-        handlers=[logging.StreamHandler()]
-    )
-    
     # Load environment variables from .env file
     load_dotenv()
     
     # Initialize OpenAI service with API key from environment
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        logging.error("Please set OPENAI_API_KEY environment variable")
+        log_error("Please set OPENAI_API_KEY environment variable")
         return
         
     # Define tools to use
@@ -30,10 +23,12 @@ async def main():
     agent = Agent(service, tools=tools)
     
     try:
+        log_info(" Starting agent...", style="bold blue")
         response = await agent.run("Say hello in a creative way")
-        logging.info(response)
+        log_info(f"Agent response: {response}")
+        log_info("✨ Agent completed successfully", style="bold green")
     except Exception as e:
-        logging.error(f"Error: {e}")
+        log_error(f"Agent execution failed: {str(e)}")
 
 if __name__ == "__main__":
     asyncio.run(main())
