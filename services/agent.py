@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Any
 from services.openai_service import OpenAIService
 from services.logging_service import log_info, log_error, log_tool_call, log_warning
 from services.tools.final_answer import FinalAnswerTool
@@ -7,18 +7,10 @@ import json
 class Agent:
     def __init__(self, service: OpenAIService, tools: List = None):
         self.service = service
-        self.tools = tools or [FinalAnswerTool()]
+        self.tools = tools
+        self.tools_mapping = {tool.name: tool for tool in self.tools}
         
     async def run(self, message: str) -> str:
-        """
-        Run the agent with an initial message
-        
-        Args:
-            message: Initial message to send
-            
-        Returns:
-            Model response as string
-        """
         log_info(f"⬆️ User Input: {message}", style="bold blue")
         
         try:
@@ -32,22 +24,33 @@ class Agent:
             log_error(f"Error during agent execution: {str(e)}")
             raise
 
-    async def plan(self, message: str) -> str:
-        """
-        Create system message and get initial response from LLM
-        """
-        tools_description = "\n".join([f"- {tool.name}: {tool.description}" for tool in self.tools])
-        system_message = f"""You are a helpful AI assistant. You have access to the following tools:
+    async def plan(self, message: str) -> Dict[str, any]:
+        formatted_tools = self._format_tools_for_prompt()
 
-        {tools_description}
-
-        To use a tool, respond with a JSON object:
+        system_message = f"""Given the task description, current context, and key findings, determine the SINGLE NEXT STEP to take.
+        
+        Available tools:
+        {formatted_tools}
+       
+        <rules>
+        1. Plan only ONE next step that brings us closer to completing the task
+        2. Keep any placeholders in the format [[PLACEHOLDER_NAME]]
+        3. Consider the context history to avoid redundant operations
+        4. Use ONLY the tools and parameters listed in the 'Available tools' section
+        5. Base your decision on factual information from the key findings and context
+        6. Do not introduce any information or assumptions not present in the provided data
+        </rules>
+        
+        Respond in the following JSON format:
         {{
-            "tool": "<tool_name>",
-            "params": {{}}
-        }}
-
-        For your final answer, use the final_answer tool."""
+            "_thinking": "Explain why this specific step is the best next action, referencing key findings or context",
+             "step": "description of the single next step",
+            "tool_name": "exact name of the tool to use from the available tools",
+            "parameters": {{
+                "param1": "value1",
+                "param2": "value2"
+            }}
+        }}"""
 
         messages = [
             {"role": "system", "content": system_message},
@@ -55,33 +58,45 @@ class Agent:
         ]
         
         log_info(" Planning response...", style="bold yellow")
-        response = await self.service.completion(messages=messages)
+        response = await self.service.completion(messages=messages, json_mode=True)
         log_info(f"📝 Plan created: {response}", style="bold cyan")
-        return response
+        return json.loads(response)
+    
+    def _format_tools_for_prompt(self) -> str:
+        """Formats the available tools into a string for the prompt"""
+        tool_descriptions = []
+        for tool in self.tools_mapping.values():
+            desc = f"Tool: {tool.name}\n"
+            desc += f"Description: {tool.description}\n"
+            desc += "Required parameters:\n"
+            for param, param_desc in tool.required_params.items():
+                desc += f"- {param}: {param_desc}\n"
+            if hasattr(tool, 'optional_params'):
+                desc += "Optional parameters:\n"
+                for param, param_desc in tool.optional_params.items():
+                    desc += f"- {param}: {param_desc}\n"
+            tool_descriptions.append(desc)
+        return "\n".join(tool_descriptions)
 
-    async def execute(self, response: str) -> str:
-        """
-        Execute the appropriate tool based on the response
-        """
+    async def execute(self, next_step: Dict[str, any]) -> dict[str, Any] | Any:
         try:
-            response_json = json.loads(response)
-            tool_name = response_json.get("tool")
-            tool_params = response_json.get("params", {})
+            tool_name = next_step.get("tool_name")
+            tool_params = next_step.get("parameters", {})
             
             # Find and execute the appropriate tool
             for tool in self.tools:
                 if tool.name == tool_name:
-                    result = await tool.run(tool_params)
+                    result = await tool.execute(tool_params)
                     log_tool_call(tool_name, tool_params, result)
                     return result
                     
         except json.JSONDecodeError:
             log_warning("Response was not in JSON format, returning raw response")
-            return response
+            return next_step
             
         except Exception as e:
             log_error(f"Error executing tool: {str(e)}")
             raise
             
         # If no tool format is found, return the raw response
-        return response
+        return next_step

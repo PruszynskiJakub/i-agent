@@ -17,15 +17,14 @@ async def main():
         return
         
     # Define tools to use
-    tools = [FinalAnswerTool()]
     
     service = OpenAIService(api_key)
+    tools = [FinalAnswerTool(service)]
     agent = Agent(service, tools=tools)
     
     try:
         log_info(" Starting agent...", style="bold blue")
-        response = await agent.run("Say hello in a creative way")
-        log_info(f"Agent response: {response}")
+        await agent.run("Say hello in a creative way")
         log_info("✨ Agent completed successfully", style="bold green")
     except Exception as e:
         log_error(f"Agent execution failed: {str(e)}")
