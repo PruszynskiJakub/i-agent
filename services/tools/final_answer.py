@@ -28,7 +28,11 @@ class FinalAnswerTool(AgentTool):
         messages = [
             {
                 "role": "system",
-                "content": answer_prompt(params.get("context", "No context provided"))
+                "content": answer_prompt(
+                    {
+                        "context": params.get("context", "No context provided")
+                    }
+                )
             },
             {
                 "role": "user",

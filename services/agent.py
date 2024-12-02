@@ -80,7 +80,7 @@ class Agent:
             return next_step
             
         except Exception as e:
-            log_error(f"Error executing tool: {str(e)}")
+            log_error(f"Error executing tool: {e}")
             raise
             
         # If no tool format is found, return the raw response

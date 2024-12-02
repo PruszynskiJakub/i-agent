@@ -19,7 +19,9 @@ async def main():
     # Define tools to use
     
     service = OpenAIService(api_key)
-    tools = [FinalAnswerTool(service)]
+    tools = [
+        FinalAnswerTool(service)
+    ]
     agent = Agent(service, tools=tools)
     
     try:
