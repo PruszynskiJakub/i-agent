@@ -2,6 +2,7 @@ from typing import List, Dict
 from services.openai_service import OpenAIService
 from services.logging_service import LoggingService
 from services.tools.final_answer import FinalAnswerTool
+import json
 
 class Agent:
     def __init__(self, service: OpenAIService):
@@ -26,13 +27,15 @@ class Agent:
         tools_description = "\n".join([f"- {tool.name}: {tool.description}" for tool in self.tools])
         system_message = f"""You are a helpful AI assistant. You have access to the following tools:
 
-{tools_description}
+        {tools_description}
 
-To use a tool, respond with:
-TOOL: <tool_name>
-INPUT: <input_text>
+        To use a tool, respond with a JSON object:
+        {{
+            "tool": "<tool_name>",
+            "params": {{}}
+        }}
 
-For your final answer, use the final_answer tool."""
+        For your final answer, use the final_answer tool."""
 
         messages = [
             {"role": "system", "content": system_message},
@@ -45,18 +48,20 @@ For your final answer, use the final_answer tool."""
         )
         
         # Parse tool usage
-        lines = response.strip().split('\n')
-        if len(lines) >= 2 and lines[0].startswith('TOOL:') and lines[1].startswith('INPUT:'):
-            tool_name = lines[0].replace('TOOL:', '').strip()
-            tool_input = lines[1].replace('INPUT:', '').strip()
+        try:
+            response_json = json.loads(response)
+            tool_name = response_json.get("tool")
+            tool_params = response_json.get("params", {})
             
             # Find and execute the appropriate tool
             for tool in self.tools:
                 if tool.name == tool_name:
-                    result = await tool.run(tool_input)
+                    result = await tool.run(tool_params)
                     self.logger.log_output(result)
                     return result
-        
+        except json.JSONDecodeError:
+            pass  # Handle the case where the response is not valid JSON
+
         # If no tool format is found, return the raw response
         self.logger.log_output(response)
         return response
