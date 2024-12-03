@@ -6,6 +6,7 @@ from services.agent import Agent
 from services.tools.final_answer import FinalAnswerTool
 from services.logging_service import setup_logging, log_error, log_info
 from services.tools.make_api_call import MakeApiCallTool
+from services.tools.base64_tool import Base64Tool
 
 async def main():
     # Load environment variables from .env file
@@ -22,6 +23,7 @@ async def main():
     service = OpenAIService(api_key)
     tools = [
         MakeApiCallTool(),
+        Base64Tool(),
         FinalAnswerTool(service)
     ]
     agent = Agent(service, tools=tools)
