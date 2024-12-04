@@ -34,14 +34,6 @@ def restore_conversation(conversation_uuid: str) -> list:
     stored_messages = db_service.get_messages(conversation_uuid)
     conversation_history = [{"role": msg["role"], "content": msg["content"]} for msg in stored_messages]
 
-    # Start tracing the conversation with LangFuse
-    trace = langfuse_service.create_trace({
-        "id": str(uuid.uuid4()),
-        "name": "chat_conversation",
-        "userid": os.getenv("USER", "default_user"),
-        "sessionid": conversation_uuid
-    })
-
     if conversation_history:
         print("Continuing existing conversation...")
         print("\nPrevious messages in this conversation:")
@@ -63,6 +55,14 @@ async def main():
     
     # Initialize conversation history
     conversation_history = restore_conversation(conversation_uuid) if args.conversation else []
+    
+    # Start tracing the conversation with LangFuse
+    trace = langfuse_service.create_trace({
+        "id": str(uuid.uuid4()),
+        "name": "chat_conversation",
+        "userid": os.getenv("USER", "default_user"),
+        "sessionid": conversation_uuid
+    })
     
     print("Welcome to the AI Chat! (Type 'quit' to exit)")
     print(f"\nConversation ID: {conversation_uuid}")
@@ -100,6 +100,9 @@ async def main():
         except Exception as e:
             print(f"\nError: {str(e)}")
             print("Please try again.")
+    
+    # End the trace when conversation is finished
+    langfuse_service.end_trace(trace)
 
 if __name__ == "__main__":
     asyncio.run(main())
