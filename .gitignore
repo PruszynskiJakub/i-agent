@@ -3,3 +3,4 @@
 .aider.input.history
 .aider*
 __pycache__
+*.db
