@@ -8,6 +8,7 @@ from services.database_service import DatabaseService
 from services.openai_service import OpenAIService
 from services.langfuse_service import LangFuseService
 from services.agent_service import AgentService
+from services.logging_service import logger
 
 # Load environment variables from .env file
 load_dotenv()
@@ -39,8 +40,8 @@ def restore_conversation(conversation_uuid: str) -> list:
     conversation_history = [{"role": msg["role"], "content": msg["content"]} for msg in stored_messages]
 
     if conversation_history:
-        print("Continuing existing conversation...")
-        print("\nPrevious messages in this conversation:")
+        logger.info("Continuing existing conversation...")
+        logger.info("\nPrevious messages in this conversation:")
         for msg in conversation_history:
             prefix = "You:" if msg["role"] == "user" else "AI:"
             print(f"\n{prefix} {msg['content']}")
@@ -57,6 +58,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         conversation_history: List of previous messages
         exit_keyword: Keyword to exit the conversation (default: 'exit')
     """
+    logger.info
     while True:
         # Get user input
         user_input = input("\nYou: ").strip()
@@ -82,8 +84,8 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
             print("\nAI:", ai_response)
             
         except Exception as e:
-            print(f"\nError: {str(e)}")
-            print("Please try again.")
+            logger.error(f"\nError: {str(e)}")
+            logger.warning("Please try again.")
 
 async def main():
     # Set up argument parsing
@@ -105,12 +107,13 @@ async def main():
         "sessionid": conversation_uuid
     })
     
-    print("Welcome to the AI Chat! (Type 'exit' to end)")
+    logger.info("Welcome to the AI Chat! (Type 'exit' to end)")
     print(f"\nConversation ID: {conversation_uuid}")
     print("-" * 50)
 
     await main_loop(conversation_uuid, conversation_history)
     
+    logger.info("Conversation finished.")
     # End the trace when conversation is finished
     langfuse_service.end_trace()
 
