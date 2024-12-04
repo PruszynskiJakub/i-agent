@@ -9,14 +9,12 @@ from services.openai_service import OpenAIService
 # Load environment variables from .env file
 load_dotenv()
 
-# Initialize OpenAI service
+# Initialize services
 openai_service = OpenAIService(api_key=os.getenv("OPENAI_API_KEY"))
+db_service = DatabaseService()
 
 @traceable
 async def main():
-    # Initialize database service
-    db_service = DatabaseService()
-    
     # Initialize conversation history
     conversation_history = []
     
