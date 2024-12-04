@@ -32,40 +32,9 @@ class LangFuseService:
             Trace object
         """
         return self.client.trace(**options)
-    
-    def log_span(self, 
-                 trace: Any,
-                 name: str,
-                 input_data: Dict[str, Any],
-                 output_data: Dict[str, Any],
-                 span_type: str = "llm",
-                 model: Optional[str] = None) -> None:
-        """
-        Log a span within a trace
-        
-        Args:
-            trace: Trace object
-            name: Name of the span
-            input_data: Input data for the span
-            output_data: Output data from the span
-            span_type: Type of span (default: "llm")
-            model: Model name if applicable
-        """
-        span = trace.span(
-            name=name,
-            input=input_data,
-            output=output_data,
-            type=span_type
-        )
-        if model:
-            span.update(model=model)
-        span.end()
-    
-    def end_trace(self, trace: Any) -> None:
+
+    def end_trace(self) -> None:
         """
         End a trace
-        
-        Args:
-            trace: Trace object to end
         """
-        trace.end()
+        self.client.flush()
