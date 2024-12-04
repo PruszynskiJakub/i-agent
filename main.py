@@ -30,7 +30,10 @@ async def main():
         
         # Check if user wants to quit
         if user_input.lower() in ['quit', 'exit', 'bye']:
-            print("\nAI: Goodbye! Thanks for chatting!")
+            goodbye_msg = "Goodbye! Thanks for chatting!"
+            print(f"\nAI: {goodbye_msg}")
+            # Store goodbye message
+            db_service.store_message(conversation_uuid, "assistant", goodbye_msg)
             break
         
         # Add user message to conversation history
