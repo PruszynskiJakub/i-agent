@@ -35,7 +35,12 @@ def restore_conversation(conversation_uuid: str) -> list:
     conversation_history = [{"role": msg["role"], "content": msg["content"]} for msg in stored_messages]
 
     # Start tracing the conversation with LangFuse
-    trace = langfuse_service.create_trace(conversation_uuid)
+    trace = langfuse_service.create_trace({
+        "id": conversation_uuid,
+        "name": "chat_conversation",
+        "userid": os.getenv("USER", "default_user"),
+        "sessionid": str(uuid.uuid4())
+    })
 
     if conversation_history:
         print("Continuing existing conversation...")
