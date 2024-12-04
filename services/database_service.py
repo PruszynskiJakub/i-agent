@@ -1,4 +1,5 @@
 import sqlite3
+import uuid
 from datetime import datetime
 
 class DatabaseService:
@@ -13,6 +14,7 @@ class DatabaseService:
         c.execute('''
             CREATE TABLE IF NOT EXISTS messages (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                conversation_uuid TEXT NOT NULL,
                 role TEXT NOT NULL,
                 content TEXT NOT NULL,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -21,24 +23,34 @@ class DatabaseService:
         conn.commit()
         conn.close()
 
-    def store_message(self, role, content):
+    def store_message(self, conversation_uuid: str, role: str, content: str):
         """Store a message in the database"""
         conn = sqlite3.connect(self.db_name)
         c = conn.cursor()
-        c.execute('INSERT INTO messages (role, content) VALUES (?, ?)', (role, content))
+        c.execute('INSERT INTO messages (conversation_uuid, role, content) VALUES (?, ?, ?)', 
+                 (conversation_uuid, role, content))
         conn.commit()
         conn.close()
 
-    def get_messages(self, limit=None):
+    def get_messages(self, conversation_uuid: str = None, limit: int = None):
         """Retrieve messages from the database"""
         conn = sqlite3.connect(self.db_name)
         c = conn.cursor()
         
-        query = 'SELECT role, content, timestamp FROM messages ORDER BY timestamp'
-        if limit:
-            query += f' LIMIT {limit}'
+        query = 'SELECT role, content, timestamp FROM messages'
+        params = []
+        
+        if conversation_uuid:
+            query += ' WHERE conversation_uuid = ?'
+            params.append(conversation_uuid)
             
-        c.execute(query)
+        query += ' ORDER BY timestamp'
+        
+        if limit:
+            query += ' LIMIT ?'
+            params.append(limit)
+            
+        c.execute(query, params)
         messages = c.fetchall()
         conn.close()
         

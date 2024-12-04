@@ -1,5 +1,6 @@
 import asyncio
 import os
+import uuid
 from datetime import datetime
 from langsmith import traceable
 from dotenv import load_dotenv
@@ -15,7 +16,8 @@ db_service = DatabaseService()
 
 @traceable
 async def main():
-    # Initialize conversation history
+    # Initialize conversation with a new UUID
+    conversation_uuid = str(uuid.uuid4())
     conversation_history = []
     
     print("Welcome to the AI Chat! (Type 'quit' to exit)")
@@ -35,7 +37,7 @@ async def main():
         
         try:
             # Store user message
-            db_service.store_message("user", user_input)
+            db_service.store_message(conversation_uuid, "user", user_input)
             
             # Get AI response using OpenAI service
             ai_response = await openai_service.completion(
@@ -47,7 +49,7 @@ async def main():
             conversation_history.append({"role": "assistant", "content": ai_response})
             
             # Store AI response
-            db_service.store_message("assistant", ai_response)
+            db_service.store_message(conversation_uuid, "assistant", ai_response)
             
             # Print AI response
             print("\nAI:", ai_response)
