@@ -3,7 +3,6 @@ import os
 import uuid
 import argparse
 from datetime import datetime
-from langsmith import traceable
 from dotenv import load_dotenv
 from services.database_service import DatabaseService
 from services.openai_service import OpenAIService
