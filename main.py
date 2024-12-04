@@ -21,6 +21,7 @@ async def main():
     conversation_history = []
     
     print("Welcome to the AI Chat! (Type 'quit' to exit)")
+    print(f"\nConversation ID: {conversation_uuid}")
     print("-" * 50)
 
     while True:
