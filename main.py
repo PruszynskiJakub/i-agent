@@ -16,7 +16,8 @@ openai_service = OpenAIService(api_key=os.getenv("OPENAI_API_KEY"))
 db_service = DatabaseService()
 langfuse_service = LangFuseService(
     public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
-    secret_key=os.getenv("LANGFUSE_SECRET_KEY")
+    secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
+    host="https://cloud.langfuse.com"
 )
 
 def restore_conversation(conversation_uuid: str) -> list:
