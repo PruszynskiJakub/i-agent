@@ -1,3 +1,4 @@
+import os
 from typing import List, Dict
 from openai import AsyncOpenAI
 from langsmith.wrappers import wrap_openai
@@ -7,7 +8,7 @@ class OpenAIService:
     def __init__(self, api_key: str):
         self.client = wrap_openai(AsyncOpenAI(api_key=api_key))
     
-    async def completion(self, messages: List[Dict[str, str]], model: str = "gpt-4o-mini", json_mode: bool = False) -> str:
+    async def completion(self, messages: List[Dict[str, str]], model: str = None, json_mode: bool = False) -> str:
         """
         Get completion from OpenAI API
         
@@ -20,7 +21,7 @@ class OpenAIService:
             Model response as string
         """
         response = await self.client.chat.completions.create(
-            model=model,
+            model=model or os.getenv("OPENAI_MODEL", "gpt-3.5-turbo"),
             messages=messages,
             response_format={"type": "json_object"} if json_mode else {"type": "text"}
         )

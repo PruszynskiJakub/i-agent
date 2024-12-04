@@ -77,8 +77,7 @@ async def main():
             
             # Get AI response using OpenAI service
             ai_response = await openai_service.completion(
-                messages=conversation_history,
-                model="gpt-4o-mini"
+                messages=conversation_history
             )
             
             # Add AI response to conversation history
