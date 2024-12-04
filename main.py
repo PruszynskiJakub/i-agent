@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from services.database_service import DatabaseService
 from services.openai_service import OpenAIService
 from services.langfuse_service import LangFuseService
+from services.agent_service import AgentService
 
 # Load environment variables from .env file
 load_dotenv()
@@ -19,6 +20,9 @@ langfuse_service = LangFuseService(
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
     host=os.getenv("LANGFUSE_HOST")
 )
+
+# Initialize agent service
+agent_service = AgentService(openai_service, db_service, langfuse_service)
 
 def restore_conversation(conversation_uuid: str) -> list:
     """
@@ -83,16 +87,11 @@ async def main():
             # Store user message
             db_service.store_message(conversation_uuid, "user", user_input)
             
-            # Get AI response using OpenAI service
-            ai_response = await openai_service.completion(
-                messages=conversation_history
-            )
+            # Get AI response using AgentService
+            ai_response = await agent_service.run(conversation_uuid, conversation_history)
             
             # Add AI response to conversation history
             conversation_history.append({"role": "assistant", "content": ai_response})
-            
-            # Store AI response
-            db_service.store_message(conversation_uuid, "assistant", ai_response)
             
             # Print AI response
             print("\nAI:", ai_response)
