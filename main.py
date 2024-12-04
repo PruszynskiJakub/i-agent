@@ -17,7 +17,7 @@ db_service = DatabaseService()
 langfuse_service = LangFuseService(
     public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
-    host="https://cloud.langfuse.com"
+    host=os.getenv("LANGFUSE_HOST")
 )
 
 def restore_conversation(conversation_uuid: str) -> list:
@@ -33,7 +33,10 @@ def restore_conversation(conversation_uuid: str) -> list:
     conversation_history = []
     stored_messages = db_service.get_messages(conversation_uuid)
     conversation_history = [{"role": msg["role"], "content": msg["content"]} for msg in stored_messages]
-    
+
+    # Start tracing the conversation with LangFuse
+    trace = langfuse_service.create_trace(conversation_uuid)
+
     if conversation_history:
         print("Continuing existing conversation...")
         print("\nPrevious messages in this conversation:")
