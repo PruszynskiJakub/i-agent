@@ -15,7 +15,6 @@ load_dotenv()
 openai_service = OpenAIService(api_key=os.getenv("OPENAI_API_KEY"))
 db_service = DatabaseService()
 
-@traceable
 async def main():
     # Set up argument parsing
     parser = argparse.ArgumentParser(description='AI Chat Interface')
