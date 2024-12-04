@@ -24,7 +24,7 @@ async def chat_with_ai():
         
         # Check if user wants to quit
         if user_input.lower() in ['quit', 'exit', 'bye']:
-            print("\nGoodbye! Thanks for chatting!")
+            print("\nAI: Goodbye! Thanks for chatting!")
             break
         
         # Add user message to conversation history
