@@ -2,15 +2,15 @@ import asyncio
 import os
 from datetime import datetime
 from langsmith import traceable
-from openai import AsyncOpenAI
 from dotenv import load_dotenv
 from services.database_service import DatabaseService
+from services.openai_service import OpenAIService
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Initialize OpenAI client
-client = AsyncOpenAI()
+# Initialize OpenAI service
+openai_service = OpenAIService(api_key=os.getenv("OPENAI_API_KEY"))
 
 @traceable
 async def main():
@@ -39,14 +39,11 @@ async def main():
             # Store user message
             db_service.store_message("user", user_input)
             
-            # Get AI response
-            response = await client.chat.completions.create(
-                model="gpt-4o-mini",
+            # Get AI response using OpenAI service
+            ai_response = await openai_service.completion(
                 messages=conversation_history,
+                model="gpt-4o-mini"
             )
-            
-            # Extract AI response
-            ai_response = response.choices[0].message.content
             
             # Add AI response to conversation history
             conversation_history.append({"role": "assistant", "content": ai_response})
