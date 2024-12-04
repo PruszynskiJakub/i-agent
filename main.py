@@ -48,36 +48,21 @@ def restore_conversation(conversation_uuid: str) -> list:
     
     return conversation_history
 
-async def main():
-    # Set up argument parsing
-    parser = argparse.ArgumentParser(description='AI Chat Interface')
-    parser.add_argument('--conversation', type=str, help='UUID of existing conversation to continue')
-    args = parser.parse_args()
+async def main_loop(conversation_uuid: str, conversation_history: list, exit_keyword: str = 'exit') -> None:
+    """
+    Main conversation loop handling user input and AI responses
     
-    # Use provided UUID or generate new one
-    conversation_uuid = args.conversation if args.conversation else str(uuid.uuid4())
-    
-    # Initialize conversation history
-    conversation_history = restore_conversation(conversation_uuid) if args.conversation else []
-    
-    # Start tracing the conversation with LangFuse
-    trace = langfuse_service.create_trace({
-        "id": str(uuid.uuid4()),
-        "name": "chat_conversation",
-        "userid": os.getenv("USER", "default_user"),
-        "sessionid": conversation_uuid
-    })
-    
-    print("Welcome to the AI Chat! (Type 'quit' to exit)")
-    print(f"\nConversation ID: {conversation_uuid}")
-    print("-" * 50)
-
+    Args:
+        conversation_uuid: UUID of the conversation
+        conversation_history: List of previous messages
+        exit_keyword: Keyword to exit the conversation (default: 'exit')
+    """
     while True:
         # Get user input
         user_input = input("\nYou: ").strip()
         
         # Check if user wants to quit
-        if user_input.lower() in ['exit']:
+        if user_input.lower() in [exit_keyword]:
             break
         
         # Add user message to conversation history
@@ -99,6 +84,32 @@ async def main():
         except Exception as e:
             print(f"\nError: {str(e)}")
             print("Please try again.")
+
+async def main():
+    # Set up argument parsing
+    parser = argparse.ArgumentParser(description='AI Chat Interface')
+    parser.add_argument('--conversation', type=str, help='UUID of existing conversation to continue')
+    args = parser.parse_args()
+    
+    # Use provided UUID or generate new one
+    conversation_uuid = args.conversation if args.conversation else str(uuid.uuid4())
+    
+    # Initialize conversation history
+    conversation_history = restore_conversation(conversation_uuid) if args.conversation else []
+    
+    # Start tracing the conversation with LangFuse
+    trace = langfuse_service.create_trace({
+        "id": str(uuid.uuid4()),
+        "name": "chat_conversation",
+        "userid": os.getenv("USER", "default_user"),
+        "sessionid": conversation_uuid
+    })
+    
+    print("Welcome to the AI Chat! (Type 'exit' to end)")
+    print(f"\nConversation ID: {conversation_uuid}")
+    print("-" * 50)
+
+    await main_loop(conversation_uuid, conversation_history)
     
     # End the trace when conversation is finished
     langfuse_service.end_trace(trace)
