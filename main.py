@@ -15,6 +15,30 @@ load_dotenv()
 openai_service = OpenAIService(api_key=os.getenv("OPENAI_API_KEY"))
 db_service = DatabaseService()
 
+def restore_conversation(conversation_uuid: str) -> list:
+    """
+    Restore conversation history from database for a given UUID
+    
+    Args:
+        conversation_uuid: UUID of the conversation to restore
+        
+    Returns:
+        List of message dictionaries with role and content
+    """
+    conversation_history = []
+    stored_messages = db_service.get_messages(conversation_uuid)
+    conversation_history = [{"role": msg["role"], "content": msg["content"]} for msg in stored_messages]
+    
+    if conversation_history:
+        print("Continuing existing conversation...")
+        print("\nPrevious messages in this conversation:")
+        for msg in conversation_history:
+            prefix = "You:" if msg["role"] == "user" else "AI:"
+            print(f"\n{prefix} {msg['content']}")
+        print("\n" + "-" * 50)
+    
+    return conversation_history
+
 async def main():
     # Set up argument parsing
     parser = argparse.ArgumentParser(description='AI Chat Interface')
@@ -25,23 +49,11 @@ async def main():
     conversation_uuid = args.conversation if args.conversation else str(uuid.uuid4())
     
     # Initialize conversation history
-    conversation_history = []
-    if args.conversation:
-        # Load existing messages if continuing a conversation
-        stored_messages = db_service.get_messages(conversation_uuid)
-        conversation_history = [{"role": msg["role"], "content": msg["content"]} for msg in stored_messages]
-        print("Continuing existing conversation...")
+    conversation_history = restore_conversation(conversation_uuid) if args.conversation else []
     
     print("Welcome to the AI Chat! (Type 'quit' to exit)")
     print(f"\nConversation ID: {conversation_uuid}")
     print("-" * 50)
-    
-    if conversation_history:
-        print("\nPrevious messages in this conversation:")
-        for msg in conversation_history:
-            prefix = "You:" if msg["role"] == "user" else "AI:"
-            print(f"\n{prefix} {msg['content']}")
-        print("\n" + "-" * 50)
 
     while True:
         # Get user input
