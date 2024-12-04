@@ -112,7 +112,7 @@ async def main():
     await main_loop(conversation_uuid, conversation_history)
     
     # End the trace when conversation is finished
-    langfuse_service.end_trace(trace)
+    langfuse_service.end_trace()
 
 if __name__ == "__main__":
     asyncio.run(main())
