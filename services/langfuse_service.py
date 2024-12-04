@@ -17,24 +17,26 @@ class LangFuseService:
             host=host
         )
     
-    def create_trace(self, options: Dict[str, str]) -> Any:
+    def create_trace(self, options: Dict[str, str]):
         """
         Create a new trace for conversation tracking
-        
-        Args:
-            options: Dictionary containing trace options with keys:
-                - id: Trace identifier
-                - userid: User identifier
-                - sessionid: Session identifier
-                - name: Name of the trace
-            
-        Returns:
-            Trace object
         """
-        return self.client.trace(**options)
+        return self.client.trace(
+            name=options.get("name"),
+            user_id=options.get("userid"),
+            session_id=options.get("sessionid"),
+            tags=options.get("tags", [])
+        )
 
-    def end_trace(self) -> None:
+    def finalize_trace(self, trace):
         """
-        End a trace
+        End a trace and flush data
         """
         self.client.flush()
+
+    def shutdown(self):
+        """
+        Shutdown LangFuse client
+        """
+        self.client.flush()
+        self.client.shutdown()

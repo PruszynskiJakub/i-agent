@@ -49,7 +49,7 @@ def restore_conversation(conversation_uuid: str) -> list:
     
     return conversation_history
 
-async def main_loop(conversation_uuid: str, conversation_history: list, exit_keyword: str = 'exit') -> None:
+async def main_loop(conversation_uuid: str, conversation_history: list, trace, exit_keyword: str = 'exit') -> None:
     """
     Main conversation loop handling user input and AI responses
     
@@ -58,7 +58,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         conversation_history: List of previous messages
         exit_keyword: Keyword to exit the conversation (default: 'exit')
     """
-    logger.info
+    
     while True:
         # Get user input
         user_input = input("\nYou: ").strip()
@@ -75,7 +75,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
             db_service.store_message(conversation_uuid, "user", user_input)
             
             # Get AI response using AgentService
-            ai_response = await agent_service.run(conversation_uuid, conversation_history)
+            ai_response = await agent_service.run(conversation_uuid, conversation_history, trace)
             
             # Add AI response to conversation history
             conversation_history.append({"role": "assistant", "content": ai_response})
@@ -99,23 +99,23 @@ async def main():
     # Initialize conversation history
     conversation_history = restore_conversation(conversation_uuid) if args.conversation else []
     
-    # Start tracing the conversation with LangFuse
+    # Create a trace for the entire conversation
     trace = langfuse_service.create_trace({
-        "id": str(uuid.uuid4()),
         "name": "chat_conversation",
         "userid": os.getenv("USER", "default_user"),
-        "sessionid": conversation_uuid
+        "sessionid": conversation_uuid,
+        "tags": ["production"]
     })
     
     logger.info("Welcome to the AI Chat! (Type 'exit' to end)")
     print(f"\nConversation ID: {conversation_uuid}")
     print("-" * 50)
 
-    await main_loop(conversation_uuid, conversation_history)
+    await main_loop(conversation_uuid, conversation_history, trace)
     
-    logger.info("Conversation finished.")
     # End the trace when conversation is finished
-    langfuse_service.end_trace()
+    langfuse_service.finalize_trace(trace)
+    langfuse_service.shutdown()
 
 if __name__ == "__main__":
     asyncio.run(main())
