@@ -1,6 +1,7 @@
 import asyncio
 import os
 import uuid
+import argparse
 from datetime import datetime
 from langsmith import traceable
 from dotenv import load_dotenv
@@ -16,13 +17,32 @@ db_service = DatabaseService()
 
 @traceable
 async def main():
-    # Initialize conversation with a new UUID
-    conversation_uuid = str(uuid.uuid4())
+    # Set up argument parsing
+    parser = argparse.ArgumentParser(description='AI Chat Interface')
+    parser.add_argument('--conversation', type=str, help='UUID of existing conversation to continue')
+    args = parser.parse_args()
+    
+    # Use provided UUID or generate new one
+    conversation_uuid = args.conversation if args.conversation else str(uuid.uuid4())
+    
+    # Initialize conversation history
     conversation_history = []
+    if args.conversation:
+        # Load existing messages if continuing a conversation
+        stored_messages = db_service.get_messages(conversation_uuid)
+        conversation_history = [{"role": msg["role"], "content": msg["content"]} for msg in stored_messages]
+        print("Continuing existing conversation...")
     
     print("Welcome to the AI Chat! (Type 'quit' to exit)")
     print(f"\nConversation ID: {conversation_uuid}")
     print("-" * 50)
+    
+    if conversation_history:
+        print("\nPrevious messages in this conversation:")
+        for msg in conversation_history:
+            prefix = "You:" if msg["role"] == "user" else "AI:"
+            print(f"\n{prefix} {msg['content']}")
+        print("\n" + "-" * 50)
 
     while True:
         # Get user input
