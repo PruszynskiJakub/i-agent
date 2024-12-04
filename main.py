@@ -36,10 +36,10 @@ def restore_conversation(conversation_uuid: str) -> list:
 
     # Start tracing the conversation with LangFuse
     trace = langfuse_service.create_trace({
-        "id": conversation_uuid,
+        "id": str(uuid.uuid4()),
         "name": "chat_conversation",
         "userid": os.getenv("USER", "default_user"),
-        "sessionid": str(uuid.uuid4())
+        "sessionid": conversation_uuid
     })
 
     if conversation_history:
