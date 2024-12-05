@@ -1,10 +1,10 @@
 import os
 from typing import List, Dict, Any
 import uuid
-from services.openai_service import OpenAIService
-from services.database_service import DatabaseService
-from services.langfuse_service import LangFuseService
-from services.types import State
+from modules.openai_service import OpenAIService
+from modules.database_service import DatabaseService
+from modules.langfuse_service import LangFuseService
+from modules.types import State
 
 class AgentService:
     def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, langfuse_service: LangFuseService):

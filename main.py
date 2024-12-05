@@ -4,17 +4,17 @@ import uuid
 import argparse
 from datetime import datetime
 from dotenv import load_dotenv
-from services.database_service import DatabaseService
-from services.openai_service import OpenAIService
-from services.langfuse_service import LangFuseService
-from services.agent_service import AgentService
-from services.logging_service import logger
-from services.types import State
+from modules.database_service import DatabaseService
+from modules.openai_service import OpenAIService
+from modules.langfuse_service import LangFuseService
+from modules.agent_service import AgentService
+from modules.logging_service import logger
+from modules.types import State
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Initialize services
+# Initialize modules
 openai_service = OpenAIService(api_key=os.getenv("OPENAI_API_KEY"))
 db_service = DatabaseService()
 langfuse_service = LangFuseService(
