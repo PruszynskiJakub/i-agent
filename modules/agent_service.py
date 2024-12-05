@@ -22,19 +22,18 @@ class AgentService:
         self.db_service = db_service
         self.langfuse_service = langfuse_service
 
-    async def run(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> str:
+    async def _plan(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> str:
         """
-        Process a single conversation turn
+        Plan and execute the next conversation turn
         
         Args:
             conversation_id: UUID of the conversation
             messages: List of message dictionaries with role and content
+            parent_trace: Parent trace for logging
             
         Returns:
             AI response as string
         """
-        
-
         try:
             # Create generation observation under the main trace
             generation = parent_trace.generation(
@@ -80,5 +79,18 @@ class AgentService:
             
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
+
+    async def run(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> str:
+        """
+        Process a single conversation turn
         
+        Args:
+            conversation_id: UUID of the conversation
+            messages: List of message dictionaries with role and content
+            parent_trace: Parent trace for logging
+            
+        Returns:
+            AI response as string
+        """
+        return await self._plan(conversation_id, messages, parent_trace)
 
