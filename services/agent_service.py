@@ -4,9 +4,10 @@ import uuid
 from services.openai_service import OpenAIService
 from services.database_service import DatabaseService
 from services.langfuse_service import LangFuseService
+from services.types import State
 
 class AgentService:
-    def __init__(self, openai_service: OpenAIService, db_service: DatabaseService, langfuse_service: LangFuseService):
+    def __init__(self, openai_service: OpenAIService, db_service: DatabaseService, langfuse_service: LangFuseService, state: State):
         """
         Initialize AgentService
         
@@ -14,10 +15,12 @@ class AgentService:
             openai_service: OpenAI service instance
             db_service: Database service instance
             langfuse_service: LangFuse service instance
+            state: State instance containing tools and other configuration
         """
         self.openai_service = openai_service
         self.db_service = db_service
         self.langfuse_service = langfuse_service
+        self.state = state
 
     async def run(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> str:
         """

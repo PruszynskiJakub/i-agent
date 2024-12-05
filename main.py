@@ -9,6 +9,7 @@ from services.openai_service import OpenAIService
 from services.langfuse_service import LangFuseService
 from services.agent_service import AgentService
 from services.logging_service import logger
+from services.types import State
 
 # Load environment variables from .env file
 load_dotenv()
@@ -22,8 +23,9 @@ langfuse_service = LangFuseService(
     host=os.getenv("LANGFUSE_HOST")
 )
 
-# Initialize agent service
-agent_service = AgentService(openai_service, db_service, langfuse_service)
+# Initialize state and agent service
+state = State(tools=[])  # Initialize with empty tools list for now
+agent_service = AgentService(openai_service, db_service, langfuse_service, state)
 
 def restore_conversation(conversation_uuid: str) -> list:
     """
