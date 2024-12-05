@@ -25,7 +25,7 @@ langfuse_service = LangFuseService(
 
 # Initialize state and agent service
 state = State(tools=[])  # Initialize with empty tools list for now
-agent_service = AgentService(openai_service, db_service, langfuse_service, state)
+agent_service = AgentService(state, openai_service, db_service, langfuse_service)
 
 def restore_conversation(conversation_uuid: str) -> list:
     """
