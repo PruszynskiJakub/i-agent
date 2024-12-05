@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Any
+from typing import List, Any, Optional
 from uuid import UUID
 
 @dataclass
@@ -22,3 +22,4 @@ class Action:
 class State:
     """The state of the agent"""
     tools: List[Tool]
+    action: Optional[Action] = None
