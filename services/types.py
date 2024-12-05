@@ -22,4 +22,4 @@ class Action:
 class State:
     """The state of the agent"""
     tools: List[Tool]
-    action: Optional[Action] = None
+    actions: List[Action] = None
