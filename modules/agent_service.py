@@ -47,7 +47,10 @@ class AgentService:
             )
             
             # Get AI response
-            ai_response = await self.openai_service.completion(messages=messages, model="gpt-4o-mini")
+            ai_response = await self.openai_service.completion(
+                messages=messages, 
+                model="gpt-4o-mini"
+            )
             
             # Store AI response
             self.db_service.store_message(conversation_id, "assistant", ai_response)
