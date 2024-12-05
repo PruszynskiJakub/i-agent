@@ -15,6 +15,7 @@ class Action:
     """An action performed by a tool"""
     tool_uuid: UUID
     uuid: UUID
+    name: str
     result: Any
     payload: dict
 
