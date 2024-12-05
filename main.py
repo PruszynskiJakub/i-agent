@@ -30,10 +30,9 @@ def answer_tool(params: Dict[str, Any]) -> str:
     return f"Processing query: {params['user_query']}"
 
 # Initialize state and agent service
-answer_tool_uuid = UUID('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11')  # Fixed UUID for reproducibility
 state = State(tools=[
     Tool(
-        uuid=answer_tool_uuid,
+        uuid=UUID('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'),
         name="answer",
         description="A tool for processing user queries",
         instructions="Use this tool to process and respond to user queries",
