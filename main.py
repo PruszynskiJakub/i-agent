@@ -3,13 +3,15 @@ import os
 import uuid
 import argparse
 from datetime import datetime
+from uuid import UUID
+from typing import Dict, Any
 from dotenv import load_dotenv
 from modules.database_service import DatabaseService
 from modules.openai_service import OpenAIService
 from modules.langfuse_service import LangFuseService
 from modules.agent_service import AgentService
 from modules.logging_service import logger
-from modules.types import State
+from modules.types import State, Tool
 
 # Load environment variables from .env file
 load_dotenv()
@@ -23,8 +25,23 @@ langfuse_service = LangFuseService(
     host=os.getenv("LANGFUSE_HOST")
 )
 
+def answer_tool(params: Dict[str, Any]) -> str:
+    """Simple tool that returns the user query"""
+    return f"Processing query: {params['user_query']}"
+
 # Initialize state and agent service
-state = State(tools=[])  # Initialize with empty tools list
+answer_tool_uuid = UUID('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11')  # Fixed UUID for reproducibility
+state = State(tools=[
+    Tool(
+        uuid=answer_tool_uuid,
+        name="answer",
+        description="A tool for processing user queries",
+        instructions="Use this tool to process and respond to user queries",
+        function=answer_tool,
+        required_params={"user_query": "str"},
+        optional_params={}
+    )
+])
 agent_service = AgentService(state, openai_service, db_service, langfuse_service)
 
 def restore_conversation(conversation_uuid: str) -> list:
