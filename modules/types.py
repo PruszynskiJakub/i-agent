@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Any, Optional, Callable
+from typing import List, Any, Optional, Callable, Dict
 from uuid import UUID
 
 @dataclass
@@ -10,6 +10,8 @@ class Tool:
     description: str
     instructions: str
     function: Callable[..., Any]
+    required_params: Dict[str, str]
+    optional_params: Dict[str, str]
 
 @dataclass
 class Action:
