@@ -50,6 +50,7 @@ class AgentService:
             system_prompt = self.langfuse_service.get_prompt(
                 name="helpful-assistant",
                 prompt_type="text",
+                label="latest"
             ).compile()  # Add any variables needed for compilation
 
             # Get AI response
