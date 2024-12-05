@@ -13,7 +13,7 @@ class Tool:
 @dataclass
 class Action:
     """An action performed by a tool"""
-    tool: Tool
+    tool_uuid: UUID
     uuid: UUID
     result: Any
     payload: dict
