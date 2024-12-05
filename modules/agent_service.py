@@ -46,9 +46,16 @@ class AgentService:
                 }
             )
             
+            # Add system prompt to messages
+            system_prompt = {
+                "role": "system",
+                "content": "You are a helpful AI assistant. You have access to various tools that can help you complete tasks. Always be clear and concise in your responses."
+            }
+            messages_with_prompt = [system_prompt] + messages
+
             # Get AI response
             ai_response = await self.openai_service.completion(
-                messages=messages, 
+                messages=messages_with_prompt,
                 model="gpt-4o-mini"
             )
             
