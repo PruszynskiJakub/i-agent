@@ -3,15 +3,6 @@ import os
 import uuid
 import argparse
 from datetime import datetime
-from uuid import UUID
-=======>>>>>>> REPLACE
-```
-
-main.py
-```python
-<<<<<<< SEARCH
-# Initialize state and agent service
-state = State(tools=[])  # Initialize with empty tools list
 from dotenv import load_dotenv
 from modules.database_service import DatabaseService
 from modules.openai_service import OpenAIService
