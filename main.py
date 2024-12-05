@@ -12,6 +12,7 @@ from modules.langfuse_service import LangFuseService
 from modules.agent_service import AgentService
 from modules.logging_service import logger
 from modules.types import State, Tool
+from modules.tools import answer_tool
 
 # Load environment variables from .env file
 load_dotenv()
@@ -24,10 +25,6 @@ langfuse_service = LangFuseService(
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
     host=os.getenv("LANGFUSE_HOST")
 )
-
-def answer_tool(params: Dict[str, Any]) -> str:
-    """Simple tool that returns the user query"""
-    return f"Processing query: {params['user_query']}"
 
 # Initialize state and agent service
 state = State(tools=[
