@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Any, Optional
 from uuid import UUID
 
@@ -22,4 +22,4 @@ class Action:
 class State:
     """The state of the agent"""
     tools: List[Tool]
-    actions: List[Action] = None
+    actions: List[Action] = field(default_factory=list)
