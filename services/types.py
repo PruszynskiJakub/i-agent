@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Any
 from uuid import UUID
 
 @dataclass
@@ -9,6 +9,14 @@ class Tool:
     name: str
     description: str
     instructions: str
+
+@dataclass
+class Action:
+    """An action performed by a tool"""
+    tool: Tool
+    uuid: UUID
+    result: Any
+    payload: dict
 
 @dataclass
 class State:
