@@ -66,7 +66,7 @@ class AgentService:
             
             # Create generation observation under the main trace
             generation = parent_trace.generation(
-                name="chat_response",
+                name="agent_plan",
                 model=model,  # Use model from prompt config
                 input=messages,
                 metadata={
