@@ -23,21 +23,43 @@ class AgentService:
         self.db_service = db_service
         self.langfuse_service = langfuse_service
 
-    async def _execute(self, plan: str, conversation_id: str, parent_trace=None) -> str:
+    async def run(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
-        Execute the planned action
+        Process conversation turns with planning and execution loop
         
         Args:
-            plan: The planned action from the AI
             conversation_id: UUID of the conversation
+            messages: List of message dictionaries with role and content
             parent_trace: Parent trace for logging
             
         Returns:
-            Result of the execution
+            Final AI response as string
         """
-        # For now, return the plan directly
-        # This will be enhanced later to actually execute tools
-        return plan
+        self.db_service.store_message(conversation_id, "user", messages[-1]['content'])
+
+        while self.state.config["current_step"] < self.state.config["max_steps"]:
+            # Plan phase
+            plan_result = await self._plan(conversation_id, messages, parent_trace)
+            
+            # If the tool is final_answer, return empty string
+            if plan_result["tool"] == "final_answer":
+                break
+                
+            # Execute phase
+            result = await self._execute(plan_result, conversation_id, parent_trace)
+            
+            # Add the result to messages for next iteration
+            messages.append({"role": "assistant", "content": result})
+            
+            # Increment step counter at end of loop
+            self.state.config["current_step"] += 1
+            
+        # Get final answer using answer method
+        final_answer = await self.answer(conversation_id, messages, parent_trace)
+
+        self.db_service.store_message(conversation_id, "assistant", final_answer)
+        
+        return final_answer
 
     async def _plan(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> Dict[str, Any]:
         """
@@ -107,43 +129,21 @@ class AgentService:
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
 
-    async def run(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> str:
+    async def _execute(self, plan: str, conversation_id: str, parent_trace=None) -> str:
         """
-        Process conversation turns with planning and execution loop
+        Execute the planned action
         
         Args:
+            plan: The planned action from the AI
             conversation_id: UUID of the conversation
-            messages: List of message dictionaries with role and content
             parent_trace: Parent trace for logging
             
         Returns:
-            Final AI response as string
+            Result of the execution
         """
-        self.db_service.store_message(conversation_id, "user", messages[-1]['content'])
-
-        while self.state.config["current_step"] < self.state.config["max_steps"]:
-            # Plan phase
-            plan_result = await self._plan(conversation_id, messages, parent_trace)
-            
-            # If the tool is final_answer, return empty string
-            if plan_result["tool"] == "final_answer":
-                break
-                
-            # Execute phase
-            result = await self._execute(plan_result, conversation_id, parent_trace)
-            
-            # Add the result to messages for next iteration
-            messages.append({"role": "assistant", "content": result})
-            
-            # Increment step counter at end of loop
-            self.state.config["current_step"] += 1
-            
-        # Get final answer using answer method
-        final_answer = await self.answer(conversation_id, messages, parent_trace)
-
-        self.db_service.store_message(conversation_id, "assistant", final_answer)
-        
-        return final_answer
+        # For now, return the plan directly
+        # This will be enhanced later to actually execute tools
+        return plan
 
     async def answer(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
