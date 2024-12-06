@@ -139,6 +139,65 @@ class AgentService:
             # Add the result to messages for next iteration
             messages.append({"role": "assistant", "content": result})
             
-        # If we hit max iterations, return the last result
-        return ""
+        # Get final answer using answer method
+        final_answer = await self.answer(conversation_id, messages, parent_trace)
+        return final_answer
+
+    async def answer(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> str:
+        """
+        Generate a final answer to the user
+        
+        Args:
+            conversation_id: UUID of the conversation
+            messages: List of message dictionaries with role and content
+            parent_trace: Parent trace for logging
+            
+        Returns:
+            Final answer as string
+        """
+        try:
+            # Get system prompt for final answer
+            prompt = self.langfuse_service.get_prompt(
+                name="agent_answer",
+                prompt_type="text",
+                label="latest"
+            )
+            
+            # Compile the prompt
+            system_prompt = prompt.compile()
+            
+            # Get model from prompt config, fallback to default
+            model = prompt.config.get("model", "gpt-4o-mini")
+            
+            # Create generation observation
+            generation = parent_trace.generation(
+                name="agent_answer",
+                model=model,
+                input=messages,
+                metadata={
+                    "conversation_id": conversation_id
+                }
+            )
+            
+            # Get final answer from OpenAI
+            final_answer = await self.openai_service.completion(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    *messages
+                ],
+                model=model
+            )
+            
+            # Store the final answer
+            self.db_service.store_message(conversation_id, "assistant", final_answer)
+            
+            # Update generation with the response
+            generation.end(
+                output=final_answer,
+            )
+            
+            return final_answer
+            
+        except Exception as e:
+            raise Exception(f"Error generating final answer: {str(e)}")
 
