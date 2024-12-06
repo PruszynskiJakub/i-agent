@@ -66,7 +66,7 @@ def restore_conversation(conversation_uuid: str) -> list:
     
     return conversation_history
 
-async def main_loop(conversation_uuid: str, conversation_history: list, trace, exit_keyword: str = 'exit') -> None:
+async def main_loop(conversation_uuid: str, conversation_history: list, exit_keyword: str = 'exit') -> None:
     """
     Main conversation loop handling user input and AI responses
     
@@ -77,6 +77,14 @@ async def main_loop(conversation_uuid: str, conversation_history: list, trace, e
     """
     
     while True:
+        # Create a trace for this interaction
+        trace = langfuse_service.create_trace({
+            "name": "chat_interaction",
+            "userid": os.getenv("USER", "default_user"),
+            "sessionid": conversation_uuid,
+            "tags": ["production"]
+        })
+
         # Get user input
         user_input = input("\nYou: ").strip()
         
@@ -99,6 +107,13 @@ async def main_loop(conversation_uuid: str, conversation_history: list, trace, e
             
             # Print AI response
             print("\nAI:", ai_response)
+
+            # Finalize the trace with input and output
+            langfuse_service.finalize_trace(
+                trace,
+                input=conversation_history[:-1],  # All messages except the last AI response
+                output=ai_response
+            )
             
         except Exception as e:
             logger.error(f"\nError: {str(e)}")
@@ -116,22 +131,13 @@ async def main():
     # Initialize conversation history
     conversation_history = restore_conversation(conversation_uuid) if args.conversation else []
     
-    # Create a trace for the entire conversation
-    trace = langfuse_service.create_trace({
-        "name": "chat_conversation",
-        "userid": os.getenv("USER", "default_user"),
-        "sessionid": conversation_uuid,
-        "tags": ["production"]
-    })
-    
     logger.info("Welcome to the AI Chat! (Type 'exit' to end)")
     print(f"\nConversation ID: {conversation_uuid}")
     print("-" * 50)
 
-    await main_loop(conversation_uuid, conversation_history, trace)
+    await main_loop(conversation_uuid, conversation_history)
     
-    # End the trace when conversation is finished
-    langfuse_service.finalize_trace(trace)
+    # Shutdown langfuse client
     langfuse_service.shutdown()
 
 if __name__ == "__main__":
