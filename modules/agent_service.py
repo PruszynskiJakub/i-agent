@@ -45,20 +45,26 @@ class AgentService:
                 }
             )
             
-            # Add system prompt to messages
-            system_prompt = self.langfuse_service.get_prompt(
+            # Get system prompt
+            prompt = self.langfuse_service.get_prompt(
                 name="helpful-assistant",
                 prompt_type="text",
                 label="latest"
-            ).compile()  # Add any variables needed for compilation
-
+            )
+            
+            # Compile the prompt with any needed variables
+            system_prompt = prompt.compile()
+            
+            # Get model from prompt config, fallback to default if not specified
+            model = prompt.config.get("model", "gpt-4o-mini")
+            
             # Get AI response
             ai_response = await self.openai_service.completion(
-                messages= [
+                messages=[
                     {"role": "system", "content": system_prompt},
                     *messages
                 ],
-                model="gpt-4o-mini"
+                model=model
             )
             
             # Store AI response
