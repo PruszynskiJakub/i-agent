@@ -26,22 +26,6 @@ langfuse_service = LangfuseService(
     host=os.getenv("LANGFUSE_HOST")
 )
 
-# Initialize state and agent service
-state = State(
-    tools=[
-        Tool(
-            uuid=UUID('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'),
-            name="answer",
-            description="Use this tool to write message to the user",
-            instructions="",
-            function=answer_tool,
-            required_params={"user_query": "The user's input message or question that needs to be processed and responded to"},
-            optional_params={}
-        )
-    ]
-)
-agent_service = AgentService(state, openai_service, db_service, langfuse_service)
-
 def restore_conversation(conversation_uuid: str) -> list:
     """
     Restore conversation history from database for a given UUID
@@ -75,7 +59,23 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         conversation_history: List of previous messages
         exit_keyword: Keyword to exit the conversation (default: 'exit')
     """
-    
+    # Initialize state and agent service
+    state = State(
+        conversation_uuid=conversation_uuid,
+        tools=[
+            Tool(
+                uuid=UUID('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'),
+                name="answer",
+                description="Use this tool to write message to the user",
+                instructions="",
+                function=answer_tool,
+                required_params={"user_query": "The user's input message or question that needs to be processed and responded to"},
+                optional_params={}
+            )
+        ]
+    )
+    agent_service = AgentService(state, openai_service, db_service, langfuse_service)
+        
     while True:
         # Get user input
         user_input = input("\nYou: ").strip()
