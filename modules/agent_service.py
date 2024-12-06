@@ -23,22 +23,18 @@ class AgentService:
         self.db_service = db_service
         self.langfuse_service = langfuse_service
 
-    async def run(self, conversation_uuid: str, messages: List[Dict[str, Any]], parent_trace=None) -> str:
+    async def run(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
         Process conversation turns with planning and execution loop
         
         Args:
-            conversation_id: UUID of the conversation
             messages: List of message dictionaries with role and content
             parent_trace: Parent trace for logging
             
         Returns:
             Final AI response as string
         """
-        # Set conversation UUID in state
-        self.state.conversation_uuid = conversation_uuid
-        
-        self.db_service.store_message(conversation_uuid, "user", messages[-1]['content'])
+        self.db_service.store_message(self.state.conversation_uuid, "user", messages[-1]['content'])
 
         while self.state.config["current_step"] < self.state.config["max_steps"]:
             # Plan phase
@@ -64,12 +60,11 @@ class AgentService:
         
         return final_answer
 
-    async def _plan(self, conversation_uuid: str, messages: List[Dict[str, Any]], parent_trace=None) -> Dict[str, Any]:
+    async def _plan(self, messages: List[Dict[str, Any]], parent_trace=None) -> Dict[str, Any]:
         """
         Plan and execute the next conversation turn
         
         Args:
-            conversation_id: UUID of the conversation
             messages: List of message dictionaries with role and content
             parent_trace: Parent trace for logging
             
@@ -96,7 +91,7 @@ class AgentService:
                 model=model,  # Use model from prompt config
                 input=messages,
                 metadata={
-                    "conversation_id": conversation_uuid
+                    "conversation_id": self.state.conversation_uuid
                 }
             )
             
@@ -117,7 +112,7 @@ class AgentService:
                 response_data = {}
             
             # Store AI response
-            self.db_service.store_message(conversation_uuid, "assistant", completion)
+            self.db_service.store_message(self.state.conversation_uuid, "assistant", completion)
             
             # Update generation with the response
             generation.end(
@@ -132,13 +127,12 @@ class AgentService:
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
 
-    async def _execute(self, plan: str, conversation_id: str, parent_trace=None) -> str:
+    async def _execute(self, plan: str, parent_trace=None) -> str:
         """
         Execute the planned action
         
         Args:
             plan: The planned action from the AI
-            conversation_id: UUID of the conversation
             parent_trace: Parent trace for logging
             
         Returns:
@@ -148,12 +142,11 @@ class AgentService:
         # This will be enhanced later to actually execute tools
         return plan
 
-    async def answer(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> str:
+    async def answer(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
         Generate a final answer to the user
         
         Args:
-            conversation_id: UUID of the conversation
             messages: List of message dictionaries with role and content
             parent_trace: Parent trace for logging
             
@@ -180,7 +173,7 @@ class AgentService:
                 model=model,
                 input=messages,
                 metadata={
-                    "conversation_id": conversation_id
+                    "conversation_id": self.state.conversation_uuid
                 }
             )
             

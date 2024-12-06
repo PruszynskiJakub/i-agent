@@ -97,7 +97,8 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         
         try:            
             # Get AI response using AgentService
-            ai_response = await agent_service.run(conversation_uuid, conversation_history, trace)
+            state.conversation_uuid = conversation_uuid
+            ai_response = await agent_service.run(conversation_history, trace)
             
             # Add AI response to conversation history
             conversation_history.append({"role": "assistant", "content": ai_response})
