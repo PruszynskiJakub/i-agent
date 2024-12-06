@@ -77,16 +77,16 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
     """
     
     while True:
+        # Get user input
+        user_input = input("\nYou: ").strip()
+
         # Create a trace for this interaction
         trace = langfuse_service.create_trace({
-            "name": "chat_interaction",
+            "name": user_input[:45],  # First 45 chars of user input as trace name
             "userid": os.getenv("USER", "default_user"),
             "sessionid": conversation_uuid,
             "tags": ["production"]
         })
-
-        # Get user input
-        user_input = input("\nYou: ").strip()
         
         # Check if user wants to quit
         if user_input.lower() in [exit_keyword]:
