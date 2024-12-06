@@ -26,7 +26,7 @@ class Action:
 class State:
     """The state of the agent"""
     tools: List[Tool]
-    conversation_uuid: Optional[str] = None
+    conversation_uuid: str
     actions: List[Action] = field(default_factory=list)
     messages: List[Dict[str, Any]] = field(default_factory=list)
     config: Dict[str, Any] = field(default_factory=lambda: {

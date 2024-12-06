@@ -35,6 +35,9 @@ class AgentService:
         Returns:
             Final AI response as string
         """
+        # Set conversation UUID in state
+        self.state.conversation_uuid = conversation_uuid
+        
         self.db_service.store_message(conversation_uuid, "user", messages[-1]['content'])
 
         while self.state.config["current_step"] < self.state.config["max_steps"]:
