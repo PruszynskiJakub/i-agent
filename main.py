@@ -8,7 +8,7 @@ from typing import Dict, Any
 from dotenv import load_dotenv
 from modules.database_service import DatabaseService
 from modules.openai_service import OpenAIService
-from modules.langfuse_service import LangFuseService
+from modules.langfuse_service import LangfuseService
 from modules.agent_service import AgentService
 from modules.logging_service import logger
 from modules.types import State, Tool
@@ -20,7 +20,7 @@ load_dotenv()
 # Initialize modules
 openai_service = OpenAIService(api_key=os.getenv("OPENAI_API_KEY"))
 db_service = DatabaseService()
-langfuse_service = LangFuseService(
+langfuse_service = LangfuseService(
     public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
     host=os.getenv("LANGFUSE_HOST")

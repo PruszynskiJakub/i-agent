@@ -1,7 +1,7 @@
 from langfuse.client import Langfuse
 from typing import Optional, Dict, Any, Union, List
 
-class LangFuseService:
+class LangfuseService:
     def __init__(self, public_key: str, secret_key: str, host: Optional[str] = None):
         """
         Initialize LangFuse service

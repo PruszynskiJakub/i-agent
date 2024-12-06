@@ -4,11 +4,11 @@ from typing import List, Dict, Any
 import uuid
 from modules.openai_service import OpenAIService
 from modules.database_service import DatabaseService
-from modules.langfuse_service import LangFuseService
+from modules.langfuse_service import LangfuseService
 from modules.types import State
 
 class AgentService:
-    def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, langfuse_service: LangFuseService):
+    def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, langfuse_service: LangfuseService):
         """
         Initialize AgentService
         
@@ -101,7 +101,7 @@ class AgentService:
 
             ## To Remove
             response_data['tool'] = response_data.get('tool', 'final_answer')
-            
+
             return response_data
             
         except Exception as e:
