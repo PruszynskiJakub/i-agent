@@ -1,3 +1,4 @@
+import json
 import os
 from typing import List, Dict, Any
 import uuid
@@ -75,7 +76,7 @@ class AgentService:
             )
             
             # Get AI response with JSON mode enabled
-            ai_response = await self.openai_service.completion(
+            completion = await self.openai_service.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
                     *messages
@@ -85,14 +86,13 @@ class AgentService:
             )
             
             # Parse the response as JSON
-            response_data = {
-                "content": ai_response,
-                "tool": ai_response.get("tool", ""),
-                "parameters": ai_response.get("parameters", {})
-            }
+            try:
+                response_data = json.loads(completion)
+            except:
+                response_data = {}
             
             # Store AI response
-            self.db_service.store_message(conversation_id, "assistant", str(response_data))
+            self.db_service.store_message(conversation_id, "assistant", completion)
             
             # Update generation with the response
             generation.end(
@@ -128,14 +128,14 @@ class AgentService:
             
             # If the tool is final_answer, return empty string
             if plan_result["tool"] == "final_answer":
-                return ""
+                break
                 
             # Execute phase
-            result = await self._execute(plan_result["content"], conversation_id, parent_trace)
+            result = await self._execute(plan_result, conversation_id, parent_trace)
             
             # Add the result to messages for next iteration
             messages.append({"role": "assistant", "content": result})
             
         # If we hit max iterations, return the last result
-        return result
+        return ""
 
