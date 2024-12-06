@@ -38,7 +38,7 @@ class AgentService:
         # This will be enhanced later to actually execute tools
         return plan
 
-    async def _plan(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> tuple[str, bool]:
+    async def _plan(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> tuple[str, bool]:
         """
         Plan and execute the next conversation turn
         
@@ -99,7 +99,7 @@ class AgentService:
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
 
-    async def run(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> str:
+    async def run(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
         Process conversation turns with planning and execution loop
         
