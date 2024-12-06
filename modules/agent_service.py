@@ -22,7 +22,23 @@ class AgentService:
         self.db_service = db_service
         self.langfuse_service = langfuse_service
 
-    async def _plan(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> str:
+    async def _execute(self, plan: str, conversation_id: str, parent_trace=None) -> str:
+        """
+        Execute the planned action
+        
+        Args:
+            plan: The planned action from the AI
+            conversation_id: UUID of the conversation
+            parent_trace: Parent trace for logging
+            
+        Returns:
+            Result of the execution
+        """
+        # For now, return the plan directly
+        # This will be enhanced later to actually execute tools
+        return plan
+
+    async def _plan(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> tuple[str, bool]:
         """
         Plan and execute the next conversation turn
         
@@ -70,25 +86,22 @@ class AgentService:
             # Store AI response
             self.db_service.store_message(conversation_id, "assistant", ai_response)
             
-            # Update generation with the response and usage
+            # Update generation with the response
             generation.end(
                 output=ai_response,
-                # Add usage if available from OpenAI response
-                # usage={
-                #     "promptTokens": response.usage.prompt_tokens,
-                #     "completionTokens": response.usage.completion_tokens,
-                #     "totalTokens": response.usage.total_tokens
-                # }
             )
             
-            return ai_response
+            # Check if this is a final answer
+            is_final = "final_answer" in ai_response.lower()
+            
+            return ai_response, is_final
             
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
 
     async def run(self, conversation_id: str, messages: List[Dict[str, str]], parent_trace=None) -> str:
         """
-        Process a single conversation turn
+        Process conversation turns with planning and execution loop
         
         Args:
             conversation_id: UUID of the conversation
@@ -96,7 +109,28 @@ class AgentService:
             parent_trace: Parent trace for logging
             
         Returns:
-            AI response as string
+            Final AI response as string
         """
-        return await self._plan(conversation_id, messages, parent_trace)
+        max_iterations = 5
+        iteration = 0
+        
+        while iteration < max_iterations:
+            # Increment iteration counter
+            iteration += 1
+            
+            # Plan phase
+            plan, is_final = await self._plan(conversation_id, messages, parent_trace)
+            
+            # If this is a final answer, return it
+            if is_final:
+                return plan
+                
+            # Execute phase
+            result = await self._execute(plan, conversation_id, parent_trace)
+            
+            # Add the result to messages for next iteration
+            messages.append({"role": "assistant", "content": result})
+            
+        # If we hit max iterations, return the last result
+        return result
 
