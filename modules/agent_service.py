@@ -98,6 +98,9 @@ class AgentService:
             generation.end(
                 output=response_data,
             )
+
+            ## To Remove
+            response_data['tool'] = response_data.get('tool', 'final_answer')
             
             return response_data
             
