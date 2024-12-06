@@ -119,12 +119,12 @@ class AgentService:
         Returns:
             Final AI response as string
         """
-        max_iterations = 5
-        iteration = 0
+        # Reset current step at start of run
+        self.state.config["current_step"] = 0
         
-        while iteration < max_iterations:
-            # Increment iteration counter
-            iteration += 1
+        while self.state.config["current_step"] < self.state.config["max_steps"]:
+            # Increment step counter
+            self.state.config["current_step"] += 1
             
             # Plan phase
             plan_result = await self._plan(conversation_id, messages, parent_trace)
