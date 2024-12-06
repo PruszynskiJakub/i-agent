@@ -38,14 +38,14 @@ class AgentService:
 
         while self.state.config["current_step"] < self.state.config["max_steps"]:
             # Plan phase
-            plan_result = await self._plan(conversation_uuid, messages, parent_trace)
+            plan_result = await self._plan(messages, parent_trace)
             
             # If the tool is final_answer, return empty string
             if plan_result["tool"] == "final_answer":
                 break
                 
             # Execute phase
-            result = await self._execute(plan_result, conversation_uuid, parent_trace)
+            result = await self._execute(plan_result, parent_trace)
             
             # Add the result to messages for next iteration
             messages.append({"role": "assistant", "content": result})
@@ -54,9 +54,9 @@ class AgentService:
             self.state.config["current_step"] += 1
             
         # Get final answer using answer method
-        final_answer = await self.answer(conversation_uuid, messages, parent_trace)
+        final_answer = await self.answer(messages, parent_trace)
 
-        self.db_service.store_message(conversation_uuid, "assistant", final_answer)
+        self.db_service.store_message(self.state.conversation_uuid, "assistant", final_answer)
         
         return final_answer
 
