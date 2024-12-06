@@ -121,9 +121,6 @@ class AgentService:
         """
         
         while self.state.config["current_step"] < self.state.config["max_steps"]:
-            # Increment step counter
-            self.state.config["current_step"] += 1
-            
             # Plan phase
             plan_result = await self._plan(conversation_id, messages, parent_trace)
             
@@ -136,6 +133,9 @@ class AgentService:
             
             # Add the result to messages for next iteration
             messages.append({"role": "assistant", "content": result})
+            
+            # Increment step counter at end of loop
+            self.state.config["current_step"] += 1
             
         # Get final answer using answer method
         final_answer = await self.answer(conversation_id, messages, parent_trace)
