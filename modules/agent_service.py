@@ -35,16 +35,6 @@ class AgentService:
             AI response as string
         """
         try:
-            # Create generation observation under the main trace
-            generation = parent_trace.generation(
-                name="chat_response",
-                model="gpt-4o-mini",  # or whatever model you're using
-                input=messages,
-                metadata={
-                    "conversation_id": conversation_id
-                }
-            )
-            
             # Get system prompt
             prompt = self.langfuse_service.get_prompt(
                 name="helpful-assistant",
@@ -57,6 +47,16 @@ class AgentService:
             
             # Get model from prompt config, fallback to default if not specified
             model = prompt.config.get("model", "gpt-4o-mini")
+            
+            # Create generation observation under the main trace
+            generation = parent_trace.generation(
+                name="chat_response",
+                model=model,  # Use model from prompt config
+                input=messages,
+                metadata={
+                    "conversation_id": conversation_id
+                }
+            )
             
             # Get AI response
             ai_response = await self.openai_service.completion(
