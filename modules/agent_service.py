@@ -119,8 +119,6 @@ class AgentService:
         Returns:
             Final AI response as string
         """
-        # Reset current step at start of run
-        self.state.config["current_step"] = 0
         
         while self.state.config["current_step"] < self.state.config["max_steps"]:
             # Increment step counter
