@@ -53,7 +53,7 @@ class AgentService:
         try:
             # Get system prompt
             prompt = self.langfuse_service.get_prompt(
-                name="helpful-assistant",
+                name="agent_plan",
                 prompt_type="text",
                 label="latest"
             )
