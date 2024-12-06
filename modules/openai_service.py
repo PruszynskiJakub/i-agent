@@ -1,12 +1,12 @@
 import os
 from typing import List, Dict
-from openai import OpenAI
+from openai import AsyncOpenAI, OpenAI
 from langsmith.wrappers import wrap_openai
 
 
 class OpenAIService:
     def __init__(self, api_key: str):
-        self.client = wrap_openai(OpenAI(api_key=api_key))
+        self.client = AsyncOpenAI(api_key=api_key)
     
     async def completion(self, messages: List[Dict[str, str]], model: str = "gpt-4o-mini", json_mode: bool = False) -> str:
         """
