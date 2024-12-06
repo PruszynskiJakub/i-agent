@@ -95,10 +95,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         # Add user message to conversation history
         conversation_history.append({"role": "user", "content": user_input})
         
-        try:
-            # Store user message
-            db_service.store_message(conversation_uuid, "user", user_input)
-            
+        try:            
             # Get AI response using AgentService
             ai_response = await agent_service.run(conversation_uuid, conversation_history, trace)
             

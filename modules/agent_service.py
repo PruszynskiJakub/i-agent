@@ -119,7 +119,8 @@ class AgentService:
         Returns:
             Final AI response as string
         """
-        
+        self.db_service.store_message(conversation_id, "user", messages[-1]['content'])
+
         while self.state.config["current_step"] < self.state.config["max_steps"]:
             # Plan phase
             plan_result = await self._plan(conversation_id, messages, parent_trace)
@@ -139,6 +140,9 @@ class AgentService:
             
         # Get final answer using answer method
         final_answer = await self.answer(conversation_id, messages, parent_trace)
+
+        self.db_service.store_message(conversation_id, "assistant", final_answer)
+        
         return final_answer
 
     async def answer(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> str:
@@ -185,10 +189,7 @@ class AgentService:
                 ],
                 model=model
             )
-            
-            # Store the final answer
-            self.db_service.store_message(conversation_id, "assistant", final_answer)
-            
+                        
             # Update generation with the response
             generation.end(
                 output=final_answer,
