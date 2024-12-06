@@ -126,9 +126,9 @@ class AgentService:
             # Plan phase
             plan_result = await self._plan(conversation_id, messages, parent_trace)
             
-            # If the tool is final_answer, return the content
+            # If the tool is final_answer, return empty string
             if plan_result["tool"] == "final_answer":
-                return plan_result["content"]
+                return ""
                 
             # Execute phase
             result = await self._execute(plan_result["content"], conversation_id, parent_trace)
