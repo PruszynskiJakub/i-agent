@@ -27,3 +27,4 @@ class State:
     """The state of the agent"""
     tools: List[Tool]
     actions: List[Action] = field(default_factory=list)
+    messages: List[Dict[str, str]] = field(default_factory=list)
