@@ -28,10 +28,19 @@ class LangFuseService:
             tags=options.get("tags", [])
         )
 
-    def finalize_trace(self, trace):
+    def finalize_trace(self, trace, input=None, output=None):
         """
         End a trace and flush data
+        
+        Args:
+            trace: The trace to finalize
+            input: Optional input data (e.g., conversation history)
+            output: Optional output data (e.g., AI response)
         """
+        if input is not None:
+            trace.update(input=input)
+        if output is not None:
+            trace.update(output=output)
         self.client.flush()
 
     def shutdown(self):
