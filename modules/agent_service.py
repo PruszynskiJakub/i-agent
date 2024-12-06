@@ -38,7 +38,7 @@ class AgentService:
         # This will be enhanced later to actually execute tools
         return plan
 
-    async def _plan(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> tuple[str, bool]:
+    async def _plan(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> Dict[str, Any]:
         """
         Plan and execute the next conversation turn
         
@@ -48,7 +48,7 @@ class AgentService:
             parent_trace: Parent trace for logging
             
         Returns:
-            AI response as string
+            Dictionary containing the AI response and tool information
         """
         try:
             # Get system prompt
@@ -74,27 +74,32 @@ class AgentService:
                 }
             )
             
-            # Get AI response
+            # Get AI response with JSON mode enabled
             ai_response = await self.openai_service.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
                     *messages
                 ],
-                model=model
+                model=model,
+                json_mode=True
             )
             
+            # Parse the response as JSON
+            response_data = {
+                "content": ai_response,
+                "tool": ai_response.get("tool", ""),
+                "parameters": ai_response.get("parameters", {})
+            }
+            
             # Store AI response
-            self.db_service.store_message(conversation_id, "assistant", ai_response)
+            self.db_service.store_message(conversation_id, "assistant", str(response_data))
             
             # Update generation with the response
             generation.end(
-                output=ai_response,
+                output=response_data,
             )
             
-            # Check if this is a final answer
-            is_final = "final_answer" in ai_response.lower()
-            
-            return ai_response, is_final
+            return response_data
             
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
@@ -119,14 +124,14 @@ class AgentService:
             iteration += 1
             
             # Plan phase
-            plan, is_final = await self._plan(conversation_id, messages, parent_trace)
+            plan_result = await self._plan(conversation_id, messages, parent_trace)
             
-            # If this is a final answer, return it
-            if is_final:
-                return plan
+            # If the tool is final_answer, return the content
+            if plan_result["tool"] == "final_answer":
+                return plan_result["content"]
                 
             # Execute phase
-            result = await self._execute(plan, conversation_id, parent_trace)
+            result = await self._execute(plan_result["content"], conversation_id, parent_trace)
             
             # Add the result to messages for next iteration
             messages.append({"role": "assistant", "content": result})
