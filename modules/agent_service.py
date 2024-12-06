@@ -61,7 +61,7 @@ class AgentService:
         
         return final_answer
 
-    async def _plan(self, conversation_id: str, messages: List[Dict[str, Any]], parent_trace=None) -> Dict[str, Any]:
+    async def _plan(self, conversation_uuid: str, messages: List[Dict[str, Any]], parent_trace=None) -> Dict[str, Any]:
         """
         Plan and execute the next conversation turn
         
@@ -93,7 +93,7 @@ class AgentService:
                 model=model,  # Use model from prompt config
                 input=messages,
                 metadata={
-                    "conversation_id": conversation_id
+                    "conversation_id": conversation_uuid
                 }
             )
             
@@ -114,7 +114,7 @@ class AgentService:
                 response_data = {}
             
             # Store AI response
-            self.db_service.store_message(conversation_id, "assistant", completion)
+            self.db_service.store_message(conversation_uuid, "assistant", completion)
             
             # Update generation with the response
             generation.end(
