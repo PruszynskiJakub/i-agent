@@ -65,7 +65,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         tools=[
             Tool(
                 uuid=UUID('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'),
-                name="answer",
+                name="final_answer",
                 description="Use this tool to write message to the user",
                 instructions="",
                 function=answer_tool,
