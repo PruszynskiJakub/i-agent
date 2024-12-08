@@ -16,11 +16,11 @@ class Tool:
 @dataclass
 class Action:
     """An action performed by a tool"""
-    tool_uuid: UUID
     uuid: UUID
     name: str
-    result: Any
+    tool_uuid: UUID
     payload: dict
+    result: Any
 
 @dataclass
 class State:
