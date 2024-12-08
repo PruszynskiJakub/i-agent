@@ -20,7 +20,7 @@ class OpenAIService:
         Returns:
             Model response as string
         """
-        response = self.client.chat.completions.create(
+        response = await self.client.chat.completions.create(
             model=model or os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
             messages=messages,
             response_format={"type": "json_object"} if json_mode else {"type": "text"}

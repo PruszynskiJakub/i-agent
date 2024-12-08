@@ -1,3 +1,8 @@
+from typing import List
+
+from modules.types import Tool
+
+
 def parse_markdown_backticks(str) -> str:
     if "```" not in str:
         return str.strip()
@@ -8,17 +13,17 @@ def parse_markdown_backticks(str) -> str:
     # Remove any leading or trailing whitespace
     return str.strip()
 
-def format_tools_for_prompt(tools_mapping: dict) -> str:
+def format_tools_for_prompt(tools_mapping: List[Tool]) -> str:
     """Formats the available tools into a string for the prompt
     
     Args:
-        tools_mapping: Dictionary mapping tool names to tool objects
+        tools_mapping: List of Tool objects
         
     Returns:
         str: Formatted string describing all available tools
     """
     tool_descriptions = []
-    for tool in tools_mapping.values():
+    for tool in tools_mapping:
         desc = "<tool>\n"
         desc += f"  <name>{tool.name}</name>\n"
         desc += f"  <description>{tool.description}</description>\n"
@@ -26,7 +31,7 @@ def format_tools_for_prompt(tools_mapping: dict) -> str:
         for param, param_desc in tool.required_params.items():
             desc += f"    <param name='{param}'>{param_desc}</param>\n"
         desc += "  </required_parameters>\n"
-        if hasattr(tool, 'optional_params'):
+        if tool.optional_params:
             desc += "  <optional_parameters>\n"
             for param, param_desc in tool.optional_params.items():
                 desc += f"    <param name='{param}'>{param_desc}</param>\n"

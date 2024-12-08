@@ -6,6 +6,7 @@ from modules.openai_service import OpenAIService
 from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
 from modules.types import State
+from modules.utils import format_tools_for_prompt
 
 class AgentService:
     def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, langfuse_service: LangfuseService):
@@ -80,7 +81,9 @@ class AgentService:
             )
             
             # Compile the prompt with any needed variables
-            system_prompt = prompt.compile()
+            system_prompt = prompt.compile(
+                formatted_tools=format_tools_for_prompt(self.state.tools)
+            )
             
             # Get model from prompt config, fallback to default if not specified
             model = prompt.config.get("model", "gpt-4o-mini")
@@ -154,7 +157,7 @@ class AgentService:
             
         try:
             # Execute the tool with parameters
-            result = tool.function(plan["parameters"])
+            result = await tool.function(plan["parameters"])
             return result
             
         except Exception as e:
