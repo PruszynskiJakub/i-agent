@@ -45,7 +45,7 @@ class AgentService:
                 break
                 
             # Execute phase
-            result = await self._execute(plan_result, parent_trace)
+            result = await self._execute(plan_result)
             
             # Add the result to messages for next iteration
             messages.append({"role": "assistant", "content": result})
@@ -127,7 +127,7 @@ class AgentService:
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
 
-    async def _execute(self, plan: str, parent_trace=None) -> str:
+    async def _execute(self, plan: str) -> str:
         """
         Execute the planned action
         
