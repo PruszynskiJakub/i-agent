@@ -62,17 +62,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
     # Initialize state and agent service
     state = State(
         conversation_uuid=conversation_uuid,
-        tools=[
-            Tool(
-                uuid=UUID('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'),
-                name="final_answer",
-                description="Use this tool to write message to the user",
-                instructions="",
-                function=answer_tool,
-                required_params={"user_query": "The user's input message or question that needs to be processed and responded to"},
-                optional_params={}
-            )
-        ]
+        tools=[]
     )
     agent_service = AgentService(state, openai_service, db_service, langfuse_service)
         
