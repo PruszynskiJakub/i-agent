@@ -205,7 +205,7 @@ class AgentService:
             generation = parent_trace.generation(
                 name="agent_answer",
                 model=model,
-                input=messages,
+                input=system_prompt,
                 metadata={
                     "conversation_id": self.state.conversation_uuid
                 }
