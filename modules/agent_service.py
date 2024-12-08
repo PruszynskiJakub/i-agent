@@ -2,6 +2,7 @@ import json
 import os
 from typing import List, Dict, Any
 import uuid
+from modules.logging_service import log_info, log_error, log_tool_call
 from modules.openai_service import OpenAIService
 from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
@@ -111,7 +112,9 @@ class AgentService:
             # Parse the response as JSON
             try:
                 response_data = json.loads(completion)
-            except:
+                log_info(f"Plan generated: {response_data}", style="bold blue")
+            except json.JSONDecodeError as e:
+                log_error(f"Failed to parse JSON response: {str(e)}")
                 response_data = {}
             
             # Store AI response
@@ -140,15 +143,21 @@ class AgentService:
         Returns:
             Result of the tool execution
         """
+        log_info(f"Executing plan with tool: {plan.get('tool', 'unknown')}", style="bold cyan")
+        
         # Validate plan structure
         required_fields = ["_thinking", "step", "tool", "parameters", "required_information"]
         if not all(field in plan for field in required_fields):
-            raise ValueError(f"Plan missing required fields. Must include: {required_fields}")
+            error_msg = f"Plan missing required fields. Must include: {required_fields}"
+            log_error(error_msg)
+            raise ValueError(error_msg)
             
         # Find matching tool
         tool = next((t for t in self.state.tools if t.name == plan["tool"]), None)
         if not tool:
-            raise ValueError(f"Tool '{plan['tool']}' not found in available tools")
+            error_msg = f"Tool '{plan['tool']}' not found in available tools"
+            log_error(error_msg)
+            raise ValueError(error_msg)
             
         # Validate required parameters
         missing_params = [param for param in tool.required_params if param not in plan["parameters"]]
@@ -157,11 +166,15 @@ class AgentService:
             
         try:
             # Execute the tool with parameters
+            log_info(f"Executing {tool.name} with parameters: {plan['parameters']}", style="bold magenta")
             result = await tool.function(plan["parameters"])
+            log_tool_call(tool.name, plan["parameters"], result)
             return result
             
         except Exception as e:
-            raise Exception(f"Error executing tool '{tool.name}': {str(e)}")
+            error_msg = f"Error executing tool '{tool.name}': {str(e)}"
+            log_error(error_msg)
+            raise Exception(error_msg)
 
     async def answer(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
