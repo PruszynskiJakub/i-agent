@@ -93,7 +93,7 @@ class AgentService:
             generation = parent_trace.generation(
                 name="agent_plan",
                 model=model,  # Use model from prompt config
-                input=messages,
+                input=system_prompt,
                 metadata={
                     "conversation_id": self.state.conversation_uuid
                 }
