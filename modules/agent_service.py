@@ -127,20 +127,38 @@ class AgentService:
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
 
-    async def _execute(self, plan: str) -> str:
+    async def _execute(self, plan: Dict[str, Any]) -> str:
         """
-        Execute the planned action
+        Execute the planned action using the specified tool
         
         Args:
-            plan: The planned action from the AI
-            parent_trace: Parent trace for logging
+            plan: Dictionary containing the plan details including tool name and parameters
             
         Returns:
-            Result of the execution
+            Result of the tool execution
         """
-        # For now, return the plan directly
-        # This will be enhanced later to actually execute tools
-        return plan
+        # Validate plan structure
+        required_fields = ["_thinking", "step", "tool", "parameters", "required_information"]
+        if not all(field in plan for field in required_fields):
+            raise ValueError(f"Plan missing required fields. Must include: {required_fields}")
+            
+        # Find matching tool
+        tool = next((t for t in self.state.tools if t.name == plan["tool"]), None)
+        if not tool:
+            raise ValueError(f"Tool '{plan['tool']}' not found in available tools")
+            
+        # Validate required parameters
+        missing_params = [param for param in tool.required_params if param not in plan["parameters"]]
+        if missing_params:
+            raise ValueError(f"Missing required parameters for tool '{tool.name}': {missing_params}")
+            
+        try:
+            # Execute the tool with parameters
+            result = tool.function(plan["parameters"])
+            return result
+            
+        except Exception as e:
+            raise Exception(f"Error executing tool '{tool.name}': {str(e)}")
 
     async def answer(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
