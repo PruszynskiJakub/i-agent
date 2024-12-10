@@ -39,5 +39,5 @@ class Document:
     """A document that can be processed by the agent"""
     uuid: UUID
     conversation_uuid: str
-    content: str
+    text: str
     metadata: Dict[str, Any] = field(default_factory=dict)
