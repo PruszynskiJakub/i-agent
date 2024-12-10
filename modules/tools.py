@@ -1,3 +1,4 @@
+import os
 from typing import Dict, Any, Literal
 from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
@@ -27,7 +28,7 @@ def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
         return {"error": "Format must be 'md' or 'html'", "status": 400}
         
     try:
-        app = FirecrawlApp(api_key="fc-YOUR_API_KEY")  # Replace with env variable
+        app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))  # Replace with env variable
         formats = ['markdown'] if format_type == 'md' else ['html']
         
         result = app.scrape_url(url, params={'formats': formats})
