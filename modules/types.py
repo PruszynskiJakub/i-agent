@@ -33,3 +33,10 @@ class State:
         "current_step": 0,
         "max_steps": 5
     })
+
+@dataclass
+class Document:
+    """A document that can be processed by the agent"""
+    uuid: UUID
+    content: str
+    metadata: Dict[str, Any] = field(default_factory=dict)
