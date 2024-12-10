@@ -4,12 +4,13 @@ import aiohttp
 from bs4 import BeautifulSoup
 from modules.logging_service import log_tool_call
 
-async def webscrape_tool(url: str) -> Dict[str, Any]:
+async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
     """
     Scrapes content from a given URL
     
     Args:
-        url: The URL to scrape
+        params: Dictionary containing:
+            - url: The URL to scrape
         
     Returns:
         Dict containing:
@@ -17,6 +18,10 @@ async def webscrape_tool(url: str) -> Dict[str, Any]:
             - text: main text content
             - status: HTTP status code
     """
+    url = params.get('url')
+    if not url:
+        return {"error": "URL parameter is required", "status": 400}
+        
     async with aiohttp.ClientSession() as session:
         try:
             async with session.get(url) as response:
@@ -49,5 +54,5 @@ async def webscrape_tool(url: str) -> Dict[str, Any]:
                 "error": str(e),
                 "status": 500
             }
-            log_tool_call("webscrape_tool", {"url": url}, error_result)
+            log_tool_call("webscrape_tool", params, error_result)
             return error_result

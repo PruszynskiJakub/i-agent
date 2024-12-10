@@ -65,7 +65,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         tools=[
             Tool(
                 name="webscrape",
-                description="Scrapes content from a webpage. Input should be a valid URL.",
+                description="Scrapes content from a webpage. Input should be a dictionary containing 'url' key with a valid URL value.",
                 function=webscrape_tool
             )
         ]
