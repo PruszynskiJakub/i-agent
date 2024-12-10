@@ -4,6 +4,8 @@ from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
 from modules.types import Tool
 
+from uuid import uuid4
+
 def get_available_tools() -> List[Tool]:
     """
     Returns a list of all available tools
@@ -13,9 +15,13 @@ def get_available_tools() -> List[Tool]:
     """
     return [
         Tool(
+            uuid=uuid4(),
             name="webscrape",
-            description="Scrapes content from a webpage. Input should be a dictionary containing 'url' key with a valid URL value, and optional 'format' key with value 'md' or 'html' (defaults to 'md').",
-            function=webscrape_tool
+            description="Scrapes content from a webpage",
+            instructions="Input should be a dictionary containing 'url' key with a valid URL value, and optional 'format' key with value 'md' or 'html' (defaults to 'md').",
+            function=webscrape_tool,
+            required_params={"url": "The URL to scrape"},
+            optional_params={"format": "Output format ('md' or 'html', defaults to 'md')"}
         )
     ]
 
