@@ -1,44 +1,55 @@
-from typing import Dict, Any
-from firecrawl import AsyncCrawler
+from typing import Dict, Any, Literal
+from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
 
-async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
+def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Scrapes content from a given URL
+    Scrapes content from a given URL in specified format
     
     Args:
         params: Dictionary containing:
             - url: The URL to scrape
+            - format: Format to return ('md' or 'html')
         
     Returns:
         Dict containing:
-            - title: page title
-            - text: main text content
+            - content: scraped content in requested format
+            - metadata: page metadata
             - status: HTTP status code
     """
     url = params.get('url')
+    format_type = params.get('format', 'md')  # Default to markdown
+    
     if not url:
         return {"error": "URL parameter is required", "status": 400}
         
-    try:
-        crawler = AsyncCrawler()
-        page = await crawler.crawl(url)
+    if format_type not in ['md', 'html']:
+        return {"error": "Format must be 'md' or 'html'", "status": 400}
         
-        if not page.success:
+    try:
+        app = FirecrawlApp(api_key="fc-YOUR_API_KEY")  # Replace with env variable
+        formats = ['markdown'] if format_type == 'md' else ['html']
+        
+        result = app.scrape_url(url, params={'formats': formats})
+        
+        if not result or 'data' not in result:
             error_result = {
-                "error": "Failed to crawl page",
-                "status": page.status_code or 500
+                "error": "Failed to scrape page",
+                "status": 500
             }
             log_tool_call("webscrape_tool", params, error_result)
             return error_result
             
-        result = {
-            "title": page.title,
-            "text": page.text[:1000],  # Limit text length
-            "status": page.status_code
+        content = result['data'].get('markdown' if format_type == 'md' else 'html', '')
+        metadata = result['data'].get('metadata', {})
+        
+        success_result = {
+            "content": content,
+            "metadata": metadata,
+            "status": metadata.get('statusCode', 200)
         }
-        log_tool_call("webscrape_tool", params, result)
-        return result
+        log_tool_call("webscrape_tool", params, success_result)
+        return success_result
         
     except Exception as e:
         error_result = {
