@@ -37,14 +37,13 @@ async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
             "text": page.text[:1000],  # Limit text length
             "status": page.status_code
         }
-                
-                log_tool_call("webscrape_tool", {"url": url}, result)
-                return result
-                
-        except Exception as e:
-            error_result = {
-                "error": str(e),
-                "status": 500
-            }
-            log_tool_call("webscrape_tool", params, error_result)
-            return error_result
+        log_tool_call("webscrape_tool", params, result)
+        return result
+        
+    except Exception as e:
+        error_result = {
+            "error": str(e),
+            "status": 500
+        }
+        log_tool_call("webscrape_tool", params, error_result)
+        return error_result
