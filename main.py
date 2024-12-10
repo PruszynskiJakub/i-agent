@@ -12,7 +12,7 @@ from modules.langfuse_service import LangfuseService
 from modules.agent_service import AgentService
 from modules.logging_service import logger
 from modules.types import State, Tool
-from modules.tools import webscrape_tool
+from modules.tools import get_available_tools
 
 # Load environment variables from .env file
 load_dotenv()
@@ -62,13 +62,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
     # Initialize state and agent service
     state = State(
         conversation_uuid=conversation_uuid,
-        tools=[
-            Tool(
-                name="webscrape",
-                description="Scrapes content from a webpage. Input should be a dictionary containing 'url' key with a valid URL value, and optional 'format' key with value 'md' or 'html' (defaults to 'md').",
-                function=webscrape_tool
-            )
-        ]
+        tools=get_available_tools()
     )
     agent_service = AgentService(state, openai_service, db_service, langfuse_service)
         

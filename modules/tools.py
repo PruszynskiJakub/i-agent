@@ -1,7 +1,23 @@
 import os
-from typing import Dict, Any, Literal
+from typing import Dict, Any, Literal, List
 from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
+from modules.types import Tool
+
+def get_available_tools() -> List[Tool]:
+    """
+    Returns a list of all available tools
+    
+    Returns:
+        List[Tool]: List of available tools
+    """
+    return [
+        Tool(
+            name="webscrape",
+            description="Scrapes content from a webpage. Input should be a dictionary containing 'url' key with a valid URL value, and optional 'format' key with value 'md' or 'html' (defaults to 'md').",
+            function=webscrape_tool
+        )
+    ]
 
 def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
     """
