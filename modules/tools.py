@@ -1,7 +1,5 @@
-import asyncio
 from typing import Dict, Any
-import aiohttp
-from bs4 import BeautifulSoup
+from firecrawl import AsyncCrawler
 from modules.logging_service import log_tool_call
 
 async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
@@ -22,29 +20,23 @@ async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
     if not url:
         return {"error": "URL parameter is required", "status": 400}
         
-    async with aiohttp.ClientSession() as session:
-        try:
-            async with session.get(url) as response:
-                html = await response.text()
-                status = response.status
-                
-                soup = BeautifulSoup(html, 'html.parser')
-                
-                # Remove script and style elements
-                for script in soup(["script", "style"]):
-                    script.decompose()
-                    
-                # Get text content
-                text = soup.get_text(separator=' ', strip=True)
-                
-                # Get title
-                title = soup.title.string if soup.title else ''
-                
-                result = {
-                    "title": title,
-                    "text": text[:1000],  # Limit text length
-                    "status": status
-                }
+    try:
+        crawler = AsyncCrawler()
+        page = await crawler.crawl(url)
+        
+        if not page.success:
+            error_result = {
+                "error": "Failed to crawl page",
+                "status": page.status_code or 500
+            }
+            log_tool_call("webscrape_tool", params, error_result)
+            return error_result
+            
+        result = {
+            "title": page.title,
+            "text": page.text[:1000],  # Limit text length
+            "status": page.status_code
+        }
                 
                 log_tool_call("webscrape_tool", {"url": url}, result)
                 return result
