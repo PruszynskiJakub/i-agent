@@ -12,7 +12,6 @@ from modules.langfuse_service import LangfuseService
 from modules.agent_service import AgentService
 from modules.logging_service import logger
 from modules.types import State, Tool
-from modules.tools import answer_tool
 
 # Load environment variables from .env file
 load_dotenv()
