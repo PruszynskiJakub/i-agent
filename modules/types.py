@@ -40,6 +40,7 @@ class DocumentMetadata(TypedDict):
     conversation_uuid: str
     source: str
     mime_type: str
+    name: str
 
 @dataclass
 class Document:
