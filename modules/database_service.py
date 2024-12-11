@@ -11,6 +11,8 @@ class DatabaseService:
         """Initialize the database and create necessary tables"""
         conn = sqlite3.connect(self.db_name)
         c = conn.cursor()
+        
+        # Create messages table
         c.execute('''
             CREATE TABLE IF NOT EXISTS messages (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,6 +22,20 @@ class DatabaseService:
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ''')
+        
+        # Create documents table
+        c.execute('''
+            CREATE TABLE IF NOT EXISTS documents (
+                uuid TEXT PRIMARY KEY,
+                conversation_uuid TEXT,
+                name TEXT,
+                source TEXT,
+                mime_type TEXT,
+                text TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
         conn.commit()
         conn.close()
 
