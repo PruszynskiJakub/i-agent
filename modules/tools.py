@@ -25,7 +25,7 @@ def get_available_tools() -> List[Tool]:
         )
     ]
 
-def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
+async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
     """
     Scrapes content from a given URL in specified format
     
@@ -54,6 +54,8 @@ def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
         formats = ['markdown'] if format_type == 'md' else ['html']
         
         result = app.scrape_url(url, params={'formats': formats})
+
+        print(result)
         
         if not result or 'data' not in result:
             error_result = {
