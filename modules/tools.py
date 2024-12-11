@@ -53,20 +53,10 @@ async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
         app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))  # Replace with env variable
         formats = ['markdown'] if format_type == 'md' else ['html']
         
-        result = app.scrape_url(url, params={'formats': formats})
-
-        print(result)
+        data = app.scrape_url(url, params={'formats': formats})
         
-        if not result or 'data' not in result:
-            error_result = {
-                "error": "Failed to scrape page",
-                "status": 500
-            }
-            log_tool_call("webscrape_tool", params, error_result)
-            return error_result
-            
-        content = result['data'].get('markdown' if format_type == 'md' else 'html', '')
-        metadata = result['data'].get('metadata', {})
+        content = data.get('markdown' if format_type == 'md' else 'html', '')
+        metadata = data.get('metadata', {})
         
         success_result = {
             "content": content,
