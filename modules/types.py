@@ -34,23 +34,15 @@ class State:
         "max_steps": 5
     })
 
-class DocumentMetadata(TypedDict, total=False):
+class DocumentMetadata(TypedDict):
     """Metadata for a document"""
-    title: str
-    author: str
-    date: str
-    url: str
+    uuid: UUID
+    conversation_uuid: str
     source: str
-    language: str
-    format: str
-    tags: List[str]
-    summary: str
-    word_count: int
+    mime_type: str
 
 @dataclass
 class Document:
     """A document that can be processed by the agent"""
-    uuid: UUID
-    conversation_uuid: str
     text: str
-    metadata: DocumentMetadata = field(default_factory=lambda: DocumentMetadata())
+    metadata: DocumentMetadata
