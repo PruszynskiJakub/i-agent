@@ -2,19 +2,6 @@ from dataclasses import dataclass, field
 from typing import List, Any, Optional, Callable, Dict, TypedDict
 from uuid import UUID
 
-class DocumentMetadata(TypedDict, total=False):
-    """Metadata for a document"""
-    title: str
-    author: str
-    date: str
-    url: str
-    source: str
-    language: str
-    format: str
-    tags: List[str]
-    summary: str
-    word_count: int
-
 @dataclass
 class Tool:
     """A tool that can be used by the agent"""
@@ -46,6 +33,19 @@ class State:
         "current_step": 0,
         "max_steps": 5
     })
+
+class DocumentMetadata(TypedDict, total=False):
+    """Metadata for a document"""
+    title: str
+    author: str
+    date: str
+    url: str
+    source: str
+    language: str
+    format: str
+    tags: List[str]
+    summary: str
+    word_count: int
 
 @dataclass
 class Document:

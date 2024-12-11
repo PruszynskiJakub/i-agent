@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/AI_DOCS/firecrawl.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Small improvements">
       <change beforePath="$PROJECT_DIR$/modules/types.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/types.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,6 +83,23 @@
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
     </task>
+    <task id="LOCAL-00001" summary="Add firecrawl docs">
+      <option name="closed" value="true" />
+      <created>1733934358558</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1733934358558</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Small improvements">
+      <option name="closed" value="true" />
+      <created>1733934370860</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1733934370860</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -98,5 +112,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add firecrawl docs" />
+    <MESSAGE value="Small improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small improvements" />
   </component>
 </project>
