@@ -9,7 +9,7 @@ class Tool:
     name: str
     description: str
     instructions: str
-    function: Callable[[Dict[str, Any]], str]
+    function: Callable[[Dict[str, Any]], Any]
     required_params: Dict[str, str]
     optional_params: Dict[str, str]
 
