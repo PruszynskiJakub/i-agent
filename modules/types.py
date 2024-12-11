@@ -34,7 +34,7 @@ class State:
         "max_steps": 5
     })
 
-class DocumentMetadata(TypedDict):
+class DocumentMetadata(TypedDict, total=False):
     """Metadata for a document"""
     uuid: UUID
     conversation_uuid: str
