@@ -4,7 +4,7 @@ from .openai_service import OpenAIService
 from .types import Document
 
 class DocumentService:
-    def __init__(self, database_service: DatabaseService, openai_service: OpenAiService):
+    def __init__(self, database_service: DatabaseService, openai_service: OpenAIService):
         self.database_service = database_service
         self.openai_service = openai_service
         
