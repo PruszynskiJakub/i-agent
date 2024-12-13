@@ -141,7 +141,7 @@ class DatabaseService:
             "created_at": doc[6]
         } for doc in documents]
 
-    def store_action(self, action_uuid: str, name: str, tool_uuid: str, payload: dict, result: Any = None) -> None:
+    def store_action(self, action: Action) -> None:
         """Store an action in the database"""
         query = '''
             INSERT INTO actions (uuid, name, tool_uuid, payload, result)
@@ -150,11 +150,11 @@ class DatabaseService:
         self._execute_query(
             query, 
             (
-                str(action_uuid),
-                name,
-                str(tool_uuid),
-                str(payload),  # Converting dict to string for storage
-                str(result) if result is not None else None
+                str(action.uuid),
+                action.name,
+                str(action.tool_uuid),
+                str(action.payload),  # Converting dict to string for storage
+                str(action.result) if action.result is not None else None
             )
         )
 

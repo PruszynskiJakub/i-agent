@@ -173,14 +173,15 @@ class AgentService:
             log_info(f"Executing {tool_name} with parameters: {parameters}", style="bold magenta")
             log_tool_call(tool_name, parameters, document)
             
-            # Store action in database
-            self.db_service.store_action(
-                action_uuid=action_uuid,
+            # Create and store action
+            action = Action(
+                uuid=uuid.UUID(action_uuid),
                 name=tool_name,
-                tool_uuid=str(uuid.uuid4()),  # Generate new UUID since we don't have tool object
+                tool_uuid=uuid.uuid4(),  # Generate new UUID since we don't have tool object
                 payload=plan["parameters"],
                 result=document
             )
+            self.db_service.store_action(action)
             
             # Store action in state
             if not hasattr(self.state, 'actions'):
