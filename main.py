@@ -11,6 +11,7 @@ from modules.langfuse_service import LangfuseService
 from modules.logging_service import logger
 from modules.openai_service import OpenAIService
 from modules.web_service import WebService
+from modules.text_service import TextService
 from modules.tools import get_available_tools
 from modules.types import State
 
@@ -25,7 +26,8 @@ langfuse_service = LangfuseService(
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
     host=os.getenv("LANGFUSE_HOST")
 )
-web_service = WebService(api_key=os.getenv("FIRECRAWL_API_KEY"))
+text_service = TextService()
+web_service = WebService(api_key=os.getenv("FIRECRAWL_API_KEY"), text_service=text_service)
 
 
 def restore_conversation(conversation_uuid: str) -> list:

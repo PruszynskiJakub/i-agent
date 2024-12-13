@@ -5,15 +5,17 @@ from modules.logging_service import log_tool_call
 from modules.types import WebContent
 
 class WebService:
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, text_service):
         """
         Initialize WebService
         
         Args:
             api_key: Firecrawl API key
+            text_service: TextService instance for document processing
         """
         self.api_key = api_key
         self.app = FirecrawlApp(api_key=api_key)
+        self.text_service = text_service
 
     async def scrape_url(self, params: Dict[str, Any]) -> WebContent:
         """
