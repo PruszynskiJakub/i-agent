@@ -152,27 +152,25 @@ class AgentService:
             error_msg = f"Plan missing required fields. Must include: {required_fields}"
             log_error(error_msg)
             raise ValueError(error_msg)
-            
-        # Find matching tool
-        tool = next((t for t in self.state.tools if t.name == plan["tool"]), None)
-        if not tool:
-            error_msg = f"Tool '{plan['tool']}' not found in available tools"
-            log_error(error_msg)
-            raise ValueError(error_msg)
-            
-        # Validate required parameters
-        missing_params = [param for param in tool.required_params if param not in plan["parameters"]]
-        if missing_params:
-            raise ValueError(f"Missing required parameters for tool '{tool.name}': {missing_params}")
-            
+
+        tool_name = plan["tool"]
+        parameters = plan["parameters"]
+        action_uuid = str(uuid.uuid4())
+
         try:
-            # Generate action UUID
-            action_uuid = str(uuid.uuid4())
-            
-            # Execute the tool with parameters
-            log_info(f"Executing {tool.name} with parameters: {plan['parameters']}", style="bold magenta")
-            result = await tool.function(plan["parameters"])
-            log_tool_call(tool.name, plan["parameters"], result)
+            # Execute appropriate tool based on name
+            if tool_name == "webscrape":
+                if "url" not in parameters:
+                    raise ValueError("URL parameter is required for webscrape tool")
+                from modules.tools import webscrape_tool
+                result = await webscrape_tool(parameters)
+            else:
+                error_msg = f"Unknown tool: {tool_name}"
+                log_error(error_msg)
+                raise ValueError(error_msg)
+
+            log_info(f"Executing {tool_name} with parameters: {parameters}", style="bold magenta")
+            log_tool_call(tool_name, parameters, result)
             
             # Store action in database
             self.db_service.store_action(
