@@ -28,6 +28,8 @@ class DocumentMetadata(TypedDict, total=False):
     source: str
     mime_type: str
     name: str
+    images: List[str]  # List of image URLs found in the document
+    urls: List[str]    # List of URLs found in the document
 
 class Document(TypedDict, total=True):
     """A document that can be processed by the agent"""
