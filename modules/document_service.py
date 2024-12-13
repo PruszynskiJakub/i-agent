@@ -8,7 +8,7 @@ class DocumentService:
         self.database_service = database_service
         self.openai_service = openai_service
         
-    def process_document(self, document: Document, params: Dict[str, Any] = None) -> Document:
+    def process_document(self, params: Dict[str, Any], document: Document) -> Document:
         """
         Process a document and return the processed version
         
