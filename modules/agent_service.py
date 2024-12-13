@@ -166,14 +166,15 @@ class AgentService:
             if tool_name == "webscrape":
                 if "url" not in parameters:
                     raise ValueError("URL parameter is required for webscrape tool")
-                result = await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
+                document = await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
+                document_uuid = self.db_service.store_document(document)
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)
                 raise ValueError(error_msg)
 
             log_info(f"Executing {tool_name} with parameters: {parameters}", style="bold magenta")
-            log_tool_call(tool_name, parameters, result)
+            log_tool_call(tool_name, parameters, document)
             
             # Store action in database
             self.db_service.store_action(
@@ -181,7 +182,7 @@ class AgentService:
                 name=tool_name,
                 tool_uuid=str(uuid.uuid4()),  # Generate new UUID since we don't have tool object
                 payload=plan["parameters"],
-                result=result
+                result=document
             )
             
             # Store action in state
@@ -193,11 +194,11 @@ class AgentService:
                 "name": tool_name,
                 "tool_uuid": str(uuid.uuid4()),  # Generate new UUID since we don't have tool object
                 "parameters": plan["parameters"],
-                "result": result,
+                "result": document,
                 "timestamp": datetime.now().isoformat()
             })
             
-            return result
+            return document
             
         except Exception as e:
             error_msg = f"Error executing tool '{tool_name}': {str(e)}"
