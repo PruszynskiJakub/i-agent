@@ -108,11 +108,11 @@ class DatabaseService:
         '''
         self._execute_query(query, (
             document_uuid,
-            document.metadata.get('conversation_uuid', ''),
-            document.metadata.get('name', ''),
-            document.metadata.get('source', ''),
-            document.metadata.get('mime_type', ''),
-            document.text
+            document['metadata'].get('conversation_uuid', ''),
+            document['metadata'].get('name', ''),
+            document['metadata'].get('source', ''),
+            document['metadata'].get('mime_type', ''),
+            document['text']
         ))
         return document_uuid
 

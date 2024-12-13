@@ -29,8 +29,7 @@ class DocumentMetadata(TypedDict, total=False):
     mime_type: str
     name: str
 
-@dataclass
-class Document:
+class Document(TypedDict, total=True):
     """A document that can be processed by the agent"""
     text: str
     metadata: DocumentMetadata
@@ -49,7 +48,7 @@ class State:
     conversation_uuid: str
     actions: List[Action] = field(default_factory=list)
     messages: List[Dict[str, Any]] = field(default_factory=list)
-    documents: List[Document] = field(default_factory=list)
+    documents: List[Dict[str, Any]] = field(default_factory=list)
     config: Dict[str, Any] = field(default_factory=lambda: {
         "current_step": 0,
         "max_steps": 5
