@@ -187,14 +187,7 @@ class AgentService:
             if not hasattr(self.state, 'actions'):
                 self.state.actions = []
             
-            self.state.actions.append({
-                "uuid": action_uuid,
-                "name": tool_name,
-                "tool_uuid": str(uuid.uuid4()),  # Generate new UUID since we don't have tool object
-                "parameters": plan["parameters"],
-                "result": document,
-                "timestamp": datetime.now().isoformat()
-            })
+            self.state.actions.append(action)
             
             return document
             
