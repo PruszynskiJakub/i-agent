@@ -132,9 +132,4 @@ class TextService:
             )
             
         return self.document(content, metadata)
-            
-        return {
-            "content": content,
-            "urls": urls,
-            "images": images
-        }
+
