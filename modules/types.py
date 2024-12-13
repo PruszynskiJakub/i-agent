@@ -48,7 +48,7 @@ class State:
     conversation_uuid: str
     actions: List[Action] = field(default_factory=list)
     messages: List[Dict[str, Any]] = field(default_factory=list)
-    documents: List[Dict[str, Any]] = field(default_factory=list)
+    documents: List[Document] = field(default_factory=list)
     config: Dict[str, Any] = field(default_factory=lambda: {
         "current_step": 0,
         "max_steps": 5
