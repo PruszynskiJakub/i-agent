@@ -12,7 +12,6 @@ from modules.logging_service import logger
 from modules.openai_service import OpenAIService
 from modules.web_service import WebService
 from modules.text_service import TextService
-from modules.tools import get_available_tools
 from modules.types import State
 
 # Load environment variables from .env file
