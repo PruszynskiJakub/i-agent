@@ -1,8 +1,8 @@
 import os
-from typing import Dict, Any, Literal, List
+from typing import Dict, Any, List
 from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
-from modules.types import Tool
+from modules.types import Tool, WebContent
 
 from uuid import uuid4
 
@@ -25,7 +25,7 @@ def get_available_tools() -> List[Tool]:
         )
     ]
 
-async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
+async def webscrape_tool(params: Dict[str, Any]) -> WebContent:
     """
     Scrapes content from a given URL in specified format
     
@@ -35,41 +35,37 @@ async def webscrape_tool(params: Dict[str, Any]) -> Dict[str, Any]:
             - format: Format to return ('md' or 'html')
         
     Returns:
-        Dict containing:
+        WebContent object containing:
+            - url: The scraped URL
             - content: scraped content in requested format
-            - metadata: page metadata
-            - status: HTTP status code
+            - type: format type ('md' or 'html')
     """
     url = params.get('url')
     format_type = params.get('format', 'md')  # Default to markdown
     
     if not url:
-        return {"error": "URL parameter is required", "status": 400}
+        raise ValueError("URL parameter is required")
         
     if format_type not in ['md', 'html']:
-        return {"error": "Format must be 'md' or 'html'", "status": 400}
+        raise ValueError("Format must be 'md' or 'html'")
         
     try:
-        app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))  # Replace with env variable
+        app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))
         formats = ['markdown'] if format_type == 'md' else ['html']
         
         data = app.scrape_url(url, params={'formats': formats})
         
         content = data.get('markdown' if format_type == 'md' else 'html', '')
-        metadata = data.get('metadata', {})
         
-        success_result = {
-            "content": content,
-            "metadata": metadata,
-            "status": metadata.get('statusCode', 200)
-        }
-        log_tool_call("webscrape_tool", params, success_result)
-        return success_result
+        web_content = WebContent(
+            url=url,
+            content=content,
+            type=format_type
+        )
+        
+        log_tool_call("webscrape_tool", params, {"status": "success", "content_length": len(content)})
+        return web_content
         
     except Exception as e:
-        error_result = {
-            "error": str(e),
-            "status": 500
-        }
-        log_tool_call("webscrape_tool", params, error_result)
-        return error_result
+        log_tool_call("webscrape_tool", params, {"error": str(e)})
+        raise
