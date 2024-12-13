@@ -9,7 +9,7 @@ from modules.langfuse_service import LangfuseService
 from modules.web_service import WebService
 from modules.document_service import DocumentService
 from modules.types import State, Action
-from modules.utils import format_tools_for_prompt
+from modules.utils import format_actions_for_prompt, format_tools_for_prompt
 from datetime import datetime
 
 class AgentService:
@@ -54,10 +54,7 @@ class AgentService:
                 break
                 
             # Execute phase
-            result = await self._execute(plan_result)
-            
-            # Add the result to messages for next iteration
-            messages.append({"role": "assistant", "content": result})
+            await self._execute(plan_result)
             
             # Increment step counter at end of loop
             self.state.config["current_step"] += 1
@@ -90,7 +87,8 @@ class AgentService:
             
             # Compile the prompt with any needed variables
             system_prompt = prompt.compile(
-                formatted_tools=format_tools_for_prompt(self.state.tools)
+                formatted_tools=format_tools_for_prompt(self.state.tools),
+                taken_actions=format_actions_for_prompt(self.state.actions)
             )
             
             # Get model from prompt config, fallback to default if not specified
@@ -137,7 +135,7 @@ class AgentService:
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
 
-    async def _execute(self, plan: Dict[str, Any]) -> str:
+    async def _execute(self, plan: Dict[str, Any]):
         """
         Execute the planned action using the specified tool
         
@@ -194,8 +192,6 @@ class AgentService:
                 self.state.actions = []
             
             self.state.actions.append(action)
-            
-            return document
             
         except Exception as e:
             error_msg = f"Error executing tool '{tool_name}': {str(e)}"
