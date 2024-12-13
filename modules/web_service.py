@@ -17,7 +17,7 @@ class WebService:
         self.app = FirecrawlApp(api_key=api_key)
         self.text_service = text_service
 
-    async def scrape_url(self, params: Dict[str, Any]) -> Document:
+    async def scrape_url(self, params: Dict[str, Any], conversation_uuid: str = None) -> Document:
         """
         Scrapes content from a URL and returns it as a Document
         
@@ -25,6 +25,7 @@ class WebService:
             params: Dictionary containing:
                 - url: The URL to scrape
                 - format: Format to return ('md' or 'html')
+            conversation_uuid: Optional UUID of the conversation context
             
         Returns:
             Document object containing the scraped content and metadata
@@ -35,7 +36,8 @@ class WebService:
         metadata = {
             "source": web_content.url,
             "mime_type": "text/markdown" if web_content.type == 'md' else "text/html",
-            "name": web_content.url.split('/')[-1] or "webpage"
+            "name": web_content.url.split('/')[-1] or "webpage",
+            "conversation_uuid": conversation_uuid
         }
         
         # Transform WebContent into Document using TextService

@@ -28,4 +28,4 @@ web_service = WebService(api_key=os.getenv("FIRECRAWL_API_KEY"))
 
 async def webscrape_tool(params: Dict[str, Any]) -> WebContent:
     """Wrapper for WebService.scrape_url"""
-    return await web_service.scrape_url(params)
+    return await web_service.scrape_url(params, conversation_uuid=None)

@@ -166,7 +166,7 @@ class AgentService:
             if tool_name == "webscrape":
                 if "url" not in parameters:
                     raise ValueError("URL parameter is required for webscrape tool")
-                result = await self.web_service.scrape_url(parameters)
+                result = await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)
