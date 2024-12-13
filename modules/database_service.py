@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 from contextlib import contextmanager
 from typing import Optional, Any, List, Dict
+from modules.types import Document
 
 class DatabaseService:
     def __init__(self, db_name='chat_history.db'):
