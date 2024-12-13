@@ -22,18 +22,6 @@ class Action:
     payload: dict
     result: Any
 
-@dataclass
-class State:
-    """The state of the agent"""
-    tools: List[Tool]
-    conversation_uuid: str
-    actions: List[Action] = field(default_factory=list)
-    messages: List[Dict[str, Any]] = field(default_factory=list)
-    config: Dict[str, Any] = field(default_factory=lambda: {
-        "current_step": 0,
-        "max_steps": 5
-    })
-
 class DocumentMetadata(TypedDict, total=False):
     """Metadata for a document"""
     uuid: UUID
@@ -47,3 +35,16 @@ class Document:
     """A document that can be processed by the agent"""
     text: str
     metadata: DocumentMetadata
+
+@dataclass
+class State:
+    """The state of the agent"""
+    tools: List[Tool]
+    conversation_uuid: str
+    actions: List[Action] = field(default_factory=list)
+    messages: List[Dict[str, Any]] = field(default_factory=list)
+    documents: List[Document] = field(default_factory=list)
+    config: Dict[str, Any] = field(default_factory=lambda: {
+        "current_step": 0,
+        "max_steps": 5
+    })
