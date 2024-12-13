@@ -1,6 +1,6 @@
 from typing import List
 
-from modules.types import Tool
+from modules.types import Tool, Action
 
 
 def parse_markdown_backticks(str) -> str:
@@ -12,6 +12,33 @@ def parse_markdown_backticks(str) -> str:
     str = str.rsplit("```", 1)[0]
     # Remove any leading or trailing whitespace
     return str.strip()
+
+def format_actions_for_prompt(actions: List[Action]) -> str:
+    """Formats the executed actions into a string for the prompt
+    
+    Args:
+        actions: List of Action objects
+        
+    Returns:
+        str: Formatted string describing all executed actions
+    """
+    action_descriptions = []
+    for action in actions:
+        desc = f"<action name='{action.name}'>\n"
+        desc += "  <parameters>\n"
+        for param_name, param_value in action.payload.items():
+            desc += f"    <param name='{param_name}'>{param_value}</param>\n"
+        desc += "  </parameters>\n"
+        
+        # Add result information if it's a Document
+        if hasattr(action.result, 'metadata'):
+            desc += "  <result>\n"
+            desc += f"    <source>{action.result['metadata'].get('source', '')}</source>\n"
+            desc += "  </result>\n"
+        
+        desc += "</action>"
+        action_descriptions.append(desc)
+    return "\n".join(action_descriptions)
 
 def format_tools_for_prompt(tools_mapping: List[Tool]) -> str:
     """Formats the available tools into a string for the prompt
