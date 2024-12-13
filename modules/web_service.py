@@ -35,18 +35,23 @@ class WebService:
         """
         web_content = await self._scrape_webpage(params)
         
+        # Process content to extract images and URLs
+        processed_content = self.text_service.extract_images_and_urls(web_content.content)
+        
         # Create document metadata
         metadata = {
             "uuid": str(uuid.uuid4()),
             "source": web_content.url,
             "mime_type": "text/markdown" if web_content.type == 'md' else "text/html",
             "name": web_content.url.split('/')[-1] or "webpage",
-            "conversation_uuid": conversation_uuid
+            "conversation_uuid": conversation_uuid,
+            "urls": processed_content["urls"],
+            "images": processed_content["images"]
         }
         
         # Transform WebContent into Document using TextService
         document = self.text_service.document(
-            content=web_content.content,
+            content=processed_content["content"],
             metadata=metadata
         )
         
