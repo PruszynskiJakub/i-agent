@@ -2,7 +2,7 @@ import os
 from typing import Dict, Any
 from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
-from modules.types import WebContent
+from modules.types import WebContent, Document
 
 class WebService:
     def __init__(self, api_key: str, text_service):
