@@ -47,34 +47,52 @@ class TextService:
                 - images: List of extracted image URLs
                 - urls: List of extracted regular URLs
         """
-        # Regular expressions for matching markdown URLs and images
-        md_image_pattern = r'!\[([^\]]*)\]\(([^)]+)\)'  # ![alt text](url)
-        md_url_pattern = r'(?<!!)\[([^\]]*)\]\(([^)]+)\)'  # [text](url) but not starting with !
-        bare_url_pattern = r'(?<!\]\()(https?://[^\s<>"]+|www\.[^\s<>"]+)(?!\))'  # URLs not in markdown syntax
-        
-        content = text
-        images = []
         urls = []
+        images = []
+        url_index = 0
+        image_index = 0
+        content = text
+
+        def replace_images(match):
+            nonlocal image_index
+            alt_text, url = match.groups()
+            images.append(url)
+            placeholder = f"![{alt_text}]({{{{$img{image_index}}}}})"
+            image_index += 1
+            return placeholder
+
+        def replace_urls(match):
+            nonlocal url_index
+            link_text, url = match.groups()
+            if not url.startswith('{{$img'):
+                urls.append(url)
+                placeholder = f"[{link_text}]({{{{$url{url_index}}}}})"
+                url_index += 1
+                return placeholder
+            return match.group(0)  # Keep image placeholders unchanged
+
+        # Replace markdown images first
+        content = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', replace_images, content)
         
-        # Extract and replace markdown images
-        for idx, match in enumerate(re.finditer(md_image_pattern, text)):
-            full_match = match.group(0)
-            image_url = match.group(2)
-            images.append(image_url)
-            content = content.replace(full_match, f"[IMAGE_{idx}]")
-        
-        # Extract and replace markdown URLs
-        for idx, match in enumerate(re.finditer(md_url_pattern, text)):
-            full_match = match.group(0)
-            url = match.group(2)
-            urls.append(url)
-            content = content.replace(full_match, f"[URL_{idx}]")
-            
-        # Extract and replace bare URLs
-        bare_urls = re.findall(bare_url_pattern, content)
-        for idx, url in enumerate(bare_urls, start=len(urls)):
-            urls.append(url)
-            content = content.replace(url, f"[URL_{idx}]")
+        # Then replace markdown links
+        content = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', replace_urls, content)
+
+        # Finally handle bare URLs
+        def replace_bare_urls(match):
+            nonlocal url_index
+            url = match.group(0)
+            if not url.startswith('{{$'):  # Skip if it's already a placeholder
+                urls.append(url)
+                placeholder = f"{{{{$url{url_index}}}}"
+                url_index += 1
+                return placeholder
+            return url
+
+        content = re.sub(
+            r'(?<!\]\()(https?://[^\s<>"]+|www\.[^\s<>"]+)(?!\))', 
+            replace_bare_urls, 
+            content
+        )
             
         return {
             "content": content,
