@@ -45,10 +45,9 @@ class DatabaseService:
             CREATE TABLE IF NOT EXISTS documents (
                 uuid TEXT PRIMARY KEY,
                 conversation_uuid TEXT,
-                name TEXT,
                 source TEXT,
-                mime_type TEXT,
                 text TEXT NOT NULL,
+                metadata TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         '''
@@ -103,23 +102,22 @@ class DatabaseService:
         """
         document_uuid = str(uuid.uuid4()) if 'uuid' not in document['metadata'] else document['metadata']['uuid']
         query = '''
-            INSERT INTO documents (uuid, conversation_uuid, name, source, mime_type, text)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO documents (uuid, conversation_uuid, source, text, metadata)
+            VALUES (?, ?, ?, ?, ?)
         '''
         self._execute_query(query, (
             document_uuid,
             document['metadata'].get('conversation_uuid', ''),
-            document['metadata'].get('name', ''),
             document['metadata'].get('source', ''),
-            document['metadata'].get('mime_type', ''),
-            document['text']
+            document['text'],
+            str(document['metadata'])
         ))
         return document_uuid
 
     def get_documents(self, conversation_uuid: str = None) -> List[Dict[str, Any]]:
         """Retrieve documents from the database"""
         query = '''
-            SELECT uuid, conversation_uuid, name, source, mime_type, text, created_at 
+            SELECT uuid, conversation_uuid, source, text, metadata, created_at 
             FROM documents
         '''
         params = []
@@ -134,11 +132,10 @@ class DatabaseService:
         return [{
             "uuid": doc[0],
             "conversation_uuid": doc[1],
-            "name": doc[2],
-            "source": doc[3],
-            "mime_type": doc[4],
-            "text": doc[5],
-            "created_at": doc[6]
+            "source": doc[2],
+            "text": doc[3],
+            "metadata": eval(doc[4]) if doc[4] else {},
+            "created_at": doc[5]
         } for doc in documents]
 
     def store_action(self, action: Action) -> None:
