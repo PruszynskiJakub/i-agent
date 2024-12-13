@@ -7,7 +7,7 @@ from modules.openai_service import OpenAIService
 from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
 from modules.web_service import WebService
-from modules.types import State
+from modules.types import State, Action
 from modules.utils import format_tools_for_prompt
 from datetime import datetime
 
