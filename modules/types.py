@@ -37,6 +37,13 @@ class Document:
     metadata: DocumentMetadata
 
 @dataclass
+class WebContent:
+    """Content fetched from a web URL"""
+    url: str
+    content: str
+    type: str  # 'md' or 'html'
+
+@dataclass
 class State:
     """The state of the agent"""
     tools: List[Tool]
