@@ -24,18 +24,17 @@ def format_tools_for_prompt(tools_mapping: List[Tool]) -> str:
     """
     tool_descriptions = []
     for tool in tools_mapping:
-        desc = "<tool>\n"
-        desc += f"  <name>{tool.name}</name>\n"
-        desc += f"  <description>{tool.description}</description>\n"
-        desc += "  <required_parameters>\n"
-        for param, param_desc in tool.required_params.items():
-            desc += f"    <param name='{param}'>{param_desc}</param>\n"
-        desc += "  </required_parameters>\n"
+        desc = f"<tool name='{tool.name}' description='{tool.description}'>\n"
+        if tool.required_params:
+            desc += "  <required_params>\n"
+            for param, param_desc in tool.required_params.items():
+                desc += f"    <param name='{param}'>{param_desc}</param>\n"
+            desc += "  </required_params>\n"
         if tool.optional_params:
-            desc += "  <optional_parameters>\n"
+            desc += "  <optional_params>\n"
             for param, param_desc in tool.optional_params.items():
                 desc += f"    <param name='{param}'>{param_desc}</param>\n"
-            desc += "  </optional_parameters>\n"
+            desc += "  </optional_params>\n"
         desc += "</tool>"
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)
