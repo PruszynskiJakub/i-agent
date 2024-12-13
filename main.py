@@ -12,7 +12,7 @@ from modules.logging_service import logger
 from modules.openai_service import OpenAIService
 from modules.web_service import WebService
 from modules.text_service import TextService
-from modules.types import State
+from modules.types import State, Tool
 
 # Load environment variables from .env file
 load_dotenv()
@@ -70,6 +70,16 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
     # Initialize state and agent service
     state = State(
         conversation_uuid=conversation_uuid,
+        tools=[
+            Tool(
+                uuid=uuid.UUID("123e4567-e89b-12d3-a456-426614174000"),
+                name="webscrape",
+                description="Scrapes content from a webpage",
+                instructions="Input should be a dictionary containing 'url' key with a valid URL value, and optional 'format' key with value 'md' or 'html' (defaults to 'md').",
+                required_params={"url": "The URL to scrape"},
+                optional_params={"format": "Output format ('md' or 'html', defaults to 'md')"}
+            )
+        ]
     )
     agent_service = AgentService(state, openai_service, db_service, langfuse_service, web_service)
 
