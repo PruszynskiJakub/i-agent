@@ -25,9 +25,18 @@ class TextService:
             "uuid": metadata.get("uuid", UUID(int=0)),
             "conversation_uuid": metadata.get("conversation_uuid", ""),
             "source": metadata.get("source", ""),
-            "mime_type": metadata.get("mime_type", ""),
-            "name": metadata.get("name", "")
+            "mime_type": metadata.get("mime_type", "text/plain"),
+            "name": metadata.get("name", ""),
+            "images": metadata.get("images", []),
+            "urls": metadata.get("urls", [])
         }
+        
+        # Extract images and URLs if not provided
+        if not document_metadata["images"] and not document_metadata["urls"]:
+            extracted = self.extract_images_and_urls(content)
+            document_metadata["images"] = extracted["images"]
+            document_metadata["urls"] = extracted["urls"]
+            content = extracted["content"]
             
         return Document(
             text=content,
