@@ -57,7 +57,7 @@ class TextService:
             nonlocal image_index
             alt_text, url = match.groups()
             images.append(url)
-            placeholder = f"![{alt_text}]({{{{$img{image_index}}}}})"
+            placeholder = f"![{alt_text}]({{$img{image_index}}})"
             image_index += 1
             return placeholder
 
@@ -66,7 +66,7 @@ class TextService:
             link_text, url = match.groups()
             if not url.startswith('{{$img'):
                 urls.append(url)
-                placeholder = f"[{link_text}]({{{{$url{url_index}}}}})"
+                placeholder = f"[{link_text}]({{$url{url_index}}})"
                 url_index += 1
                 return placeholder
             return match.group(0)  # Keep image placeholders unchanged
@@ -83,7 +83,7 @@ class TextService:
             url = match.group(0)
             if not url.startswith('{{$'):  # Skip if it's already a placeholder
                 urls.append(url)
-                placeholder = f"{{{{$url{url_index}}}}"
+                placeholder = f"{{$url{url_index}}}"
                 url_index += 1
                 return placeholder
             return url
