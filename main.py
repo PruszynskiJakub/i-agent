@@ -78,10 +78,19 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
                 instructions="Input should be a dictionary containing 'url' key with a valid URL value, and optional 'format' key with value 'md' or 'html' (defaults to 'md').",
                 required_params={"url": "The URL to scrape"},
                 optional_params={"format": "Output format ('md' or 'html', defaults to 'md')"}
+            ),
+            Tool(
+                uuid=uuid.UUID("223e4567-e89b-12d3-a456-426614174001"),
+                name="file_process",
+                description="Process a document using the document service",
+                instructions="No parameters required. Will process the most recently created document.",
+                required_params={},
+                optional_params={}
             )
         ]
     )
-    agent_service = AgentService(state, openai_service, db_service, langfuse_service, web_service)
+    document_service = DocumentService(db_service, openai_service)
+    agent_service = AgentService(state, openai_service, db_service, langfuse_service, web_service, document_service)
 
     while True:
         # Get user input

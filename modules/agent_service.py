@@ -7,13 +7,14 @@ from modules.openai_service import OpenAIService
 from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
 from modules.web_service import WebService
+from modules.document_service import DocumentService
 from modules.types import State, Action
 from modules.utils import format_tools_for_prompt
 from datetime import datetime
 
 class AgentService:
     def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, 
-                 langfuse_service: LangfuseService, web_service: WebService):
+                 langfuse_service: LangfuseService, web_service: WebService, document_service: DocumentService):
         """
         Initialize AgentService
         
@@ -29,6 +30,7 @@ class AgentService:
         self.db_service = db_service
         self.langfuse_service = langfuse_service
         self.web_service = web_service
+        self.document_service = document_service
 
     async def run(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
@@ -164,6 +166,12 @@ class AgentService:
                 if "url" not in parameters:
                     raise ValueError("URL parameter is required for webscrape tool")
                 document = await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
+                document_uuid = self.db_service.store_document(document)
+            elif tool_name == "file_process":
+                if not hasattr(self.state, 'actions') or not self.state.actions:
+                    raise ValueError("No previous document available to process")
+                last_doc = self.state.actions[-1].result
+                document = self.document_service.process_document(last_doc)
                 document_uuid = self.db_service.store_document(document)
             else:
                 error_msg = f"Unknown tool: {tool_name}"
