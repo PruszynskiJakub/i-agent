@@ -1,4 +1,5 @@
-from typing import Dict, Any
+from typing import Dict, Any, List, Tuple
+import re
 from uuid import UUID
 from modules.types import Document, DocumentMetadata
 
