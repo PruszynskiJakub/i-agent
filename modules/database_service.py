@@ -101,7 +101,7 @@ class DatabaseService:
         Returns:
             str: UUID of the stored document
         """
-        document_uuid = str(uuid.uuid4())
+        document_uuid = str(uuid.uuid4()) if 'uuid' not in document['metadata'] else document['metadata']['uuid']
         query = '''
             INSERT INTO documents (uuid, conversation_uuid, name, source, mime_type, text)
             VALUES (?, ?, ?, ?, ?, ?)

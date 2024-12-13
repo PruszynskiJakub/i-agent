@@ -1,5 +1,6 @@
 import os
 from typing import Dict, Any
+import uuid
 from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
 from modules.types import WebContent, Document
@@ -36,6 +37,7 @@ class WebService:
         
         # Create document metadata
         metadata = {
+            "uuid": str(uuid.uuid4()),
             "source": web_content.url,
             "mime_type": "text/markdown" if web_content.type == 'md' else "text/html",
             "name": web_content.url.split('/')[-1] or "webpage",
@@ -49,7 +51,7 @@ class WebService:
         )
         
         # Store document in database
-        document.metadata["uuid"] = self.db_service.store_document(document)
+        document['metadata']['uuid'] = self.db_service.store_document(document)
         
         return document
     
