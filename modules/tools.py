@@ -1,5 +1,6 @@
+import os
 from typing import Dict, Any, List
-from modules.types import Tool
+from modules.types import Tool, WebContent
 from modules.web_service import WebService
 from uuid import uuid4
 
