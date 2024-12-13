@@ -56,7 +56,7 @@ class AgentService:
             self.state.config["current_step"] += 1
             
         # Get final answer using answer method
-        final_answer = await self.answer(messages, parent_trace)
+        final_answer = await self._answer(messages, parent_trace)
 
         self.db_service.store_message(self.state.conversation_uuid, "assistant", final_answer)
         
@@ -176,7 +176,7 @@ class AgentService:
             log_error(error_msg)
             raise Exception(error_msg)
 
-    async def answer(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
+    async def _answer(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
         Generate a final answer to the user
         
