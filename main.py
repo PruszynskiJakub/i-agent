@@ -10,6 +10,7 @@ from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
 from modules.logging_service import logger
 from modules.openai_service import OpenAIService
+from modules.web_service import WebService
 from modules.tools import get_available_tools
 from modules.types import State
 
@@ -24,6 +25,7 @@ langfuse_service = LangfuseService(
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
     host=os.getenv("LANGFUSE_HOST")
 )
+web_service = WebService(api_key=os.getenv("FIRECRAWL_API_KEY"))
 
 
 def restore_conversation(conversation_uuid: str) -> list:
@@ -65,7 +67,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         conversation_uuid=conversation_uuid,
         tools=get_available_tools()
     )
-    agent_service = AgentService(state, openai_service, db_service, langfuse_service)
+    agent_service = AgentService(state, openai_service, db_service, langfuse_service, web_service)
 
     while True:
         # Get user input

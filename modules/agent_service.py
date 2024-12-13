@@ -6,12 +6,14 @@ from modules.logging_service import log_info, log_error, log_tool_call
 from modules.openai_service import OpenAIService
 from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
+from modules.web_service import WebService
 from modules.types import State
 from modules.utils import format_tools_for_prompt
 from datetime import datetime
 
 class AgentService:
-    def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, langfuse_service: LangfuseService):
+    def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, 
+                 langfuse_service: LangfuseService, web_service: WebService):
         """
         Initialize AgentService
         
@@ -20,11 +22,13 @@ class AgentService:
             openai_service: OpenAI service instance
             db_service: Database service instance
             langfuse_service: LangFuse service instance
+            web_service: Web service instance for handling web-related tools
         """
         self.state = state
         self.openai_service = openai_service
         self.db_service = db_service
         self.langfuse_service = langfuse_service
+        self.web_service = web_service
 
     async def run(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         """
@@ -162,8 +166,7 @@ class AgentService:
             if tool_name == "webscrape":
                 if "url" not in parameters:
                     raise ValueError("URL parameter is required for webscrape tool")
-                from modules.tools import webscrape_tool
-                result = await webscrape_tool(parameters)
+                result = await self.web_service.scrape_url(parameters)
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)
