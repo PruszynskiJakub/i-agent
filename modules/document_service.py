@@ -1,6 +1,6 @@
 from typing import List, Dict, Any, Optional
 from .database_service import DatabaseService
-from .openai_service import OpenAiService
+from .openai_service import OpenAIService
 from .types import Document
 
 class DocumentService:
