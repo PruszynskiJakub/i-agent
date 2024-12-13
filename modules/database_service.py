@@ -90,14 +90,29 @@ class DatabaseService:
         messages = self._execute_query(query, tuple(params))
         return [{"role": msg[0], "content": msg[1], "timestamp": msg[2]} for msg in messages]
 
-    def store_document(self, conversation_uuid: str, name: str, source: str, mime_type: str, text: str) -> str:
-        """Store a document in the database"""
+    def store_document(self, document: Document) -> str:
+        """
+        Store a document in the database
+        
+        Args:
+            document: Document object to store
+            
+        Returns:
+            str: UUID of the stored document
+        """
         document_uuid = str(uuid.uuid4())
         query = '''
             INSERT INTO documents (uuid, conversation_uuid, name, source, mime_type, text)
             VALUES (?, ?, ?, ?, ?, ?)
         '''
-        self._execute_query(query, (document_uuid, conversation_uuid, name, source, mime_type, text))
+        self._execute_query(query, (
+            document_uuid,
+            document.metadata.get('conversation_uuid', ''),
+            document.metadata.get('name', ''),
+            document.metadata.get('source', ''),
+            document.metadata.get('mime_type', ''),
+            document.text
+        ))
         return document_uuid
 
     def get_documents(self, conversation_uuid: str = None) -> List[Dict[str, Any]]:

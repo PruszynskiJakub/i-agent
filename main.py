@@ -27,7 +27,11 @@ langfuse_service = LangfuseService(
     host=os.getenv("LANGFUSE_HOST")
 )
 text_service = TextService()
-web_service = WebService(api_key=os.getenv("FIRECRAWL_API_KEY"), text_service=text_service)
+web_service = WebService(
+    api_key=os.getenv("FIRECRAWL_API_KEY"),
+    text_service=text_service,
+    db_service=db_service
+)
 
 
 def restore_conversation(conversation_uuid: str) -> list:

@@ -5,17 +5,19 @@ from modules.logging_service import log_tool_call
 from modules.types import WebContent, Document
 
 class WebService:
-    def __init__(self, api_key: str, text_service):
+    def __init__(self, api_key: str, text_service, db_service):
         """
         Initialize WebService
         
         Args:
             api_key: Firecrawl API key
             text_service: TextService instance for document processing
+            db_service: DatabaseService instance for storing documents
         """
         self.api_key = api_key
         self.app = FirecrawlApp(api_key=api_key)
         self.text_service = text_service
+        self.db_service = db_service
 
     async def scrape_url(self, params: Dict[str, Any], conversation_uuid: str = None) -> Document:
         """
@@ -41,10 +43,15 @@ class WebService:
         }
         
         # Transform WebContent into Document using TextService
-        return self.text_service.document(
+        document = self.text_service.document(
             content=web_content.content,
             metadata=metadata
         )
+        
+        # Store document in database
+        document.metadata["uuid"] = self.db_service.store_document(document)
+        
+        return document
     
     async def _scrape_webpage(self, params: Dict[str, Any]) -> WebContent:
         """
