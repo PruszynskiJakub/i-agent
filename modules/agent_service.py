@@ -8,6 +8,7 @@ from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
 from modules.types import State
 from modules.utils import format_tools_for_prompt
+from datetime import datetime
 
 class AgentService:
     def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, langfuse_service: LangfuseService):
@@ -165,10 +166,36 @@ class AgentService:
             raise ValueError(f"Missing required parameters for tool '{tool.name}': {missing_params}")
             
         try:
+            # Generate action UUID
+            action_uuid = str(uuid.uuid4())
+            
             # Execute the tool with parameters
             log_info(f"Executing {tool.name} with parameters: {plan['parameters']}", style="bold magenta")
             result = await tool.function(plan["parameters"])
             log_tool_call(tool.name, plan["parameters"], result)
+            
+            # Store action in database
+            self.db_service.store_action(
+                action_uuid=action_uuid,
+                name=tool.name,
+                tool_uuid=tool.uuid,
+                payload=plan["parameters"],
+                result=result
+            )
+            
+            # Store action in state
+            if not hasattr(self.state, 'actions'):
+                self.state.actions = []
+            
+            self.state.actions.append({
+                "uuid": action_uuid,
+                "name": tool.name,
+                "tool_uuid": tool.uuid,
+                "parameters": plan["parameters"],
+                "result": result,
+                "timestamp": datetime.now().isoformat()
+            })
+            
             return result
             
         except Exception as e:

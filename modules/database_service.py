@@ -52,8 +52,20 @@ class DatabaseService:
             )
         '''
         
+        actions_table = '''
+            CREATE TABLE IF NOT EXISTS actions (
+                uuid TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                tool_uuid TEXT NOT NULL,
+                payload TEXT NOT NULL,
+                result TEXT,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        '''
+        
         self._execute_query(messages_table)
         self._execute_query(documents_table)
+        self._execute_query(actions_table)
 
     def store_message(self, conversation_uuid: str, role: str, content: str) -> None:
         """Store a message in the database"""
@@ -112,3 +124,44 @@ class DatabaseService:
             "text": doc[5],
             "created_at": doc[6]
         } for doc in documents]
+
+    def store_action(self, action_uuid: str, name: str, tool_uuid: str, payload: dict, result: Any = None) -> None:
+        """Store an action in the database"""
+        query = '''
+            INSERT INTO actions (uuid, name, tool_uuid, payload, result)
+            VALUES (?, ?, ?, ?, ?)
+        '''
+        self._execute_query(
+            query, 
+            (
+                str(action_uuid),
+                name,
+                str(tool_uuid),
+                str(payload),  # Converting dict to string for storage
+                str(result) if result is not None else None
+            )
+        )
+
+    def get_actions(self, action_uuid: str = None) -> List[Dict[str, Any]]:
+        """Retrieve actions from the database"""
+        query = '''
+            SELECT uuid, name, tool_uuid, payload, result, created_at 
+            FROM actions
+        '''
+        params = []
+        
+        if action_uuid:
+            query += ' WHERE uuid = ?'
+            params.append(action_uuid)
+            
+        query += ' ORDER BY created_at DESC'
+        
+        actions = self._execute_query(query, tuple(params))
+        return [{
+            "uuid": action[0],
+            "name": action[1],
+            "tool_uuid": action[2],
+            "payload": eval(action[3]),  # Converting string back to dict
+            "result": eval(action[4]) if action[4] else None,
+            "created_at": action[5]
+        } for action in actions]
