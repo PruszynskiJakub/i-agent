@@ -175,8 +175,8 @@ class AgentService:
             # Store action in database
             self.db_service.store_action(
                 action_uuid=action_uuid,
-                name=tool.name,
-                tool_uuid=tool.uuid,
+                name=tool_name,
+                tool_uuid=str(uuid.uuid4()),  # Generate new UUID since we don't have tool object
                 payload=plan["parameters"],
                 result=result
             )
@@ -187,8 +187,8 @@ class AgentService:
             
             self.state.actions.append({
                 "uuid": action_uuid,
-                "name": tool.name,
-                "tool_uuid": tool.uuid,
+                "name": tool_name,
+                "tool_uuid": str(uuid.uuid4()),  # Generate new UUID since we don't have tool object
                 "parameters": plan["parameters"],
                 "result": result,
                 "timestamp": datetime.now().isoformat()
@@ -197,7 +197,7 @@ class AgentService:
             return result
             
         except Exception as e:
-            error_msg = f"Error executing tool '{tool.name}': {str(e)}"
+            error_msg = f"Error executing tool '{tool_name}': {str(e)}"
             log_error(error_msg)
             raise Exception(error_msg)
 
