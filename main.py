@@ -71,7 +71,6 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
     # Initialize state and agent service
     state = State(
         conversation_uuid=conversation_uuid,
-        tools=get_available_tools()
     )
     agent_service = AgentService(state, openai_service, db_service, langfuse_service, web_service)
 
