@@ -54,7 +54,7 @@ class AgentService:
                 break
                 
             # Execute phase
-            await self._execute(plan_result)
+            await self._execute(plan_result, parent_trace)
             
             # Increment step counter at end of loop
             self.state.config["current_step"] += 1
@@ -132,15 +132,9 @@ class AgentService:
         except Exception as e:
             raise Exception(f"Error in agent service: {str(e)}")
 
-    async def _execute(self, plan: Dict[str, Any]):
+    async def _execute(self, plan: Dict[str, Any], parent_trace=None):
         """
         Execute the planned action using the specified tool
-        
-        Args:
-            plan: Dictionary containing the plan details including tool name and parameters
-            
-        Returns:
-            Result of the tool execution
         """
         log_info(f"Executing plan with tool: {plan.get('tool', 'unknown')}", style="bold cyan")
         
@@ -156,6 +150,20 @@ class AgentService:
         action_uuid = str(uuid.uuid4())
 
         try:
+            # Create execution event
+            execution_event = parent_trace.span(
+                name=f"tool_execution_{tool_name}",
+                input={
+                    "tool": tool_name,
+                    "parameters": parameters,
+                    "step": plan["step"]
+                },
+                metadata={
+                    "conversation_id": self.state.conversation_uuid,
+                    "action_id": action_uuid
+                }
+            )
+
             # Execute appropriate tool based on name
             if tool_name == "webscrape":
                 if "url" not in parameters:
@@ -171,10 +179,16 @@ class AgentService:
                 log_error(error_msg)
                 raise ValueError(error_msg)
 
+            # Update event with successful execution
+            execution_event.end(
+                output=document,
+                level="DEFAULT",
+                status_message="Tool execution successful"
+            )
+
             log_info(f"Executing {tool_name} with parameters: {parameters}", style="bold magenta")
             log_tool_call(tool_name, parameters, document)
             
-            # Create and store action
             action = Action(
                 uuid=uuid.UUID(action_uuid),
                 name=plan['step'],
@@ -184,14 +198,20 @@ class AgentService:
             )
             self.db_service.store_action(action)
             
-            # Store action in state
             if not hasattr(self.state, 'actions'):
                 self.state.actions = []
             
             self.state.actions.append(action)
+            self.state.documents.append(document)
             
         except Exception as e:
             error_msg = f"Error executing tool '{tool_name}': {str(e)}"
+            # Update event with error status
+            execution_event.end(
+                output={"error": str(e)},
+                level="ERROR",
+                status_message=error_msg
+            )
             log_error(error_msg)
             raise Exception(error_msg)
 
