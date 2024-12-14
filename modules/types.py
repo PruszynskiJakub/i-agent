@@ -28,6 +28,7 @@ class DocumentMetadata(TypedDict, total=False):
     source: str
     mime_type: str
     name: str
+    description: str   # A brief description of the document's content
     images: List[str]  # List of image URLs found in the document
     urls: List[str]    # List of URLs found in the document
 

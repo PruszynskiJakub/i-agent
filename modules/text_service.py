@@ -27,6 +27,7 @@ class TextService:
             "source": metadata.get("source", ""),
             "mime_type": metadata.get("mime_type", "text/plain"),
             "name": metadata.get("name", ""),
+            "description": metadata.get("description", ""),
             "images": metadata.get("images", []),
             "urls": metadata.get("urls", [])
         }
