@@ -178,7 +178,7 @@ class AgentService:
             action = Action(
                 uuid=uuid.UUID(action_uuid),
                 name=plan['step'],
-                tool_uuid=uuid.uuid4(),  # Generate new UUID since we don't have tool object
+                tool_uuid=next((tool.uuid for tool in self.state.tools if tool.name == tool_name), None),
                 payload=plan["parameters"],
                 result=document
             )
