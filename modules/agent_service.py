@@ -33,16 +33,6 @@ class AgentService:
         self.document_service = document_service
 
     async def run(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
-        """
-        Process conversation turns with planning and execution loop
-        
-        Args:
-            messages: List of message dictionaries with role and content
-            parent_trace: Parent trace for logging
-            
-        Returns:
-            Final AI response as string
-        """
         self.db_service.store_message(self.state.conversation_uuid, "user", messages[-1]['content'])
 
         while self.state.config["current_step"] < self.state.config["max_steps"]:
@@ -67,16 +57,6 @@ class AgentService:
         return final_answer
 
     async def _plan(self, messages: List[Dict[str, Any]], parent_trace=None) -> Dict[str, Any]:
-        """
-        Plan and execute the next conversation turn
-        
-        Args:
-            messages: List of message dictionaries with role and content
-            parent_trace: Parent trace for logging
-            
-        Returns:
-            Dictionary containing the AI response and tool information
-        """
         try:
             # Get system prompt
             prompt = self.langfuse_service.get_prompt(
@@ -133,9 +113,6 @@ class AgentService:
             raise Exception(f"Error in agent service: {str(e)}")
 
     async def _execute(self, plan: Dict[str, Any], parent_trace=None):
-        """
-        Execute the planned action using the specified tool
-        """
         log_info(f"Executing plan with tool: {plan.get('tool', 'unknown')}", style="bold cyan")
         
         # Validate plan structure
@@ -149,22 +126,20 @@ class AgentService:
         parameters = plan["parameters"]
         action_uuid = str(uuid.uuid4())
 
-        try:
-            # Create execution event
-            execution_event = parent_trace.span(
-                name=f"tool_execution_{tool_name}",
-                input={
-                    "tool": tool_name,
-                    "parameters": parameters,
-                    "step": plan["step"]
-                },
-                metadata={
-                    "conversation_id": self.state.conversation_uuid,
-                    "action_id": action_uuid
-                }
-            )
+        execution_event = parent_trace.span(
+            name=f"tool_execution_{tool_name}",
+            input={
+                "tool": tool_name,
+                "parameters": parameters,
+                "step": plan["step"]
+            },
+            metadata={
+                "conversation_id": self.state.conversation_uuid,
+                "action_id": action_uuid
+            }
+        )
 
-            # Execute appropriate tool based on name
+        try:
             if tool_name == "webscrape":
                 if "url" not in parameters:
                     raise ValueError("URL parameter is required for webscrape tool")
@@ -180,11 +155,7 @@ class AgentService:
                 raise ValueError(error_msg)
 
             # Update event with successful execution
-            execution_event.end(
-                output=document,
-                level="DEFAULT",
-                status_message="Tool execution successful"
-            )
+
 
             log_info(f"Executing {tool_name} with parameters: {parameters}", style="bold magenta")
             log_tool_call(tool_name, parameters, document)
@@ -203,6 +174,12 @@ class AgentService:
             
             self.state.actions.append(action)
             self.state.documents.append(document)
+
+            execution_event.end(
+                output=document,
+                level="DEFAULT",
+                status_message="Tool execution successful"
+            )
             
         except Exception as e:
             error_msg = f"Error executing tool '{tool_name}': {str(e)}"
@@ -216,16 +193,6 @@ class AgentService:
             raise Exception(error_msg)
 
     async def _answer(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
-        """
-        Generate a final answer to the user
-        
-        Args:
-            messages: List of message dictionaries with role and content
-            parent_trace: Parent trace for logging
-            
-        Returns:
-            Final answer as string
-        """
         try:
             # Get system prompt for final answer
             prompt = self.langfuse_service.get_prompt(
