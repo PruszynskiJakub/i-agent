@@ -136,7 +136,7 @@ class AgentService:
                 if not hasattr(self.state, 'actions') or not self.state.actions:
                     raise ValueError("No previous document available to process")
                 last_doc = self.state.actions[-1].result
-                document = self.document_service.translate(last_doc, parameters)
+                document = await self.document_service.translate(parameters, last_doc, parent_trace)
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)
