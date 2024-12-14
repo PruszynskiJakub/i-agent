@@ -122,9 +122,6 @@ class AgentService:
                 log_error(f"Failed to parse JSON response: {str(e)}")
                 response_data = {}
             
-            # Store AI response
-            self.db_service.store_message(self.state.conversation_uuid, "assistant", completion)
-            
             # Update generation with the response
             generation.end(
                 output=response_data,
