@@ -180,7 +180,7 @@ class AgentService:
             # Create and store action
             action = Action(
                 uuid=uuid.UUID(action_uuid),
-                name=tool_name,
+                name=plan['step'],
                 tool_uuid=uuid.uuid4(),  # Generate new UUID since we don't have tool object
                 payload=plan["parameters"],
                 result=document
