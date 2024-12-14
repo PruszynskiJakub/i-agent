@@ -1,3 +1,4 @@
+import uuid
 from typing import Dict, Any, Optional
 
 from modules.database_service import DatabaseService
@@ -75,13 +76,14 @@ class DocumentService:
         
             # Create new translated document
             translated_doc = document.copy()
-            translated_doc["content"] = translated_content
+            translated_doc["text"] = translated_content
             translated_doc["metadata"] = {
                 **(document.get("metadata", {})),
                 "translated_from": source_lang,
-                "translated_to": target_lang
+                "translated_to": target_lang,
+                "uuid": str(uuid.uuid4()),  # Override uuid with a new one
+                "source": document['metadata']['uuid']
             }
-            
             # Store translated document
             self.database_service.store_document(translated_doc)
 
