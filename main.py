@@ -83,10 +83,13 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
             ),
             Tool(
                 uuid=uuid.UUID("223e4567-e89b-12d3-a456-426614174001"),
-                name="file_process",
-                description="Process a document using the document service",
+                name="translate",
+                description="Translate a document from one language to another",
                 instructions="No parameters required. Will process the most recently created document.",
-                required_params={},
+                required_params={
+                    "source_lang": "The source language of the document",
+                    "target_lang": "The target language to translate the document to"
+                },
                 optional_params={}
             )
         ]

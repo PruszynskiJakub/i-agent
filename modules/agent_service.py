@@ -1,5 +1,4 @@
 import json
-import os
 from typing import List, Dict, Any
 import uuid
 from modules.logging_service import log_info, log_error, log_tool_call
@@ -10,21 +9,10 @@ from modules.web_service import WebService
 from modules.document_service import DocumentService
 from modules.types import State, Action
 from modules.utils import format_actions_for_prompt, format_tools_for_prompt
-from datetime import datetime
 
 class AgentService:
     def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, 
                  langfuse_service: LangfuseService, web_service: WebService, document_service: DocumentService):
-        """
-        Initialize AgentService
-        
-        Args:
-            state: State instance containing tools and other configuration
-            openai_service: OpenAI service instance
-            db_service: Database service instance
-            langfuse_service: LangFuse service instance
-            web_service: Web service instance for handling web-related tools
-        """
         self.state = state
         self.openai_service = openai_service
         self.db_service = db_service
@@ -144,11 +132,11 @@ class AgentService:
                 if "url" not in parameters:
                     raise ValueError("URL parameter is required for webscrape tool")
                 document = await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
-            elif tool_name == "file_process":
+            elif tool_name == "translate":
                 if not hasattr(self.state, 'actions') or not self.state.actions:
                     raise ValueError("No previous document available to process")
                 last_doc = self.state.actions[-1].result
-                document = self.document_service.process_document(last_doc, parameters)
+                document = self.document_service.translate(last_doc, parameters)
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)
@@ -200,7 +188,7 @@ class AgentService:
                 prompt_type="text",
                 label="latest"
             )
-            
+            0
             # Compile the prompt
             system_prompt = prompt.compile()
             
