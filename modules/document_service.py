@@ -83,7 +83,7 @@ class DocumentService:
                 "translated_to": target_lang,
                 "uuid": str(uuid.uuid4()),  # Override uuid with a new one
                 "source_uuid": document['metadata']['uuid'],
-                "description": f"Translation of document {document['metadata']['uuid']} from {source_lang} to {target_lang}"
+                "description": f"Translation of document [[{document['metadata']['uuid']}]] from {source_lang} to {target_lang}"
             }
             # Store translated document
             self.database_service.store_document(translated_doc)
