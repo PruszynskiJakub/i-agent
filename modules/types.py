@@ -2,10 +2,10 @@ from dataclasses import dataclass, field
 from typing import List, Any, Optional, Callable, Dict, TypedDict, ForwardRef
 from uuid import UUID
 
+from enum import Enum
+
 # Forward reference for Document type
 Document = ForwardRef('Document')
-
-from enum import Enum
 
 class ActionStatus(Enum):
     SUCCESS = "success"
