@@ -5,10 +5,17 @@ from uuid import UUID
 # Forward reference for Document type
 Document = ForwardRef('Document')
 
+from enum import Enum
+
+class ActionStatus(Enum):
+    SUCCESS = "success"
+    FAILURE = "failure"
+
 @dataclass
 class ActionResult:
     """Result of an action performed by a tool"""
     result: str
+    status: ActionStatus
     documents: List[Document] = field(default_factory=list)
 
 @dataclass
@@ -29,6 +36,7 @@ class Action:
     tool_uuid: UUID
     payload: dict
     result: str
+    status: ActionStatus
     documents: List[Document] = field(default_factory=list)
 
 class DocumentMetadata(TypedDict, total=False):

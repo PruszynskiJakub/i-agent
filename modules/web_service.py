@@ -61,6 +61,7 @@ class WebService:
         
         return ActionResult(
             result=f"Successfully scraped content from {params['url']}",
+            status=ActionStatus.SUCCESS,
             documents=[document]
         )
     

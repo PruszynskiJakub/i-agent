@@ -99,10 +99,11 @@ class DocumentService:
                     status_message="Translation successful"
                 )
             
-            return {
-                "result": f"Successfully translated document from {source_lang} to {target_lang}",
-                "documents": [translated_doc]
-            }
+            return ActionResult(
+                result=f"Successfully translated document from {source_lang} to {target_lang}",
+                status=ActionStatus.SUCCESS,
+                documents=[translated_doc]
+            )
 
         except Exception as e:
             # End translation span with error if it exists

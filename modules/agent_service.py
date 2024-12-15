@@ -155,6 +155,7 @@ class AgentService:
                 tool_uuid=next((tool.uuid for tool in self.state.tools if tool.name == tool_name), None),
                 payload=plan["parameters"],
                 result=result.result,
+                status=result.status,
                 documents=result.documents
             )
             self.db_service.store_action(action)
