@@ -138,6 +138,13 @@ class AgentService:
                     raise ValueError("No previous document available to process")
                 last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
                 result = await self.document_service.translate(parameters, last_doc, parent_trace)
+            elif tool_name == "upload":
+                print(f"Uploading file to {parameters.get('path', 'unknown path')}")
+                result = ActionResult(
+                    result={"message": f"File uploaded to {parameters.get('path')}"},
+                    status=ActionStatus.SUCCESS,
+                    documents=[]
+                )
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)

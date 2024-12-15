@@ -91,6 +91,16 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
                     "target_lang": "The target language to translate the document to"
                 },
                 optional_params={}
+            ),
+            Tool(
+                uuid=uuid.UUID("323e4567-e89b-12d3-a456-426614174002"),
+                name="upload",
+                description="Upload a document to the file system",
+                instructions="Uploads the most recently created document to the specified path",
+                required_params={
+                    "path": "The file path where the document should be saved"
+                },
+                optional_params={}
             )
         ]
     )
