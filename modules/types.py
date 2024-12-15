@@ -6,6 +6,12 @@ from uuid import UUID
 Document = ForwardRef('Document')
 
 @dataclass
+class ActionResult:
+    """Result of an action performed by a tool"""
+    result: str
+    documents: List[Document] = field(default_factory=list)
+
+@dataclass
 class Tool:
     """A tool that can be used by the agent"""
     uuid: UUID

@@ -20,7 +20,7 @@ class WebService:
         self.text_service = text_service
         self.db_service = db_service
 
-    async def scrape_url(self, params: Dict[str, Any], conversation_uuid: str = None) -> Document:
+    async def scrape_url(self, params: Dict[str, Any], conversation_uuid: str = None) -> ActionResult:
         """
         Scrapes content from a URL and returns it as a Document
         
@@ -59,7 +59,10 @@ class WebService:
         # Store document in database
         document['metadata']['uuid'] = self.db_service.store_document(document)
         
-        return document
+        return ActionResult(
+            result=f"Successfully scraped content from {url}",
+            documents=[document]
+        )
     
     async def _scrape_webpage(self, params: Dict[str, Any]) -> WebContent:
         """

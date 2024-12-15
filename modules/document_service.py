@@ -13,7 +13,7 @@ class DocumentService:
         self.openai_service = openai_service
         self.langfuse_service = langfuse_service
 
-    async def translate(self, params: Dict[str, Any], document: Document, parent_trace=None) -> Document:
+    async def translate(self, params: Dict[str, Any], document: Document, parent_trace=None) -> ActionResult:
         """
         Translate a document from source language to target language with tracing
         

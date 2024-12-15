@@ -128,15 +128,16 @@ class AgentService:
         )
 
         try:
+            result = None
             if tool_name == "webscrape":
                 if "url" not in parameters:
                     raise ValueError("URL parameter is required for webscrape tool")
-                document = await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
+                result = await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
             elif tool_name == "translate":
                 if not hasattr(self.state, 'actions') or not self.state.actions:
                     raise ValueError("No previous document available to process")
-                last_doc = self.state.actions[-1].result
-                document = await self.document_service.translate(parameters, last_doc, parent_trace)
+                last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
+                result = await self.document_service.translate(parameters, last_doc, parent_trace)
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)
@@ -146,15 +147,15 @@ class AgentService:
 
 
             log_info(f"Executing {tool_name} with parameters: {parameters}", style="bold magenta")
-            log_tool_call(tool_name, parameters, document)
+            log_tool_call(tool_name, parameters, result)
             
             action = Action(
                 uuid=uuid.UUID(action_uuid),
                 name=plan['step'],
                 tool_uuid=next((tool.uuid for tool in self.state.tools if tool.name == tool_name), None),
                 payload=plan["parameters"],
-                result='No result', # Store text content as result
-                documents=[document]  # Store full document in documents list
+                result=result.result,
+                documents=result.documents
             )
             self.db_service.store_action(action)
             
@@ -162,7 +163,7 @@ class AgentService:
                 self.state.actions = []
             
             self.state.actions.append(action)
-            self.state.documents.append(document)
+            self.state.documents.extend(result.documents)
 
             execution_event.end(
                 output=document,
