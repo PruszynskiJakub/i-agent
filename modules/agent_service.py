@@ -153,7 +153,7 @@ class AgentService:
                 name=plan['step'],
                 tool_uuid=next((tool.uuid for tool in self.state.tools if tool.name == tool_name), None),
                 payload=plan["parameters"],
-                result=str(document.get('text', '')),  # Store text content as result
+                result='No result', # Store text content as result
                 documents=[document]  # Store full document in documents list
             )
             self.db_service.store_action(action)

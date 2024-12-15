@@ -46,7 +46,8 @@ class WebService:
             "name": web_content.url.split('/')[-1] or "webpage",
             "conversation_uuid": conversation_uuid,
             "urls": processed_content["urls"],
-            "images": processed_content["images"]
+            "images": processed_content["images"],
+            "description": f"The content of the webpage {web_content.url}"
         }
         
         # Transform WebContent into Document using TextService
