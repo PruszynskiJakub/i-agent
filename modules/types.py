@@ -19,7 +19,8 @@ class Action:
     name: str
     tool_uuid: UUID
     payload: dict
-    result: Any
+    result: str
+    documents: List[Document] = field(default_factory=list)
 
 class DocumentMetadata(TypedDict, total=False):
     """Metadata for a document"""

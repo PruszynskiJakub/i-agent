@@ -30,11 +30,17 @@ def format_actions_for_prompt(actions: List[Action]) -> str:
             desc += f"    <param name='{param_name}'>{param_value}</param>\n"
         desc += "  </parameters>\n"
         
-        # Add result information if it's a Document
-        if hasattr(action.result, 'metadata'):
-            desc += "  <result>\n"
-            desc += f"    <source>{action.result['metadata'].get('source', '')}</source>\n"
-            desc += "  </result>\n"
+        # Add result information
+        desc += "  <result>\n"
+        desc += f"    <output>{action.result}</output>\n"
+        if action.documents:
+            desc += "    <documents>\n"
+            for doc in action.documents:
+                desc += f"      <document source='{doc['metadata'].get('source', '')}'>\n"
+                desc += f"        <description>{doc['metadata'].get('description', '')}</description>\n"
+                desc += "      </document>\n"
+            desc += "    </documents>\n"
+        desc += "  </result>\n"
         
         desc += "</action>"
         action_descriptions.append(desc)

@@ -82,7 +82,8 @@ class DocumentService:
                 "translated_from": source_lang,
                 "translated_to": target_lang,
                 "uuid": str(uuid.uuid4()),  # Override uuid with a new one
-                "source": document['metadata']['uuid']
+                "source": document['metadata']['uuid'],
+                "description": f"Translation of document {document['metadata']['uuid']} from {source_lang} to {target_lang}"
             }
             # Store translated document
             self.database_service.store_document(translated_doc)
@@ -90,12 +91,18 @@ class DocumentService:
             # End translation span if it exists
             if translation_span:
                 translation_span.end(
-                    output=translated_doc,
+                    output={
+                        "result": f"Successfully translated document from {source_lang} to {target_lang}",
+                        "documents": [translated_doc]
+                    },
                     level="DEFAULT",
                     status_message="Translation successful"
                 )
             
-            return translated_doc
+            return {
+                "result": f"Successfully translated document from {source_lang} to {target_lang}",
+                "documents": [translated_doc]
+            }
 
         except Exception as e:
             # End translation span with error if it exists
