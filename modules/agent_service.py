@@ -7,7 +7,7 @@ from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
 from modules.web_service import WebService
 from modules.document_service import DocumentService
-from modules.types import State, Action
+from modules.types import ActionResult, ActionStatus, State, Action
 from modules.utils import format_actions_for_prompt, format_tools_for_prompt
 
 class AgentService:
