@@ -1,6 +1,9 @@
 from dataclasses import dataclass, field
-from typing import List, Any, Optional, Callable, Dict, TypedDict
+from typing import List, Any, Optional, Callable, Dict, TypedDict, ForwardRef
 from uuid import UUID
+
+# Forward reference for Document type
+Document = ForwardRef('Document')
 
 @dataclass
 class Tool:
