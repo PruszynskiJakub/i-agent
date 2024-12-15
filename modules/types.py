@@ -30,6 +30,7 @@ class DocumentMetadata(TypedDict, total=False):
     uuid: UUID
     conversation_uuid: str
     source: str
+    source_uuid: Optional[UUID]  # UUID of the source document if this is derived from another document
     mime_type: str
     name: str
     description: str   # A brief description of the document's content
