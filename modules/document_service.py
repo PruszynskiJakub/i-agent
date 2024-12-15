@@ -4,7 +4,7 @@ from typing import Dict, Any, Optional
 from modules.database_service import DatabaseService
 from modules.openai_service import OpenAIService
 from modules.langfuse_service import LangfuseService
-from modules.types import Document, ActionResult
+from modules.types import Document, ActionResult, ActionStatus
 
 
 class DocumentService:

@@ -3,7 +3,7 @@ from typing import Dict, Any
 import uuid
 from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
-from modules.types import WebContent, Document, ActionResult
+from modules.types import WebContent, Document, ActionResult, ActionStatus
 
 class WebService:
     def __init__(self, api_key: str, text_service, db_service):
