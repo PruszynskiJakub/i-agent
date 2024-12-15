@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from contextlib import contextmanager
 from typing import Optional, Any, List, Dict
-from modules.types import Document, Action
+from modules.types import Document, Action, ActionStatus
 
 class DatabaseService:
     def __init__(self, db_name='chat_history.db'):
