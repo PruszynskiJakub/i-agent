@@ -1,5 +1,6 @@
 import sqlite3
 import uuid
+import json
 from datetime import datetime
 from contextlib import contextmanager
 from typing import Optional, Any, List, Dict
@@ -63,9 +64,21 @@ class DatabaseService:
             )
         '''
         
+        action_documents_table = '''
+            CREATE TABLE IF NOT EXISTS action_documents (
+                action_uuid TEXT NOT NULL,
+                document_uuid TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (action_uuid, document_uuid),
+                FOREIGN KEY (action_uuid) REFERENCES actions(uuid),
+                FOREIGN KEY (document_uuid) REFERENCES documents(uuid)
+            )
+        '''
+        
         self._execute_query(messages_table)
         self._execute_query(documents_table)
         self._execute_query(actions_table)
+        self._execute_query(action_documents_table)
 
     def store_message(self, conversation_uuid: str, role: str, content: str) -> None:
         """Store a message in the database"""
@@ -139,21 +152,65 @@ class DatabaseService:
         } for doc in documents]
 
     def store_action(self, action: Action) -> None:
-        """Store an action in the database"""
-        query = '''
+        """Store an action and its related documents in the database"""
+        # Store the action
+        action_query = '''
             INSERT INTO actions (uuid, name, tool_uuid, payload, result)
             VALUES (?, ?, ?, ?, ?)
         '''
         self._execute_query(
-            query, 
+            action_query, 
             (
                 str(action.uuid),
                 action.name,
                 str(action.tool_uuid),
-                str(action.payload),  # Converting dict to string for storage
-                str(action.result) if action.result is not None else None
+                json.dumps(action.payload),  # Use json for proper dict serialization
+                action.result
             )
         )
+        
+        # Store document relationships
+        if action.documents:
+            doc_query = '''
+                INSERT INTO action_documents (action_uuid, document_uuid)
+                VALUES (?, ?)
+            '''
+            for document in action.documents:
+                self._execute_query(
+                    doc_query,
+                    (str(action.uuid), document['metadata']['uuid'])
+                )
+
+    def get_action_documents(self, action_uuid: str) -> List[Document]:
+        """
+        Retrieve all documents associated with an action
+        
+        Args:
+            action_uuid: UUID of the action
+            
+        Returns:
+            List of Document objects
+        """
+        query = '''
+            SELECT d.* 
+            FROM documents d
+            JOIN action_documents ad ON d.uuid = ad.document_uuid
+            WHERE ad.action_uuid = ?
+        '''
+        
+        rows = self._execute_query(query, (action_uuid,))
+        documents = []
+        
+        for row in rows:
+            # Parse metadata string back into dict
+            metadata = eval(row[4]) if row[4] else {}
+            
+            documents.append({
+                "text": row[3],
+                "metadata": metadata
+            })
+            
+        return documents
 
     def get_actions(self, action_uuid: str = None) -> List[Dict[str, Any]]:
         """Retrieve actions from the database"""
