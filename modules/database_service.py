@@ -60,6 +60,7 @@ class DatabaseService:
                 tool_uuid TEXT NOT NULL,
                 payload TEXT NOT NULL,
                 result TEXT,
+                status TEXT NOT NULL,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         '''
@@ -155,8 +156,8 @@ class DatabaseService:
         """Store an action and its related documents in the database"""
         # Store the action
         action_query = '''
-            INSERT INTO actions (uuid, name, tool_uuid, payload, result)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO actions (uuid, name, tool_uuid, payload, result, status)
+            VALUES (?, ?, ?, ?, ?, ?)
         '''
         self._execute_query(
             action_query, 
@@ -165,7 +166,8 @@ class DatabaseService:
                 action.name,
                 str(action.tool_uuid),
                 json.dumps(action.payload),  # Use json for proper dict serialization
-                action.result
+                action.result,
+                action.status.value  # Store the enum value as string
             )
         )
         
@@ -215,7 +217,7 @@ class DatabaseService:
     def get_actions(self, action_uuid: str = None) -> List[Dict[str, Any]]:
         """Retrieve actions from the database"""
         query = '''
-            SELECT uuid, name, tool_uuid, payload, result, created_at 
+            SELECT uuid, name, tool_uuid, payload, result, status, created_at 
             FROM actions
         '''
         params = []
@@ -233,5 +235,6 @@ class DatabaseService:
             "tool_uuid": action[2],
             "payload": eval(action[3]),  # Converting string back to dict
             "result": eval(action[4]) if action[4] else None,
-            "created_at": action[5]
+            "status": ActionStatus(action[5]),  # Convert string back to enum
+            "created_at": action[6]
         } for action in actions]
