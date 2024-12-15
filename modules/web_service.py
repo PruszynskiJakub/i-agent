@@ -3,7 +3,7 @@ from typing import Dict, Any
 import uuid
 from firecrawl import FirecrawlApp
 from modules.logging_service import log_tool_call
-from modules.types import WebContent, Document
+from modules.types import WebContent, Document, ActionResult
 
 class WebService:
     def __init__(self, api_key: str, text_service, db_service):
@@ -60,7 +60,7 @@ class WebService:
         document['metadata']['uuid'] = self.db_service.store_document(document)
         
         return ActionResult(
-            result=f"Successfully scraped content from {url}",
+            result=f"Successfully scraped content from {params['url']}",
             documents=[document]
         )
     

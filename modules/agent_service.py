@@ -166,7 +166,7 @@ class AgentService:
             self.state.documents.extend(result.documents)
 
             execution_event.end(
-                output=document,
+                output=result,
                 level="DEFAULT",
                 status_message="Tool execution successful"
             )
