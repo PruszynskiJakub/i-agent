@@ -74,7 +74,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
     # Initialize state and agent service
     state = State(
         conversation_uuid=conversation_uuid,
-        conversation_history=conversation_history,
+        messages=conversation_history,
         tools=[
             Tool(
                 uuid=uuid.UUID("123e4567-e89b-12d3-a456-426614174000"),
