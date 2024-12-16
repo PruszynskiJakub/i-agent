@@ -7,6 +7,7 @@ from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
 from modules.web_service import WebService
 from modules.document_service import DocumentService
+from modules.file_service import FileService
 from modules.types import ActionResult, ActionStatus, State, Action
 from modules.utils import format_actions_for_prompt, format_tools_for_prompt
 
