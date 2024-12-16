@@ -16,6 +16,12 @@ class AgentService:
                  langfuse_service: LangfuseService, web_service: WebService, document_service: DocumentService,
                  file_service: FileService):
         self.state = state
+        self.tool_handlers = {
+            "webscrape": self._handle_webscrape,
+            "translate": self._handle_translate,
+            "upload": self._handle_upload,
+            "open_file": self._handle_open_file
+        }
         self.openai_service = openai_service
         self.db_service = db_service
         self.langfuse_service = langfuse_service
@@ -104,15 +110,6 @@ class AgentService:
             raise Exception(f"Error in agent service: {str(e)}")
 
     async def _execute(self, plan: Dict[str, Any], parent_trace=None):
-        log_info(f"Executing plan with tool: {plan.get('tool', 'unknown')}", style="bold cyan")
-        
-        # Validate plan structure
-        required_fields = ["_thinking", "step", "tool", "parameters", "required_information"]
-        if not all(field in plan for field in required_fields):
-            error_msg = f"Plan missing required fields. Must include: {required_fields}"
-            log_error(error_msg)
-            raise ValueError(error_msg)
-
         tool_name = plan["tool"]
         parameters = plan["parameters"]
         action_uuid = str(uuid.uuid4())
@@ -131,30 +128,14 @@ class AgentService:
         )
 
         try:
-            result = None
-            if tool_name == "webscrape":
-                if "url" not in parameters:
-                    raise ValueError("URL parameter is required for webscrape tool")
-                result = await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
-            elif tool_name == "translate":
-                if not hasattr(self.state, 'actions') or not self.state.actions:
-                    raise ValueError("No previous document available to process")
-                last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
-                result = await self.document_service.translate(parameters, last_doc, parent_trace)
-            elif tool_name == "upload":
-                
-                last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
-                result = self.file_service.upload(last_doc)
-            elif tool_name == "open_file":
-                if not hasattr(self.state, 'actions') or not self.state.actions:
-                    raise ValueError("No previous document available to open")
-                last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
-                result = self.file_service.open_file(last_doc)
-            else:
-                error_msg = f"Unknown tool: {tool_name}"
-                log_error(error_msg)
-                raise ValueError(error_msg)
+            # Get the appropriate handler for the tool
+            handler = self.tool_handlers.get(tool_name)
+            if not handler:
+                raise ValueError(f"Unknown tool: {tool_name}")
 
+            # Execute the tool handler
+            result = await handler(parameters)
+            
             # Update event with successful execution
 
 
@@ -194,6 +175,29 @@ class AgentService:
             )
             log_error(error_msg)
             raise Exception(error_msg)
+
+    async def _handle_webscrape(self, parameters: Dict[str, Any]) -> ActionResult:
+        if "url" not in parameters:
+            raise ValueError("URL parameter is required for webscrape tool")
+        return await self.web_service.scrape_url(parameters, conversation_uuid=self.state.conversation_uuid)
+
+    async def _handle_translate(self, parameters: Dict[str, Any]) -> ActionResult:
+        if not hasattr(self.state, 'actions') or not self.state.actions:
+            raise ValueError("No previous document available to process")
+        last_doc = self.state.actions[-1].documents[0]
+        return await self.document_service.translate(parameters, last_doc)
+
+    async def _handle_upload(self, parameters: Dict[str, Any]) -> ActionResult:
+        if not hasattr(self.state, 'actions') or not self.state.actions:
+            raise ValueError("No previous document available to upload")
+        last_doc = self.state.actions[-1].documents[0]
+        return self.file_service.upload(last_doc)
+
+    async def _handle_open_file(self, parameters: Dict[str, Any]) -> ActionResult:
+        if not hasattr(self.state, 'actions') or not self.state.actions:
+            raise ValueError("No previous document available to open")
+        last_doc = self.state.actions[-1].documents[0]
+        return self.file_service.open_file(last_doc)
 
     async def _answer(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         try:
