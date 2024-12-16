@@ -136,11 +136,8 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         conversation_history.append({"role": "user", "content": user_input})
 
         try:
-            # Get AI response using AgentService
-            state.conversation_uuid = conversation_uuid
-            ai_response = await agent_service.run(conversation_history, trace)
+            ai_response = await agent_service.run(trace)
 
-            # Add AI response to conversation history
             conversation_history.append({"role": "assistant", "content": ai_response})
 
             # Print AI response

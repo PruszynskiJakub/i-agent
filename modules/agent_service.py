@@ -29,12 +29,23 @@ class AgentService:
         self.document_service = document_service
         self.file_service = file_service
 
-    async def run(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
-        self.db_service.store_message(self.state.conversation_uuid, "user", messages[-1]['content'])
+    async def run(self, parent_trace=None) -> str:
+        self._store_message(self.state.messages[-1]['content'], "user")
 
-        while self.state.config["current_step"] < self.state.config["max_steps"]:
+        await self._loop(parent_trace)
+        final_answer = await self._answer(parent_trace)
+
+        self._store_message(final_answer, "assistant")
+        
+        return final_answer
+    
+    def _store_message(self, message: str, role: str):
+        self.db_service.store_message(self.state.conversation_uuid, role, message)
+
+    async def _loop(self, parent_trace=None):
+       while self.state.config["current_step"] < self.state.config["max_steps"]:
             # Plan phase
-            plan_result = await self._plan(messages, parent_trace)
+            plan_result = await self._plan(parent_trace)
             
             # If the tool is final_answer, return empty string
             if plan_result["tool"] == "final_answer":
@@ -45,15 +56,8 @@ class AgentService:
             
             # Increment step counter at end of loop
             self.state.config["current_step"] += 1
-            
-        # Get final answer using answer method
-        final_answer = await self._answer(messages, parent_trace)
 
-        self.db_service.store_message(self.state.conversation_uuid, "assistant", final_answer)
-        
-        return final_answer
-
-    async def _plan(self, messages: List[Dict[str, Any]], parent_trace=None) -> Dict[str, Any]:
+    async def _plan(self, parent_trace=None) -> Dict[str, Any]:
         try:
             # Get system prompt
             prompt = self.langfuse_service.get_prompt(
@@ -136,9 +140,6 @@ class AgentService:
             # Execute the tool handler
             result = await handler(parameters)
             
-            # Update event with successful execution
-
-
             log_info(f"Executing {tool_name} with parameters: {parameters}", style="bold magenta")
             log_tool_call(tool_name, parameters, result)
             
@@ -199,7 +200,7 @@ class AgentService:
         last_doc = self.state.actions[-1].documents[0]
         return self.file_service.open_file(last_doc)
 
-    async def _answer(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
+    async def _answer(self, parent_trace=None) -> str:
         try:
             # Get system prompt for final answer
             prompt = self.langfuse_service.get_prompt(
@@ -228,7 +229,7 @@ class AgentService:
             final_answer = await self.openai_service.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    *messages
+                    *self.state.messages
                 ],
                 model=model
             )
