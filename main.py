@@ -6,6 +6,7 @@ import uuid
 from dotenv import load_dotenv
 
 from modules.agent_service import AgentService
+from modules.answer_service import AnswerService
 from modules.database_service import DatabaseService
 from modules.langfuse_service import LangfuseService
 from modules.logging_service import logger
@@ -114,7 +115,8 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         ]
     )
     
-    agent_service = AgentService(state, openai_service, db_service, langfuse_service, web_service, document_service, file_service)
+    answer_service = AnswerService(openai_service, langfuse_service)
+    agent_service = AgentService(state, planning_service, execution_service, db_service, answer_service)
 
     while True:
         # Get user input

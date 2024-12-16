@@ -1,11 +1,12 @@
 from modules.types import State
 
 class AgentService:
-    def __init__(self, state: State, planning_service, execution_service, db_service):
+    def __init__(self, state: State, planning_service, execution_service, db_service, answer_service):
         self.state = state
         self.planning_service = planning_service
         self.execution_service = execution_service
         self.db_service = db_service
+        self.answer_service = answer_service
 
     async def run(self, parent_trace=None) -> str:
         self._store_message(self.state.messages[-1]['content'], "user")
