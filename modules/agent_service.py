@@ -12,13 +12,15 @@ from modules.utils import format_actions_for_prompt, format_tools_for_prompt
 
 class AgentService:
     def __init__(self, state: State, openai_service: OpenAIService, db_service: DatabaseService, 
-                 langfuse_service: LangfuseService, web_service: WebService, document_service: DocumentService):
+                 langfuse_service: LangfuseService, web_service: WebService, document_service: DocumentService,
+                 file_service: FileService):
         self.state = state
         self.openai_service = openai_service
         self.db_service = db_service
         self.langfuse_service = langfuse_service
         self.web_service = web_service
         self.document_service = document_service
+        self.file_service = file_service
 
     async def run(self, messages: List[Dict[str, Any]], parent_trace=None) -> str:
         self.db_service.store_message(self.state.conversation_uuid, "user", messages[-1]['content'])
@@ -139,12 +141,13 @@ class AgentService:
                 last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
                 result = await self.document_service.translate(parameters, last_doc, parent_trace)
             elif tool_name == "upload":
-                print(f"Uploading file to {parameters.get('path', 'unknown path')}")
-                result = ActionResult(
-                    result={"message": f"File uploaded to {parameters.get('path')}"},
-                    status=ActionStatus.SUCCESS,
-                    documents=[]
-                )
+                if not hasattr(self.state, 'actions') or not self.state.actions:
+                    raise ValueError("No previous document available to upload")
+                if "path" not in parameters:
+                    raise ValueError("Path parameter is required for upload tool")
+                    
+                last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
+                result = self.file_service.upload(last_doc, parameters["path"])
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)
