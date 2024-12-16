@@ -1,5 +1,5 @@
 import json
-from typing import List, Dict, Any
+from typing import Dict, Any
 import uuid
 from modules.logging_service import log_info, log_error, log_tool_call
 from modules.openai_service import OpenAIService
@@ -8,7 +8,7 @@ from modules.langfuse_service import LangfuseService
 from modules.web_service import WebService
 from modules.document_service import DocumentService
 from modules.file_service import FileService
-from modules.types import ActionResult, ActionStatus, State, Action
+from modules.types import ActionResult, State, Action
 from modules.utils import format_actions_for_prompt, format_tools_for_prompt
 
 class AgentService:
