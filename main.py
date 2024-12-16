@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 from modules.agent_service import AgentService
 from modules.answer_service import AnswerService
 from modules.database_service import DatabaseService
+from modules.execution_service import ExecutionService
 from modules.langfuse_service import LangfuseService
+from modules.planning_service import PlanningService
 from modules.logging_service import logger
 from modules.openai_service import OpenAIService
 from modules.web_service import WebService
@@ -115,6 +117,8 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
         ]
     )
     
+    planning_service = PlanningService(openai_service, langfuse_service)
+    execution_service = ExecutionService(openai_service, langfuse_service)
     answer_service = AnswerService(openai_service, langfuse_service)
     agent_service = AgentService(state, planning_service, execution_service, db_service, answer_service)
 
