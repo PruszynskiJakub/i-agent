@@ -34,7 +34,7 @@ web_service = WebService(
     db_service=db_service
 )
 document_service = DocumentService(db_service, openai_service, langfuse_service)
-file_service = FileService()
+file_service = FileService(text_service)
 
 
 def restore_conversation(conversation_uuid: str) -> list:

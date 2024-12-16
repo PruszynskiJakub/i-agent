@@ -6,13 +6,15 @@ from modules.logging_service import log_info, log_error
 class FileService:
     """Service for handling file system operations"""
     
-    def __init__(self, base_path: str = "uploads"):
+    def __init__(self, text_service, base_path: str = "uploads"):
         """
         Initialize FileService
         
         Args:
+            text_service: TextService instance for document processing
             base_path: Base directory for file uploads (default: "uploads")
         """
+        self.text_service = text_service
         self.base_path = base_path
         os.makedirs(base_path, exist_ok=True)
         
