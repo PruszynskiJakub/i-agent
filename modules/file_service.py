@@ -52,7 +52,7 @@ class FileService:
             log_error(error_msg)
             
             return ActionResult(
-                result=,
+                result=f"Failed to upload file: {str(e)}",
                 status=ActionStatus.FAILURE,
                 documents=[]
             )
