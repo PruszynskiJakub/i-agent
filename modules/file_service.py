@@ -30,7 +30,7 @@ class FileService:
         """
         try:
             # Ensure the path is within base_path
-            full_path = os.path.join(self.base_path, f"{document['uuid']}.md")
+            full_path = os.path.join(self.base_path, f"{document['metadata']['uuid']}.md")
             os.makedirs(os.path.dirname(full_path), exist_ok=True)
             
             # Restore placeholders in the document before writing
@@ -53,7 +53,7 @@ class FileService:
             
             return ActionResult(
                 result={"error": error_msg},
-                status=ActionStatus.ERROR,
+                status=ActionStatus.FAILURE,
                 documents=[]
             )
             
