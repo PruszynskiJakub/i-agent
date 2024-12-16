@@ -21,7 +21,7 @@ class AgentService:
             await self.execution_service.execute_plan(plan_result, self.state, parent_trace)
             self.state.config["current_step"] += 1
 
-        final_answer = await self.planning_service.create_final_answer(
+        final_answer = await self.answer_service.create_final_answer(
             self.state, self.state.messages, parent_trace
         )
 
