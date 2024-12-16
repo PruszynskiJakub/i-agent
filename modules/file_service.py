@@ -90,6 +90,6 @@ class FileService:
             log_error(error_msg)
             return ActionResult(
                 result={"error": error_msg},
-                status=ActionStatus.ERROR,
+                status=ActionStatus.FAILURE,
                 documents=[]
             )

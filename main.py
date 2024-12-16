@@ -74,6 +74,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
     # Initialize state and agent service
     state = State(
         conversation_uuid=conversation_uuid,
+        conversation_history=conversation_history,
         tools=[
             Tool(
                 uuid=uuid.UUID("123e4567-e89b-12d3-a456-426614174000"),
@@ -99,9 +100,7 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
                 name="upload",
                 description="Upload a document to the file system",
                 instructions="Uploads the most recently created document to the specified path",
-                required_params={
-                    "path": "The file path where the document should be saved"
-                },
+                required_params={},
                 optional_params={}
             ),
             Tool(
