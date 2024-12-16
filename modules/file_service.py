@@ -42,7 +42,7 @@ class FileService:
             log_info(f"File uploaded successfully to {full_path}")
             
             return ActionResult(
-                result={"message": f"File uploaded successfully to {full_path}"},
+                result=f"File uploaded successfully to {full_path}",
                 status=ActionStatus.SUCCESS,
                 documents=[]
             )
@@ -52,7 +52,7 @@ class FileService:
             log_error(error_msg)
             
             return ActionResult(
-                result={"error": error_msg},
+                result=,
                 status=ActionStatus.FAILURE,
                 documents=[]
             )
