@@ -16,30 +16,28 @@ class FileService:
         self.base_path = base_path
         os.makedirs(base_path, exist_ok=True)
         
-    def upload(self, document: Document, path: str) -> ActionResult:
+    def upload(self, document: Document) -> ActionResult:
         """
         Upload a document to the file system
         
         Args:
             document: Document to upload
-            path: Target path for the file
-            
+                
         Returns:
             ActionResult with status and result message
         """
         try:
             # Ensure the path is within base_path
-            full_path = os.path.join(self.base_path, path)
+            full_path = os.path.join(self.base_path, f"{document['uuid']}.md")
             os.makedirs(os.path.dirname(full_path), exist_ok=True)
             
-            # Write the document content to file
             with open(full_path, 'w', encoding='utf-8') as f:
-                f.write(document['content'])
+                f.write(document['text'])
                 
             log_info(f"File uploaded successfully to {full_path}")
             
             return ActionResult(
-                result={"message": f"File uploaded successfully to {path}"},
+                result={"message": f"File uploaded successfully to {full_path}"},
                 status=ActionStatus.SUCCESS,
                 documents=[]
             )
