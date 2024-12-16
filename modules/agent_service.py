@@ -142,13 +142,9 @@ class AgentService:
                 last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
                 result = await self.document_service.translate(parameters, last_doc, parent_trace)
             elif tool_name == "upload":
-                if not hasattr(self.state, 'actions') or not self.state.actions:
-                    raise ValueError("No previous document available to upload")
-                if "path" not in parameters:
-                    raise ValueError("Path parameter is required for upload tool")
-                    
+                
                 last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
-                result = self.file_service.upload(last_doc, parameters["path"])
+                result = self.file_service.upload(last_doc)
             elif tool_name == "open_file":
                 if not hasattr(self.state, 'actions') or not self.state.actions:
                     raise ValueError("No previous document available to open")
