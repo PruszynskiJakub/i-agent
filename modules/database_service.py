@@ -3,12 +3,98 @@ import uuid
 import json
 from datetime import datetime
 from contextlib import contextmanager
-from typing import Optional, Any, List, Dict
+from typing import Optional, Any, List, Dict, TypeVar, Generic
 from modules.types import Document, Action, ActionStatus
 
+T = TypeVar('T')
+
+class Repository(Generic[T]):
+    """Base repository class for database operations"""
+    def __init__(self, db_service: 'DatabaseService'):
+        self.db = db_service
+
+    @property
+    def table_name(self) -> str:
+        raise NotImplementedError("Table name must be specified")
+
+class MessageRepository(Repository[Dict[str, Any]]):
+    table_name = "messages"
+
+    def store(self, conversation_uuid: str, role: str, content: str) -> None:
+        query = 'INSERT INTO messages (conversation_uuid, role, content) VALUES (?, ?, ?)'
+        self.db._execute_query(query, (conversation_uuid, role, content))
+
+    def get_messages(self, conversation_uuid: Optional[str] = None, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        query = 'SELECT role, content, timestamp FROM messages'
+        params = []
+        
+        if conversation_uuid:
+            query += ' WHERE conversation_uuid = ?'
+            params.append(conversation_uuid)
+            
+        query += ' ORDER BY timestamp'
+        
+        if limit:
+            query += ' LIMIT ?'
+            params.append(limit)
+            
+        messages = self.db._execute_query(query, tuple(params))
+        return [
+            {
+                "role": msg[0], 
+                "content": msg[1], 
+                "timestamp": msg[2]
+            } for msg in messages
+        ]
+
+class DocumentRepository(Repository[Document]):
+    table_name = "documents"
+
+    def store(self, document: Document) -> str:
+        document_uuid = str(uuid.uuid4()) if 'uuid' not in document['metadata'] else document['metadata']['uuid']
+        query = '''
+            INSERT INTO documents (uuid, conversation_uuid, source, text, metadata)
+            VALUES (?, ?, ?, ?, ?)
+        '''
+        self.db._execute_query(query, (
+            document_uuid,
+            document['metadata'].get('conversation_uuid', ''),
+            document['metadata'].get('source', ''),
+            document['text'],
+            str(document['metadata'])
+        ))
+        return document_uuid
+
+    def get_documents(self, conversation_uuid: Optional[str] = None) -> List[Document]:
+        query = '''
+            SELECT uuid, conversation_uuid, source, text, metadata, created_at 
+            FROM documents
+        '''
+        params = []
+        
+        if conversation_uuid:
+            query += ' WHERE conversation_uuid = ?'
+            params.append(conversation_uuid)
+            
+        query += ' ORDER BY created_at DESC'
+        
+        documents = self.db._execute_query(query, tuple(params))
+        return [{
+            "uuid": doc[0],
+            "conversation_uuid": doc[1],
+            "source": doc[2],
+            "text": doc[3],
+            "metadata": eval(doc[4]) if doc[4] else {},
+            "created_at": doc[5]
+        } for doc in documents]
+
 class DatabaseService:
+    """Service for database operations using the Repository pattern"""
+    
     def __init__(self, db_name='chat_history.db'):
         self.db_name = db_name
+        self.messages = MessageRepository(self)
+        self.documents = DocumentRepository(self)
         self.init_db()
 
     @contextmanager
@@ -82,75 +168,16 @@ class DatabaseService:
         self._execute_query(action_documents_table)
 
     def store_message(self, conversation_uuid: str, role: str, content: str) -> None:
-        """Store a message in the database"""
-        query = 'INSERT INTO messages (conversation_uuid, role, content) VALUES (?, ?, ?)'
-        self._execute_query(query, (conversation_uuid, role, content))
+        return self.messages.store(conversation_uuid, role, content)
 
-    def get_messages(self, conversation_uuid: str = None, limit: int = None) -> List[Dict[str, Any]]:
-        """Retrieve messages from the database"""
-        query = 'SELECT role, content, timestamp FROM messages'
-        params = []
-        
-        if conversation_uuid:
-            query += ' WHERE conversation_uuid = ?'
-            params.append(conversation_uuid)
-            
-        query += ' ORDER BY timestamp'
-        
-        if limit:
-            query += ' LIMIT ?'
-            params.append(limit)
-            
-        messages = self._execute_query(query, tuple(params))
-        return [{"role": msg[0], "content": msg[1], "timestamp": msg[2]} for msg in messages]
+    def get_messages(self, conversation_uuid: Optional[str] = None, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+        return self.messages.get_messages(conversation_uuid, limit)
 
     def store_document(self, document: Document) -> str:
-        """
-        Store a document in the database
-        
-        Args:
-            document: Document object to store
-            
-        Returns:
-            str: UUID of the stored document
-        """
-        document_uuid = str(uuid.uuid4()) if 'uuid' not in document['metadata'] else document['metadata']['uuid']
-        query = '''
-            INSERT INTO documents (uuid, conversation_uuid, source, text, metadata)
-            VALUES (?, ?, ?, ?, ?)
-        '''
-        self._execute_query(query, (
-            document_uuid,
-            document['metadata'].get('conversation_uuid', ''),
-            document['metadata'].get('source', ''),
-            document['text'],
-            str(document['metadata'])
-        ))
-        return document_uuid
+        return self.documents.store(document)
 
-    def get_documents(self, conversation_uuid: str = None) -> List[Dict[str, Any]]:
-        """Retrieve documents from the database"""
-        query = '''
-            SELECT uuid, conversation_uuid, source, text, metadata, created_at 
-            FROM documents
-        '''
-        params = []
-        
-        if conversation_uuid:
-            query += ' WHERE conversation_uuid = ?'
-            params.append(conversation_uuid)
-            
-        query += ' ORDER BY created_at DESC'
-        
-        documents = self._execute_query(query, tuple(params))
-        return [{
-            "uuid": doc[0],
-            "conversation_uuid": doc[1],
-            "source": doc[2],
-            "text": doc[3],
-            "metadata": eval(doc[4]) if doc[4] else {},
-            "created_at": doc[5]
-        } for doc in documents]
+    def get_documents(self, conversation_uuid: Optional[str] = None) -> List[Document]:
+        return self.documents.get_documents(conversation_uuid)
 
     def store_action(self, action: Action) -> None:
         """Store an action and its related documents in the database"""
