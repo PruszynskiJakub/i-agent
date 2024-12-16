@@ -33,8 +33,11 @@ class FileService:
             full_path = os.path.join(self.base_path, f"{document['uuid']}.md")
             os.makedirs(os.path.dirname(full_path), exist_ok=True)
             
+            # Restore placeholders in the document before writing
+            restored_doc = self.text_service.restore_placeholders(document)
+            
             with open(full_path, 'w', encoding='utf-8') as f:
-                f.write(document['text'])
+                f.write(restored_doc['text'])
                 
             log_info(f"File uploaded successfully to {full_path}")
             
