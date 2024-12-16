@@ -53,3 +53,43 @@ class FileService:
                 status=ActionStatus.ERROR,
                 documents=[]
             )
+            
+    def open_file(self, document: Document) -> ActionResult:
+        """
+        Open and read a file specified in the document
+        
+        Args:
+            document: Document containing the file path to open
+            
+        Returns:
+            ActionResult with file contents or error message
+        """
+        try:
+            path = document.get('path')
+            if not path:
+                raise ValueError("Document must contain a 'path' field")
+                
+            full_path = os.path.join(self.base_path, path)
+            
+            if not os.path.exists(full_path):
+                raise FileNotFoundError(f"File not found: {path}")
+                
+            with open(full_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                
+            log_info(f"File opened successfully: {full_path}")
+            
+            return ActionResult(
+                result={"content": content},
+                status=ActionStatus.SUCCESS,
+                documents=[]
+            )
+            
+        except Exception as e:
+            error_msg = f"Failed to open file: {str(e)}"
+            log_error(error_msg)
+            return ActionResult(
+                result={"error": error_msg},
+                status=ActionStatus.ERROR,
+                documents=[]
+            )

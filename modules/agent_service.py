@@ -149,6 +149,11 @@ class AgentService:
                     
                 last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
                 result = self.file_service.upload(last_doc, parameters["path"])
+            elif tool_name == "open_file":
+                if not hasattr(self.state, 'actions') or not self.state.actions:
+                    raise ValueError("No previous document available to open")
+                last_doc = self.state.actions[-1].documents[0]  # Get first document from last action
+                result = self.file_service.open_file(last_doc)
             else:
                 error_msg = f"Unknown tool: {tool_name}"
                 log_error(error_msg)

@@ -103,6 +103,14 @@ async def main_loop(conversation_uuid: str, conversation_history: list, exit_key
                     "path": "The file path where the document should be saved"
                 },
                 optional_params={}
+            ),
+            Tool(
+                uuid=uuid.UUID("423e4567-e89b-12d3-a456-426614174003"),
+                name="open_file",
+                description="Open and read a file from the file system",
+                instructions="Opens a file specified in the most recently created document. The document must contain a 'path' field.",
+                required_params={},
+                optional_params={}
             )
         ]
     )
