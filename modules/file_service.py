@@ -65,14 +65,14 @@ class FileService:
             ActionResult with file contents or error message
         """
         try:
-            path = document.get('path')
-            if not path:
-                raise ValueError("Document must contain a 'path' field")
+            source = document.get('source')
+            if not source:
+                raise ValueError("Document must contain a 'source' field")
                 
-            full_path = os.path.join(self.base_path, path)
+            full_path = os.path.join(self.base_path, source)
             
             if not os.path.exists(full_path):
-                raise FileNotFoundError(f"File not found: {path}")
+                raise FileNotFoundError(f"File not found: {source}")
                 
             with open(full_path, 'r', encoding='utf-8') as f:
                 content = f.read()
