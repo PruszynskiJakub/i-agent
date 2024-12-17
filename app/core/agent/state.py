@@ -1,27 +1,31 @@
 from dataclasses import dataclass, field
-from typing import Any, List, Dict
+from typing import Any, List, Dict, Literal
 from uuid import UUID
 
 from app.core.agent.config import AgentConfig
+from app.core.repository.message import MessageRepository
+from app.core.model.message import Message
 
 class StateHolder:
     """
-    Holds the state of an agent conversation, including messages, actions, and documents.
-    This class implements proper encapsulation and immutability where appropriate.
+    Manages the state of an agent's conversation, encompassing messages, actions, and documents.
+    This class ensures encapsulation and immutability where applicable.
     
     Attributes:
-        conversation_uuid (str): Unique identifier for the conversation
+        conversation_uuid (str): A unique identifier for the conversation.
     """
-    def __init__(self, conversation_uuid: str, config: AgentConfig = None) -> None:
+    def __init__(self, conversation_uuid: str, message_repository: MessageRepository, config: AgentConfig = None) -> None:
         """
         Initialize a new StateHolder instance.
         
         Args:
             conversation_uuid: Unique identifier for the conversation
+            message_repository: Repository for managing messages
             config: Configuration for the state holder. If None, default config will be used.
         """
         self._conversation_uuid: str = conversation_uuid
-        self._messages: List[Any] = []
+        self._message_repository = message_repository
+        self._messages: List[Message] = self._message_repository.find_by_conversation(conversation_uuid)
         self._taken_actions: List[Any] = []
         self._documents: List[Any] = []
         self._config: AgentConfig = config if config is not None else AgentConfig()
@@ -32,18 +36,28 @@ class StateHolder:
         return self._conversation_uuid
 
     @property
-    def messages(self) -> List[Any]:
+    def messages(self) -> List[Message]:
         """Get a copy of all messages in the conversation."""
         return self._messages.copy()
 
-    def add_message(self, message: Any) -> None:
+    def add_message(self, content: str, role: Literal["user", "assistant"]) -> Message:
         """
-        Add a new message to the conversation.
+        Create and add a new message to the conversation.
         
         Args:
-            message: The message to add
+            content: The message content
+            role: The role of the message sender (user or assistant)
+            
+        Returns:
+            Message: The created and persisted Message object
         """
+        message = self._message_repository.create(
+            conversation_uuid=self._conversation_uuid,
+            content=content,
+            role=role
+        )
         self._messages.append(message)
+        return message
 
     @property
     def taken_actions(self) -> List[Any]:

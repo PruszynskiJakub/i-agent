@@ -1,0 +1,31 @@
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Literal
+
+class Message(BaseModel):
+    """
+    Represents a message in a conversation
+    
+    Attributes:
+        uuid: Unique identifier for the message
+        conversation_uuid: UUID of the conversation this message belongs to
+        content: The actual message content
+        role: Role of the message sender (user or assistant)
+        created_at: Timestamp when the message was created
+    """
+    uuid: str = Field(..., description="Unique identifier for the message")
+    conversation_uuid: str = Field(..., description="UUID of the conversation")
+    content: str = Field(..., description="Message content")
+    role: Literal["user", "assistant"] = Field(..., description="Role of the message sender")
+    created_at: datetime = Field(default_factory=datetime.utcnow, description="Message creation timestamp")
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "uuid": "123e4567-e89b-12d3-a456-426614174000",
+                "conversation_uuid": "987fcdeb-51a2-43d7-9012-345678901234",
+                "content": "Hello, how can I help you today?",
+                "role": "assistant",
+                "created_at": "2024-01-01T12:00:00"
+            }
+        }
