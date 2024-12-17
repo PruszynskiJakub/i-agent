@@ -32,7 +32,8 @@ class AgentPlan:
             )
 
             # Create generation trace
-            generation = trace.create_generation(
+            generation = self.trace_service.create_generation(
+                trace=trace,
                 name="agent_plan",
                 model=prompt.config.get("model", "gpt-4"),
                 input=system_prompt,
@@ -40,13 +41,13 @@ class AgentPlan:
             )
 
             # Get completion from LLM
-            completion = self.llm.complete(
+            completion = self.llm.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
                     *format_messages_for_completion(state.messages)
                 ],
                 model=prompt.config.get("model", "gpt-4"),
-                response_format={"type": "json"}
+                json_mode=True
             )
 
             # Parse response into Plan object
@@ -68,7 +69,7 @@ class AgentPlan:
                 raise Exception(f"Failed to parse JSON response: {str(e)}")
 
             # End the generation trace
-            generation.end(output=response_data)
+            self.trace_service.end_generation(generation, output=response_data)
             
             return plan
 
