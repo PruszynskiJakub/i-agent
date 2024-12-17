@@ -1,8 +1,7 @@
-from typing import List, Dict
-from app.core.agent.state import StateHolder
-from app.core.ai.llm import LLMProvider
-from app.core.services.trace import TraceService
-from app.core.repository.prompt import PromptRepository
+from app.agent.state import StateHolder
+from app.ai.llm import LLMProvider
+from app.services.trace import TraceService
+from app.repository.prompt import PromptRepository
 
 class Answer:
     def __init__(self, llm: LLMProvider, trace_service: TraceService, prompt_repository: PromptRepository):

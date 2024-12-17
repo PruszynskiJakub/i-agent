@@ -2,8 +2,8 @@ from datetime import datetime
 import uuid
 from typing import List, Optional
 
-from app.core.model.message import Message
-from app.core.repository.database import Database
+from app.model.message import Message
+from app.repository.database import Database
 
 class MessageRepository:
     """Repository for managing Message entities in the database"""

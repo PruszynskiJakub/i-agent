@@ -1,8 +1,8 @@
-from app.core.agent.answer import Answer
-from app.core.agent.execute import Execute
-from app.core.agent.plan import Plan
-from app.core.agent.state import StateHolder
-from app.core.services.trace import TraceService
+from app.agent.answer import Answer
+from app.agent.execute import Execute
+from app.agent.plan import Plan
+from app.agent.state import StateHolder
+from app.services.trace import TraceService
 
 
 class Agent:

@@ -2,7 +2,7 @@ from typing import Dict, Any
 import re
 from uuid import UUID
 
-from app.core.model.document import Document, DocumentMetadata
+from app.model.document import Document, DocumentMetadata
 
 
 class TextService:

@@ -1,12 +1,10 @@
-from dataclasses import dataclass, field
-from typing import Any, List, Dict, Literal
-from uuid import UUID
+from typing import List, Literal
 
-from app.core.agent.config import AgentConfig
-from app.core.repository.message import MessageRepository
-from app.core.model.message import Message
-from app.core.model.action import Action
-from app.core.model.document import Document
+from app.agent.config import AgentConfig
+from app.repository.message import MessageRepository
+from app.model.message import Message
+from app.model.action import Action
+from app.model.document import Document
 
 class StateHolder:
     """

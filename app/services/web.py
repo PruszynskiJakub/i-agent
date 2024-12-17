@@ -1,7 +1,5 @@
-import os
-from typing import Dict, Any
 from firecrawl import FirecrawlApp
-from app.core.model.web_content import WebContent
+from app.model.web_content import WebContent
 
 class WebService:
     def __init__(self, api_key: str):

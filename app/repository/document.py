@@ -2,8 +2,8 @@ from typing import List, Optional
 import json
 from uuid import UUID
 
-from app.core.model.document import Document, DocumentMetadata
-from app.core.repository.database import Database
+from app.model.document import Document
+from app.repository.database import Database
 
 
 class DocumentRepository:

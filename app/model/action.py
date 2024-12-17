@@ -3,7 +3,7 @@ from enum import Enum
 from typing import List
 from uuid import UUID
 
-from app.core.model.document import Document
+from app.model.document import Document
 
 
 class ActionStatus(Enum):

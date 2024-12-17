@@ -2,9 +2,9 @@ from typing import List, Optional
 import json
 from uuid import UUID
 
-from app.core.model.action import Action, ActionStatus
-from app.core.repository.database import Database
-from app.core.repository.document import DocumentRepository
+from app.model.action import Action, ActionStatus
+from app.repository.database import Database
+from app.repository.document import DocumentRepository
 
 
 class ActionRepository:
