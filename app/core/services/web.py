@@ -6,7 +6,6 @@ from app.core.model.web_content import WebContent
 class WebService:
     def __init__(self, api_key: str):
         """Initialize WebService with Firecrawl API key"""
-        self.api_key = api_key
         self.client = FirecrawlApp(api_key=api_key)
 
     async def scrape_webpage(self, url: str, format_type: str = 'md') -> WebContent:
