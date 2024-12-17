@@ -3,7 +3,7 @@ import json
 from uuid import UUID
 
 from app.core.model.document import Document, DocumentMetadata
-from app.core.infrastructure.repository.database import Database
+from app.core.repository.database import Database
 
 
 class DocumentRepository:
