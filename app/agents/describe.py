@@ -1,2 +1,2 @@
-class Describe:
+class AgentDescribe:
     pass

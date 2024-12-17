@@ -3,7 +3,7 @@ from app.ai.llm import LLMProvider
 from app.services.trace import TraceService
 from app.repository.prompt import PromptRepository
 
-class Answer:
+class AgentAnswer:
     def __init__(self, llm: LLMProvider, trace_service: TraceService, prompt_repository: PromptRepository):
         self.llm = llm
         self.trace_service = trace_service

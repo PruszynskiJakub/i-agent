@@ -3,7 +3,7 @@ from app.repository.prompt import PromptRepository
 from app.services.trace import TraceService
 
 
-class Execute:
+class AgentExecute:
     def __init__(self, llm: LLMProvider, prompt_repository: PromptRepository, trace_service: TraceService):
         self.llm = llm
         self.prompt_repository = prompt_repository
