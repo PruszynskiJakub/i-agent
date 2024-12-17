@@ -1,12 +1,12 @@
 from agents.state import StateHolder
-from agents.plan import Plan
+from agents.plan import AgentPlan
 from agents.execute import AgentExecute
 from agents.answer import AgentAnswer
 from services.trace import TraceService
 
 
 class Agent:
-    def __init__(self, state: StateHolder, trace_service: TraceService, plan: Plan, execute: AgentExecute, answer: AgentAnswer):
+    def __init__(self, state: StateHolder, trace_service: TraceService, plan: AgentPlan, execute: AgentExecute, answer: AgentAnswer):
         self.state = state
         self.trace_service = trace_service
         self.plan = plan
