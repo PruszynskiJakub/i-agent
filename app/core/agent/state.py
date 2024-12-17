@@ -5,6 +5,8 @@ from uuid import UUID
 from app.core.agent.config import AgentConfig
 from app.core.repository.message import MessageRepository
 from app.core.model.message import Message
+from app.core.model.action import Action
+from app.core.model.document import Document
 
 class StateHolder:
     """
@@ -26,8 +28,8 @@ class StateHolder:
         self._conversation_uuid: str = conversation_uuid
         self._message_repository = message_repository
         self._messages: List[Message] = self._message_repository.find_by_conversation(conversation_uuid)
-        self._taken_actions: List[Any] = []
-        self._documents: List[Any] = []
+        self._taken_actions: List[Action] = []
+        self._documents: List[Document] = []
         self._config: AgentConfig = config if config is not None else AgentConfig()
 
     @property
@@ -60,30 +62,30 @@ class StateHolder:
         return message
 
     @property
-    def taken_actions(self) -> List[Any]:
+    def taken_actions(self) -> List[Action]:
         """Get a copy of all actions taken in the conversation."""
         return self._taken_actions.copy()
 
-    def add_action(self, action: Any) -> None:
+    def add_action(self, action: Action) -> None:
         """
         Add a new action to the conversation.
         
         Args:
-            action: The action to add
+            action (Action): The action to add
         """
         self._taken_actions.append(action)
 
     @property
-    def documents(self) -> List[Any]:
+    def documents(self) -> List[Document]:
         """Get a copy of all documents in the conversation."""
         return self._documents.copy()
 
-    def add_document(self, document: Any) -> None:
+    def add_document(self, document: Document) -> None:
         """
         Add a new document to the conversation.
         
         Args:
-            document: The document to add
+            document (Document): The document to add
         """
         self._documents.append(document)
 
