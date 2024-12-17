@@ -91,6 +91,10 @@ class StateHolder:
     def config(self) -> AgentConfig:
         """Get the current configuration."""
         return self._config
+    
+    def should_continue(self) -> bool:
+        """Determine if the agent should continue processing."""
+        return self._config.current_step < self._config.max_steps
 
     def increment_step(self) -> None:
         """Increment the current step number."""
