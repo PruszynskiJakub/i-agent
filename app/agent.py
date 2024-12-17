@@ -1,11 +1,8 @@
 from agents.state import StateHolder
-
 from agents.plan import Plan
-
 from agents.execute import Execute
-
 from agents.answer import Answer
-from app.services.trace import TraceService
+from services.trace import TraceService
 
 
 class Agent:
