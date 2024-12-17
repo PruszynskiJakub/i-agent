@@ -158,6 +158,30 @@ class TraceService:
             status_message=status_message
         )
 
+    def end_trace(self,
+                 trace,
+                 input: Optional[Any] = None,
+                 output: Optional[Any] = None,
+                 level: Optional[str] = None,
+                 status_message: Optional[str] = None):
+        """End a trace with input/output data
+        
+        Args:
+            trace: Trace object to end
+            input: Optional input data to update
+            output: Optional output data to update
+            level: Final level of the trace
+            status_message: Status message (e.g. error details)
+        """
+        if input is not None:
+            trace.update(input=input)
+        if output is not None:
+            trace.update(output=output)
+        if level is not None:
+            trace.update(level=level)
+        if status_message is not None:
+            trace.update(status_message=status_message)
+
     def flush(self):
         """Flush all pending traces to Langfuse"""
         self.client.flush()
