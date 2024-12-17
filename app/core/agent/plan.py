@@ -1,2 +1,2 @@
 class Plan:
-    
+    pass
