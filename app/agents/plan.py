@@ -12,7 +12,7 @@ class AgentPlan:
         self.prompt_repository = prompt_repository
         self.trace_service = trace_service
 
-    def invoke(self, state: StateHolder, trace: TraceService) -> Plan:
+    def invoke(self, state: StateHolder, trace) -> Plan:
         """
         Creates a plan based on the current state.
         Returns a Plan object with thinking, step, tool, parameters, and required information.
