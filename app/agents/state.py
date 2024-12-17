@@ -1,6 +1,6 @@
 from typing import List, Literal
 
-from app.agent.config import AgentConfig
+from config import AgentConfig
 from app.repository.message import MessageRepository
 from app.model.message import Message
 from app.model.action import Action

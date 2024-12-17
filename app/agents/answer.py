@@ -1,4 +1,4 @@
-from app.agent.state import StateHolder
+from state import StateHolder
 from app.ai.llm import LLMProvider
 from app.services.trace import TraceService
 from app.repository.prompt import PromptRepository

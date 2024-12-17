@@ -1,2 +1,0 @@
-class Plan:
-    pass

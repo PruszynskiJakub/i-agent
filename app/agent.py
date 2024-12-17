@@ -1,7 +1,10 @@
-from app.agent.answer import Answer
-from app.agent.execute import Execute
-from app.agent.plan import Plan
-from app.agent.state import StateHolder
+from agents.state import StateHolder
+
+from agents.plan import Plan
+
+from agents.execute import Execute
+
+from agents.answer import Answer
 from app.services.trace import TraceService
 
 
