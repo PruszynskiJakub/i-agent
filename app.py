@@ -19,12 +19,6 @@ def message_hello(message, say):
         thread_ts=message["thread_ts"]
     )
 
-@app.event("assistant_thread_started")
-def handle_message(message: Dict, say):
-    print(message)
-    say("Hello")
-
-
 @app.command("/model")
 def handle_model_command(ack, body, respond):
     ack()
