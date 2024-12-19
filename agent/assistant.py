@@ -21,6 +21,9 @@ class Assistant:
         trace = self.trace_service.create_trace(
             name = self.state.messages[-1].content[:45],  # First 45 chars of user input as trace name
             user_id= os.getenv("USER", "default_user"),
+            metadata={
+                'medium': 'slack'
+            },
             session_id= self.state.conversation_uuid,
             input= self.state.messages[-1].content,
         )
