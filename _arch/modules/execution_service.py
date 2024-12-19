@@ -1,7 +1,8 @@
 import uuid
 from typing import Dict, Any
-from modules.logging_service import log_info, log_error, log_tool_call
-from modules.types import Action, ActionResult
+from _arch.modules.logging_service import log_info, log_error, log_tool_call
+from _arch.modules.types import Action
+
 
 class ExecutionService:
     def __init__(self, tool_registry, db_service):

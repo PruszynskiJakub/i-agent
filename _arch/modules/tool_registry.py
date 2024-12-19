@@ -1,5 +1,5 @@
 from typing import Dict, Any, Callable
-from modules.types import ActionResult
+from _arch.modules.types import ActionResult
 
 class ToolRegistry:
     def __init__(self, web_service, document_service, file_service):

@@ -1,4 +1,4 @@
-from modules.types import State
+from _arch.modules.types import State
 
 class AgentService:
     def __init__(self, state: State, planning_service, execution_service, db_service, answer_service):

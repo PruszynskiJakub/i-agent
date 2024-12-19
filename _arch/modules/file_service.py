@@ -1,7 +1,6 @@
 import os
-from typing import Dict, Any
-from modules.types import Document, ActionResult, ActionStatus
-from modules.logging_service import log_info, log_error
+from _arch.modules.types import Document, ActionResult, ActionStatus
+from _arch.modules.logging_service import log_info, log_error
 
 class FileService:
     """Service for handling file system operations"""

@@ -5,19 +5,19 @@ import uuid
 
 from dotenv import load_dotenv
 
-from modules.agent_service import AgentService
-from modules.answer_service import AnswerService
-from modules.database_service import DatabaseService
-from modules.execution_service import ExecutionService
-from modules.langfuse_service import LangfuseService
-from modules.planning_service import PlanningService
-from modules.logging_service import logger
-from modules.openai_service import OpenAIService
-from modules.web_service import WebService
-from modules.text_service import TextService
-from modules.document_service import DocumentService
-from modules.file_service import FileService
-from modules.types import State, Tool
+from _arch.modules.agent_service import AgentService
+from _arch.modules.answer_service import AnswerService
+from _arch.modules.database_service import DatabaseService
+from _arch.modules.execution_service import ExecutionService
+from _arch.modules.langfuse_service import LangfuseService
+from _arch.modules.planning_service import PlanningService
+from _arch.modules.logging_service import logger
+from _arch.modules.openai_service import OpenAIService
+from _arch.modules.web_service import WebService
+from _arch.modules.text_service import TextService
+from _arch.modules.document_service import DocumentService
+from _arch.modules.file_service import FileService
+from _arch.modules.types import State, Tool
 
 # Load environment variables from .env file
 load_dotenv()

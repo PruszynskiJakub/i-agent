@@ -1,6 +1,6 @@
 from typing import List
 
-from modules.types import Tool, Action
+from _arch.modules.types import Tool, Action
 
 
 def parse_markdown_backticks(str) -> str:

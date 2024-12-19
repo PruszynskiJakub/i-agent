@@ -1,7 +1,7 @@
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any
 import re
 from uuid import UUID
-from modules.types import Document, DocumentMetadata
+from _arch.modules.types import Document, DocumentMetadata
 
 class TextService:
     """Service for processing and managing text documents"""

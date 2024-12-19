@@ -1,7 +1,7 @@
 from typing import Dict, Any
 import json
-from modules.logging_service import log_info, log_error
-from modules.utils import format_tools_for_prompt, format_actions_for_prompt
+from _arch.modules.logging_service import log_info, log_error
+from _arch.modules.utils import format_tools_for_prompt, format_actions_for_prompt
 
 class PlanningService:
     def __init__(self, openai_service, langfuse_service):

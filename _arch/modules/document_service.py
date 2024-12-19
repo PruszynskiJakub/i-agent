@@ -1,10 +1,10 @@
 import uuid
 from typing import Dict, Any, Optional
 
-from modules.database_service import DatabaseService
-from modules.openai_service import OpenAIService
-from modules.langfuse_service import LangfuseService
-from modules.types import Document, ActionResult, ActionStatus
+from _arch.modules.database_service import DatabaseService
+from _arch.modules.openai_service import OpenAIService
+from _arch.modules.langfuse_service import LangfuseService
+from _arch.modules.types import Document, ActionResult, ActionStatus
 
 
 class DocumentService:
