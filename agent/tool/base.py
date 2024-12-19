@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, Any, List
 from uuid import UUID
 
+from model.action import ActionResult
 from model.document import Document
 
 @dataclass
@@ -16,7 +17,7 @@ class Tool(ABC):
     optional_params: Dict[str, str]
 
     @abstractmethod
-    async def execute(self, params: Dict[str, Any], docs: List[Document], trace: Any) -> Any:
+    async def execute(self, params: Dict[str, Any], docs: List[Document], trace: Any) -> ActionResult:
         """Execute the tool with the given parameters and documents
         
         Args:
