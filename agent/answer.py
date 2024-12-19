@@ -57,6 +57,7 @@ class AgentAnswer:
             
             
             self.trace_service.end_generation(generation, output=final_answer)
+            state.add_message(content=final_answer, role="assistant")
             
             return final_answer
             
