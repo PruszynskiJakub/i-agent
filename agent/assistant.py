@@ -1,11 +1,11 @@
-from agents.state import StateHolder
-from agents.plan import AgentPlan
-from agents.execute import AgentExecute
-from agents.answer import AgentAnswer
+from agent.answer import AgentAnswer
+from agent.execute import AgentExecute
+from agent.plan import AgentPlan
+from agent.state import StateHolder
 from services.trace import TraceService
 
 
-class Agent:
+class Assistant:
     def __init__(self, state: StateHolder, trace_service: TraceService, plan: AgentPlan, execute: AgentExecute, answer: AgentAnswer):
         self.state = state
         self.trace_service = trace_service
@@ -18,14 +18,14 @@ class Agent:
         trace = self.trace_service.create_trace()
 
         while self.state.should_continue(): 
-            plan = self.plan.invoke(self.state, trace)
+            plan = await self.plan.invoke(self.state, trace)
 
-            if plan['tool'] == 'final_answer':
+            if plan.tool == 'final_answer':
                 break
 
-            self.execute.invoke(self.state, plan, trace)
+            await self.execute.invoke(self.state, plan, trace)
 
-        final_answer = self.answer.invoke(self.state, trace)
+        final_answer = await self.answer.invoke(self.state, trace)
 
         self.trace_service.end_trace(trace, output=final_answer)
         return final_answer

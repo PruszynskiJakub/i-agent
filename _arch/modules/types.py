@@ -1,8 +1,7 @@
 from dataclasses import dataclass, field
-from typing import List, Any, Optional, Callable, Dict, TypedDict, ForwardRef
-from uuid import UUID
-
 from enum import Enum
+from typing import List, Any, Dict, TypedDict, ForwardRef
+from uuid import UUID
 
 # Forward reference for Document type
 Document = ForwardRef('Document')

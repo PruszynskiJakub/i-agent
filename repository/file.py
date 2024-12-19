@@ -5,12 +5,12 @@ from typing import Optional
 class FileRepository:
     """Repository for handling basic file system operations"""
 
-    def __init__(self, base_path: str = "uploads"):
+    def __init__(self, base_path: str = "_uploads"):
         """
         Initialize FileRepository
         
         Args:
-            base_path: Base directory for file storage (default: "uploads")
+            base_path: Base directory for file storage (default: "_uploads")
         """
         self.base_path = base_path
         os.makedirs(base_path, exist_ok=True)

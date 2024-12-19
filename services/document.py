@@ -1,5 +1,5 @@
-from app.model.document import Document
-from app.repository.prompt import PromptRepository
+from model.document import Document
+from repository.prompt import PromptRepository
 
 
 class DocumentService:

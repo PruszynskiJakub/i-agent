@@ -1,8 +1,8 @@
-from app.agents.state import StateHolder
-from app.ai.llm import LLMProvider
-from app.model.plan import Plan
-from app.repository.prompt import PromptRepository
-from app.services.trace import TraceService
+from agent.state import StateHolder
+from ai.llm import LLMProvider
+from model.plan import Plan
+from repository.prompt import PromptRepository
+from services.trace import TraceService
 
 
 class AgentExecute:
@@ -11,7 +11,7 @@ class AgentExecute:
         self.prompt_repository = prompt_repository
         self.trace_service = trace_service
     
-    def invoke(self, state: StateHolder, plan: Plan, trace) -> None:
+    async def invoke(self, state: StateHolder, plan: Plan, trace) -> None:
         """
         Executes the given plan and updates the state accordingly.
         Creates a trace span for the execution process.

@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List, TypedDict
 from uuid import UUID
 
@@ -12,7 +13,8 @@ class DocumentMetadata(TypedDict, total=False):
     images: List[str]  # List of image URLs found in the document
     urls: List[str]    # List of URLs found in the document
 
-class Document(TypedDict, total=True):
+@dataclass
+class Document:
     """A document that can be processed by the agent"""
     uuid: UUID
     conversation_uuid: str

@@ -1,63 +1,91 @@
+import asyncio
 import os
-from typing import Dict
 
 from dotenv import load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
-from slack_bolt.context import assistant
 
+from agent.answer import AgentAnswer
+from agent.assistant import Assistant
+from agent.execute import AgentExecute
+from agent.plan import AgentPlan
+from agent.state import StateHolder
+from ai.open_ai import OpenAIProvider
+from repository.database import Database
+from repository.message import MessageRepository
+from repository.prompt import PromptRepository
+from services.trace import TraceService
+
+# Initialize core services
 load_dotenv()
+database = Database()
+message_repository = MessageRepository(database)
+llm = OpenAIProvider(api_key=os.environ["OPENAI_API_KEY"])
+trace_service = TraceService(
+    public_key=os.environ["LANGFUSE_PUBLIC_KEY"],
+    secret_key=os.environ["LANGFUSE_SECRET_KEY"],
+    host=os.environ.get("LANGFUSE_HOST", "https://cloud.langfuse.com")
+)
+prompt_repository = PromptRepository(trace_service.client)
 
+# Initialize agent components
+agent_plan = AgentPlan(llm, prompt_repository, trace_service)
+agent_execute = AgentExecute(llm, prompt_repository, trace_service)
+agent_answer = AgentAnswer(llm, trace_service, prompt_repository)
+
+# Initialize Slack app
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
-@app.message("hello")
-def message_hello(message, say):
-    print(message)
-    # say() sends a message to the channel where the event was triggered
-    say(
-        f"Hey there <@{message['user']}>!",
-        thread_ts=message["thread_ts"] # present in thread
-    )
 
 @app.event("message")
-def handle_message(message, say):
-    print(message)
-    blocks = [{
-        "type": "section",
-        "text": {"type": "mrkdwn", "text": "Pick a date for me to remind you"},
-        "accessory": {
-            "type": "datepicker",
-            "action_id": "datepicker_remind",
-            "initial_date": "2020-05-04",
-            "placeholder": {"type": "plain_text", "text": "Select a date"}
-        }
-    }]
-    say(
-        blocks=blocks,
-        text="Pick a date for me to remind you",
-        thread_ts = message["ts"],
-        attachments=[
-            {
-                "color": "#36a64f",
-                "pretext": "Optional pretext",
-                "title": "Attachment Title",
-                "text": "Attachment text",
-                "footer": "Footer text"
-            }
-        ]
-    )
+def handle_message(message, say, ack):
+    ack()
+    """Handle incoming messages and respond using the agent"""
+    try:
+        # Initialize state for this conversation
+        state = StateHolder(
+            conversation_uuid=message["ts"],  # Using timestamp as conversation ID
+            message_repository=message_repository
+        )
 
+        # Add the user's message to state
+        state.add_message(content=message["text"], role="user")
+
+        # Initialize and run agent
+        assistant = Assistant(
+            state=state,
+            trace_service=trace_service,
+            plan=agent_plan,
+            execute=agent_execute,
+            answer=agent_answer
+        )
+
+        # Get agent's response
+        response = asyncio.run(assistant.run())
+
+        # Send response back to Slack
+        say(
+            text=response,
+            thread_ts=message.get("thread_ts", message["ts"])  # Reply in thread
+        )
+
+    except Exception as e:
+        # Handle errors gracefully
+        raise e
+        error_message = f"Sorry, I encountered an error: {str(e)}"
+        say(
+            text=error_message,
+            thread_ts=message.get("thread_ts", message["ts"])
+        )
+
+
+# Keep existing command handlers
 @app.command("/model")
 def handle_model_command(ack, body, respond):
     ack()
-    print(body)
     respond("OK, model changed")
-
-@app.action("datepicker_remind")
-def handle_some_action(ack, body, logger):
-    ack()
-    logger.info(body)
 
 
 if __name__ == "__main__":
-    SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
+    handler = SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"])
+    handler.start()

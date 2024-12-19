@@ -5,13 +5,13 @@ from _arch.modules.logging_service import log_info, log_error
 class FileService:
     """Service for handling file system operations"""
     
-    def __init__(self, text_service, base_path: str = "uploads"):
+    def __init__(self, text_service, base_path: str = "_uploads"):
         """
         Initialize FileService
         
         Args:
             text_service: TextService instance for document processing
-            base_path: Base directory for file uploads (default: "uploads")
+            base_path: Base directory for file _uploads (default: "_uploads")
         """
         self.text_service = text_service
         self.base_path = base_path

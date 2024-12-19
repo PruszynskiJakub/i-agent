@@ -1,5 +1,6 @@
 from typing import List
-from app.model.action import Action
+from model.action import Action
+from model.message import Message
 
 
 def format_actions_for_prompt(actions: List[Action]) -> str:
@@ -35,7 +36,7 @@ def format_actions_for_prompt(actions: List[Action]) -> str:
         action_descriptions.append(desc)
     return "\n".join(action_descriptions)
 
-def format_messages_for_completion(messages: List[dict]) -> List[dict]:
+def format_messages_for_completion(messages: List[Message]) -> List[dict]:
     """
     Formats messages for completion by ensuring each message is a dictionary
     with 'role' and 'content' keys.
@@ -49,8 +50,8 @@ def format_messages_for_completion(messages: List[dict]) -> List[dict]:
     formatted_messages = []
     for message in messages:
         formatted_message = {
-            "role": message.get("role", ""),
-            "content": message.get("content", "")
+            "role": message.role,
+            "content": message.content
         }
         formatted_messages.append(formatted_message)
     return formatted_messages

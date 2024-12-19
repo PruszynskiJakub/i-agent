@@ -1,5 +1,7 @@
-from typing import Optional, Dict, Any, Union, List
+from typing import Optional, Dict, Any, List
+
 from langfuse.client import Langfuse
+
 
 class TraceService:
     def __init__(self, public_key: str, secret_key: str, host: str):

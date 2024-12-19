@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from tool.base import Tool
+from agent.tool.base import Tool
 
 
 @dataclass

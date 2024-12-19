@@ -2,7 +2,7 @@ from typing import Dict, List, Optional
 
 from openai import AsyncOpenAI
 
-from app.ai.llm import LLMProvider
+from ai.llm import LLMProvider
 
 
 class OpenAIProvider(LLMProvider):

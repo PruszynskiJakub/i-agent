@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from typing import List, Dict, Optional
-from openai import AsyncOpenAI
 
 class LLMProvider(ABC):
     """Abstract base class for LLM providers"""

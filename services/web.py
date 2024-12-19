@@ -1,5 +1,5 @@
 from firecrawl import FirecrawlApp
-from app.model.web_content import WebContent
+from model.web_content import WebContent
 
 class WebService:
     def __init__(self, api_key: str):

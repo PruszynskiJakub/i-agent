@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, Any, List
 from uuid import UUID
 
-from app.model.document import Document
+from model.document import Document
 
 @dataclass
 class Tool(ABC):

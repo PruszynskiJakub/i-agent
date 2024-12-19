@@ -1,9 +1,9 @@
-from app.model.plan import Plan
-from app.ai.llm import LLMProvider
-from app.repository.prompt import PromptRepository
-from app.utils.utils import format_actions_for_prompt, format_messages_for_completion
-from state import StateHolder
-from app.services.trace import TraceService
+from model.plan import Plan
+from ai.llm import LLMProvider
+from repository.prompt import PromptRepository
+from utils.utils import format_actions_for_prompt, format_messages_for_completion
+from agent.state import StateHolder
+from services.trace import TraceService
 import json
 
 class AgentPlan:
@@ -12,7 +12,7 @@ class AgentPlan:
         self.prompt_repository = prompt_repository
         self.trace_service = trace_service
 
-    def invoke(self, state: StateHolder, trace) -> Plan:
+    async def invoke(self, state: StateHolder, trace) -> Plan:
         """
         Creates a plan based on the current state.
         Returns a Plan object with thinking, step, tool, parameters, and required information.
@@ -41,7 +41,7 @@ class AgentPlan:
             )
 
             # Get completion from LLM
-            completion = self.llm.completion(
+            completion = await self.llm.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
                     *format_messages_for_completion(state.messages)

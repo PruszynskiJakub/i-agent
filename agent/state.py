@@ -1,10 +1,10 @@
 from typing import List, Literal
 
-from config import AgentConfig
-from app.repository.message import MessageRepository
-from app.model.message import Message
-from app.model.action import Action
-from app.model.document import Document
+from agent.config import AgentConfig
+from repository.message import MessageRepository
+from model.message import Message
+from model.action import Action
+from model.document import Document
 
 class StateHolder:
     """
@@ -25,7 +25,7 @@ class StateHolder:
         """
         self._conversation_uuid: str = conversation_uuid
         self._message_repository = message_repository
-        self._messages: List[Message] = self._message_repository.find_by_conversation(conversation_uuid)
+        self._messages: List[Message] = [] #self._message_repository.find_by_conversation(conversation_uuid)
         self._taken_actions: List[Action] = []
         self._documents: List[Document] = []
         self._config: AgentConfig = config if config is not None else AgentConfig()

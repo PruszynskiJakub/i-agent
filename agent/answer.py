@@ -1,7 +1,7 @@
-from state import StateHolder
-from app.ai.llm import LLMProvider
-from app.services.trace import TraceService
-from app.repository.prompt import PromptRepository
+from agent.state import StateHolder
+from ai.llm import LLMProvider
+from services.trace import TraceService
+from repository.prompt import PromptRepository
 
 class AgentAnswer:
     def __init__(self, llm: LLMProvider, trace_service: TraceService, prompt_repository: PromptRepository):

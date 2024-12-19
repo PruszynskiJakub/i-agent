@@ -1,7 +1,7 @@
 import os
 from typing import List, Dict
-from openai import AsyncOpenAI, OpenAI
-from langsmith.wrappers import wrap_openai
+
+from openai import AsyncOpenAI
 
 
 class OpenAIService:
