@@ -38,13 +38,12 @@ app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 
 @app.event("message")
-def handle_message(message, say, ack):
-    ack()
+def handle_message(message, say):
     """Handle incoming messages and respond using the agent"""
     try:
         # Initialize state for this conversation
         state = StateHolder(
-            conversation_uuid=message["ts"],  # Using timestamp as conversation ID
+            conversation_uuid=message.get("thread_ts", message["ts"]),  # Using timestamp as conversation ID
             message_repository=message_repository
         )
 
@@ -84,6 +83,11 @@ def handle_message(message, say, ack):
 def handle_model_command(ack, body, respond):
     ack()
     respond("OK, model changed")
+
+@app.event("assistant_thread_started")
+def handle_assistant_thread_started(body, ack):
+    print(body)
+    ack()
 
 
 if __name__ == "__main__":

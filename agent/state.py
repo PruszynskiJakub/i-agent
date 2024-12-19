@@ -25,7 +25,7 @@ class StateHolder:
         """
         self._conversation_uuid: str = conversation_uuid
         self._message_repository = message_repository
-        self._messages: List[Message] = [] #self._message_repository.find_by_conversation(conversation_uuid)
+        self._messages: List[Message] = self._message_repository.find_by_conversation(conversation_uuid)
         self._taken_actions: List[Action] = []
         self._documents: List[Document] = []
         self._config: AgentConfig = config if config is not None else AgentConfig()
