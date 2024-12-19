@@ -17,7 +17,7 @@ class Tool(ABC):
     optional_params: Dict[str, str]
 
     @abstractmethod
-    async def execute(self, params: Dict[str, Any], docs: List[Document], trace: Any) -> ActionResult:
+    async def execute(self, params: Dict[str, Any], trace: Any) -> ActionResult:
         """Execute the tool with the given parameters and documents
         
         Args:
