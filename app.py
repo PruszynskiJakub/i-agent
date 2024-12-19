@@ -16,7 +16,15 @@ def message_hello(message, say):
     # say() sends a message to the channel where the event was triggered
     say(
         f"Hey there <@{message['user']}>!",
-        thread_ts=message["thread_ts"]
+        thread_ts=message["thread_ts"] # present in thread
+    )
+
+@app.event("message")
+def handle_message(message, say):
+    print(message)
+    say(
+        "Hello, world!",
+        thread_ts=message["ts"]
     )
 
 @app.command("/model")
