@@ -2,6 +2,7 @@ import asyncio
 import os
 
 from dotenv import load_dotenv
+from langfuse import Langfuse
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
@@ -21,11 +22,12 @@ load_dotenv()
 database = Database()
 message_repository = MessageRepository(database)
 llm = OpenAIProvider(api_key=os.environ["OPENAI_API_KEY"])
-trace_service = TraceService(
+langfuse_client = Langfuse(
     public_key=os.environ["LANGFUSE_PUBLIC_KEY"],
     secret_key=os.environ["LANGFUSE_SECRET_KEY"],
     host=os.environ.get("LANGFUSE_HOST", "https://cloud.langfuse.com")
 )
+trace_service = TraceService(langfuse_client)
 prompt_repository = PromptRepository(trace_service.client)
 
 # Initialize agent components

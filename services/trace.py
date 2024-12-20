@@ -4,7 +4,7 @@ from langfuse.client import Langfuse
 
 
 class TraceService:
-    def __init__(self, public_key: str, secret_key: str, host: str):
+    def __init__(self, langfuse_client: Langfuse):
         """Initialize Trace service with Langfuse client
         
         Args:
@@ -12,11 +12,7 @@ class TraceService:
             secret_key: Langfuse secret key
             host: Optional host URL for Langfuse API
         """
-        self.client = Langfuse(
-            public_key=public_key,
-            secret_key=secret_key,
-            host=host
-        )
+        self.client = langfuse_client
 
     def create_trace(self, 
                     name: Optional[str] = None,
