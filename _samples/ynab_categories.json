@@ -1,0 +1,429 @@
+[
+    {
+        "name": "Current",
+        "categories": [
+            {
+                "name": "General",
+                "id": "760f82ad-e8bd-476f-a512-923be87efe63",
+                "category_group_name": "Current",
+                "category_group_id": "ee6a3653-d116-4d61-905d-771d7b204931"
+            }
+        ]
+    },
+    {
+        "name": "Savings & Investments",
+        "categories": [
+            {
+                "name": "Piggy bank",
+                "id": "f2933933-77ff-4877-8116-3217fabb45af",
+                "category_group_name": "Savings & Investments",
+                "category_group_id": "743e0bfb-bdc5-467c-b1ba-b4fa86bb0652"
+            },
+            {
+                "name": "Investment Wallet",
+                "id": "e7efb2bc-6582-48b5-95e2-1ec925dfa844",
+                "category_group_name": "Savings & Investments",
+                "category_group_id": "743e0bfb-bdc5-467c-b1ba-b4fa86bb0652"
+            }
+        ]
+    },
+    {
+        "name": "Housing",
+        "categories": [
+            {
+                "name": "Mortage & Rent",
+                "id": "09b7d213-d378-4f58-bd0c-2f1f5274e4d7",
+                "category_group_name": "Housing",
+                "category_group_id": "787c0ac4-cec0-4a7c-9bd0-62975b72da24"
+            },
+            {
+                "name": "Maintenance",
+                "id": "a5a42d00-1ec6-4f96-923b-9136c2217704",
+                "category_group_name": "Housing",
+                "category_group_id": "787c0ac4-cec0-4a7c-9bd0-62975b72da24"
+            },
+            {
+                "name": "Utilities",
+                "id": "2bdbf976-274b-49ed-9fa4-0335c375c811",
+                "category_group_name": "Housing",
+                "category_group_id": "787c0ac4-cec0-4a7c-9bd0-62975b72da24"
+            },
+            {
+                "name": "Insurance",
+                "id": "4c31cd88-8a86-47e1-a3f9-f0768df76f56",
+                "category_group_name": "Housing",
+                "category_group_id": "787c0ac4-cec0-4a7c-9bd0-62975b72da24"
+            },
+            {
+                "name": "Taxes",
+                "id": "8a73d2c5-1045-44b5-ac20-5044bcff7524",
+                "category_group_name": "Housing",
+                "category_group_id": "787c0ac4-cec0-4a7c-9bd0-62975b72da24"
+            }
+        ]
+    },
+    {
+        "name": "Food & Dining",
+        "categories": [
+            {
+                "name": "Groceries",
+                "id": "62beca08-69fc-481e-80a8-4ff54fd74762",
+                "category_group_name": "Food & Dining",
+                "category_group_id": "6763ba72-9645-46e5-aa9f-c29be6cb4504"
+            },
+            {
+                "name": "Eating out",
+                "id": "093068f7-9308-4617-ad9b-5c79baea1745",
+                "category_group_name": "Food & Dining",
+                "category_group_id": "6763ba72-9645-46e5-aa9f-c29be6cb4504"
+            },
+            {
+                "name": "Snacks & Beverages",
+                "id": "45ffe1f4-0d46-449c-ba1d-ac55865ef0f3",
+                "category_group_name": "Food & Dining",
+                "category_group_id": "6763ba72-9645-46e5-aa9f-c29be6cb4504"
+            },
+            {
+                "name": "Coffee shops",
+                "id": "27fea14e-e7f3-496a-873e-bd913b4f6e3d",
+                "category_group_name": "Food & Dining",
+                "category_group_id": "6763ba72-9645-46e5-aa9f-c29be6cb4504"
+            }
+        ]
+    },
+    {
+        "name": "Personal Care & Wellness",
+        "categories": [
+            {
+                "name": "Cosmetics",
+                "id": "8b43556e-72d4-49f0-b235-a02b238d4063",
+                "category_group_name": "Personal Care & Wellness",
+                "category_group_id": "ee933024-d0f3-4c6a-b209-dbca2db3d9b4"
+            },
+            {
+                "name": "Fitness",
+                "id": "588a3cd5-a50f-44d1-9d71-08cfde240538",
+                "category_group_name": "Personal Care & Wellness",
+                "category_group_id": "ee933024-d0f3-4c6a-b209-dbca2db3d9b4"
+            },
+            {
+                "name": "Therapy",
+                "id": "917cb268-56ec-4455-8457-415420eca02e",
+                "category_group_name": "Personal Care & Wellness",
+                "category_group_id": "ee933024-d0f3-4c6a-b209-dbca2db3d9b4"
+            },
+            {
+                "name": "Wellness activites",
+                "id": "7753dada-59fe-45f4-b94a-9d014e3b597a",
+                "category_group_name": "Personal Care & Wellness",
+                "category_group_id": "ee933024-d0f3-4c6a-b209-dbca2db3d9b4"
+            },
+            {
+                "name": "Haircare",
+                "id": "090157ac-343a-4164-aa5a-5fac9b11113a",
+                "category_group_name": "Personal Care & Wellness",
+                "category_group_id": "ee933024-d0f3-4c6a-b209-dbca2db3d9b4"
+            },
+            {
+                "name": "Clothing",
+                "id": "d7135fbf-23dd-4153-9597-60c4df9abcdc",
+                "category_group_name": "Personal Care & Wellness",
+                "category_group_id": "ee933024-d0f3-4c6a-b209-dbca2db3d9b4"
+            }
+        ]
+    },
+    {
+        "name": "Miscellaneous",
+        "categories": [
+            {
+                "name": "Licences & Renewals",
+                "id": "bd85d4f1-4a96-4803-9981-7b44bec7b55d",
+                "category_group_name": "Miscellaneous",
+                "category_group_id": "4d268967-e858-47c1-a719-0bf31866aac6"
+            },
+            {
+                "name": "Bank fees",
+                "id": "2e121358-a602-4773-b2ba-70ee41db8228",
+                "category_group_name": "Miscellaneous",
+                "category_group_id": "4d268967-e858-47c1-a719-0bf31866aac6"
+            },
+            {
+                "name": "Stuff I forgot to budget for",
+                "id": "f7194b41-4329-4e48-8bf4-2b916ef29efc",
+                "category_group_name": "Miscellaneous",
+                "category_group_id": "4d268967-e858-47c1-a719-0bf31866aac6"
+            }
+        ]
+    },
+    {
+        "name": "Taxes",
+        "categories": [
+            {
+                "name": "Income taxes",
+                "id": "ae8fdd56-6fc0-4a94-a233-9c3a21d47ac5",
+                "category_group_name": "Taxes",
+                "category_group_id": "aa0e22a4-c1a2-4337-a4e1-e5ae5fbd66fb"
+            },
+            {
+                "name": "VAT taxes",
+                "id": "ad53009e-540c-447a-bd79-69c94555aea1",
+                "category_group_name": "Taxes",
+                "category_group_id": "aa0e22a4-c1a2-4337-a4e1-e5ae5fbd66fb"
+            }
+        ]
+    },
+    {
+        "name": "Business expenses",
+        "categories": [
+            {
+                "name": "Accounting services",
+                "id": "0a00ca8f-d141-4e39-ae80-4cb394f10ed2",
+                "category_group_name": "Business expenses",
+                "category_group_id": "12aef6d9-b020-4ffd-a6e6-55f8e9100777"
+            },
+            {
+                "name": "Business travel",
+                "id": "0a667822-1022-48ec-beff-b2fa8d3c2d71",
+                "category_group_name": "Business expenses",
+                "category_group_id": "12aef6d9-b020-4ffd-a6e6-55f8e9100777"
+            },
+            {
+                "name": "Hardware",
+                "id": "970b4b3a-82f7-4d40-a728-1c5cfa8cac06",
+                "category_group_name": "Business expenses",
+                "category_group_id": "12aef6d9-b020-4ffd-a6e6-55f8e9100777"
+            },
+            {
+                "name": "Software & subcriptions",
+                "id": "05be3ecd-a147-43a7-8ae8-47a6ee2fdac6",
+                "category_group_name": "Business expenses",
+                "category_group_id": "12aef6d9-b020-4ffd-a6e6-55f8e9100777"
+            }
+        ]
+    },
+    {
+        "name": "Gifts & Donations",
+        "categories": [
+            {
+                "name": "Gifts",
+                "id": "5e08691f-d283-4817-b4f5-8f2240626594",
+                "category_group_name": "Gifts & Donations",
+                "category_group_id": "9ea9069b-6063-4b40-82db-1dada713f34e"
+            },
+            {
+                "name": "Charity",
+                "id": "b7ac6c6c-5954-4c1a-a3bc-f841bcfed9bd",
+                "category_group_name": "Gifts & Donations",
+                "category_group_id": "9ea9069b-6063-4b40-82db-1dada713f34e"
+            }
+        ]
+    },
+    {
+        "name": "Education & Self-improvement",
+        "categories": [
+            {
+                "name": "Professional development",
+                "id": "e18b79d5-319e-4910-827c-b7d2b05e7374",
+                "category_group_name": "Education & Self-improvement",
+                "category_group_id": "2718034b-fb6c-4be1-be81-5eb54dd2a657"
+            },
+            {
+                "name": "Books & educational materials",
+                "id": "be8812a5-d7c6-4015-bba1-f7c4c1895fbd",
+                "category_group_name": "Education & Self-improvement",
+                "category_group_id": "2718034b-fb6c-4be1-be81-5eb54dd2a657"
+            },
+            {
+                "name": "Courses & Workshops",
+                "id": "fcf413d9-2e9a-4609-88b6-07c330d8e6c5",
+                "category_group_name": "Education & Self-improvement",
+                "category_group_id": "2718034b-fb6c-4be1-be81-5eb54dd2a657"
+            }
+        ]
+    },
+    {
+        "name": "Entertainment & Recreation",
+        "categories": [
+            {
+                "name": "Movies, concerts & events",
+                "id": "b96aae9b-9f83-4248-b4f3-caefbc32e4bc",
+                "category_group_name": "Entertainment & Recreation",
+                "category_group_id": "346bc674-bf33-447f-b956-cba7028ef121"
+            },
+            {
+                "name": "Hobbies",
+                "id": "37dc2e38-f337-44bd-8263-5226c35c030b",
+                "category_group_name": "Entertainment & Recreation",
+                "category_group_id": "346bc674-bf33-447f-b956-cba7028ef121"
+            },
+            {
+                "name": "Vacation & Travel",
+                "id": "6ede0e3a-3617-4715-86a0-19df38ddb67d",
+                "category_group_name": "Entertainment & Recreation",
+                "category_group_id": "346bc674-bf33-447f-b956-cba7028ef121"
+            },
+            {
+                "name": "Books and magazines",
+                "id": "f16cd9bc-b945-4452-b95e-19cff5da5658",
+                "category_group_name": "Entertainment & Recreation",
+                "category_group_id": "346bc674-bf33-447f-b956-cba7028ef121"
+            },
+            {
+                "name": "Streaming subscriptions",
+                "id": "1493fb10-c58b-49a8-8648-4bedebbda738",
+                "category_group_name": "Entertainment & Recreation",
+                "category_group_id": "346bc674-bf33-447f-b956-cba7028ef121"
+            }
+        ]
+    },
+    {
+        "name": "Insurance",
+        "categories": [
+            {
+                "name": "Umbrella insurance",
+                "id": "713add76-3b7d-4755-b5b8-6de0ca1ae684",
+                "category_group_name": "Insurance",
+                "category_group_id": "0c7480da-c291-4c11-b09d-b67275d7d8cb"
+            },
+            {
+                "name": "Life insurance",
+                "id": "b4aeee5f-ef24-4de9-9af2-aeb62a34c56f",
+                "category_group_name": "Insurance", 
+                "category_group_id": "0c7480da-c291-4c11-b09d-b67275d7d8cb"
+            }
+        ]
+    },
+    {
+        "name": "Transportation",
+        "categories": [
+            {
+                "name": "Leasing",
+                "id": "53f8cd5e-023c-4471-afca-c3f1460bc0f0",
+                "category_group_name": "Transportation",
+                "category_group_id": "afedfbdb-21cf-4cee-9a80-98aaa9d556ae"
+            },
+            {
+                "name": "Public transportation",
+                "id": "b8fe58a1-30c4-428b-b6bb-0b4ce0c0c801",
+                "category_group_name": "Transportation",
+                "category_group_id": "afedfbdb-21cf-4cee-9a80-98aaa9d556ae"
+            },
+            {
+                "name": "Fuel",
+                "id": "d294d4c0-e691-4ea0-8916-c2b334035782",
+                "category_group_name": "Transportation",
+                "category_group_id": "afedfbdb-21cf-4cee-9a80-98aaa9d556ae"
+            },
+            {
+                "name": "Rideshare services",
+                "id": "502ce220-b2ce-47ab-9dfa-291762fce450",
+                "category_group_name": "Transportation",
+                "category_group_id": "afedfbdb-21cf-4cee-9a80-98aaa9d556ae"
+            },
+            {
+                "name": "Parking & tolls",
+                "id": "4e5eb2c0-6d46-468b-b3e0-4b6b4d8944b7",
+                "category_group_name": "Transportation",
+                "category_group_id": "afedfbdb-21cf-4cee-9a80-98aaa9d556ae"
+            },
+            {
+                "name": "Auto Insurance",
+                "id": "d29f8e89-3162-4f5d-bbe9-f625ad96501b",
+                "category_group_name": "Transportation",
+                "category_group_id": "afedfbdb-21cf-4cee-9a80-98aaa9d556ae"
+            },
+            {
+                "name": "Repairs",
+                "id": "a58e5e28-d451-4353-b4ef-74c9b4661ace",
+                "category_group_name": "Transportation",
+                "category_group_id": "afedfbdb-21cf-4cee-9a80-98aaa9d556ae"
+            }
+        ]
+    },
+    {
+        "name": "Debt Repayment",
+        "categories": [
+            {
+                "name": "Personal loans",
+                "id": "d79b12b5-356d-4441-aeef-fa2c5531320d",
+                "category_group_name": "Debt Repayment",
+                "category_group_id": "a4a483af-da4d-439d-ba65-c40590fa685a"
+            },
+            {
+                "name": "Mom loan",
+                "id": "5507936d-4f11-4c10-88a1-1fbb2c65af42",
+                "category_group_name": "Debt Repayment",
+                "category_group_id": "a4a483af-da4d-439d-ba65-c40590fa685a"
+            },
+            {
+                "name": "Dad loan",
+                "id": "26f4b559-ae83-4afd-ac71-c35406bd1135",
+                "category_group_name": "Debt Repayment",
+                "category_group_id": "a4a483af-da4d-439d-ba65-c40590fa685a"
+            }
+        ]
+    },
+    {
+        "name": "Healthcare",
+        "categories": [
+            {
+                "name": "Medications",
+                "id": "789624f3-1e0c-4811-8cfe-b58bdf49ea57",
+                "category_group_name": "Healthcare",
+                "category_group_id": "05b01099-d17d-4c49-8534-8c2294182989"
+            },
+            {
+                "name": "Vision care",
+                "id": "b5c41b31-e77b-471f-8b93-59a7914d721a",
+                "category_group_name": "Healthcare",
+                "category_group_id": "05b01099-d17d-4c49-8534-8c2294182989"
+            },
+            {
+                "name": "Dental care",
+                "id": "42f6068a-299b-4bc0-881c-5eba5268f0cd",
+                "category_group_name": "Healthcare",
+                "category_group_id": "05b01099-d17d-4c49-8534-8c2294182989"
+            },
+            {
+                "name": "Medical expenses",
+                "id": "54cae617-86a1-4587-9994-81798f6cd236",
+                "category_group_name": "Healthcare",
+                "category_group_id": "05b01099-d17d-4c49-8534-8c2294182989"
+            },
+            {
+                "name": "Health insurance",
+                "id": "0038a7d0-4e88-4a17-838a-cdcfb2c523c2",
+                "category_group_name": "Healthcare",
+                "category_group_id": "05b01099-d17d-4c49-8534-8c2294182989"
+            }
+        ]
+    },
+    {
+        "name": "Internal Master Category",
+        "categories": [
+            {
+                "name": "Inflow: Ready to Assign",
+                "id": "ca570c65-57d8-488e-96f3-946d836fde23",
+                "category_group_name": "Internal Master Category",
+                "category_group_id": "c7fcc1f5-fd40-4d39-9959-2105607595ef"
+            },
+            {
+                "name": "Uncategorized",
+                "id": "c0b087da-25ec-4ccb-8f08-17ea30daea3a",
+                "category_group_name": "Internal Master Category",
+                "category_group_id": "c7fcc1f5-fd40-4d39-9959-2105607595ef"
+            }
+        ]
+    },
+    {
+        "name": "Credit Card Payments",
+        "categories": [
+            {
+                "name": "Pekao - Credit Card",
+                "id": "456ecbe3-eb8f-44c3-b6d7-182a228dceb6",
+                "category_group_name": "Credit Card Payments",
+                "category_group_id": "52c1533a-fd67-4106-aa39-973825f826af"
+            }
+        ]
+    }
+]
