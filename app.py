@@ -46,7 +46,12 @@ def handle_message(message, say):
         # Initialize state for this conversation
         state = StateHolder(
             conversation_uuid=message.get("thread_ts", message["ts"]),  # Using timestamp as conversation ID
-            message_repository=message_repository
+            message_repository=message_repository,
+            tools=[
+                {
+                    'uuid': '1',
+                }
+            ]
         )
 
         # Add the user's message to state

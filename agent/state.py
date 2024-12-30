@@ -1,10 +1,10 @@
-from typing import List, Literal
+from typing import List, Literal, Dict
 
-from agent.config import AgentConfig
-from repository.message import MessageRepository
-from model.message import Message
 from model.action import Action
 from model.document import Document
+from model.message import Message
+from repository.message import MessageRepository
+
 
 class StateHolder:
     """
@@ -14,7 +14,9 @@ class StateHolder:
     Attributes:
         conversation_uuid (str): A unique identifier for the conversation.
     """
-    def __init__(self, conversation_uuid: str, message_repository: MessageRepository, config: AgentConfig = None) -> None:
+
+    def __init__(self, conversation_uuid: str, message_repository: MessageRepository,
+                 tools: List[Dict[str, str]]) -> None:
         """
         Initialize a new StateHolder instance.
         
@@ -28,7 +30,9 @@ class StateHolder:
         self._messages: List[Message] = self._message_repository.find_by_conversation(conversation_uuid)
         self._taken_actions: List[Action] = []
         self._documents: List[Document] = []
-        self._config: AgentConfig = config if config is not None else AgentConfig()
+        self._current_step: int = 0
+        self._max_steps: int = 5
+        self._tools: List[Dict[str, str]] = []
 
     @property
     def conversation_uuid(self) -> str:
@@ -87,22 +91,16 @@ class StateHolder:
         """
         self._documents.append(document)
 
-    @property
-    def config(self) -> AgentConfig:
-        """Get the current configuration."""
-        return self._config
-    
     def should_continue(self) -> bool:
         """Determine if the agent should continue processing."""
-        return self._config.current_step < self._config.max_steps
+        return self._current_step < self._max_steps
 
     def increment_step(self) -> None:
         """Increment the current step number."""
-        self._config.current_step += 1
+        self._current_step += 1
 
     def reset(self) -> None:
         """Reset the state to initial values."""
         self._messages.clear()
         self._taken_actions.clear()
         self._documents.clear()
-        self._config = AgentConfig() 

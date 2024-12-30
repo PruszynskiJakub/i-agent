@@ -1,4 +1,5 @@
 from typing import List
+
 from model.action import Action
 from model.message import Message
 
@@ -19,7 +20,7 @@ def format_actions_for_prompt(actions: List[Action]) -> str:
         for param_name, param_value in action.payload.items():
             desc += f"    <param name='{param_name}'>{param_value}</param>\n"
         desc += "  </parameters>\n"
-        
+
         # Add result information
         desc += "  <result>\n"
         desc += f"    <output>{action.result}</output>\n"
@@ -31,10 +32,11 @@ def format_actions_for_prompt(actions: List[Action]) -> str:
                 desc += "      </document>\n"
             desc += "    </documents>\n"
         desc += "  </result>\n"
-        
+
         desc += "</action>"
         action_descriptions.append(desc)
     return "\n".join(action_descriptions)
+
 
 def format_messages_for_completion(messages: List[Message]) -> List[dict]:
     """
