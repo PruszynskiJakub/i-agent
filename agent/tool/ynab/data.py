@@ -449,3 +449,66 @@ ynab_categories = """
         </category>
     </category_group>
 """
+
+ynab_accounts = """
+    <account>
+        <id>f642f5db-efcc-425e-a69e-59242628d143</id>
+        <name>Pekao - Basic</name>
+        <type>checking</type>
+        <description>Main checking account for everyday expenses</description>
+    </account>
+    <account>
+        <id>74b62003-e493-4472-a874-451b45fa37a8</id>
+        <name>Pekao - Next Step Studio</name>
+        <type>checking</type>
+        <description>Dedicated account for Next Step Studio business transactions</description>
+    </account>
+    <account>
+        <id>68f10746-3c15-4c72-bf58-7ec9e5b47425</id>
+        <name>Pekao - Piggy bank</name>
+        <type>savings</type>
+        <description>Savings account for future investments and large purchases</description>
+    </account>
+    <account>
+        <id>1b8425d2-c9c8-4a24-b9d2-1133fad20107</id>
+        <name>Revolut</name>
+        <type>checking</type>
+        <description>Digital banking account for international transactions</description>
+    </account>
+    <account>
+        <id>afab1423-e83d-4854-933f-36df25b2882d</id>
+        <name>Mbank</name>
+        <type>checking</type>
+        <description>Secondary checking account for personal use</description>
+    </account>
+    <account>
+        <id>b4f62a02-9815-4dea-bcab-db727a450c1a</id>
+        <name>Investment wallet</name>
+        <type>otherAsset</type>
+        <description>Account for holding investment funds and assets</description>
+    </account>
+    <account>
+        <id>e44b24ae-504e-4757-beae-3ec29e6d9e76</id>
+        <name>Pasikonie</name>
+        <type>otherAsset</type>
+        <description>Account for Pasikonie eco-village project funds</description>
+    </account>
+    <account>
+        <id>19cdf1f0-979a-499e-90c2-85297350dc1e</id>
+        <name>Mom loan</name>
+        <type>personalLoan</type>
+        <description>Personal loan account from mother</description>
+    </account>
+    <account>
+        <id>c55ac400-e885-4489-ab44-9c6d9488beae</id>
+        <name>Dad loan</name>
+        <type>personalLoan</type>
+        <description>Personal loan account from father</description>
+    </account>
+    <account>
+        <id>4ca9b037-54f2-4e9c-841a-381d739cf566</id>
+        <name>Pekao - Credit Card</name>
+        <type>creditCard</type>
+        <description>Credit card account for managing revolving credit</description>
+    </account>
+"""
