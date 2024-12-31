@@ -157,8 +157,8 @@
 ## Restore the previous chat history messages (default: False)
 #restore-chat-history: false
 
-## Log the conversation with the LLM to this file (for example, .aider.llm.history)
-#llm-history-file: xxx
+## Log the conversation with the LLM to this file (for example, .aider.llm_utils.history)
+#llm_utils-history-file: xxx
 
 ##################
 # Output Settings:

@@ -1,13 +1,13 @@
 from agent.state import StateHolder
 from ai.llm import LLMProvider
+from llm_utils.prompts import get_prompt
+from llm_utils.tracing import create_generation, end_generation
 from services.trace import TraceService
 from repository.prompt import PromptRepository
 
 class AgentAnswer:
-    def __init__(self, llm: LLMProvider, trace_service: TraceService, prompt_repository: PromptRepository):
+    def __init__(self, llm: LLMProvider):
         self.llm = llm
-        self.trace_service = trace_service
-        self.prompt_repository = prompt_repository
 
     async def invoke(self, state: StateHolder, parent_trace) -> str:
         """
@@ -29,16 +29,15 @@ class AgentAnswer:
             ]
             
             # Fetch prompt from repository
-            prompt = self.prompt_repository.get_prompt(
+            prompt = get_prompt(
                 name="agent_answer",
-                prompt_type="text",
                 label="latest"
             )
             system_prompt = prompt.compile()
             model = prompt.config.get("model", "gpt-4")
             
             # Create generation trace
-            generation = self.trace_service.create_generation(
+            generation = create_generation(
                 trace=parent_trace,
                 name="final_answer",
                 model=model,
@@ -56,7 +55,7 @@ class AgentAnswer:
             )
             
             
-            self.trace_service.end_generation(generation, output=final_answer)
+            end_generation(generation, output=final_answer)
             state.add_message(content=final_answer, role="assistant")
             
             return final_answer

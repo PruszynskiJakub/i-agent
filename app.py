@@ -27,13 +27,11 @@ langfuse_client = Langfuse(
     secret_key=os.environ["LANGFUSE_SECRET_KEY"],
     host=os.environ.get("LANGFUSE_HOST", "https://cloud.langfuse.com")
 )
-trace_service = TraceService(langfuse_client)
-prompt_repository = PromptRepository(trace_service.client)
 
 # Initialize agent components
-agent_plan = AgentPlan(llm, prompt_repository, trace_service)
-agent_execute = AgentExecute(llm, prompt_repository, trace_service)
-agent_answer = AgentAnswer(llm, trace_service, prompt_repository)
+agent_plan = AgentPlan(llm)
+agent_execute = AgentExecute(llm)
+agent_answer = AgentAnswer(llm)
 
 # Initialize Slack app
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
@@ -63,7 +61,6 @@ def handle_message(message, say):
         # Initialize and run agent
         assistant = Assistant(
             state=state,
-            trace_service=trace_service,
             plan=agent_plan,
             execute=agent_execute,
             answer=agent_answer

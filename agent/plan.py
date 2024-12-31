@@ -1,3 +1,5 @@
+from llm_utils.prompts import get_prompt
+from llm_utils.tracing import create_generation, end_generation
 from model.plan import Plan
 from ai.llm import LLMProvider
 from repository.prompt import PromptRepository
@@ -7,10 +9,8 @@ from services.trace import TraceService
 import json
 
 class AgentPlan:
-    def __init__(self, llm: LLMProvider, prompt_repository: PromptRepository, trace_service: TraceService):
+    def __init__(self, llm: LLMProvider):
         self.llm = llm
-        self.prompt_repository = prompt_repository
-        self.trace_service = trace_service
 
     async def invoke(self, state: StateHolder, trace) -> Plan:
         """
@@ -19,9 +19,8 @@ class AgentPlan:
         """
         try:
             # Get the planning prompt from repository
-            prompt = self.prompt_repository.get_prompt(
+            prompt = get_prompt(
                 name="agent_plan",
-                prompt_type="text",
                 label="latest"
             )
 
@@ -32,7 +31,7 @@ class AgentPlan:
             )
 
             # Create generation trace
-            generation = self.trace_service.create_generation(
+            generation = create_generation(
                 trace=trace,
                 name="agent_plan",
                 model=prompt.config.get("model", "gpt-4"),
@@ -57,8 +56,6 @@ class AgentPlan:
                     _thinking=response_data.get("thinking", ""),
                     step=response_data.get("step", ""),
                     tool=response_data.get("tool", ""),
-                    parameters=response_data.get("parameters", {}),
-                    required_information=response_data.get("required_information", [])
                 )
             except json.JSONDecodeError as e:
                 generation.end(
@@ -69,7 +66,7 @@ class AgentPlan:
                 raise Exception(f"Failed to parse JSON response: {str(e)}")
 
             # End the generation trace
-            self.trace_service.end_generation(generation, output=response_data)
+            end_generation(generation, output=response_data)
             
             return plan
 

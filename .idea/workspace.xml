@@ -5,13 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="simplify state">
+      <change afterPath="$PROJECT_DIR$/llm_utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/llm_utils/prompts.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/llm_utils/tracing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/tool/base.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/tool/ynab/data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/tool/ynab/service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample Aider Config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Sample Aider Config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ynab.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ynab.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/tools/tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/tools/tool.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
