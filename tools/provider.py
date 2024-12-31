@@ -11,6 +11,6 @@ def get_tools():
         }
     ]
 
-toolMap = {
+tool_handlers = {
     "ynab" : execute_ynab
 }

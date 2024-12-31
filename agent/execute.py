@@ -1,6 +1,7 @@
 from agent.state import AgentState
 from agent.types import Plan
 from llm.tracing import create_span, end_span
+from tools.provider import tool_handlers
 
 
 async def agent_execute(state: AgentState, plan: Plan, trace) -> AgentState:
@@ -19,8 +20,11 @@ async def agent_execute(state: AgentState, plan: Plan, trace) -> AgentState:
     )
 
     try:
-        # TODO
-        # Execute the tool
+        tool = plan.tool
+        tool_handler = tool_handlers.get(tool)
+        action_result = await tool_handler(state, plan, execution_span)
+
+        print(f"Action result: {action_result}")
 
         end_span(
             execution_span,

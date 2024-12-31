@@ -42,7 +42,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
                 {"role": "system", "content": system_prompt},
                 *format_messages(state.messages)
             ],
-            model=prompt.config.get("models", "gpt-4"),
+            model=prompt.config.get("models", "gpt-4o"),
             json_mode=True
         )
 

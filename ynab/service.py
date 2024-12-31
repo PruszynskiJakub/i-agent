@@ -4,4 +4,8 @@ from models.action import ActionResult
 
 
 async def execute_ynab(action, params: Dict[str, Any], trace) -> ActionResult:
-   pass
+   return ActionResult(
+       result='Success',
+       status='success',
+       documents=[]
+   )

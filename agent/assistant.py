@@ -3,7 +3,7 @@ import os
 from agent.answer import agent_answer
 from agent.execute import agent_execute
 from agent.plan import agent_plan
-from agent.state import AgentState, should_continue
+from agent.state import AgentState, should_continue, increment_current_step
 from llm.tracing import create_trace, end_trace
 
 
@@ -25,6 +25,7 @@ async def agent_run(state: AgentState) -> str:
             break
 
         await agent_execute(state, plan, trace)
+        increment_current_step(state)
 
     new_state = await agent_answer(state, trace)
     final_answer = new_state.messages[-1].content
