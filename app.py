@@ -7,7 +7,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 from agent.assistant import agent_run
 from agent.state import create_or_restore_state, add_message
-from agent.tools import create_tools
+from agent.tools import get_tools
 from llm_utils.tracing import flush
 
 # Initialize core services

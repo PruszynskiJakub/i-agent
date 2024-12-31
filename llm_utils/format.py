@@ -1,10 +1,11 @@
-from typing import List
+from ast import Dict
+from typing import Any, List
 
 from model.action import Action
 from model.message import Message
 
 
-def format_actions_for_prompt(actions: List[Action]) -> str:
+def format_actions(actions: List[Action]) -> str:
     """Formats the executed actions into a string for the prompt
 
     Args:
@@ -38,7 +39,7 @@ def format_actions_for_prompt(actions: List[Action]) -> str:
     return "\n".join(action_descriptions)
 
 
-def format_messages_for_completion(messages: List[Message]) -> List[dict]:
+def format_messages(messages: List[Message]) -> List[dict]:
     """
     Formats messages for completion by ensuring each message is a dictionary
     with 'role' and 'content' keys.
@@ -58,3 +59,23 @@ def format_messages_for_completion(messages: List[Message]) -> List[dict]:
         formatted_messages.append(formatted_message)
     return formatted_messages
 
+
+def format_tools(tools: List[Dict[str, Any]]) -> str:
+    """
+    Formats a list of tools into an XML-like string representation.
+
+    Args:
+        tools: List of tool dictionaries
+
+    Returns:
+        str: Formatted string describing all tools
+    """
+    tool_descriptions = []
+    for tool in tools:
+        desc = f"<tool uuid='{tool['uuid']}'>\n"
+        desc += f"  <name>{tool['name']}</name>\n"
+        desc += f"  <description>{tool['description']}</description>\n"
+        desc += f"  <instructions>{tool['instructions']}</instructions>\n"
+        desc += "</tool>"
+        tool_descriptions.append(desc)
+    return "\n".join(tool_descriptions)

@@ -1,8 +1,9 @@
 import json
 
 from agent.state import AgentState
+from agent.tools import get_tools
 from llm import open_ai
-from llm_utils.format import format_actions_for_prompt, format_messages_for_completion
+from llm_utils.format import format_actions, format_messages, format_tools
 from llm_utils.prompts import get_prompt
 from llm_utils.tracing import create_generation, end_generation
 from model.plan import Plan
@@ -22,8 +23,8 @@ async def agent_plan(state: AgentState, trace) -> Plan:
 
         # Format the system prompt with current state
         system_prompt = prompt.compile(
-            formatted_tools="",
-            taken_actions=format_actions_for_prompt(state.taken_actions)
+            formatted_tools=format_tools(get_tools()),
+            taken_actions=format_actions(state.taken_actions)
         )
 
         # Create generation trace
@@ -39,7 +40,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
         completion = await open_ai.completion(
             messages=[
                 {"role": "system", "content": system_prompt},
-                *format_messages_for_completion(state.messages)
+                *format_messages(state.messages)
             ],
             model=prompt.config.get("model", "gpt-4"),
             json_mode=True
