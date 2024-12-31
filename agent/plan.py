@@ -31,7 +31,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
         generation = create_generation(
             trace=trace,
             name="agent_plan",
-            model=prompt.config.get("models", "gpt-4"),
+            model=prompt.config.get("models", "gpt-4o"),
             input=system_prompt,
             metadata={"conversation_id": state.conversation_uuid}
         )

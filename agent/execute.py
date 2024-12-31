@@ -22,13 +22,13 @@ async def agent_execute(state: AgentState, plan: Plan, trace) -> AgentState:
     try:
         tool = plan.tool
         tool_handler = tool_handlers.get(tool)
-        action_result = await tool_handler(state, plan, execution_span)
+        action_result = await tool_handler('add_transaction', {"user_query": state.messages[-1].content}, execution_span)
 
         print(f"Action result: {action_result}")
 
         end_span(
             execution_span,
-            output="",
+            output=action_result,
             level="DEFAULT",
             status_message="Tool execution successful"
         )
@@ -38,6 +38,7 @@ async def agent_execute(state: AgentState, plan: Plan, trace) -> AgentState:
     except Exception as e:
         error_msg = f"Error executing tool '{plan.tool}': {str(e)}"
         end_span(
+            execution_span,
             output={"error": str(e)},
             level="ERROR",
             status_message=error_msg

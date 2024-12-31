@@ -37,7 +37,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         taken_actions=[],
         documents=[],
         current_step=0,
-        max_steps=5
+        max_steps=1
     )
 
 

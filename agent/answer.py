@@ -29,7 +29,7 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
             label="latest"
         )
         system_prompt = prompt.compile()
-        model = prompt.config.get("models", "gpt-4")
+        model = prompt.config.get("models", "gpt-4o")
 
         # Create generation trace
         generation = create_generation(
