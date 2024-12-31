@@ -2,7 +2,7 @@ from typing import Optional, Union, List, Dict
 
 from langfuse.model import TextPromptClient
 
-from llm_utils import langfuse_client
+from llm import langfuse_client
 
 
 def get_prompt(

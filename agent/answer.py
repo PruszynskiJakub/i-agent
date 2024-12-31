@@ -1,7 +1,7 @@
 from agent.state import AgentState, add_message
 from llm import open_ai
-from llm_utils.prompts import get_prompt
-from llm_utils.tracing import create_generation, end_generation
+from llm.prompts import get_prompt
+from llm.tracing import create_generation, end_generation
 
 
 async def agent_answer(state: AgentState, parent_trace) -> AgentState:

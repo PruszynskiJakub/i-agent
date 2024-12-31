@@ -1,6 +1,6 @@
 from typing import Optional, List, Dict, Any
 
-from llm_utils import langfuse_client
+from llm import langfuse_client
 
 
 def create_trace(

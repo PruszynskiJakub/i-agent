@@ -4,7 +4,7 @@ from agent.answer import agent_answer
 from agent.execute import agent_execute
 from agent.plan import agent_plan
 from agent.state import AgentState, should_continue
-from llm_utils.tracing import create_trace, end_trace
+from llm.tracing import create_trace, end_trace
 
 
 async def agent_run(state: AgentState) -> str:
