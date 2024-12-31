@@ -55,3 +55,6 @@ def add_taken_action(state: AgentState, action: Action) -> AgentState:
 
 def add_documents(state: AgentState, documents: List[Document]) -> AgentState:
     return state.copy(documents=[*state.documents, *documents])
+
+def should_continue(state: AgentState) -> bool:
+    return state.current_step < state.max_steps

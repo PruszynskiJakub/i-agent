@@ -5,19 +5,13 @@ from dotenv import load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
-from agent.answer import AgentAnswer
-from agent.assistant import Assistant
-from agent.state import StateHolder
+from agent.assistant import agent_run
+from agent.state import create_or_restore_state, add_message
+from agent.tools import create_tools
 from llm_utils.tracing import flush
-from repository.database import Database
-from repository.message import MessageRepository
 
 # Initialize core services
 load_dotenv()
-database = Database()
-message_repository = MessageRepository(database)
-
-agent_answer = AgentAnswer()
 
 # Initialize Slack app
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
@@ -28,27 +22,10 @@ def handle_message(message, say):
     """Handle incoming messages and respond using the agent"""
     try:
         # Initialize state for this conversation
-        state = StateHolder(
-            conversation_uuid=message.get("thread_ts", message["ts"]),  # Using timestamp as conversation ID
-            message_repository=message_repository,
-            tools=[
-                {
-                    "uuid": "a3bb189e-8bf9-4c8b-9beb-5de10a41cf62",
-                    "name": "ynab",
-                    "description": "responsible for managing budget, transactions etc",
-                    "instructions": "",
-                }
-            ]
-        )
+        state = create_or_restore_state(conversation_uuid=message.get("thread_ts", message["ts"]))
+        state = add_message(state, content=message["text"], role="user")
 
-        # Add the user's message to state
-        state.add_message(content=message["text"], role="user")
-
-        # Initialize and run agent
-        assistant = Assistant(state=state)
-
-        # Get agent's response
-        response = asyncio.run(assistant.run())
+        response = asyncio.run(agent_run(state=state))
         flush()
         # Send response back to Slack
         say(

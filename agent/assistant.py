@@ -1,31 +1,32 @@
 import os
 
+from agent.answer import agent_answer
 from agent.execute import agent_execute
 from agent.plan import agent_plan
-from agent.answer import agent_answer
+from agent.state import AgentState, should_continue
 from llm_utils.tracing import create_trace, end_trace
 
 
-async def agent_run(self):
+async def agent_run(state: AgentState):
     trace = create_trace(
-        name=self.state.messages[-1].content[:45],  # First 45 chars of user input as trace name
+        name=state.messages[-1].content[:45],  # First 45 chars of user input as trace name
         user_id=os.getenv("USER", "default_user"),
         metadata={
             'medium': 'slack'
         },
-        session_id=self.state.conversation_uuid,
-        input=self.state.messages[-1].content,
+        session_id=state.conversation_uuid,
+        input=state.messages[-1].content,
     )
 
-    while self.state.should_continue():
-        plan = await agent_plan(self.state, trace)
+    while should_continue(state):
+        plan = await agent_plan(state, trace)
 
         if plan.tool == 'final_answer':
             break
 
-        await agent_execute(self.state, plan, trace)
+        await agent_execute(state, plan, trace)
 
-    final_answer = await agent_answer(self.state, trace)
+    final_answer = await agent_answer(state, trace)
 
     end_trace(trace, output=final_answer)
     return final_answer
