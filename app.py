@@ -24,7 +24,7 @@ def handle_message(message, say):
         state = create_or_restore_state(conversation_uuid=message.get("thread_ts", message["ts"]))
         state = add_message(state, content=message["text"], role="user")
 
-        response = asyncio.run(agent_run(state=state))
+        response = asyncio.run(agent_run(in_state=state))
         flush()
         # Send response back to Slack
         say(
