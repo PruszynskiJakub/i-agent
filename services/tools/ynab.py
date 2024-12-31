@@ -1,3 +1,18 @@
+from typing import Any, Dict
+
+from model.action import ActionResult
+from repository.prompt import PromptRepository
+from services.tools.tool import ToolService
+
+
+class YnabService(ToolService):
+    def __init__(self, prompt_repository: PromptRepository):
+        self.prompt_repository = prompt_repository
+
+    def execute(self, action: str, params: Dict[str, Any], trace) -> Any:
+        pass
+
+
 ynab_categories = """
     <category_group name="Current">
         <category>

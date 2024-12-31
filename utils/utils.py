@@ -57,3 +57,4 @@ def format_messages_for_completion(messages: List[Message]) -> List[dict]:
         }
         formatted_messages.append(formatted_message)
     return formatted_messages
+

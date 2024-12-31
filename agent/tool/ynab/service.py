@@ -1,2 +1,0 @@
-class YnabService:
-    pass
