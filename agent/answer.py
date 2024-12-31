@@ -1,10 +1,10 @@
-from agent.state import StateHolder
+from agent.state import AgentState, add_message
 from llm import open_ai
 from llm_utils.prompts import get_prompt
 from llm_utils.tracing import create_generation, end_generation
 
 
-async def agent_answer(state: StateHolder, parent_trace) -> str:
+async def agent_answer(state: AgentState, parent_trace) -> str:
     """
     Generate final answer based on conversation state and trace the generation.
 
@@ -50,7 +50,7 @@ async def agent_answer(state: StateHolder, parent_trace) -> str:
         )
 
         end_generation(generation, output=final_answer)
-        state.add_message(content=final_answer, role="assistant")
+        add_message(state, content=final_answer, role="assistant")
 
         return final_answer
 

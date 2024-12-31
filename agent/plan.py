@@ -1,6 +1,6 @@
 import json
 
-from agent.state import StateHolder
+from agent.state import AgentState
 from llm import open_ai
 from llm_utils.format import format_actions_for_prompt, format_messages_for_completion
 from llm_utils.prompts import get_prompt
@@ -8,7 +8,7 @@ from llm_utils.tracing import create_generation, end_generation
 from model.plan import Plan
 
 
-async def agent_plan(state: StateHolder, trace) -> Plan:
+async def agent_plan(state: AgentState, trace) -> Plan:
     """
     Creates a plan based on the current state.
     Returns a Plan object with thinking, step, tool, parameters, and required information.

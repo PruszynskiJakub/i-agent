@@ -1,9 +1,9 @@
-from agent.state import StateHolder
+from agent.state import AgentState
 from llm_utils.tracing import create_span, end_span
 from model.plan import Plan
 
 
-async def agent_execute(state: StateHolder, plan: Plan, trace) -> None:
+async def agent_execute(state: AgentState, plan: Plan, trace) -> AgentState:
     """
     Executes the given plan and updates the state accordingly.
     Creates a trace span for the execution process.
@@ -28,6 +28,8 @@ async def agent_execute(state: StateHolder, plan: Plan, trace) -> None:
             level="DEFAULT",
             status_message="Tool execution successful"
         )
+
+        return state
 
     except Exception as e:
         error_msg = f"Error executing tool '{plan.tool}': {str(e)}"

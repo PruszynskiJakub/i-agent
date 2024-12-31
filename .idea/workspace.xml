@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="simplify">
-      <change afterPath="$PROJECT_DIR$/llm_utils/format.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/message.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/describe.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735638912694</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="simplify">
+      <option name="closed" value="true" />
+      <created>1735639572997</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1735639572997</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
