@@ -4,7 +4,7 @@ from llm_utils.prompts import get_prompt
 from llm_utils.tracing import create_generation, end_generation
 
 
-async def agent_answer(state: AgentState, parent_trace) -> str:
+async def agent_answer(state: AgentState, parent_trace) -> AgentState:
     """
     Generate final answer based on conversation state and trace the generation.
 
@@ -50,9 +50,8 @@ async def agent_answer(state: AgentState, parent_trace) -> str:
         )
 
         end_generation(generation, output=final_answer)
-        add_message(state, content=final_answer, role="assistant")
-
-        return final_answer
+        
+        return add_message(state, content=final_answer, role="assistant")
 
     except Exception as e:
         raise Exception(f"Error generating final answer: {str(e)}")

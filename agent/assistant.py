@@ -7,7 +7,7 @@ from agent.state import AgentState, should_continue
 from llm_utils.tracing import create_trace, end_trace
 
 
-async def agent_run(state: AgentState):
+async def agent_run(state: AgentState) -> str:
     trace = create_trace(
         name=state.messages[-1].content[:45],  # First 45 chars of user input as trace name
         user_id=os.getenv("USER", "default_user"),
@@ -26,7 +26,8 @@ async def agent_run(state: AgentState):
 
         await agent_execute(state, plan, trace)
 
-    final_answer = await agent_answer(state, trace)
+    new_state = await agent_answer(state, trace)
+    final_answer = new_state.messages[-1].content
 
     end_trace(trace, output=final_answer)
     return final_answer
