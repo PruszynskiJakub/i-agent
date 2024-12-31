@@ -1,10 +1,11 @@
-from typing import List, Optional
 import json
+from typing import List, Optional
 from uuid import UUID
+
+from repository.document import DocumentRepository
 
 from model.action import Action, ActionStatus
 from repository.database import Database
-from repository.document import DocumentRepository
 
 
 class ActionRepository:
@@ -27,7 +28,7 @@ class ActionRepository:
                 status TEXT NOT NULL
             )
         """)
-        
+
         self.db.execute("""
             CREATE TABLE IF NOT EXISTS action_documents (
                 action_uuid TEXT,
@@ -72,13 +73,13 @@ class ActionRepository:
             return None
 
         action_data = result[0]
-        
+
         # Get associated documents
         doc_results = self.db.execute("""
             SELECT document_uuid FROM action_documents
             WHERE action_uuid = ?
         """, (str(uuid),))
-        
+
         documents = []
         if doc_results:
             documents = [
@@ -101,5 +102,5 @@ class ActionRepository:
         actions = self.db.execute("""
             SELECT uuid FROM actions WHERE tool_uuid = ?
         """, (str(tool_uuid),))
-        
-        return [self.find_by_id(UUID(action[0])) for action in actions] if actions else [] 
+
+        return [self.find_by_id(UUID(action[0])) for action in actions] if actions else []
