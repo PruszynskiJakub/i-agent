@@ -3,12 +3,13 @@ from enum import Enum
 from typing import List
 from uuid import UUID
 
-from model.document import Document
+from document.types import Document
 
 
 class ActionStatus(Enum):
     SUCCESS = "success"
     FAILURE = "failure"
+
 
 @dataclass
 class ActionResult:

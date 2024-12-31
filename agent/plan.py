@@ -1,12 +1,12 @@
 import json
 
 from agent.state import AgentState
-from agent.tools import get_tools
 from agent.types import Plan
 from llm import open_ai
 from llm.format import format_actions, format_messages, format_tools
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
+from tools.provider import get_tools
 
 
 async def agent_plan(state: AgentState, trace) -> Plan:
@@ -31,7 +31,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
         generation = create_generation(
             trace=trace,
             name="agent_plan",
-            model=prompt.config.get("model", "gpt-4"),
+            model=prompt.config.get("types", "gpt-4"),
             input=system_prompt,
             metadata={"conversation_id": state.conversation_uuid}
         )
@@ -42,7 +42,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
                 {"role": "system", "content": system_prompt},
                 *format_messages(state.messages)
             ],
-            model=prompt.config.get("model", "gpt-4"),
+            model=prompt.config.get("types", "gpt-4"),
             json_mode=True
         )
 

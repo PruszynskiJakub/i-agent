@@ -5,19 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="simplify">
-      <change afterPath="$PROJECT_DIR$/agent/types.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/document/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/document/types.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/document/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/provider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ynab/service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample Aider Config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Sample Aider Config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/document.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/plan.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/action.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/database.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/text.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/web.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/web.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/tools.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llm/format.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/format.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/llm/tracing.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/tracing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/action.py" beforeDir="false" afterPath="$PROJECT_DIR$/types/action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/types/message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ynab/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +65,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/llm" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/app/agents" />
       <recent name="$PROJECT_DIR$/_arch" />
@@ -289,7 +294,23 @@
       <option name="project" value="LOCAL" />
       <updated>1735645609448</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="simplify">
+      <option name="closed" value="true" />
+      <created>1735646375132</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1735646375132</updated>
+    </task>
+    <task id="LOCAL-00021" summary="simplify">
+      <option name="closed" value="true" />
+      <created>1735646507496</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1735646507496</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

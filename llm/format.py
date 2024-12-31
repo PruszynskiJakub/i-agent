@@ -1,8 +1,7 @@
 from ast import Dict
 from typing import Any, List
 
-from model.action import Action
-from model.message import Message
+from common.types import Action
 
 
 def format_actions(actions: List[Action]) -> str:

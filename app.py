@@ -44,10 +44,10 @@ def handle_message(message, say):
 
 
 # Keep existing command handlers
-@app.command("/model")
+@app.command("/types")
 def handle_model_command(ack, body, respond):
     ack()
-    respond("OK, model changed")
+    respond("OK, types changed")
 
 
 @app.event("assistant_thread_started")

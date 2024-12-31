@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List, Optional, Tuple
 
 from db import connection, execute
-from model.message import Message
+from types.message import Message
 
 
 def save_message(message: Message) -> None:

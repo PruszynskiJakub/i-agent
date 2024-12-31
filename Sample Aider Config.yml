@@ -23,40 +23,40 @@
 ## Specify the Anthropic API key
 #anthropic-api-key: xxx
 
-## Specify the model to use for the main chat
-#model: xxx
+## Specify the types to use for the main chat
+#types: xxx
 
-## Use claude-3-opus-20240229 model for the main chat
+## Use claude-3-opus-20240229 types for the main chat
 #opus: false
 
-## Use claude-3-5-sonnet-20241022 model for the main chat
+## Use claude-3-5-sonnet-20241022 types for the main chat
 #sonnet: false
 
-## Use claude-3-5-haiku-20241022 model for the main chat
+## Use claude-3-5-haiku-20241022 types for the main chat
 #haiku: false
 
-## Use gpt-4-0613 model for the main chat
+## Use gpt-4-0613 types for the main chat
 #4: false
 
-## Use gpt-4o model for the main chat
+## Use gpt-4o types for the main chat
 #4o: false
 
-## Use gpt-4o-mini model for the main chat
+## Use gpt-4o-mini types for the main chat
 #mini: false
 
-## Use gpt-4-1106-preview model for the main chat
+## Use gpt-4-1106-preview types for the main chat
 #4-turbo: false
 
-## Use gpt-3.5-turbo model for the main chat
+## Use gpt-3.5-turbo types for the main chat
 #35turbo: false
 
-## Use deepseek/deepseek-coder model for the main chat
+## Use deepseek/deepseek-coder types for the main chat
 #deepseek: false
 
-## Use o1-mini model for the main chat
+## Use o1-mini types for the main chat
 #o1-mini: false
 
-## Use o1-preview model for the main chat
+## Use o1-preview types for the main chat
 #o1-preview: false
 
 #################
@@ -80,13 +80,13 @@
 ## Specify the OpenAI organization ID
 #openai-organization-id: xxx
 
-## Specify a file with aider model settings for unknown models
-#model-settings-file: .aider.model.settings.yml
+## Specify a file with aider types settings for unknown models
+#types-settings-file: .aider.types.settings.yml
 
 ## Specify a file with context window and costs for unknown models
-#model-metadata-file: .aider.model.metadata.json
+#types-metadata-file: .aider.types.metadata.json
 
-## Add a model alias (can be used multiple times)
+## Add a types alias (can be used multiple times)
 #alias: xxx
 ## Specify multiple values like this:
 #alias:
@@ -100,25 +100,25 @@
 ## Timeout in seconds for API calls (default: None)
 #timeout: xxx
 
-## Specify what edit format the LLM should use (default depends on model)
+## Specify what edit format the LLM should use (default depends on types)
 #edit-format: xxx
 
 ## Use architect edit format for the main chat
 #architect: false
 
-## Specify the model to use for commit messages and chat history summarization (default depends on --model)
-#weak-model: xxx
+## Specify the types to use for commit messages and chat history summarization (default depends on --types)
+#weak-types: xxx
 
-## Specify the model to use for editor tasks (default depends on --model)
-#editor-model: xxx
+## Specify the types to use for editor tasks (default depends on --types)
+#editor-types: xxx
 
-## Specify the edit format for the editor model (default: depends on editor model)
+## Specify the edit format for the editor types (default: depends on editor types)
 #editor-edit-format: xxx
 
 ## Only work with models that have meta-data available (default: True)
-#show-model-warnings: true
+#show-types-warnings: true
 
-## Soft limit on tokens for chat history, after which summarization begins. If unspecified, defaults to the model's max_chat_history_tokens.
+## Soft limit on tokens for chat history, after which summarization begins. If unspecified, defaults to the types's max_chat_history_tokens.
 #max-chat-history-tokens: xxx
 
 ## Specify the .env file to load (default: .env in git root)
@@ -340,7 +340,7 @@
 ## Apply the changes from the given file instead of running the chat (debug)
 #apply: xxx
 
-## Apply clipboard contents as edits using the main model's editor format
+## Apply clipboard contents as edits using the main types's editor format
 #apply-clipboard-edits: false
 
 ## Always say yes to every confirmation

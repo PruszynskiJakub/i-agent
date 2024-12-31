@@ -61,12 +61,12 @@ def create_generation(
                       input: Any,
                       model_parameters: Optional[Dict[str, Any]] = None,
                       metadata: Optional[Dict[str, Any]] = None):
-    """Create a generation to track AI model outputs
+    """Create a generation to track AI types outputs
 
     Args:
         trace: Parent trace object
         name: Identifier of the generation
-        model: Name of the model used
+        model: Name of the types used
         input: Prompt/input for generation
         model_parameters: Model configuration parameters
         metadata: Additional metadata
