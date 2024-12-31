@@ -1,6 +1,6 @@
 from agent.state import AgentState
+from agent.types import Plan
 from llm_utils.tracing import create_span, end_span
-from model.plan import Plan
 
 
 async def agent_execute(state: AgentState, plan: Plan, trace) -> AgentState:

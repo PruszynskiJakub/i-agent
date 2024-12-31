@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="simplify">
+      <change afterPath="$PROJECT_DIR$/agent/types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document/types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/document/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/document.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/plan.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/action.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/database.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/text.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/web.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/web.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,7 +265,31 @@
       <option name="project" value="LOCAL" />
       <updated>1735643447321</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="simplify">
+      <option name="closed" value="true" />
+      <created>1735645471936</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1735645471936</updated>
+    </task>
+    <task id="LOCAL-00018" summary="simplify">
+      <option name="closed" value="true" />
+      <created>1735645561407</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1735645561407</updated>
+    </task>
+    <task id="LOCAL-00019" summary="simplify">
+      <option name="closed" value="true" />
+      <created>1735645609448</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1735645609448</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
