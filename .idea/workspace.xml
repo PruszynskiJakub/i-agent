@@ -4,18 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="simplify state">
-      <change afterPath="$PROJECT_DIR$/llm_utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/llm_utils/prompts.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/llm_utils/tracing.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="simplify">
+      <change afterPath="$PROJECT_DIR$/llm/open_ai.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample Aider Config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Sample Aider Config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/tools/tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/tools/tool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/prompt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/trace.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735626651593</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="simplify">
+      <option name="closed" value="true" />
+      <created>1735637652253</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1735637652253</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -222,6 +227,7 @@
     <MESSAGE value="Connect assistant with slack" />
     <MESSAGE value="Clean" />
     <MESSAGE value="simplify state" />
-    <option name="LAST_COMMIT_MESSAGE" value="simplify state" />
+    <MESSAGE value="simplify" />
+    <option name="LAST_COMMIT_MESSAGE" value="simplify" />
   </component>
 </project>

@@ -1,16 +1,14 @@
+import json
+
+from agent.state import StateHolder
+from llm import open_ai
 from llm_utils.prompts import get_prompt
 from llm_utils.tracing import create_generation, end_generation
 from model.plan import Plan
-from ai.llm import LLMProvider
-from repository.prompt import PromptRepository
 from utils.utils import format_actions_for_prompt, format_messages_for_completion
-from agent.state import StateHolder
-from services.trace import TraceService
-import json
+
 
 class AgentPlan:
-    def __init__(self, llm: LLMProvider):
-        self.llm = llm
 
     async def invoke(self, state: StateHolder, trace) -> Plan:
         """
@@ -40,7 +38,7 @@ class AgentPlan:
             )
 
             # Get completion from LLM
-            completion = await self.llm.completion(
+            completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
                     *format_messages_for_completion(state.messages)
@@ -67,7 +65,7 @@ class AgentPlan:
 
             # End the generation trace
             end_generation(generation, output=response_data)
-            
+
             return plan
 
         except Exception as e:

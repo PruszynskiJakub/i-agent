@@ -14,24 +14,17 @@ from agent.state import StateHolder
 from ai.open_ai import OpenAIProvider
 from repository.database import Database
 from repository.message import MessageRepository
-from repository.prompt import PromptRepository
-from services.trace import TraceService
+
 
 # Initialize core services
 load_dotenv()
 database = Database()
 message_repository = MessageRepository(database)
-llm = OpenAIProvider(api_key=os.environ["OPENAI_API_KEY"])
-langfuse_client = Langfuse(
-    public_key=os.environ["LANGFUSE_PUBLIC_KEY"],
-    secret_key=os.environ["LANGFUSE_SECRET_KEY"],
-    host=os.environ.get("LANGFUSE_HOST", "https://cloud.langfuse.com")
-)
 
 # Initialize agent components
-agent_plan = AgentPlan(llm)
-agent_execute = AgentExecute(llm)
-agent_answer = AgentAnswer(llm)
+agent_plan = AgentPlan()
+agent_execute = AgentExecute()
+agent_answer = AgentAnswer()
 
 # Initialize Slack app
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
