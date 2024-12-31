@@ -169,11 +169,11 @@ def end_trace(
     if status_message is not None:
         trace.update(status_message=status_message)
 
-def flush(self):
+def flush():
     """Flush all pending traces to Langfuse"""
     langfuse_client.flush()
 
-def shutdown(self):
+def shutdown():
     """Shutdown the trace service and flush pending traces"""
     langfuse_client.flush()
     langfuse_client.shutdown()

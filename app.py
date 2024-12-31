@@ -2,7 +2,6 @@ import asyncio
 import os
 
 from dotenv import load_dotenv
-from langfuse import Langfuse
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
@@ -11,10 +10,9 @@ from agent.assistant import Assistant
 from agent.execute import AgentExecute
 from agent.plan import AgentPlan
 from agent.state import StateHolder
-from ai.open_ai import OpenAIProvider
+from llm_utils.tracing import flush
 from repository.database import Database
 from repository.message import MessageRepository
-
 
 # Initialize core services
 load_dotenv()
@@ -61,7 +59,7 @@ def handle_message(message, say):
 
         # Get agent's response
         response = asyncio.run(assistant.run())
-
+        flush()
         # Send response back to Slack
         say(
             text=response,
@@ -69,6 +67,7 @@ def handle_message(message, say):
         )
 
     except Exception as e:
+        flush()
         # Handle errors gracefully
         raise e
         error_message = f"Sorry, I encountered an error: {str(e)}"
@@ -83,6 +82,7 @@ def handle_message(message, say):
 def handle_model_command(ack, body, respond):
     ack()
     respond("OK, model changed")
+
 
 @app.event("assistant_thread_started")
 def handle_assistant_thread_started(body, ack):
