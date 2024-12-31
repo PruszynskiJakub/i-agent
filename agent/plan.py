@@ -31,7 +31,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
         generation = create_generation(
             trace=trace,
             name="agent_plan",
-            model=prompt.config.get("types", "gpt-4"),
+            model=prompt.config.get("models", "gpt-4"),
             input=system_prompt,
             metadata={"conversation_id": state.conversation_uuid}
         )
@@ -42,7 +42,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
                 {"role": "system", "content": system_prompt},
                 *format_messages(state.messages)
             ],
-            model=prompt.config.get("types", "gpt-4"),
+            model=prompt.config.get("models", "gpt-4"),
             json_mode=True
         )
 

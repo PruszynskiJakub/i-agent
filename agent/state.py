@@ -2,9 +2,10 @@ from dataclasses import dataclass
 from typing import List
 
 from db.message import find_messages_by_conversation, create_message
-from types.action import Action
-from types.document import Document
-from types.message import Message
+from document.types import Document
+from models.action import Action
+
+from models.message import Message
 
 
 @dataclass(frozen=True)

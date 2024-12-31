@@ -1,7 +1,8 @@
 from ast import Dict
 from typing import Any, List
 
-from common.types import Action
+from models.action import Action
+from models.message import Message
 
 
 def format_actions(actions: List[Action]) -> str:
@@ -59,7 +60,7 @@ def format_messages(messages: List[Message]) -> List[dict]:
     return formatted_messages
 
 
-def format_tools(tools: List[Dict[str, Any]]) -> str:
+def format_tools(tools: List[Dict]) -> str:
     """
     Formats a list of tools into an XML-like string representation.
 
