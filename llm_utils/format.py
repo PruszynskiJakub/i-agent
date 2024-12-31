@@ -6,10 +6,10 @@ from model.message import Message
 
 def format_actions_for_prompt(actions: List[Action]) -> str:
     """Formats the executed actions into a string for the prompt
-    
+
     Args:
         actions: List of Action objects
-        
+
     Returns:
         str: Formatted string describing all executed actions
     """

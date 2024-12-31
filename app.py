@@ -7,8 +7,6 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 from agent.answer import AgentAnswer
 from agent.assistant import Assistant
-from agent.execute import AgentExecute
-from agent.plan import AgentPlan
 from agent.state import StateHolder
 from llm_utils.tracing import flush
 from repository.database import Database
@@ -19,9 +17,6 @@ load_dotenv()
 database = Database()
 message_repository = MessageRepository(database)
 
-# Initialize agent components
-agent_plan = AgentPlan()
-agent_execute = AgentExecute()
 agent_answer = AgentAnswer()
 
 # Initialize Slack app
@@ -50,12 +45,7 @@ def handle_message(message, say):
         state.add_message(content=message["text"], role="user")
 
         # Initialize and run agent
-        assistant = Assistant(
-            state=state,
-            plan=agent_plan,
-            execute=agent_execute,
-            answer=agent_answer
-        )
+        assistant = Assistant(state=state)
 
         # Get agent's response
         response = asyncio.run(assistant.run())

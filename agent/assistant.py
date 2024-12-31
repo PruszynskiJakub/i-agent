@@ -1,42 +1,31 @@
 import os
 
-from agent.answer import AgentAnswer
-from agent.execute import AgentExecute
-from agent.plan import AgentPlan
-from agent.state import StateHolder
+from agent.execute import agent_execute
+from agent.plan import agent_plan
+from agent.answer import agent_answer
 from llm_utils.tracing import create_trace, end_trace
-from services.trace import TraceService
 
 
-class Assistant:
-    def __init__(self, state: StateHolder, plan: AgentPlan, execute: AgentExecute,
-                 answer: AgentAnswer):
-        self.state = state
-        self.plan = plan
-        self.execute = execute
-        self.answer = answer
+async def agent_run(self):
+    trace = create_trace(
+        name=self.state.messages[-1].content[:45],  # First 45 chars of user input as trace name
+        user_id=os.getenv("USER", "default_user"),
+        metadata={
+            'medium': 'slack'
+        },
+        session_id=self.state.conversation_uuid,
+        input=self.state.messages[-1].content,
+    )
 
-    async def run(self):
+    while self.state.should_continue():
+        plan = await agent_plan(self.state, trace)
 
-        trace = create_trace(
-            name = self.state.messages[-1].content[:45],  # First 45 chars of user input as trace name
-            user_id= os.getenv("USER", "default_user"),
-            metadata={
-                'medium': 'slack'
-            },
-            session_id= self.state.conversation_uuid,
-            input= self.state.messages[-1].content,
-        )
+        if plan.tool == 'final_answer':
+            break
 
-        while self.state.should_continue():
-            plan = await self.plan.invoke(self.state, trace)
+        await agent_execute(self.state, plan, trace)
 
-            if plan.tool == 'final_answer':
-                break
+    final_answer = await agent_answer(self.state, trace)
 
-            await self.execute.invoke(self.state, plan, trace)
-
-        final_answer = await self.answer.invoke(self.state, trace)
-
-        end_trace(trace, output=final_answer)
-        return final_answer
+    end_trace(trace, output=final_answer)
+    return final_answer
