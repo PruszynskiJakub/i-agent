@@ -1,3 +1,6 @@
+from ynab.service import execute_ynab
+
+
 def get_tools():
     return [
         {
@@ -7,3 +10,7 @@ def get_tools():
             "instructions": "",
         }
     ]
+
+toolMap = {
+    "ynab" : execute_ynab
+}
