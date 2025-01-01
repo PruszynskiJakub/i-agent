@@ -1,7 +1,7 @@
 import os
 
 from agent.answer import agent_answer
-from agent.describe import agent_describe
+from agent.define import agent_define
 from agent.execute import agent_execute
 from agent.plan import agent_plan
 from agent.state import AgentState, should_continue, increment_current_step
@@ -27,7 +27,7 @@ async def agent_run(in_state: AgentState) -> str:
         if plan.tool == 'final_answer':
             break
 
-        state = await agent_describe(state, trace)
+        state = await agent_define(state, trace)
         state = await agent_execute(state, plan, trace)
         state = increment_current_step(state)
 
