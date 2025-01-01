@@ -10,17 +10,17 @@ from llm import open_ai
 from llm.prompts import get_prompt
 from llm.tracing import create_event, create_generation, create_span, end_generation, end_span
 from models.action import ActionResult
-from ynab import ynab_accounts, ynab_categories
+from ynab import _ynab_accounts, _ynab_categories
 
 
 async def execute_ynab(action, params: Dict[str, Any], trace) -> ActionResult:
-   result = await take_action(action, params, trace)
+   result = await _take_action(action, params, trace)
    return result
        
-async def take_action(action, params: Dict[str, Any], trace) -> ActionResult:
+async def _take_action(action, params: Dict[str, Any], trace) -> ActionResult:
     match action:
         case "add_transaction":
-            return await add_transaction(params, trace)
+            return await _add_transaction(params, trace)
         case _:
             return ActionResult(
                 result='Action not recognized',
@@ -28,7 +28,7 @@ async def take_action(action, params: Dict[str, Any], trace) -> ActionResult:
                 documents=[]
             )
 
-async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
+async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     user_query = params.get("user_query")
 
     async def pick_amount() -> Dict[str, Any]:
@@ -51,7 +51,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         generation = create_generation(trace, "pick_sides", "gpt-4o", user_query)
         prompt = get_prompt(name="ynab_accounts")
         system_prompt = prompt.compile(
-            accounts=ynab_accounts
+            accounts=_ynab_accounts
         )
         completion = await open_ai.completion(
             messages=[
@@ -68,7 +68,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         generation = create_generation(trace, "pick_category", "gpt-4o", user_query)
         prompt = get_prompt(name="ynab_category")
         system_prompt = prompt.compile(
-            categories=ynab_categories
+            categories=_ynab_categories
         )   
         completion = await open_ai.completion(
             messages=[
