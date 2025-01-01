@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="simplify">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/provider.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Implement naively ynab adding transactions">
       <change beforePath="$PROJECT_DIR$/ynab/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -340,7 +334,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735655138570</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Implement naively ynab adding transactions">
+      <option name="closed" value="true" />
+      <created>1735665875162</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1735665875162</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -364,6 +366,7 @@
     <MESSAGE value="Clean" />
     <MESSAGE value="simplify state" />
     <MESSAGE value="simplify" />
-    <option name="LAST_COMMIT_MESSAGE" value="simplify" />
+    <MESSAGE value="Implement naively ynab adding transactions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement naively ynab adding transactions" />
   </component>
 </project>

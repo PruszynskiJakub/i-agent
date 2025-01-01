@@ -32,7 +32,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     user_query = params.get("user_query")
 
     async def pick_amount() -> Dict[str, Any]:
-        generation = create_generation(trace, "pick_amount", "gpt-4", user_query)
+        generation = create_generation(trace, "pick_amount", "gpt-4o", user_query)
         prompt = get_prompt(name="ynab_amount")
         system_prompt = prompt.compile()
 
