@@ -1,6 +1,10 @@
 import asyncio
 import json
+import os
+from datetime import datetime
 from typing import Dict, Any
+
+import requests
 
 from llm import open_ai
 from llm.prompts import get_prompt
@@ -62,10 +66,10 @@ async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     
     async def pick_category() -> Dict[str, Any]:
         generation = create_generation(trace, "pick_category", "gpt-4o", user_query)
-        prompt = get_prompt(name="ynab_categories")
+        prompt = get_prompt(name="ynab_category")
         system_prompt = prompt.compile(
             categories=ynab_categories
-        )
+        )   
         completion = await open_ai.completion(
             messages=[
                 {"role": "system", "content": system_prompt},
@@ -77,6 +81,8 @@ async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         end_generation(generation, completion)
         return json.loads(completion)
 
+
+
     amount_task = asyncio.create_task(pick_amount())
     sides_task = asyncio.create_task(pick_sides())
     
@@ -84,8 +90,36 @@ async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     sides_result, amount_result = await asyncio.gather(sides_task, amount_task)
     
     category_result = None
-    if 'payee' in sides_result and sides_result['payee']['type'] != 'checking':
+    if sides_result['account']['type'] == 'checking' and not('payee' in sides_result and sides_result['payee']['type'] != 'checking'):
         category_result = await pick_category()
+
+    def call_api():
+        model = {
+          "transaction": {
+            "account_id": sides_result['account']['id'],
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "amount": amount_result['amount'] * 1000,# Convert to milliunits
+            "payee_id": sides_result['payee']['id'] if 'payee' in sides_result else None,
+            "payee_name": sides_result['payee']['name'] if 'payee' in sides_result else None,
+            "category_id": category_result['category']['id'] if category_result else None,
+            "memo": "iAgent: " + user_query,
+          }
+        }
+
+        response = requests.post(
+            url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv("YNAB_BUDGET_ID")}/transactions",
+            json=model,
+            headers={
+                "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
+                "Content-Type": "application/json"
+            }
+        )
+
+        response.raise_for_status()
+        if response.status_code != 201:
+            raise Exception(f"Failed to add transaction: {response.text}")
+
+    call_api()
 
     return ActionResult(
         result='Success',
