@@ -1,4 +1,4 @@
-ynab_categories = """
+_ynab_categories = """
     <category_group name="Current">
         <category>
             <name>General</name>
@@ -450,7 +450,7 @@ ynab_categories = """
     </category_group>
 """
 
-ynab_accounts = """
+_ynab_accounts = """
     <account>
         <id>f642f5db-efcc-425e-a69e-59242628d143</id>
         <name>Pekao - Basic</name>
