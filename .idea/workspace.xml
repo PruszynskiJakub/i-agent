@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Implement naively ynab adding transactions">
-      <change beforePath="$PROJECT_DIR$/ynab/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/service.py" afterDir="false" />
-    </list>
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rename file and method" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -342,7 +340,47 @@
       <option name="project" value="LOCAL" />
       <updated>1735665875162</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Making ynab api call">
+      <option name="closed" value="true" />
+      <created>1735742631316</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1735742631316</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Fix info about the model">
+      <option name="closed" value="true" />
+      <created>1735742697117</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1735742697117</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Indicate private fields and methods">
+      <option name="closed" value="true" />
+      <created>1735742743712</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1735742743712</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Indicate private fields and methods">
+      <option name="closed" value="true" />
+      <created>1735742746919</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1735742746919</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Rename file and method">
+      <option name="closed" value="true" />
+      <created>1735742834150</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1735742834150</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -367,6 +405,10 @@
     <MESSAGE value="simplify state" />
     <MESSAGE value="simplify" />
     <MESSAGE value="Implement naively ynab adding transactions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement naively ynab adding transactions" />
+    <MESSAGE value="Making ynab api call" />
+    <MESSAGE value="Fix info about the model" />
+    <MESSAGE value="Indicate private fields and methods" />
+    <MESSAGE value="Rename file and method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename file and method" />
   </component>
 </project>

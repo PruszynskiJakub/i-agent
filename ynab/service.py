@@ -41,7 +41,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_query}
             ],
-            model=prompt.config.get("models", "gpt-4o"),
+            model=prompt.config.get("model", "gpt-4o"),
             json_mode=True
         )
         end_generation(generation, completion)
@@ -58,7 +58,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_query}
             ],
-            model=prompt.config.get("models", "gpt-4o"),
+            model=prompt.config.get("model", "gpt-4o"),
             json_mode=True
         )
         end_generation(generation, completion)
@@ -75,7 +75,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_query}
             ],
-            model=prompt.config.get("models", "gpt-4o"),
+            model=prompt.config.get("model", "gpt-4o"),
             json_mode=True
         )
         end_generation(generation, completion)

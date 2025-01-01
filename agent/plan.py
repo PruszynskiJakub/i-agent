@@ -31,7 +31,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
         generation = create_generation(
             trace=trace,
             name="agent_plan",
-            model=prompt.config.get("models", "gpt-4o"),
+            model=prompt.config.get("model", "gpt-4o"),
             input=system_prompt,
             metadata={"conversation_id": state.conversation_uuid}
         )
@@ -42,7 +42,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
                 {"role": "system", "content": system_prompt},
                 *format_messages(state.messages)
             ],
-            model=prompt.config.get("models", "gpt-4o"),
+            model=prompt.config.get("model", "gpt-4o"),
             json_mode=True
         )
 
@@ -50,7 +50,7 @@ async def agent_plan(state: AgentState, trace) -> Plan:
         try:
             response_data = json.loads(completion)
             plan = Plan(
-                _thinking=response_data.get("thinking", ""),
+                _thinking=response_data.get("_thinking", ""),
                 step=response_data.get("step", ""),
                 tool=response_data.get("tool", ""),
                 tool_uuid=response_data.get("tool_uuid", ""),
