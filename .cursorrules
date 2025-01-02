@@ -1,0 +1,14 @@
+You're using Python, Bolt Slack, SQLite, and OpenAI.
+
+<project_rules>
+- Always write the entire code and stay motivated to write it to the letter
+- Write functional and declarative code and patterns related to it
+- Use Python for all the code.
+- Always follow the style of the code you're editing
+- Use descriptive variable names such as `user_name` instead of `name`
+- Use descriptive function names such as `set_interaction_state` instead of `updateInteraction`
+- Fail early (exit function early) when possible and take care of error handling
+- Use `uuid` for unique identifiers
+- Avoid using classes, prefer functional approach
+- The latest OpenAI model is `gpt-4o` not `gpt-4`
+</project_rules>
