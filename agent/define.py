@@ -3,10 +3,10 @@ import json
 from agent.state import AgentState
 from agent.types import Definition, Plan
 from llm import open_ai
-from llm.format import format_actions, format_messages, format_tools
+from llm.format import format_messages, format_tool_actions
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from tools.provider import get_tools
+from tools.provider import get_tool_by_name
 
 
 async def agent_define(state: AgentState, plan: Plan, trace) -> Definition:
@@ -23,9 +23,9 @@ async def agent_define(state: AgentState, plan: Plan, trace) -> Definition:
 
         # Format the system prompt with current state
         system_prompt = prompt.compile(
-            formatted_tools=format_tools(get_tools()),
-            plan_step=plan.step,
-            plan_tool=plan.tool
+            # formatted_tools=format_tool_actions(get_tool_by_name(plan.tool)),
+            # plan_step=plan.step,
+            # plan_tool=plan.tool
         )
 
         # Create generation trace

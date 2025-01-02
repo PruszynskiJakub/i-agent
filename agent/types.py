@@ -16,5 +16,5 @@ class Definition:
     tool: str  # The tool to use
     step: str  # The step to take with the tool
     action: str  # The action to take with the tool
-    params: Dict[str, Any]  # The parameters for the action
+    params: dict[str, Any]  # The parameters for the action
     

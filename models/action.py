@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import List
+from typing import List, Dict
 from uuid import UUID
 
 from document.types import Document
@@ -25,7 +25,7 @@ class Action:
     uuid: UUID
     name: str
     tool_uuid: UUID
-    payload: dict
+    payload: Dict
     result: str
     status: ActionStatus
     documents: List[Document] = field(default_factory=list)

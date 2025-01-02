@@ -1,3 +1,5 @@
+import uuid
+
 from agent.state import AgentState, add_taken_action
 from agent.types import Definition, Plan
 from llm.tracing import create_span, end_span
@@ -28,9 +30,9 @@ async def agent_execute(state: AgentState, definition: Definition, trace) -> Age
         print(f"Action result: {action_result}")
 
         action = Action(
-            uuid=action_result.uuid,
+            uuid=uuid.uuid4(),
             name=definition.action,
-            tool_uuid=definition.tool_uuid,
+            tool_uuid=uuid.uuid4(), # TODO FIX this param
             payload=definition.params,
             result=action_result.result,
             status=action_result.status,

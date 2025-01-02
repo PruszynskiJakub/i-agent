@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from ynab.service import execute_ynab
 
 
@@ -20,6 +22,14 @@ def get_tools():
             """
         }
     ]
+
+def get_tool_by_name(name)->Dict[str, Any]:
+    tools = get_tools()
+    for tool in tools:
+        if tool['name'] == name:
+            return tool
+    return {}
+
 
 tool_handlers = {
     "ynab" : execute_ynab
