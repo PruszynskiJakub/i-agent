@@ -55,102 +55,106 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
                 "error_message": f"Failed to split transaction: {str(e)}"
             }]
 
-    async def pick_amount(query: str) -> Dict[str, Any]:
-        generation = create_generation(trace, "pick_amount", "gpt-4o", query)
-        prompt = get_prompt(name="ynab_amount")
-        system_prompt = prompt.compile()
+    async def process_transaction(transaction_query: str, trace):
+        async def pick_amount(query: str) -> Dict[str, Any]:
+            generation = create_generation(trace, "pick_amount", "gpt-4o", query)
+            prompt = get_prompt(name="ynab_amount")
+            system_prompt = prompt.compile()
 
-        completion = await open_ai.completion(
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": query}
-            ],
-            model=prompt.config.get("model", "gpt-4o"),
-            json_mode=True
-        )
-        end_generation(generation, completion)
-        return json.loads(completion)
-    
-    async def pick_sides(query: str) -> Dict[str, Any]:
-        generation = create_generation(trace, "pick_sides", "gpt-4o", query)
-        prompt = get_prompt(name="ynab_accounts")
-        system_prompt = prompt.compile(
-            accounts=_ynab_accounts
-        )
-        completion = await open_ai.completion(
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": query}
-            ],
-            model=prompt.config.get("model", "gpt-4o"),
-            json_mode=True
-        )
-        end_generation(generation, completion)
-        return json.loads(completion)
-    
-    async def pick_category(query: str) -> Dict[str, Any]:
-        generation = create_generation(trace, "pick_category", "gpt-4o", query)
-        prompt = get_prompt(name="ynab_category")
-        system_prompt = prompt.compile(
-            categories=_ynab_categories
-        )   
-        completion = await open_ai.completion(
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": query}
-            ],
-            model=prompt.config.get("model", "gpt-4o"),
-            json_mode=True
-        )
-        end_generation(generation, completion)
-        return json.loads(completion)
+            completion = await open_ai.completion(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": query}
+                ],
+                model=prompt.config.get("model", "gpt-4o"),
+                json_mode=True
+            )
+            end_generation(generation, completion)
+            return json.loads(completion)
 
-    def call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any], category_result: Dict[str, Any] | None, query: str):
-        if not sides_result or not amount_result:
-            raise ValueError("Missing required parameters: sides_result and amount_result are required")
+        async def pick_sides(query: str) -> Dict[str, Any]:
+            generation = create_generation(trace, "pick_sides", "gpt-4o", query)
+            prompt = get_prompt(name="ynab_accounts")
+            system_prompt = prompt.compile(
+                accounts=_ynab_accounts
+            )
+            completion = await open_ai.completion(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": query}
+                ],
+                model=prompt.config.get("model", "gpt-4o"),
+                json_mode=True
+            )
+            end_generation(generation, completion)
+            return json.loads(completion)
 
-        # Get account_id safely with get() method
-        account_id = sides_result.get('account', {}).get('id')
-        if not account_id:
-            raise ValueError("Missing required account_id in sides_result")
+        async def pick_category(query: str) -> Dict[str, Any]:
+            generation = create_generation(trace, "pick_category", "gpt-4o", query)
+            prompt = get_prompt(name="ynab_category")
+            system_prompt = prompt.compile(
+                categories=_ynab_categories
+            )
+            completion = await open_ai.completion(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": query}
+                ],
+                model=prompt.config.get("model", "gpt-4o"),
+                json_mode=True
+            )
+            end_generation(generation, completion)
+            return json.loads(completion)
 
-        # Build transaction model with safe access to nested dictionaries
-        model = {
-            "transaction": {
-                "account_id": account_id,
-                "date": datetime.now().strftime("%Y-%m-%d"),
-                "amount": int(amount_result.get('amount', 0) * 1000),  # Convert to milliunits
-                "payee_id": sides_result.get('payee', {}).get('id'),
-                "payee_name": sides_result.get('payee', {}).get('name'),
-                "category_id": category_result.get('category', {}).get('id') if category_result else None,
-                "memo": f"iAgent: {query}",
+        def call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any],
+                     category_result: Dict[str, Any] | None,
+                     query: str):
+            if not sides_result or not amount_result:
+                raise ValueError("Missing required parameters: sides_result and amount_result are required")
+
+            # Get account_id safely with get() method
+            account_id = sides_result.get('account', {}).get('id')
+            if not account_id:
+                raise ValueError("Missing required account_id in sides_result")
+
+            # Build transaction model with safe access to nested dictionaries
+            model = {
+                "transaction": {
+                    "account_id": account_id,
+                    "date": datetime.now().strftime("%Y-%m-%d"),
+                    "amount": int(amount_result.get('amount', 0) * 1000),  # Convert to milliunits
+                    "payee_id": sides_result.get('payee', {}).get('id'),
+                    "payee_name": sides_result.get('payee', {}).get('name'),
+                    "category_id": category_result.get('category', {}).get('id') if category_result else None,
+                    "memo": f"iAgent: {query}",
+                }
             }
-        }
 
-        response = requests.post(
-            url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions",
-            json=model,
-            headers={
-                "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
-                "Content-Type": "application/json"
-            }
-        )
+            response = requests.post(
+                url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions",
+                json=model,
+                headers={
+                    "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
+                    "Content-Type": "application/json"
+                }
+            )
 
-        response.raise_for_status()
-        if response.status_code != 201:
-            raise Exception(f"Failed to add transaction: {response.text}")
+            response.raise_for_status()
+            if response.status_code != 201:
+                raise Exception(f"Failed to add transaction: {response.text}")
 
-    async def process_transaction(transaction_query: str):
         amount_task = asyncio.create_task(pick_amount(transaction_query))
         sides_task = asyncio.create_task(pick_sides(transaction_query))
-        
+
         sides_result, amount_result = await asyncio.gather(sides_task, amount_task)
-        
+
         category_result = None
-        if sides_result['account']['type'] == 'checking' and not('payee' in sides_result and sides_result['payee']['type'] != 'checking'):
+        if sides_result['account']['type'] == 'checking' and not (
+                'payee' in sides_result and sides_result['payee']['type'] != 'checking'):
             category_result = await pick_category(transaction_query)
 
         call_api(sides_result, amount_result, category_result, transaction_query)
+
 
     split_results = await split_transaction(user_query)
 
