@@ -153,6 +153,18 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         if response.status_code != 201:
             raise Exception(f"Failed to add transaction: {response.text}")
 
+    async def process_transaction(transaction_query: str):
+        amount_task = asyncio.create_task(pick_amount(transaction_query))
+        sides_task = asyncio.create_task(pick_sides(transaction_query))
+        
+        sides_result, amount_result = await asyncio.gather(sides_task, amount_task)
+        
+        category_result = None
+        if sides_result['account']['type'] == 'checking' and not('payee' in sides_result and sides_result['payee']['type'] != 'checking'):
+            category_result = await pick_category()
+
+        call_api()
+
     split_results = await split_transaction(user_query)
     
     # Filter out and print errors, keep valid transactions
@@ -167,22 +179,11 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     if not valid_transactions:
         valid_transactions = [{"query": user_query}]
 
-    # Process each valid transaction in parallel
-    transaction_tasks = []
-    for transaction in valid_transactions:
-        amount_task = asyncio.create_task(pick_amount(transaction["query"]))
-        sides_task = asyncio.create_task(pick_sides(transaction["query"]))
-        transaction_tasks.append((amount_task, sides_task))
-
-    # Wait for all transactions to be processed
-    for amount_task, sides_task in transaction_tasks:
-        sides_result, amount_result = await asyncio.gather(sides_task, amount_task)
-        
-        category_result = None
-        if sides_result['account']['type'] == 'checking' and not('payee' in sides_result and sides_result['payee']['type'] != 'checking'):
-            category_result = await pick_category()
-
-        call_api()  # Process each transaction
+    # Process all transactions in parallel
+    await asyncio.gather(*[
+        process_transaction(transaction["query"]) 
+        for transaction in valid_transactions
+    ])
 
     return ActionResult(
         result='Success',
