@@ -28,29 +28,6 @@ async def _take_action(action, params: Dict[str, Any], trace) -> ActionResult:
                 documents=[]
             )
 
-async def split_transaction(user_query: str, trace) -> list[Dict[str, Any]]:
-    generation = create_generation(trace, "split_transaction", "gpt-4o", user_query)
-    prompt = get_prompt(name="ynab_split")
-    system_prompt = prompt.compile()
-
-    try:
-        completion = await open_ai.completion(
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_query}
-            ],
-            model=prompt.config.get("model", "gpt-4o"),
-            json_mode=True
-        )
-        end_generation(generation, completion)
-        return json.loads(completion)
-    except Exception as e:
-        return [{
-            "query": user_query,
-            "error_code": "SPLIT_FAILED",
-            "error_message": f"Failed to split transaction: {str(e)}"
-        }]
-
 async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     user_query = params.get("user_query")
     
@@ -69,7 +46,8 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
                 json_mode=True
             )
             end_generation(generation, completion)
-            return json.loads(completion)
+            json_completion =  json.loads(completion)
+            return json_completion['result']
         except Exception as e:
             return [{
                 "query": user_query,
@@ -175,7 +153,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         call_api(sides_result, amount_result, category_result, transaction_query)
 
     split_results = await split_transaction(user_query)
-    
+
     # Filter out and print errors, keep valid transactions
     valid_transactions = []
     for result in split_results:
@@ -186,7 +164,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
 
     # If no valid transactions, use original query
     if not valid_transactions:
-        valid_transactions = [{"query": user_query}]
+        valid_transactions = [user_query]
 
     # Process all transactions in parallel
     await asyncio.gather(*[
