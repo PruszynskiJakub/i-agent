@@ -127,21 +127,30 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         end_generation(generation, completion)
         return json.loads(completion)
 
-    def call_api():
+    def call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any], category_result: Dict[str, Any] | None, user_query: str):
+        if not sides_result or not amount_result:
+            raise ValueError("Missing required parameters: sides_result and amount_result are required")
+
+        # Get account_id safely with get() method
+        account_id = sides_result.get('account', {}).get('id')
+        if not account_id:
+            raise ValueError("Missing required account_id in sides_result")
+
+        # Build transaction model with safe access to nested dictionaries
         model = {
-          "transaction": {
-            "account_id": sides_result['account']['id'],
-            "date": datetime.now().strftime("%Y-%m-%d"),
-            "amount": amount_result['amount'] * 1000,# Convert to milliunits
-            "payee_id": sides_result['payee']['id'] if 'payee' in sides_result else None,
-            "payee_name": sides_result['payee']['name'] if 'payee' in sides_result else None,
-            "category_id": category_result['category']['id'] if category_result else None,
-            "memo": "iAgent: " + user_query,
-          }
+            "transaction": {
+                "account_id": account_id,
+                "date": datetime.now().strftime("%Y-%m-%d"),
+                "amount": int(amount_result.get('amount', 0) * 1000),  # Convert to milliunits
+                "payee_id": sides_result.get('payee', {}).get('id'),
+                "payee_name": sides_result.get('payee', {}).get('name'),
+                "category_id": category_result.get('category', {}).get('id') if category_result else None,
+                "memo": f"iAgent: {user_query}",
+            }
         }
 
         response = requests.post(
-            url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv("YNAB_BUDGET_ID")}/transactions",
+            url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions",
             json=model,
             headers={
                 "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
@@ -163,7 +172,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         if sides_result['account']['type'] == 'checking' and not('payee' in sides_result and sides_result['payee']['type'] != 'checking'):
             category_result = await pick_category()
 
-        call_api()
+        call_api(sides_result, amount_result, category_result, transaction_query)
 
     split_results = await split_transaction(user_query)
     
