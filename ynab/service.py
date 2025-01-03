@@ -55,7 +55,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
                 "error_message": f"Failed to split transaction: {str(e)}"
             }]
 
-    async def process_transaction(transaction_query: str, trace):
+    async def process_transaction(transaction_query: str):
         async def pick_amount(query: str) -> Dict[str, Any]:
             generation = create_generation(trace, "pick_amount", "gpt-4o", query)
             prompt = get_prompt(name="ynab_amount")
@@ -172,7 +172,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
 
     # Process all transactions in parallel
     await asyncio.gather(*[
-        process_transaction(transaction) 
+        process_transaction(transaction)
         for transaction in valid_transactions
     ])
 
