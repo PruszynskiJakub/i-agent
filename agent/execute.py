@@ -1,4 +1,5 @@
 import uuid
+from uuid import UUID
 
 from agent.state import AgentState, add_taken_action
 from llm.tracing import create_span, end_span
