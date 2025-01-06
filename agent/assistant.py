@@ -22,13 +22,13 @@ async def agent_run(in_state: AgentState) -> str:
     )
 
     while should_continue(state):
-        plan = await agent_plan(state, trace)
+        state = await agent_plan(state, trace)
 
-        if plan.tool == 'final_answer':
+        if state.step_info.tool == 'final_answer':
             break
 
-        definition = await agent_define(state, plan, trace)
-        state = await agent_execute(state, definition, trace)
+        state = await agent_define(state, trace)
+        state = await agent_execute(state, trace)
         state = increment_current_step(state)
 
     state = await agent_answer(state, trace)

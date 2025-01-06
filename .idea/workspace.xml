@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove extra param">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Properly build action result">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/define.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/define.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/document/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/document/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +408,31 @@
       <option name="project" value="LOCAL" />
       <updated>1735936420282</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Use purely state to pass data">
+      <option name="closed" value="true" />
+      <created>1736187235233</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1736187235233</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Pass uuid properly">
+      <option name="closed" value="true" />
+      <created>1736187447657</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1736187447657</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Properly build action result">
+      <option name="closed" value="true" />
+      <created>1736187942497</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1736187942497</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -443,6 +464,9 @@
     <MESSAGE value="Use dummy define step to conduct the action" />
     <MESSAGE value="Support multiple transactions in one go" />
     <MESSAGE value="Remove extra param" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove extra param" />
+    <MESSAGE value="Use purely state to pass data" />
+    <MESSAGE value="Pass uuid properly" />
+    <MESSAGE value="Properly build action result" />
+    <option name="LAST_COMMIT_MESSAGE" value="Properly build action result" />
   </component>
 </project>

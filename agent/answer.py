@@ -1,5 +1,6 @@
 from agent.state import AgentState, add_message
 from llm import open_ai
+from llm.format import format_actions
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 
@@ -28,7 +29,9 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
             name="agent_answer",
             label="latest"
         )
-        system_prompt = prompt.compile()
+        system_prompt = prompt.compile(
+            taken_actions=format_actions(state.taken_actions)
+        )
         model = prompt.config.get("model", "gpt-4o")
 
         # Create generation trace
