@@ -1,6 +1,6 @@
 import json
 
-from agent.state import AgentState
+from agent.state import AgentState, update_step_info
 from agent.types import Definition, Plan
 from llm import open_ai
 from llm.format import format_messages, format_tool_actions
