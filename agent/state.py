@@ -25,7 +25,7 @@ class AgentState:
     documents: List[Document]
     current_step: int
     max_steps: int
-    step: StepInfo
+    step_info: StepInfo
 
     def copy(self, **kwargs) -> 'AgentState':
         current_values = {
@@ -34,7 +34,8 @@ class AgentState:
             'taken_actions': self.taken_actions.copy(),
             'documents': self.documents.copy(),
             'current_step': self.current_step,
-            'max_steps': self.max_steps
+            'max_steps': self.max_steps,
+            'step_info': self.step_info
         }
         current_values.update(kwargs)
         return AgentState(**current_values)
@@ -48,7 +49,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         documents=[],
         current_step=0,
         max_steps=1,
-        step=StepInfo(
+        step_info=StepInfo(
             overview="",
             tool="",
             tool_uuid="",
