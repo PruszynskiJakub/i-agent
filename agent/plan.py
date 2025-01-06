@@ -9,10 +9,10 @@ from llm.tracing import create_generation, end_generation
 from tools.provider import get_tools
 
 
-async def agent_plan(state: AgentState, trace) -> Plan:
+async def agent_plan(state: AgentState, trace) -> AgentState:
     """
     Creates a plan based on the current state.
-    Returns a Plan object with thinking, step, tool, parameters, and required information.
+    Updates and returns AgentState with new step_info.
     """
     try:
         # Get the planning prompt from repository
@@ -66,7 +66,16 @@ async def agent_plan(state: AgentState, trace) -> Plan:
         # End the generation trace
         end_generation(generation, output=response_data)
 
-        return plan
+        # Update state with new step info
+        updated_state = update_step_info(state, {
+            'overview': plan._thinking,
+            'tool': plan.tool,
+            'tool_uuid': plan.tool_uuid,
+            'tool_action': plan.step,
+            'tool_action_params': {}
+        })
+        
+        return updated_state
 
     except Exception as e:
         raise Exception(f"Error in agent plan: {str(e)}")

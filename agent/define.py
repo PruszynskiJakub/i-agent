@@ -9,10 +9,10 @@ from llm.tracing import create_generation, end_generation
 from tools.provider import get_tool_by_name
 
 
-async def agent_define(state: AgentState, plan: Plan, trace) -> Definition:
+async def agent_define(state: AgentState, plan: Plan, trace) -> AgentState:
     """
     Creates a definition based on the current state and plan.
-    Returns a Definition object with thinking, tool, step, action, and parameters.
+    Updates and returns AgentState with complete step_info including parameters.
     """
     try:
         # Get the definition prompt from repository
@@ -68,7 +68,15 @@ async def agent_define(state: AgentState, plan: Plan, trace) -> Definition:
         # End the generation trace
         end_generation(generation, output=response_data)
 
-        return definition
+        # Update state with complete step info including parameters
+        updated_state = update_step_info(state, {
+            'overview': definition._thinking,
+            'tool': definition.tool,
+            'tool_action': definition.action,
+            'tool_action_params': definition.params
+        })
+        
+        return updated_state
 
     except Exception as e:
         raise Exception(f"Error in agent define: {str(e)}")
