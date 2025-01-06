@@ -9,14 +9,15 @@ import requests
 from llm import open_ai
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.action import ActionResult
+from models.action import ActionResult, ActionStatus
 from ynab import _ynab_accounts, _ynab_categories
 
 
 async def execute_ynab(action, params: Dict[str, Any], trace) -> ActionResult:
-   result = await _take_action(action, params, trace)
-   return result
-       
+    result = await _take_action(action, params, trace)
+    return result
+
+
 async def _take_action(action, params: Dict[str, Any], trace) -> ActionResult:
     match action:
         case "add_transaction":
@@ -28,9 +29,10 @@ async def _take_action(action, params: Dict[str, Any], trace) -> ActionResult:
                 documents=[]
             )
 
+
 async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     user_query = params.get("user_query")
-    
+
     async def split_transaction(user_query: str) -> list[Dict[str, Any]]:
         generation = create_generation(trace, "split_transaction", "gpt-4o", user_query)
         prompt = get_prompt(name="ynab_split")
@@ -46,7 +48,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
                 json_mode=True
             )
             end_generation(generation, completion)
-            json_completion =  json.loads(completion)
+            json_completion = json.loads(completion)
             return json_completion['result']
         except Exception as e:
             return [{
@@ -142,7 +144,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
             response.raise_for_status()
             if response.status_code != 201:
                 raise Exception(f"Failed to add transaction: {response.text}")
-            
+
             return {
                 "query": query,
                 "transaction_details": model["transaction"],
@@ -167,7 +169,6 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         api_result = call_api(sides_result, amount_result, category_result, transaction_query)
         return {**transaction_details, "api_result": api_result}
 
-
     split_results = await split_transaction(user_query)
 
     # Filter out and print errors, keep valid transactions
@@ -185,10 +186,10 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     # Process all transactions in parallel and collect results
     transaction_tasks = [process_transaction(transaction) for transaction in valid_transactions]
     transaction_results = []
-    
+
     # Gather results while maintaining parallel execution
     completed_results = await asyncio.gather(*transaction_tasks, return_exceptions=True)
-    
+
     for transaction, result in zip(valid_transactions, completed_results):
         if isinstance(result, Exception):
             transaction_results.append({
@@ -219,7 +220,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     }
 
     return ActionResult(
-        result=result_summary,
-        status="success" if failed == 0 else "failure",
+        result=str(result_summary),
+        status=ActionStatus.SUCCESS if failed == 0 else ActionStatus.FAILURE,
         documents=[]
     )
