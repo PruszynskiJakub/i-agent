@@ -32,7 +32,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         action = Action(
             uuid=uuid.uuid4(),
             name=state.step_info.tool_action,
-            tool_uuid=UUID(str(state.step_info.tool_uuid)),
+            tool_uuid=UUID(state.step_info.tool_uuid),
             payload=state.step_info.tool_action_params,
             result=action_result.result,
             status=action_result.status,
