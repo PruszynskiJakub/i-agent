@@ -108,7 +108,7 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
 
         def call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any],
                      category_result: Dict[str, Any] | None,
-                     query: str):
+                     query: str) -> Dict[str, Any]:
             if not sides_result or not amount_result:
                 raise ValueError("Missing required parameters: sides_result and amount_result are required")
 
@@ -142,6 +142,12 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
             response.raise_for_status()
             if response.status_code != 201:
                 raise Exception(f"Failed to add transaction: {response.text}")
+            
+            return {
+                "query": query,
+                "transaction_details": model["transaction"],
+                "api_response": response.json()
+            }
 
         amount_task = asyncio.create_task(pick_amount(transaction_query))
         sides_task = asyncio.create_task(pick_sides(transaction_query))
@@ -153,7 +159,13 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
                 'payee' in sides_result and sides_result['payee']['type'] != 'checking'):
             category_result = await pick_category(transaction_query)
 
-        call_api(sides_result, amount_result, category_result, transaction_query)
+        transaction_details = {
+            "amount_details": amount_result,
+            "account_details": sides_result,
+            "category_details": category_result,
+        }
+        api_result = call_api(sides_result, amount_result, category_result, transaction_query)
+        return {**transaction_details, "api_result": api_result}
 
 
     split_results = await split_transaction(user_query)
@@ -170,14 +182,44 @@ async def _add_transaction(params: Dict[str, Any], trace) -> ActionResult:
     if not valid_transactions:
         valid_transactions = [user_query]
 
-    # Process all transactions in parallel
-    await asyncio.gather(*[
-        process_transaction(transaction)
-        for transaction in valid_transactions
-    ])
+    # Process all transactions in parallel and collect results
+    transaction_tasks = [process_transaction(transaction) for transaction in valid_transactions]
+    transaction_results = []
+    
+    # Gather results while maintaining parallel execution
+    completed_results = await asyncio.gather(*transaction_tasks, return_exceptions=True)
+    
+    for transaction, result in zip(valid_transactions, completed_results):
+        if isinstance(result, Exception):
+            transaction_results.append({
+                "status": "error",
+                "query": transaction,
+                "error": str(result)
+            })
+        else:
+            transaction_results.append({
+                "status": "success",
+                "details": result
+            })
+
+    # Prepare summary
+    total_transactions = len(transaction_results)
+    successful = sum(1 for t in transaction_results if t["status"] == "success")
+    failed = total_transactions - successful
+
+    result_summary = {
+        "summary": {
+            "total_transactions": total_transactions,
+            "successful": successful,
+            "failed": failed
+        },
+        "transactions": transaction_results,
+        "original_query": user_query,
+        "split_results": split_results
+    }
 
     return ActionResult(
-        result='Success',
-        status='success',
+        result=result_summary,
+        status="success" if failed == 0 else "failure",
         documents=[]
     )
