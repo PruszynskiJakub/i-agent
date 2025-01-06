@@ -77,3 +77,14 @@ def add_documents(state: AgentState, documents: List[Document]) -> AgentState:
 
 def should_continue(state: AgentState) -> bool:
     return state.current_step < state.max_steps
+
+def update_step_info(state: AgentState, updates: Dict[str, Any]) -> AgentState:
+    current_values = {
+        'overview': state.step_info.overview,
+        'tool': state.step_info.tool,
+        'tool_uuid': state.step_info.tool_uuid,
+        'tool_action': state.step_info.tool_action,
+        'tool_action_params': state.step_info.tool_action_params
+    }
+    current_values.update(updates)
+    return state.copy(step_info=StepInfo(**current_values))
