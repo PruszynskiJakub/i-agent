@@ -1,11 +1,20 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict, Any
 
 from db.message import find_messages_by_conversation, create_message
 from document.types import Document
 from models.action import Action
 
 from models.message import Message
+
+
+@dataclass(frozen=True)
+class StepInfo:
+    overview: str
+    tool: str
+    tool_uuid: str
+    tool_action: str
+    tool_action_params: Dict[str, Any]
 
 
 @dataclass(frozen=True)
@@ -16,6 +25,7 @@ class AgentState:
     documents: List[Document]
     current_step: int
     max_steps: int
+    step: StepInfo
 
     def copy(self, **kwargs) -> 'AgentState':
         current_values = {
@@ -37,7 +47,14 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         taken_actions=[],
         documents=[],
         current_step=0,
-        max_steps=1
+        max_steps=1,
+        step=StepInfo(
+            overview="",
+            tool="",
+            tool_uuid="",
+            tool_action="",
+            tool_action_params={}
+        )
     )
 
 
