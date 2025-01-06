@@ -33,6 +33,7 @@ def create_document(content: str, metadata: Dict[str, Any] = None) -> Document:
         metadata=document_metadata
     )
 
+
 def restore_placeholders(doc: Document) -> Document:
     """Restores original URLs and images from placeholders in the document text"""
     content = doc.text
@@ -57,6 +58,7 @@ def restore_placeholders(doc: Document) -> Document:
             **metadata
         }
     )
+
 
 def extract_images_and_urls(text: str) -> Dict[str, Any]:
     """Extracts image URLs and regular URLs from markdown text content"""

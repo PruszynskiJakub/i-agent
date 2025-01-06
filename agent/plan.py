@@ -1,7 +1,6 @@
 import json
 
 from agent.state import AgentState, update_step_info
-from agent.types import Plan
 from llm import open_ai
 from llm.format import format_actions, format_messages, format_tools
 from llm.prompts import get_prompt
@@ -46,15 +45,13 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
             json_mode=True
         )
 
-        # Parse response into Plan object
         try:
             response_data = json.loads(completion)
-            plan = Plan(
-                _thinking=response_data.get("_thinking", ""),
-                step=response_data.get("step", ""),
-                tool=response_data.get("tool", ""),
-                tool_uuid=response_data.get("tool_uuid", ""),
-            )
+            updated_state = update_step_info(state, {
+                'overview': response_data.get("step", ""),
+                'tool': response_data.get("tool", ""),
+                'tool_uuid': response_data.get("tool_uuid", ""),
+            })
         except json.JSONDecodeError as e:
             generation.end(
                 output=None,
@@ -66,15 +63,6 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
         # End the generation trace
         end_generation(generation, output=response_data)
 
-        # Update state with new step info
-        updated_state = update_step_info(state, {
-            'overview': plan._thinking,
-            'tool': plan.tool,
-            'tool_uuid': plan.tool_uuid,
-            'tool_action': plan.step,
-            'tool_action_params': {}
-        })
-        
         return updated_state
 
     except Exception as e:

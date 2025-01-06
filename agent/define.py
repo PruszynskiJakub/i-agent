@@ -51,7 +51,6 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             response_data = json.loads(completion)
             # Update state with response data
             updated_state = update_step_info(state, {
-                'overview': response_data.get("_thinking", ""),
                 'tool_action': response_data.get("action", state.step_info.tool_action),
                 'tool_action_params': response_data.get("params", {})
             })
