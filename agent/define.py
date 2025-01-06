@@ -64,8 +64,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             raise Exception(f"Failed to parse JSON response: {str(e)}")
 
         # End the generation trace
-        end_generation(generation, output=response_data
-        })
+        end_generation(generation, output=response_data)
         
         return updated_state
 

@@ -48,7 +48,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         return add_taken_action(state, action)
 
     except Exception as e:
-        error_msg = f"Error executing tool '{definition.tool}': {str(e)}"
+        error_msg = f"Error executing tool '{state.step_info.tool}': {str(e)}"
         end_span(
             execution_span,
             output={"error": str(e)},
