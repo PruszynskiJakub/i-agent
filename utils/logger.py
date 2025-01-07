@@ -18,9 +18,9 @@ def log_tool_call(function_name: str, args: Any, result: Any) -> None:
     try:
         args_str = json.dumps(args, indent=2)
         result_str = json.dumps(result, indent=2) if result else "None"
-        logger.info(f"Tool Call: {function_name}\nArgs: {args_str}\nResult: {result_str}")
+        logger.info(f" 🛠️ Tool Call: {function_name}\nArgs: {args_str}\nResult: {result_str}")
     except Exception as e:
-        logger.error(f"Error logging tool call: {str(e)}")
+        logger.error(f" ❌ Error logging tool call: {str(e)}")
 
 def log_error(message: str) -> None:
     """Log an error message"""
