@@ -1,6 +1,6 @@
 import json
 from typing import List, Dict, Any, Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from db import execute
 from tools.types import Action, ActionStatus
@@ -69,7 +69,7 @@ def create_action(
         Created Action object
     """
     action = Action(
-        uuid=UUID(str(UUID())),
+        uuid=uuid4(),
         name=name,
         tool_uuid=tool_uuid,
         conversation_uuid=conversation_uuid,

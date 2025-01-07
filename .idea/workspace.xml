@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Update the answer so it's represent the results">
-      <change afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/service.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Clean up">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/action.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/action.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +24,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "PruszynskiJakub"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/PruszynskiJakub/i-agent.git",
+    "accountId": "63fe3fdc-2778-4a55-9fa5-5a310ce467ac"
+  }
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
@@ -50,10 +62,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tools" />
+      <recent name="$PROJECT_DIR$/agent" />
       <recent name="$PROJECT_DIR$/llm" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/app/agents" />
-      <recent name="$PROJECT_DIR$/_arch" />
     </key>
   </component>
   <component name="RunManager" selected="Python.app">
@@ -439,7 +452,47 @@
       <option name="project" value="LOCAL" />
       <updated>1736188731986</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Extract add_transaction to new file">
+      <option name="closed" value="true" />
+      <created>1736240085626</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1736240085626</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Simplify service">
+      <option name="closed" value="true" />
+      <created>1736240162418</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1736240162418</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Clean up">
+      <option name="closed" value="true" />
+      <created>1736240288752</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1736240288752</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Clean up">
+      <option name="closed" value="true" />
+      <created>1736240361512</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1736240361512</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Clean up">
+      <option name="closed" value="true" />
+      <created>1736242265558</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1736242265558</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -475,6 +528,9 @@
     <MESSAGE value="Pass uuid properly" />
     <MESSAGE value="Properly build action result" />
     <MESSAGE value="Update the answer so it's represent the results" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update the answer so it's represent the results" />
+    <MESSAGE value="Extract add_transaction to new file" />
+    <MESSAGE value="Simplify service" />
+    <MESSAGE value="Clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean up" />
   </component>
 </project>
