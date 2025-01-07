@@ -1,6 +1,6 @@
 from typing import Dict, Any
 
-from tools.types import ActionResult
+from tools.types import ActionResult, ActionStatus
 from ynab.internal.add_transaction import add_transaction
 
 async def execute_ynab(action, params: Dict[str, Any], trace) -> ActionResult:
