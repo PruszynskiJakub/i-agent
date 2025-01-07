@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Properly build action result">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Update the answer so it's represent the results">
+      <change afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ynab/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -432,7 +431,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736187942497</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Update the answer so it's represent the results">
+      <option name="closed" value="true" />
+      <created>1736188731986</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1736188731986</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -467,6 +474,7 @@
     <MESSAGE value="Use purely state to pass data" />
     <MESSAGE value="Pass uuid properly" />
     <MESSAGE value="Properly build action result" />
-    <option name="LAST_COMMIT_MESSAGE" value="Properly build action result" />
+    <MESSAGE value="Update the answer so it's represent the results" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update the answer so it's represent the results" />
   </component>
 </project>

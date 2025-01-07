@@ -4,11 +4,6 @@ from models.action import ActionResult
 from ynab.internal.add_transaction import add_transaction
 
 async def execute_ynab(action, params: Dict[str, Any], trace) -> ActionResult:
-    result = await _take_action(action, params, trace)
-    return result
-
-
-async def _take_action(action, params: Dict[str, Any], trace) -> ActionResult:
     match action:
         case "add_transaction":
             return await add_transaction(params, trace)
