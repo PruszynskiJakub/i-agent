@@ -13,7 +13,7 @@ from tools.types import ActionResult, ActionStatus
 from ynab import _ynab_accounts, _ynab_categories
 
 
-async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
+async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
     user_query = params.get("user_query")
 
     async def split_transaction(user_query: str) -> list[Dict[str, Any]]:
@@ -202,8 +202,4 @@ async def add_transaction(params: Dict[str, Any], trace) -> ActionResult:
         "split_results": split_results
     }
 
-    return ActionResult(
-        result=str(result_summary),
-        status=ActionStatus.SUCCESS if failed == 0 else ActionStatus.FAILURE,
-        documents=[]
-    )
+    return result_summary
