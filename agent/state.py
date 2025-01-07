@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List, Dict, Any
 
 from db.message import find_messages_by_conversation, create_message
+from db.action import find_actions_by_conversation
 from document.types import Document
 from tools.types import Action
 
@@ -45,7 +46,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
     return AgentState(
         conversation_uuid=conversation_uuid,
         messages=find_messages_by_conversation(conversation_uuid),
-        taken_actions=[],
+        taken_actions=find_actions_by_conversation(conversation_uuid),
         documents=[],
         current_step=0,
         max_steps=1,
