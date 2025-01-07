@@ -25,6 +25,7 @@ class Action:
     uuid: UUID
     name: str
     tool_uuid: UUID
+    conversation_uuid: str
     payload: Dict
     result: str
     status: ActionStatus

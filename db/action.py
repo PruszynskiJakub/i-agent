@@ -19,6 +19,7 @@ def _row_to_action(row: tuple) -> Action:
         payload=json.loads(row[3]),
         result=row[4],
         status=ActionStatus(row[5]),
+        conversation_uuid=row[6],
         documents=documents
     )
 
@@ -71,6 +72,7 @@ def create_action(
         uuid=UUID(str(UUID())),
         name=name,
         tool_uuid=tool_uuid,
+        conversation_uuid=conversation_uuid,
         payload=payload,
         result=result,
         status=status,
