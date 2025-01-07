@@ -1,11 +1,12 @@
 from typing import List, Optional, Dict, Any
+from document.types import Document
 from uuid import UUID
 import json
 
 from db import connection, execute
 
 
-def save_document(document: Dict[str, Any]) -> None:
+def save_document(document: Dict[str, Any]) -> None:  # Takes dict to handle both Document.__dict__ and legacy dict inputs
     """
     Save a document to the database
     
@@ -24,7 +25,7 @@ def save_document(document: Dict[str, Any]) -> None:
     ))
 
 
-def find_document_by_uuid(document_uuid: UUID) -> Optional[Dict[str, Any]]:
+def find_document_by_uuid(document_uuid: UUID) -> Optional[Document]:
     """
     Retrieve a document by its UUID
     
@@ -50,15 +51,15 @@ def find_document_by_uuid(document_uuid: UUID) -> Optional[Dict[str, Any]]:
     if parent_uuid := metadata.get('parent_document_uuid'):
         metadata['parent_document_uuid'] = UUID(parent_uuid)
 
-    return {
-        'uuid': UUID(row[0]),
-        'conversation_uuid': row[1],
-        'text': row[2],
-        'metadata': metadata
-    }
+    return Document(
+        uuid=UUID(row[0]),
+        conversation_uuid=row[1],
+        text=row[2],
+        metadata=metadata
+    )
 
 
-def find_documents_by_conversation(conversation_uuid: str) -> List[Dict[str, Any]]:
+def find_documents_by_conversation(conversation_uuid: str) -> List[Document]:
     """
     Retrieve all documents for a given conversation
     
@@ -80,7 +81,7 @@ def find_documents_by_conversation(conversation_uuid: str) -> List[Dict[str, Any
     ]
 
 
-def create_document(conversation_uuid: str, text: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
+def create_document(conversation_uuid: str, text: str, metadata: Dict[str, Any]) -> Document:
     """
     Create and save a new document
     
@@ -92,14 +93,14 @@ def create_document(conversation_uuid: str, text: str, metadata: Dict[str, Any])
     Returns:
         Created document dictionary
     """
-    document = {
-        'uuid': UUID(str(UUID())),
-        'conversation_uuid': conversation_uuid,
-        'text': text,
-        'metadata': metadata
-    }
+    document = Document(
+        uuid=UUID(str(UUID())),
+        conversation_uuid=conversation_uuid,
+        text=text,
+        metadata=metadata
+    )
     
-    save_document(document)
+    save_document(document.__dict__)
     return document
 
 def ensure_document_table() -> None:
