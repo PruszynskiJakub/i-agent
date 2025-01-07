@@ -3,7 +3,7 @@ from typing import List, Dict, Any
 
 from db.message import find_messages_by_conversation, create_message
 from document.types import Document
-from models.action import Action
+from tools.types import Action
 
 from agent.types import Message
 

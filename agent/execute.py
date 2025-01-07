@@ -3,7 +3,7 @@ from uuid import UUID
 
 from agent.state import AgentState, add_taken_action
 from llm.tracing import create_span, end_span
-from models.action import Action
+from tools.types import Action
 from tools.provider import tool_handlers
 
 

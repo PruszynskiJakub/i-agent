@@ -1,7 +1,7 @@
 from ast import Dict
 from typing import List
 
-from models.action import Action
+from tools.types import Action
 from agent.types import Message
 
 
