@@ -94,7 +94,7 @@ def create_document(conversation_uuid: str, text: str, metadata: Dict[str, Any])
         Created document dictionary
     """
     document = Document(
-        uuid=UUID(str(UUID())),
+        uuid=UUID(),
         conversation_uuid=conversation_uuid,
         text=text,
         metadata=metadata
