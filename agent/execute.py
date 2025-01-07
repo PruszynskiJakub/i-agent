@@ -29,15 +29,14 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
         print(f"Action result: {action_result}")
 
-        action = Action(
-            uuid=uuid.uuid4(),
-            name=state.step_info.tool_action,
-            tool_uuid=UUID(state.step_info.tool_uuid),
-            payload=state.step_info.tool_action_params,
-            result=action_result.result,
-            status=action_result.status,
-            documents=action_result.documents
-        )
+        action_dict = {
+            'name': state.step_info.tool_action,
+            'tool_uuid': UUID(state.step_info.tool_uuid),
+            'payload': state.step_info.tool_action_params,
+            'result': action_result.result,
+            'status': action_result.status,
+            'documents': action_result.documents
+        }
 
         end_span(
             execution_span,
@@ -46,7 +45,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             status_message="Tool execution successful"
         )
 
-        return add_taken_action(state, action)
+        return add_taken_action(state, action_dict)
 
     except Exception as e:
         error_msg = f"Error executing tool '{state.step_info.tool}': {str(e)}"

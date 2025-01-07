@@ -68,7 +68,29 @@ def add_message(state: AgentState, content, role) -> AgentState:
     return state.copy(messages=[*state.messages, message])
 
 
-def add_taken_action(state: AgentState, action: Action) -> AgentState:
+def add_taken_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentState:
+    """
+    Create an Action in the database and add it to the state
+    
+    Args:
+        state: Current agent state
+        action_dict: Dictionary containing action data
+            
+    Returns:
+        Updated AgentState with new action
+    """
+    from db.action import create_action
+    
+    action = create_action(
+        conversation_uuid=state.conversation_uuid,
+        name=action_dict['name'],
+        tool_uuid=action_dict['tool_uuid'],
+        payload=action_dict['payload'],
+        result=action_dict['result'],
+        status=action_dict['status'],
+        documents=action_dict.get('documents', [])
+    )
+    
     return state.copy(taken_actions=[*state.taken_actions, action])
 
 
