@@ -70,15 +70,28 @@ def find_documents_by_conversation(conversation_uuid: str) -> List[Document]:
         List of document dictionaries
     """
     query = """
-        SELECT uuid FROM documents WHERE conversation_uuid = ?
+        SELECT uuid, conversation_uuid, text, metadata
+        FROM documents WHERE conversation_uuid = ?
     """
     rows = execute(query, (conversation_uuid,))
     
-    return [
-        find_document_by_uuid(UUID(row[0]))
-        for row in rows
-        if row[0] is not None
-    ]
+    documents = []
+    for row in rows:
+        if row[0] is None:
+            continue
+            
+        metadata = json.loads(row[3])
+        if parent_uuid := metadata.get('parent_document_uuid'):
+            metadata['parent_document_uuid'] = UUID(parent_uuid)
+            
+        documents.append(Document(
+            uuid=UUID(row[0]),
+            conversation_uuid=row[1],
+            text=row[2],
+            metadata=metadata
+        ))
+    
+    return documents
 
 
 def create_document(conversation_uuid: str, text: str, metadata: Dict[str, Any]) -> Document:
