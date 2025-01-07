@@ -39,7 +39,7 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
             trace=parent_trace,
             name="final_answer",
             model=model,
-            input=messages,
+            input=system_prompt,
             metadata={"conversation_id": state.conversation_uuid}
         )
 
