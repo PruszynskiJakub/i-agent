@@ -1,9 +1,9 @@
 import uuid
 from datetime import datetime
-from typing import List, Optional, Tuple
+from typing import List, Tuple
 
-from db import connection, execute
-from models.message import Message
+from db import execute
+from agent.types import Message
 
 
 def save_message(message: Message) -> None:

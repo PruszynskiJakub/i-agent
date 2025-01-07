@@ -5,7 +5,7 @@ from db.message import find_messages_by_conversation, create_message
 from document.types import Document
 from models.action import Action
 
-from models.message import Message
+from agent.types import Message
 
 
 @dataclass(frozen=True)
