@@ -76,7 +76,6 @@ def format_tools(tools: List[Dict]) -> str:
         desc = f"<tool uuid='{tool['uuid']}'>\n"
         desc += f"  <name>{tool['name']}</name>\n"
         desc += f"  <description>{tool['description']}</description>\n"
-        desc += f"  <instructions>{tool['instructions']}</instructions>\n"
         desc += "</tool>"
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)
