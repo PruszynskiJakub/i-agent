@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix model">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Pass proper data to agent_define prompt">
+      <change beforePath="$PROJECT_DIR$/agent/define.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/define.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,14 +141,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Small improvements">
-      <option name="closed" value="true" />
-      <created>1733934370860</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1733934370860</updated>
     </task>
     <task id="LOCAL-00003" summary="reorder types">
       <option name="closed" value="true" />
@@ -534,7 +526,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736429699851</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Pass proper data to agent_define prompt">
+      <option name="closed" value="true" />
+      <created>1736454857758</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1736454857758</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -549,7 +549,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Arch old approach" />
     <MESSAGE value="Connect assistant with slack" />
     <MESSAGE value="Clean" />
     <MESSAGE value="simplify state" />
@@ -574,6 +573,7 @@
     <MESSAGE value="Use system prompt as input for generatin at answe" />
     <MESSAGE value="Clean up" />
     <MESSAGE value="Fix model" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix model" />
+    <MESSAGE value="Pass proper data to agent_define prompt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pass proper data to agent_define prompt" />
   </component>
 </project>

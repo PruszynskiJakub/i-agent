@@ -81,10 +81,7 @@ def format_tools(tools: List[Dict]) -> str:
     return "\n".join(tool_descriptions)
 
 def format_tool_instructions(tool) -> str:
-    desc = f"<picked_tool uuid='{tool['uuid']}'>\n"
-    desc += f"  <name>{tool['name']}</name>\n"
+    desc = f"  <name>{tool['name']}</name>\n"
     desc += f"  <description>{tool['description']}</description>\n"
     desc += f"  <instructions>{tool['instructions']}</instructions>\n"
-    desc += "</picked_tool>"
-
     return desc

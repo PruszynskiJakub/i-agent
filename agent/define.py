@@ -22,7 +22,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
 
         # Format the system prompt with current state
         system_prompt = prompt.compile(
-            instructions=format_tool_instructions(get_tool_by_name(state.step_info.tool)),
+            tool_instructions=format_tool_instructions(get_tool_by_name(state.step_info.tool)),
             understanding=state.understanding
         )
 
