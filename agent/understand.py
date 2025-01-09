@@ -37,7 +37,7 @@ async def agent_understand(state: AgentState, trace) -> AgentState:
                 {"role": "system", "content": system_prompt},
                 *format_messages(state.messages)
             ],
-            model=prompt.config.get("model", "gpt-4"),
+            model=prompt.config.get("model", "gpt-4o"),
             json_mode=True
         )
 
