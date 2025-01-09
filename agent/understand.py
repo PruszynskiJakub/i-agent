@@ -44,8 +44,10 @@ async def agent_understand(state: AgentState, trace) -> AgentState:
         # Parse response into Understanding object
         try:
             response_data = json.loads(completion)
-            # Temporarily just assign state
-            updated_state = state
+            # Update state with understanding from response
+            updated_state = state.copy(
+                understanding=response_data.get("understanding", "")
+            )
         except json.JSONDecodeError as e:
             generation.end(
                 output=None,
