@@ -44,12 +44,8 @@ async def agent_understand(state: AgentState, trace) -> AgentState:
         # Parse response into Understanding object
         try:
             response_data = json.loads(completion)
-            # Update state with understanding data
-            updated_state = update_step_info(state, {
-                'understanding': response_data.get("understanding", ""),
-                'constraints': response_data.get("constraints", []),
-                'requirements': response_data.get("requirements", [])
-            })
+            # Temporarily just assign state
+            updated_state = state
         except json.JSONDecodeError as e:
             generation.end(
                 output=None,
