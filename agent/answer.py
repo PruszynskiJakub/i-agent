@@ -30,7 +30,8 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
             label="latest"
         )
         system_prompt = prompt.compile(
-            taken_actions=format_actions(state.taken_actions)
+            taken_actions=format_actions(state.taken_actions),
+            understanding=state.understanding
         )
         model = prompt.config.get("model", "gpt-4o")
 
