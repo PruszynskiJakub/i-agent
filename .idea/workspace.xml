@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Use system prompt as input for generatin at answer.py">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix model">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llm/open_ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/open_ai.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/provider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +60,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tools" />
       <recent name="$PROJECT_DIR$/agent" />
@@ -141,14 +141,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00001" summary="Add firecrawl docs">
-      <option name="closed" value="true" />
-      <created>1733934358558</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1733934358558</updated>
     </task>
     <task id="LOCAL-00002" summary="Small improvements">
       <option name="closed" value="true" />
@@ -526,7 +518,23 @@
       <option name="project" value="LOCAL" />
       <updated>1736283319283</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Clean up">
+      <option name="closed" value="true" />
+      <created>1736425912758</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1736425912758</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Fix model">
+      <option name="closed" value="true" />
+      <created>1736429699851</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1736429699851</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -541,7 +549,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Change process_document into translate" />
     <MESSAGE value="Arch old approach" />
     <MESSAGE value="Connect assistant with slack" />
     <MESSAGE value="Clean" />
@@ -561,11 +568,12 @@
     <MESSAGE value="Update the answer so it's represent the results" />
     <MESSAGE value="Extract add_transaction to new file" />
     <MESSAGE value="Simplify service" />
-    <MESSAGE value="Clean up" />
     <MESSAGE value="Fix uuid" />
     <MESSAGE value="Add extra icons" />
     <MESSAGE value="Remove instructions part from planning" />
     <MESSAGE value="Use system prompt as input for generatin at answe" />
-    <option name="LAST_COMMIT_MESSAGE" value="Use system prompt as input for generatin at answe" />
+    <MESSAGE value="Clean up" />
+    <MESSAGE value="Fix model" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix model" />
   </component>
 </project>
