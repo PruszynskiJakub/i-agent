@@ -14,7 +14,7 @@ async def completion(
         json_mode: bool = False
 ) -> str:
     response = await openai_client.chat.completions.create(
-        model=model or "gpt-4-turbo-preview",
+        model=model or "gpt-4o-mini",
         messages=messages,
         response_format={"type": "json_object"} if json_mode else {"type": "text"}
     )

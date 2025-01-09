@@ -18,7 +18,7 @@ def get_tools():
                     "user_query": "an exact query from the user"
                 }
             }
-            Use: Creates a new transaction in the user's budget
+            Use: Creates one or multiple transactions in the user's budget
             
             """
         }

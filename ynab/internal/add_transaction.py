@@ -9,7 +9,6 @@ import requests
 from llm import open_ai
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from tools.types import ActionResult, ActionStatus
 from ynab import _ynab_accounts, _ynab_categories
 
 
