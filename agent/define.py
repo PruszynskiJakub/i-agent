@@ -24,7 +24,8 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         system_prompt = prompt.compile(
             formatted_tools=format_tool_actions(get_tool_by_name(state.step_info.tool)),
             plan_step=state.step_info.tool_action,
-            plan_tool=state.step_info.tool
+            plan_tool=state.step_info.tool,
+            understanding=state.understanding
         )
 
         # Create generation trace
