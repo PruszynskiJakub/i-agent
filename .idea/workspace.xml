@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Increase max steps to 3">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -143,14 +142,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Connect assistant with slack">
-      <option name="closed" value="true" />
-      <created>1734616957786</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1734616957786</updated>
     </task>
     <task id="LOCAL-00007" summary="Clean">
       <option name="closed" value="true" />
@@ -536,7 +527,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736457905030</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Fix">
+      <option name="closed" value="true" />
+      <created>1736503968577</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1736503968577</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -551,7 +550,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="simplify" />
     <MESSAGE value="Implement naively ynab adding transactions" />
     <MESSAGE value="Making ynab api call" />
     <MESSAGE value="Fix info about the model" />
@@ -576,6 +574,7 @@
     <MESSAGE value="Simplify" />
     <MESSAGE value="Pass understanding to answer.pyr" />
     <MESSAGE value="Increase max steps to 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Increase max steps to 3" />
+    <MESSAGE value="Fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix" />
   </component>
 </project>

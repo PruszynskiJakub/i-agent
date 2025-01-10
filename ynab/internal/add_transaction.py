@@ -128,9 +128,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
                 raise Exception(f"Failed to add transaction: {response.text}")
 
             return {
-                "query": query,
-                "transaction_details": model["transaction"],
-                "api_response": response.json()
+                "result": f"Added transaction '{query}'successfully"
             }
 
         amount_task = asyncio.create_task(pick_amount(transaction_query))
@@ -196,9 +194,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
             "successful": successful,
             "failed": failed
         },
-        "transactions": transaction_results,
-        "original_query": query,
-        "split_results": split_results
+        "results": transaction_results,
     }
 
     return result_summary
