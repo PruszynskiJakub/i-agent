@@ -15,7 +15,8 @@ def get_tools():
             {
                 "action": "add_transaction",
                 "params": {
-                    "user_query": "an exact query from the user"
+                    "query": "The query representing a full transaction or list of transactions 
+                    including amount, accounts, currencies and key details required to categorize it properly"
                 }
             }
             Use: Creates one or multiple transactions in the user's budget

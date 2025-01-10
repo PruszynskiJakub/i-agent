@@ -13,10 +13,10 @@ from ynab import _ynab_accounts, _ynab_categories
 
 
 async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
-    user_query = params.get("user_query")
+    query = params.get("query")
 
-    async def split_transaction(user_query: str) -> list[Dict[str, Any]]:
-        generation = create_generation(trace, "split_transaction", "gpt-4o", user_query)
+    async def split_transaction(q: str) -> list[Dict[str, Any]]:
+        generation = create_generation(trace, "split_transaction", "gpt-4o", q)
         prompt = get_prompt(name="ynab_split")
         system_prompt = prompt.compile()
 
@@ -24,7 +24,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
             completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_query}
+                    {"role": "user", "content": q}
                 ],
                 model=prompt.config.get("model", "gpt-4o"),
                 json_mode=True
@@ -34,21 +34,21 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
             return json_completion['result']
         except Exception as e:
             return [{
-                "query": user_query,
+                "query": q,
                 "error_code": "SPLIT_FAILED",
                 "error_message": f"Failed to split transaction: {str(e)}"
             }]
 
     async def process_transaction(transaction_query: str):
-        async def pick_amount(query: str) -> Dict[str, Any]:
-            generation = create_generation(trace, "pick_amount", "gpt-4o", query)
+        async def pick_amount(q: str) -> Dict[str, Any]:
+            generation = create_generation(trace, "pick_amount", "gpt-4o", q)
             prompt = get_prompt(name="ynab_amount")
             system_prompt = prompt.compile()
 
             completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": query}
+                    {"role": "user", "content": q}
                 ],
                 model=prompt.config.get("model", "gpt-4o"),
                 json_mode=True
@@ -56,8 +56,8 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
             end_generation(generation, completion)
             return json.loads(completion)
 
-        async def pick_sides(query: str) -> Dict[str, Any]:
-            generation = create_generation(trace, "pick_sides", "gpt-4o", query)
+        async def pick_sides(q: str) -> Dict[str, Any]:
+            generation = create_generation(trace, "pick_sides", "gpt-4o", q)
             prompt = get_prompt(name="ynab_accounts")
             system_prompt = prompt.compile(
                 accounts=_ynab_accounts
@@ -65,7 +65,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
             completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": query}
+                    {"role": "user", "content": q}
                 ],
                 model=prompt.config.get("model", "gpt-4o"),
                 json_mode=True
@@ -73,8 +73,8 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
             end_generation(generation, completion)
             return json.loads(completion)
 
-        async def pick_category(query: str) -> Dict[str, Any]:
-            generation = create_generation(trace, "pick_category", "gpt-4o", query)
+        async def pick_category(q: str) -> Dict[str, Any]:
+            generation = create_generation(trace, "pick_category", "gpt-4o", q)
             prompt = get_prompt(name="ynab_category")
             system_prompt = prompt.compile(
                 categories=_ynab_categories
@@ -82,7 +82,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
             completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": query}
+                    {"role": "user", "content": q}
                 ],
                 model=prompt.config.get("model", "gpt-4o"),
                 json_mode=True
@@ -151,7 +151,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
         api_result = call_api(sides_result, amount_result, category_result, transaction_query)
         return {**transaction_details, "api_result": api_result}
 
-    split_results = await split_transaction(user_query)
+    split_results = await split_transaction(query)
 
     # Filter out and print errors, keep valid transactions
     valid_transactions = []
@@ -163,7 +163,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
 
     # If no valid transactions, use original query
     if not valid_transactions:
-        valid_transactions = [user_query]
+        valid_transactions = [query]
 
     # Process all transactions in parallel and collect results
     transaction_tasks = [process_transaction(transaction) for transaction in valid_transactions]
@@ -197,7 +197,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
             "failed": failed
         },
         "transactions": transaction_results,
-        "original_query": user_query,
+        "original_query": query,
         "split_results": split_results
     }
 
