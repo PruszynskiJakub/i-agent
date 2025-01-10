@@ -92,7 +92,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
 
         def call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any],
                      category_result: Dict[str, Any] | None,
-                     query: str) -> Dict[str, Any]:
+                     query: str) -> str:
             if not sides_result or not amount_result:
                 raise ValueError("Missing required parameters: sides_result and amount_result are required")
 
@@ -127,9 +127,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
             if response.status_code != 201:
                 raise Exception(f"Failed to add transaction: {response.text}")
 
-            return {
-                "result": f"Added transaction '{query}'successfully"
-            }
+            return f"Added transaction '{query}'successfully"
 
         amount_task = asyncio.create_task(pick_amount(transaction_query))
         sides_task = asyncio.create_task(pick_sides(transaction_query))
@@ -160,7 +158,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
             transaction_results.append({
                 "status": "error",
                 "query": result.get("query", query),
-                "error": f"Split failed: {result['error_message']}"
+                "error": f"{result['error_message']}"
             })
         else:
             valid_transactions.append(result["query"])
@@ -200,7 +198,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
     # Add details for all transactions
     for t in transaction_results:
         if t['status'] == 'success':
-            summary += f"\n✓ {t['details']['api_result']['result']}"
+            summary += f"\n✓ {t['details']}"
         else:
             summary += f"\n✗ {t['query']}: {t['error']}"
 
