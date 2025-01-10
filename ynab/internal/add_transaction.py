@@ -193,15 +193,15 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
     successful = sum(1 for t in transaction_results if t["status"] == "success")
     failed = total_transactions - successful
 
-    # Create a human-readable summary
+    # Create a human-readable summary header
     summary = f"Processed {total_transactions} transaction{'s' if total_transactions != 1 else ''}: "
-    summary += f"{successful} successful"
-    if failed > 0:
-        summary += f", {failed} failed"
+    summary += f"{successful} successful, {failed} failed\n"
     
-    # Add details of failures if any
-    if failed > 0:
-        failure_details = [f"\n- {t['query']}: {t['error']}" for t in transaction_results if t['status'] == 'error']
-        summary += ''.join(failure_details)
+    # Add details for all transactions
+    for t in transaction_results:
+        if t['status'] == 'success':
+            summary += f"\n✓ {t['details']['api_result']['result']}"
+        else:
+            summary += f"\n✗ {t['query']}: {t['error']}"
 
     return summary
