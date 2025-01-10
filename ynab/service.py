@@ -6,10 +6,12 @@ from ynab.internal.add_transaction import add_transaction
 async def execute_ynab(action, params: Dict[str, Any], trace) -> ActionResult:
     match action:
         case "add_transaction":
-            result_summary = await add_transaction(params, trace)
+            result = await add_transaction(params, trace)
+            # Check if the result contains any failure indicators
+            status = ActionStatus.SUCCESS if "failed" not in result.lower() else ActionStatus.FAILURE
             return ActionResult(
-                result=str(result_summary),
-                status=ActionStatus.SUCCESS if result_summary["summary"]["failed"] == 0 else ActionStatus.FAILURE,
+                result=result,
+                status=status,
                 documents=[]
             )
         case _:
