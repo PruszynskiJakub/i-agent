@@ -12,7 +12,7 @@ from llm.tracing import create_generation, end_generation
 from ynab import _ynab_accounts, _ynab_categories
 
 
-async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
+async def add_transaction(params: Dict[str, Any], trace) -> str:
     query = params.get("query")
 
     async def split_transaction(q: str) -> list[Dict[str, Any]]:
@@ -188,13 +188,15 @@ async def add_transaction(params: Dict[str, Any], trace) -> Dict[str, Any]:
     successful = sum(1 for t in transaction_results if t["status"] == "success")
     failed = total_transactions - successful
 
-    result_summary = {
-        "summary": {
-            "total_transactions": total_transactions,
-            "successful": successful,
-            "failed": failed
-        },
-        "results": transaction_results,
-    }
+    # Create a human-readable summary
+    summary = f"Processed {total_transactions} transaction{'s' if total_transactions != 1 else ''}: "
+    summary += f"{successful} successful"
+    if failed > 0:
+        summary += f", {failed} failed"
+    
+    # Add details of failures if any
+    if failed > 0:
+        failure_details = [f"\n- {t['query']}: {t['error']}" for t in transaction_results if t['status'] == 'error']
+        summary += ''.join(failure_details)
 
-    return result_summary
+    return summary
