@@ -24,7 +24,7 @@ def format_actions(actions: List[Action]) -> str:
 
         # Add result information
         desc += "  <result>\n"
-        desc += f"    <output>{action.result}</output>\n"
+        desc += f"    {action.result}"
         if action.documents:
             desc += "    <documents>\n"
             for doc in action.documents:
@@ -33,7 +33,6 @@ def format_actions(actions: List[Action]) -> str:
                 desc += "      </document>\n"
             desc += "    </documents>\n"
         desc += "  </result>\n"
-
         desc += "</action>"
         action_descriptions.append(desc)
     return "\n".join(action_descriptions)
