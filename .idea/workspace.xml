@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove output field">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Simplify response">
+      <change afterPath="$PROJECT_DIR$/_specs/spec.template.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,18 +48,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/jakubpruszynski/PycharmProjects/iAgent&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.app.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/jakubpruszynski/PycharmProjects/iAgent",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -142,14 +142,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00009" summary="simplify">
-      <option name="closed" value="true" />
-      <created>1735637652253</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1735637652253</updated>
     </task>
     <task id="LOCAL-00010" summary="simplify">
       <option name="closed" value="true" />
@@ -535,7 +527,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736518338857</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Simplify response">
+      <option name="closed" value="true" />
+      <created>1736523742127</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1736523742127</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -550,7 +550,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Making ynab api call" />
     <MESSAGE value="Fix info about the model" />
     <MESSAGE value="Indicate private fields and methods" />
     <MESSAGE value="Rename file and method" />
@@ -575,6 +574,7 @@
     <MESSAGE value="Fix" />
     <MESSAGE value="Simplify" />
     <MESSAGE value="Remove output field" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove output field" />
+    <MESSAGE value="Simplify response" />
+    <option name="LAST_COMMIT_MESSAGE" value="Simplify response" />
   </component>
 </project>
