@@ -16,9 +16,9 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
     query = params.get("query")
 
     async def split_transaction(q: str) -> list[Dict[str, Any]]:
-        generation = create_generation(trace, "split_transaction", "gpt-4o", q)
         prompt = get_prompt(name="ynab_split")
         system_prompt = prompt.compile()
+        generation = create_generation(trace, "split_transaction", "gpt-4o", system_prompt)
 
         try:
             completion = await open_ai.completion(
@@ -41,9 +41,9 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
 
     async def process_transaction(transaction_query: str):
         async def pick_amount(q: str) -> Dict[str, Any]:
-            generation = create_generation(trace, "pick_amount", "gpt-4o", q)
             prompt = get_prompt(name="ynab_amount")
             system_prompt = prompt.compile()
+            generation = create_generation(trace, "pick_amount", "gpt-4o", system_prompt)
 
             completion = await open_ai.completion(
                 messages=[
@@ -57,11 +57,11 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
             return json.loads(completion)
 
         async def pick_sides(q: str) -> Dict[str, Any]:
-            generation = create_generation(trace, "pick_sides", "gpt-4o", q)
             prompt = get_prompt(name="ynab_accounts")
             system_prompt = prompt.compile(
                 accounts=_ynab_accounts
             )
+            generation = create_generation(trace, "pick_sides", "gpt-4o", system_prompt)
             completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -74,11 +74,11 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
             return json.loads(completion)
 
         async def pick_category(q: str) -> Dict[str, Any]:
-            generation = create_generation(trace, "pick_category", "gpt-4o", q)
             prompt = get_prompt(name="ynab_category")
             system_prompt = prompt.compile(
                 categories=_ynab_categories
             )
+            generation = create_generation(trace, "pick_category", "gpt-4o", system_prompt)
             completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
