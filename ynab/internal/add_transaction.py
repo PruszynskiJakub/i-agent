@@ -127,7 +127,8 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
             if response.status_code != 201:
                 raise Exception(f"Failed to add transaction: {response.text}")
 
-            return f"Added transaction '{query}'successfully"
+            category_info = f" with category '{category_result['category']['name']}'" if category_result and category_result.get('category', {}).get('name') else ""
+            return f"Added transaction '{query}'{category_info} successfully"
 
         amount_task = asyncio.create_task(pick_amount(transaction_query))
         sides_task = asyncio.create_task(pick_sides(transaction_query))
