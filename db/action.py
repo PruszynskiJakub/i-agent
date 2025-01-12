@@ -52,7 +52,8 @@ def create_action(
     payload: Dict[str, Any],
     result: str,
     status: ActionStatus,
-    documents: Optional[List[Document]] = None
+    documents: Optional[List[Document]] = None,
+    step_description: str = ""
 ) -> Action:
     """
     Create and save a new action
@@ -77,7 +78,8 @@ def create_action(
         payload=payload,
         result=result,
         status=status,
-        documents=documents or []
+        documents=documents or [],
+        step_description=step_description
     )
 
     # Convert documents to JSON-serializable format

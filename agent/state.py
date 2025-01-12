@@ -93,7 +93,8 @@ def add_taken_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentSta
         payload=action_dict['payload'],
         result=action_dict['result'],
         status=action_dict['status'],
-        documents=action_dict.get('documents', [])
+        documents=action_dict.get('documents', []),
+        step_description=action_dict.get('step_description', '')
     )
     
     return state.copy(taken_actions=[*state.taken_actions, action])
