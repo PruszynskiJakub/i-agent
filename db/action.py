@@ -20,7 +20,8 @@ def _row_to_action(row: tuple) -> Action:
         result=row[4],
         status=ActionStatus(row[5]),
         conversation_uuid=row[6],
-        documents=documents
+        documents=documents,
+        step_description=row[8]
     )
 
 
@@ -35,7 +36,7 @@ def find_actions_by_conversation(conversation_uuid: str) -> List[Action]:
         List of Action objects
     """
     query = """
-        SELECT uuid, name, tool_uuid, payload, result, status, conversation_uuid, documents
+        SELECT uuid, name, tool_uuid, payload, result, status, conversation_uuid, documents, step_description
         FROM actions 
         WHERE conversation_uuid = ?
         ORDER BY created_at
@@ -85,9 +86,9 @@ def create_action(
     query = """
         INSERT INTO actions (
             uuid, name, tool_uuid, payload, result, status, 
-            conversation_uuid, documents, created_at
+            conversation_uuid, documents, step_description, created_at
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
     """
     execute(query, (
         str(action.uuid),
@@ -97,7 +98,8 @@ def create_action(
         action.result,
         action.status.value,
         conversation_uuid,
-        json.dumps(documents_json)
+        json.dumps(documents_json),
+        action.step_description
     ))
 
     return action
@@ -115,6 +117,7 @@ def ensure_action_table() -> None:
             status TEXT NOT NULL,
             conversation_uuid TEXT NOT NULL,
             documents TEXT NOT NULL,
+            step_description TEXT NOT NULL DEFAULT '',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """

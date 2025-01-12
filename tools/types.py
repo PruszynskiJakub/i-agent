@@ -30,3 +30,4 @@ class Action:
     result: str
     status: ActionStatus
     documents: List[Document] = field(default_factory=list)
+    step_description: str = ""

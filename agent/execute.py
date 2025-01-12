@@ -35,7 +35,8 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'payload': state.step_info.tool_action_params,
             'result': action_result.result,
             'status': action_result.status,
-            'documents': action_result.documents
+            'documents': action_result.documents,
+            'step_description': state.step_info.overview
         }
 
         end_span(
