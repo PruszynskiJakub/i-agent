@@ -154,13 +154,9 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
                 'payee' not in sides_result or sides_result['payee']['type'] != 'checking'):
             category_result = await pick_category(transaction_query)
 
-        transaction_details = {
-            "amount_details": amount_result,
-            "account_details": sides_result,
-            "category_details": category_result,
-        }
+
         api_result = call_api(sides_result, amount_result, category_result, transaction_query)
-        return {**transaction_details, "api_result": api_result}
+        return api_result
 
     split_results = await split_transaction(query)
 
