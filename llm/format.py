@@ -16,7 +16,7 @@ def format_actions(actions: List[Action]) -> str:
     """
     action_descriptions = []
     for action in actions:
-        desc = f"<action name='{action.name}'>\n"
+        desc = f"<action name='{action.name}' step='{action.step_description}'>\n"
         desc += "  <parameters>\n"
         for param_name, param_value in action.payload.items():
             desc += f"    <param name='{param_name}'>{param_value}</param>\n"
