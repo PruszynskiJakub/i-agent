@@ -114,13 +114,27 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
                 }
             }
 
-            response = requests.post(
-                url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions",
-                json=model,
-                headers={
-                    "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
-                    "Content-Type": "application/json"
-                }
+            url = f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions"
+            headers = {
+                "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
+                "Content-Type": "application/json"
+            }
+            
+            response = requests.post(url=url, json=model, headers=headers)
+            
+            create_event(
+                trace,
+                name="ynab_api_call",
+                input={
+                    "url": url,
+                    "method": "POST",
+                    "body": model
+                },
+                output={
+                    "status_code": response.status_code,
+                    "body": response.json() if response.text else None
+                },
+                level="ERROR" if response.status_code != 201 else "DEFAULT"
             )
 
             response.raise_for_status()
