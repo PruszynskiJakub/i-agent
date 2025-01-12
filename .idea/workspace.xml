@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Simplify response">
-      <change afterPath="$PROJECT_DIR$/_specs/spec.template.md" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix condition">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,22 +142,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00010" summary="simplify">
-      <option name="closed" value="true" />
-      <created>1735638779011</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1735638779011</updated>
-    </task>
-    <task id="LOCAL-00011" summary="simplify">
-      <option name="closed" value="true" />
-      <created>1735638895863</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1735638895863</updated>
     </task>
     <task id="LOCAL-00012" summary="simplify">
       <option name="closed" value="true" />
@@ -535,7 +519,23 @@
       <option name="project" value="LOCAL" />
       <updated>1736523742127</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Add spec template to project">
+      <option name="closed" value="true" />
+      <created>1736588768952</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1736588768952</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Fix condition">
+      <option name="closed" value="true" />
+      <created>1736619617916</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1736619617916</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -550,8 +550,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix info about the model" />
-    <MESSAGE value="Indicate private fields and methods" />
     <MESSAGE value="Rename file and method" />
     <MESSAGE value="Use dummy define step to conduct the action" />
     <MESSAGE value="Support multiple transactions in one go" />
@@ -575,6 +573,8 @@
     <MESSAGE value="Simplify" />
     <MESSAGE value="Remove output field" />
     <MESSAGE value="Simplify response" />
-    <option name="LAST_COMMIT_MESSAGE" value="Simplify response" />
+    <MESSAGE value="Add spec template to project" />
+    <MESSAGE value="Fix condition" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix condition" />
   </component>
 </project>

@@ -28,8 +28,8 @@ async def agent_run(in_state: AgentState) -> str:
 
     try:
         # First understand the user's request
-        log_info("🤔 Understanding user request...")
-        state = await agent_understand(state, trace)
+        # log_info("🤔 Understanding user request...")
+        # state = await agent_understand(state, trace)
         
         while should_continue(state):
             log_info(f"📍 Step {state.current_step + 1}/{state.max_steps}")
