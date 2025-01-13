@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Commit">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove some details from passing">
+      <change afterPath="$PROJECT_DIR$/_AI_DOCS/todoist.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todoist/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/todoist/service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,10 +67,10 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/tools" />
       <recent name="$PROJECT_DIR$/agent" />
       <recent name="$PROJECT_DIR$/llm" />
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/app/agents" />
     </key>
   </component>
@@ -142,14 +144,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00013" summary="simplify">
-      <option name="closed" value="true" />
-      <created>1735639572997</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1735639572997</updated>
     </task>
     <task id="LOCAL-00014" summary="simplify">
       <option name="closed" value="true" />
@@ -535,7 +529,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736716224042</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Remove some details from passing">
+      <option name="closed" value="true" />
+      <created>1736719957967</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1736719957967</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -550,7 +552,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Use dummy define step to conduct the action" />
     <MESSAGE value="Support multiple transactions in one go" />
     <MESSAGE value="Remove extra param" />
     <MESSAGE value="Use purely state to pass data" />
@@ -575,6 +576,7 @@
     <MESSAGE value="Add spec template to project" />
     <MESSAGE value="Fix condition" />
     <MESSAGE value="Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit" />
+    <MESSAGE value="Remove some details from passing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove some details from passing" />
   </component>
 </project>
