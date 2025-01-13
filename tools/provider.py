@@ -29,6 +29,12 @@ def get_tools():
             "name": "todoist",
             "description": "responsible for managing tasks and projects in Todoist",
             "instructions": """Use the following actions based on the user's request type:
+            1. GET PROJECTS
+            {
+                "action": "get_projects",
+                "params": {}
+            }
+            Use: Retrieves all projects from Todoist
             """
         }
     ]
