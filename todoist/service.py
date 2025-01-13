@@ -1,10 +1,12 @@
 from tools.types import ActionResult
+from todoist.internal.get_projects import get_projects
 
-def execute_todoist(action: str, params: dict[str, any], span) -> ActionResult:
+async def execute_todoist(action: str, params: dict[str, any], span) -> ActionResult:
     if action == "get_projects":
+        result = await get_projects(span)
         return ActionResult(
             success=True,
-            result="Projects retrieval not yet implemented"
+            result=result
         )
     
     return ActionResult(
