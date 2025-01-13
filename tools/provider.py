@@ -1,6 +1,7 @@
 from typing import Any, Dict
 from uuid import UUID
 
+from todoist.service import execute_todoist
 from ynab.service import execute_ynab
 
 
@@ -34,5 +35,6 @@ def get_tool_by_name(name)->Dict[str, Any]:
 
 
 tool_handlers = {
-    "ynab" : execute_ynab
+    "ynab": execute_ynab,
+    "todoist": execute_todoist
 }
