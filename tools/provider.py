@@ -23,6 +23,13 @@ def get_tools():
             Use: Creates one or multiple transactions in the user's budget
             
             """
+        },
+        {
+            "uuid": UUID("b4cc290f-9c8a-4d87-8c2c-5de21b52df73"),
+            "name": "todoist",
+            "description": "responsible for managing tasks and projects in Todoist",
+            "instructions": """Use the following actions based on the user's request type:
+            """
         }
     ]
 
