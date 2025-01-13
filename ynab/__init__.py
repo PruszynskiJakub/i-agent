@@ -456,60 +456,70 @@ _ynab_accounts = """
         <name>Pekao - Basic</name>
         <type>checking</type>
         <description>Main checking account for everyday expenses</description>
+        <transfer_payee_id>e28772f5-5581-44ce-90d2-a96e3d66f17e</transfer_payee_id>
     </account>
     <account>
         <id>74b62003-e493-4472-a874-451b45fa37a8</id>
         <name>Pekao - Next Step Studio</name>
         <type>checking</type>
         <description>Dedicated account for Next Step Studio business transactions</description>
+        <transfer_payee_id>2b52520c-cdc7-4dad-a7da-2dbfbedf9775</transfer_payee_id>
     </account>
     <account>
         <id>68f10746-3c15-4c72-bf58-7ec9e5b47425</id>
         <name>Pekao - Piggy bank</name>
         <type>savings</type>
         <description>Savings account for future investments and large purchases</description>
+        <transfer_payee_id>d1336a6f-cdc1-40cd-9061-6a897a890bf4</transfer_payee_id>
     </account>
     <account>
         <id>1b8425d2-c9c8-4a24-b9d2-1133fad20107</id>
         <name>Revolut</name>
         <type>checking</type>
         <description>Digital banking account for international transactions</description>
+        <transfer_payee_id>6cbb4f1b-1feb-4e6a-b655-b7d492f48023</transfer_payee_id>
     </account>
     <account>
         <id>afab1423-e83d-4854-933f-36df25b2882d</id>
         <name>Mbank</name>
         <type>checking</type>
         <description>Secondary checking account for personal use</description>
+        <transfer_payee_id>7a2e1906-999a-460f-a431-65a3b54b0e81</transfer_payee_id>
     </account>
     <account>
         <id>b4f62a02-9815-4dea-bcab-db727a450c1a</id>
         <name>Investment wallet</name>
         <type>otherAsset</type>
         <description>Account for holding investment funds and assets</description>
+        <transfer_payee_id>7fc7c2c6-5302-4ebb-97e1-cc76fa82cea5</transfer_payee_id>
     </account>
     <account>
         <id>e44b24ae-504e-4757-beae-3ec29e6d9e76</id>
         <name>Pasikonie</name>
         <type>otherAsset</type>
         <description>Account for Pasikonie eco-village project funds</description>
+        <transfer_payee_id>17734206-561e-4d45-a8eb-d579c4070533</transfer_payee_id>
     </account>
     <account>
         <id>19cdf1f0-979a-499e-90c2-85297350dc1e</id>
         <name>Mom loan</name>
         <type>personalLoan</type>
         <description>Personal loan account from mother</description>
+        <transfer_payee_id>8ce51809-a6f7-402d-88b1-f559baa0c3af</transfer_payee_id>
     </account>
     <account>
         <id>c55ac400-e885-4489-ab44-9c6d9488beae</id>
         <name>Dad loan</name>
         <type>personalLoan</type>
         <description>Personal loan account from father</description>
+        <transfer_payee_id>b79fc473-676c-4cfc-8c25-38dba7ed7eb4</transfer_payee_id>
     </account>
     <account>
         <id>4ca9b037-54f2-4e9c-841a-381d739cf566</id>
         <name>Pekao - Credit Card</name>
         <type>creditCard</type>
         <description>Credit card account for managing revolving credit</description>
+        <transfer_payee_id>0ba79689-1339-45f6-bc18-e5f4202d0ae1</transfer_payee_id>
     </account>
 """
 
