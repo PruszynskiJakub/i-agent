@@ -102,16 +102,20 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
                 raise ValueError("Missing required account_id in sides_result")
 
             # Build transaction model with safe access to nested dictionaries
+            transaction = {
+                "account_id": account_id,
+                "date": datetime.now().strftime("%Y-%m-%d"),
+                "amount": int(amount_result.get('amount', 0) * 1000),  # Convert to milliunits
+                "payee_id": sides_result.get('payee', {}).get('id'),
+                "payee_name": sides_result.get('payee', {}).get('name'),
+                "memo": f"iAgent: {query}",
+            }
+            
+            if category_result:
+                transaction["category_id"] = category_result.get('category', {}).get('id')
+                
             model = {
-                "transaction": {
-                    "account_id": account_id,
-                    "date": datetime.now().strftime("%Y-%m-%d"),
-                    "amount": int(amount_result.get('amount', 0) * 1000),  # Convert to milliunits
-                    "payee_id": sides_result.get('payee', {}).get('id'),
-                    "payee_name": sides_result.get('payee', {}).get('name'),
-                    "category_id": category_result.get('category', {}).get('id') if category_result else None,
-                    "memo": f"iAgent: {query}",
-                }
+                "transaction": transaction
             }
 
             url = f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions"
