@@ -8,7 +8,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from agent.assistant import agent_run
 from agent.state import create_or_restore_state, add_message
 from llm.tracing import flush
-from utils.upload import process_attachments
+from utils.upload import process_attachments, get_conversation_id
 
 # Initialize core services
 load_dotenv()
