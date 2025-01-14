@@ -24,7 +24,8 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
         system_prompt = prompt.compile(
             formatted_tools=format_tools(get_tools()),
             taken_actions=format_actions(state.taken_actions),
-            understanding=state.understanding
+            understanding=state.understanding,
+            documents=format_documents(state.documents)
         )
 
         # Create generation trace
