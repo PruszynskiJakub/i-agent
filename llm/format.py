@@ -103,9 +103,15 @@ def format_document(document) -> str:
     # Add metadata as JSON if present
     if document.metadata:
         desc += "  <metadata>\n"
-        json_str = json.dumps(document.metadata, indent=4)
-        indented_json = json_str.replace('\n', '\n    ')
-        desc += f"    {indented_json}\n"
+        filtered_metadata = {
+            k: document.metadata[k] 
+            for k in ['mime_type', 'name', 'description'] 
+            if k in document.metadata
+        }
+        if filtered_metadata:
+            json_str = json.dumps(filtered_metadata, indent=4)
+            indented_json = json_str.replace('\n', '\n    ')
+            desc += f"    {indented_json}\n"
         desc += "  </metadata>\n"
     
     desc += "</document>"
