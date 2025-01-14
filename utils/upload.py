@@ -1,4 +1,5 @@
 import os
+import uuid
 import urllib.request
 from typing import Dict, Any
 from datetime import datetime
@@ -6,24 +7,24 @@ from datetime import datetime
 def process_attachments(message: Dict[str, Any]) -> None:
     """Process and save image and audio attachments from Slack messages"""
     
-    # Create upload directory if it doesn't exist
-    upload_dir = os.path.join(os.getcwd(), "_upload")
+    # Create base upload directory if it doesn't exist
+    base_upload_dir = os.path.join(os.getcwd(), "_upload")
+    os.makedirs(base_upload_dir, exist_ok=True)
+    
+    # Create date-based directory
+    today = datetime.now().strftime("%Y%m%d")
+    upload_dir = os.path.join(base_upload_dir, today)
     os.makedirs(upload_dir, exist_ok=True)
     
     if "files" not in message:
         return
         
     for file in message["files"]:
-        # Generate timestamp-based filename
-        timestamp = datetime.fromtimestamp(int(float(file["created"])))
-        timestamp_str = timestamp.strftime("%Y%m%d_%H%M%S")
+        # Get original file extension
+        _, ext = os.path.splitext(file["name"])
         
-        # Get original filename and extension
-        original_name = file["name"]
-        _, ext = os.path.splitext(original_name)
-        
-        # Create new filename with timestamp
-        new_filename = f"{timestamp_str}_{original_name}"
+        # Generate UUID-based filename with original extension
+        new_filename = f"{uuid.uuid4()}{ext}"
         save_path = os.path.join(upload_dir, new_filename)
         
         # Download and save file
