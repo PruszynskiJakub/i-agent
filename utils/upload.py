@@ -51,10 +51,12 @@ def process_attachments(message: Dict[str, Any]) -> None:
             if ext.lower() in ['.md', '.markdown']:
                 with open(save_path, 'r') as md_file:
                     content = md_file.read()
+                    file_uuid = uuid.uuid4()
                     doc = create_document(
                         content=content,
                         metadata={
-                            "source": "slack_upload",
+                            "uuid": file_uuid,
+                            "source": save_path,
                             "mime_type": "text/markdown",
                             "name": file["name"],
                             "description": f"Markdown file uploaded from Slack: {file['name']}",
