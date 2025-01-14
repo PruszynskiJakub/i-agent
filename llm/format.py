@@ -1,8 +1,9 @@
 from ast import Dict
 from typing import List
 
-from tools.types import Action
 from agent.types import Message
+from document.types import Document
+from tools.types import Action
 
 
 def format_actions(actions: List[Action]) -> str:
@@ -36,7 +37,6 @@ def format_actions(actions: List[Action]) -> str:
         desc += "</action>"
         action_descriptions.append(desc)
     return "\n".join(action_descriptions)
-
 
 
 def format_messages(messages: List[Message]) -> List[dict]:
@@ -79,13 +79,15 @@ def format_tools(tools: List[Dict]) -> str:
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)
 
+
 def format_tool_instructions(tool) -> str:
     desc = f"  <name>{tool['name']}</name>\n"
     desc += f"  <description>{tool['description']}</description>\n"
     desc += f"  <instructions>{tool['instructions']}</instructions>\n"
     return desc
 
-def format_documents(documents: List['Document']) -> str:
+
+def format_documents(documents: List[Document]) -> str:
     """
     Formats multiple documents' metadata into an XML-like string representation with JSON metadata,
     excluding the document text content.
@@ -97,17 +99,17 @@ def format_documents(documents: List['Document']) -> str:
         str: Formatted string describing the documents' metadata
     """
     import json
-    
+
     doc_descriptions = []
     for document in documents:
         desc = f"<document uuid='{document.uuid}'>\n"
-        
+
         # Add metadata as JSON if present
         if document.metadata:
             desc += "  <metadata>\n"
             filtered_metadata = {
-                k: document.metadata[k] 
-                for k in ['mime_type', 'name', 'description'] 
+                k: document.metadata[k]
+                for k in ['mime_type', 'name', 'description']
                 if k in document.metadata
             }
             if filtered_metadata:
@@ -115,8 +117,8 @@ def format_documents(documents: List['Document']) -> str:
                 indented_json = json_str.replace('\n', '\n    ')
                 desc += f"    {indented_json}\n"
             desc += "  </metadata>\n"
-        
+
         desc += "</document>"
         doc_descriptions.append(desc)
-    
+
     return "\n".join(doc_descriptions)
