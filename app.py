@@ -22,7 +22,7 @@ def handle_message(message, say):
     """Handle incoming messages and respond using the agent"""
     try:
         # Process any attachments
-        process_attachments(message)
+        process_attachNments(message)
         
         # Initialize state for this conversation
         state = create_or_restore_state(conversation_uuid=message.get("thread_ts", message["ts"]))
