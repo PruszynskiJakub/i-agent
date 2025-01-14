@@ -30,8 +30,7 @@ def process_attachments(message: Dict[str, Any]) -> None:
         # Download and save file
         try:
             url = file["url_private_download"] if "url_private_download" in file else file["url_private"]
-            headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
-            response = requests.get(url, headers=headers, stream=True)
+            response = requests.get(url, stream=True)
             response.raise_for_status()
             with open(save_path, 'wb') as out_file:
                 for chunk in response.iter_content(chunk_size=8192):
