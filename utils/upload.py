@@ -7,6 +7,10 @@ from utils.logger import log_info, log_error
 from document.utils import create_document
 from db.document import save_document
 
+def get_conversation_id(message: Dict[str, Any]) -> str:
+    """Extract conversation ID from a Slack message"""
+    return message.get("thread_ts", message.get("ts", ""))
+
 def process_attachments(message: Dict[str, Any]) -> None:
     """Process and save image and audio attachments from Slack messages"""
     
@@ -54,7 +58,7 @@ def process_attachments(message: Dict[str, Any]) -> None:
                             "mime_type": "text/markdown",
                             "name": file["name"],
                             "description": f"Markdown file uploaded from Slack: {file['name']}",
-                            "conversation_uuid": message.get("conversation_uuid", "")
+                            "conversation_uuid": get_conversation_id(message)
                         }
                     )
                     save_document(doc.__dict__)

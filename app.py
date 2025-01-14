@@ -25,7 +25,7 @@ def handle_message(message, say):
         process_attachments(message)
         
         # Initialize state for this conversation
-        state = create_or_restore_state(conversation_uuid=message.get("thread_ts", message["ts"]))
+        state = create_or_restore_state(conversation_uuid=get_conversation_id(message))
         state = add_message(state, content=message["text"], role="user")
 
         response = asyncio.run(agent_run(in_state=state))
