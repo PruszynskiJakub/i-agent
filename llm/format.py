@@ -87,7 +87,7 @@ def format_tool_instructions(tool) -> str:
 
 def format_document(document) -> str:
     """
-    Formats a document's metadata into an XML-like string representation,
+    Formats a document's metadata into an XML-like string representation with JSON metadata,
     excluding the document text content.
 
     Args:
@@ -96,20 +96,14 @@ def format_document(document) -> str:
     Returns:
         str: Formatted string describing the document metadata
     """
-    desc = f"<document uuid='{document.uuid}'>\n"
-    desc += f"  <conversation>{document.conversation_uuid}</conversation>\n"
+    import json
     
-    # Add metadata if present
+    desc = f"<document uuid='{document.uuid}'>\n"
+    
+    # Add metadata as JSON if present
     if document.metadata:
         desc += "  <metadata>\n"
-        for key, value in document.metadata.items():
-            if isinstance(value, list):
-                desc += f"    <{key}>\n"
-                for item in value:
-                    desc += f"      <item>{item}</item>\n"
-                desc += f"    </{key}>\n"
-            else:
-                desc += f"    <{key}>{value}</{key}>\n"
+        desc += f"    {json.dumps(document.metadata, indent=4).replace('\n', '\n    ')}\n"
         desc += "  </metadata>\n"
     
     desc += "</document>"
