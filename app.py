@@ -27,7 +27,7 @@ def handle_message(message, say):
         process_attachments(message)
         
         # Preprocess the message
-        asyncio.run(preprocess_message(message))
+        preprocess_message(message)
         
         # Initialize state for this conversation
         state = create_or_restore_state(conversation_uuid=get_conversation_id(message))
