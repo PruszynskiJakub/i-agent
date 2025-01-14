@@ -104,19 +104,14 @@ def format_documents(documents: List[Document]) -> str:
     for document in documents:
         desc = f"<document uuid='{document.uuid}'>\n"
 
-        # Add metadata as JSON if present
+        # Add metadata as individual XML tags
         if document.metadata:
-            desc += "  <metadata>\n"
-            filtered_metadata = {
-                k: document.metadata[k]
-                for k in ['mime_type', 'name', 'description']
-                if k in document.metadata
-            }
-            if filtered_metadata:
-                json_str = json.dumps(filtered_metadata, indent=4)
-                indented_json = json_str.replace('\n', '\n    ')
-                desc += f"    {indented_json}\n"
-            desc += "  </metadata>\n"
+            if 'name' in document.metadata:
+                desc += f"  <name>{document.metadata['name']}</name>\n"
+            if 'description' in document.metadata:
+                desc += f"  <desc>{document.metadata['description']}</desc>\n"
+            if 'mime_type' in document.metadata:
+                desc += f"  <mime_type>{document.metadata['mime_type']}</mime_type>\n"
 
         desc += "</document>"
         doc_descriptions.append(desc)
