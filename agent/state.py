@@ -52,7 +52,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         taken_actions=find_actions_by_conversation(conversation_uuid),
         documents=find_documents_by_conversation(conversation_uuid),
         current_step=0,
-        max_steps=3,
+        max_steps=1,
         step_info=StepInfo(
             overview="",
             tool="",
