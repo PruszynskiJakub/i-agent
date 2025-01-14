@@ -23,11 +23,11 @@ app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 def handle_message(message, say):
     """Handle incoming messages and respond using the agent"""
     try:
-        # Process any attachments
-        process_attachments(message)
-        
         # Preprocess the message
         preprocess_message(message)
+        
+        # Process any attachments
+        process_attachments(message)
         
         # Initialize state for this conversation
         state = create_or_restore_state(conversation_uuid=get_conversation_id(message))
