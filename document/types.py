@@ -1,10 +1,20 @@
 from dataclasses import dataclass
+from enum import Enum
 from typing import List, TypedDict
 from uuid import UUID
 
 
+class DocumentType(Enum):
+    """Type of document content"""
+    IMAGE = "image"
+    DOCUMENT = "document" 
+    AUDIO = "audio"
+    TEXT = "text"
+
+
 class DocumentMetadata(TypedDict, total=False):
     """Metadata for a document"""
+    type: DocumentType  # Type of document content
     source: str
     parent_document_uuid: UUID  # UUID of the source document if this is derived from another document
     mime_type: str
