@@ -9,8 +9,7 @@ from agent.assistant import agent_run
 from agent.state import create_or_restore_state, add_message
 from llm.tracing import flush
 from utils.logger import log_info
-from utils.upload import process_attachments, get_conversation_id
-from slack.utils import preprocess_message
+from slack.utils import preprocess_message, process_attachments, get_conversation_id
 
 # Initialize core services
 load_dotenv()
