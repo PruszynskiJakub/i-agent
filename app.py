@@ -8,6 +8,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from agent.assistant import agent_run
 from agent.state import create_or_restore_state, add_message
 from llm.tracing import flush
+from utils.upload import process_attachments
 
 # Initialize core services
 load_dotenv()
@@ -20,6 +21,9 @@ app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 def handle_message(message, say):
     """Handle incoming messages and respond using the agent"""
     try:
+        # Process any attachments
+        process_attachments(message)
+        
         # Initialize state for this conversation
         state = create_or_restore_state(conversation_uuid=message.get("thread_ts", message["ts"]))
         state = add_message(state, content=message["text"], role="user")
