@@ -84,3 +84,33 @@ def format_tool_instructions(tool) -> str:
     desc += f"  <description>{tool['description']}</description>\n"
     desc += f"  <instructions>{tool['instructions']}</instructions>\n"
     return desc
+
+def format_document(document) -> str:
+    """
+    Formats a document's metadata into an XML-like string representation,
+    excluding the document text content.
+
+    Args:
+        document: Document object
+
+    Returns:
+        str: Formatted string describing the document metadata
+    """
+    desc = f"<document uuid='{document.uuid}'>\n"
+    desc += f"  <conversation>{document.conversation_uuid}</conversation>\n"
+    
+    # Add metadata if present
+    if document.metadata:
+        desc += "  <metadata>\n"
+        for key, value in document.metadata.items():
+            if isinstance(value, list):
+                desc += f"    <{key}>\n"
+                for item in value:
+                    desc += f"      <item>{item}</item>\n"
+                desc += f"    </{key}>\n"
+            else:
+                desc += f"    <{key}>{value}</{key}>\n"
+        desc += "  </metadata>\n"
+    
+    desc += "</document>"
+    return desc
