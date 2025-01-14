@@ -11,13 +11,13 @@ def process_attachments(message: Dict[str, Any]) -> None:
     base_upload_dir = os.path.join(os.getcwd(), "_upload")
     os.makedirs(base_upload_dir, exist_ok=True)
     
-    # Create date-based directory
-    today = datetime.now().strftime("%Y%m%d")
-    upload_dir = os.path.join(base_upload_dir, today)
-    os.makedirs(upload_dir, exist_ok=True)
-    
     if "files" not in message:
         return
+        
+    # Create date-based directory for today's files
+    today = datetime.now().strftime("%Y%m%d")
+    today_dir = os.path.join(base_upload_dir, today)
+    os.makedirs(today_dir, exist_ok=True)
         
     for file in message["files"]:
         # Get original file extension
@@ -25,7 +25,7 @@ def process_attachments(message: Dict[str, Any]) -> None:
         
         # Generate UUID-based filename with original extension
         new_filename = f"{uuid.uuid4()}{ext}"
-        save_path = os.path.join(upload_dir, new_filename)
+        save_path = os.path.join(today_dir, new_filename)
         
         # Download and save file
         try:
