@@ -8,6 +8,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from agent.assistant import agent_run
 from agent.state import create_or_restore_state, add_message
 from llm.tracing import flush
+from utils.logger import log_info
 from utils.upload import process_attachments, get_conversation_id
 
 # Initialize core services
@@ -26,6 +27,10 @@ def handle_message(message, say):
         
         # Initialize state for this conversation
         state = create_or_restore_state(conversation_uuid=get_conversation_id(message))
+        
+        # Log initial state counts
+        log_info(f"Initial state - Actions: {len(state.taken_actions)}, Documents: {len(state.documents)}, Messages: {len(state.messages)}")
+        
         state = add_message(state, content=message["text"], role="user")
 
         response = asyncio.run(agent_run(in_state=state))
