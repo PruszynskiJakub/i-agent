@@ -103,7 +103,9 @@ def format_document(document) -> str:
     # Add metadata as JSON if present
     if document.metadata:
         desc += "  <metadata>\n"
-        desc += f"    {json.dumps(document.metadata, indent=4).replace('\n', '\n    ')}\n"
+        json_str = json.dumps(document.metadata, indent=4)
+        indented_json = json_str.replace('\n', '\n    ')
+        desc += f"    {indented_json}\n"
         desc += "  </metadata>\n"
     
     desc += "</document>"
