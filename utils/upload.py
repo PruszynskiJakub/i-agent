@@ -32,11 +32,12 @@ def process_attachments(message: Dict[str, Any]) -> None:
         # Get original file extension
         _, ext = os.path.splitext(file["name"])
         
-        # Generate UUID-based filename with original extension
-        new_filename = f"{uuid.uuid4()}{ext}"
+        # Generate UUID and filename
+        file_uuid = uuid.uuid4()
+        new_filename = f"{file_uuid}{ext}"
         save_path = os.path.join(today_dir, new_filename)
         
-        # Download and save file
+        # Download and save file 
         try:
             url = file["url_private_download"] if "url_private_download" in file else file["url_private"]
             log_info(f"Downloading file: {file['name']} -> {new_filename}")
@@ -51,7 +52,6 @@ def process_attachments(message: Dict[str, Any]) -> None:
             if ext.lower() in ['.md', '.markdown']:
                 with open(save_path, 'r') as md_file:
                     content = md_file.read()
-                    file_uuid = uuid.uuid4()
                     doc = create_document(
                         content=content,
                         metadata={
