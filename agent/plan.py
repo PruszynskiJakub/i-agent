@@ -2,7 +2,7 @@ import json
 
 from agent.state import AgentState, update_step_info
 from llm import open_ai
-from llm.format import format_actions, format_messages, format_tools
+from llm.format import format_actions, format_messages, format_tools, format_documents
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from tools.provider import get_tools
