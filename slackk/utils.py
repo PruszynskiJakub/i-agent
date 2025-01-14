@@ -1,24 +1,26 @@
 import os
 import requests
-from typing import Dict, Any
-from utils.logger import log_info, log_error
+from typing import Dict, Any, Optional, List
+from logger.logger import log_info, log_error
 from document.utils import create_document
 from db.document import save_document
 from document.types import DocumentType
+
 
 def get_conversation_id(message: Dict[str, Any]) -> str:
     """Extract conversation ID from a Slack message"""
     return message.get("thread_ts", message.get("ts", ""))
 
-def process_attachments(message: Dict[str, Any]) -> None:
-    """Process markdown files from Slack messages"""
-    if "files" not in message:
-        log_info("No files found in message")
-        return
-        
-    log_info(f"Processing {len(message['files'])} files")
-        
-    for file in message["files"]:
+
+def preprocess_message(message: Dict[str, Any], conversation_uuid: str) -> None:
+    if "files" in message:
+        _process_attachments(message['files'], conversation_uuid)
+
+
+def _process_attachments(files: List[Dict[str, Any]], conversation_uuid) -> None:
+    log_info(f"Processing {len(files)} files")
+
+    for file in files:
         # Only process markdown files
         _, ext = os.path.splitext(file["name"])
         if ext.lower() not in ['.md', '.markdown']:
@@ -43,7 +45,7 @@ def process_attachments(message: Dict[str, Any]) -> None:
                     "mime_type": "text/markdown",
                     "name": file.get("title", file.get("name", "")),
                     "description": f"Markdown file from Slack: {file.get('title', '')}",
-                    "conversation_uuid": get_conversation_id(message)
+                    "conversation_uuid": conversation_uuid
                 }
             )
             save_document(doc.__dict__)

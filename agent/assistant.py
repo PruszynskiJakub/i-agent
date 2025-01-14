@@ -1,6 +1,6 @@
 import os
 
-from utils.logger import log_info, log_error
+from logger.logger import log_info, log_error
 from agent.answer import agent_answer
 from agent.define import agent_define
 from agent.execute import agent_execute
@@ -20,7 +20,7 @@ async def agent_run(in_state: AgentState) -> str:
         name=in_state.messages[-1].content[:45],  # First 45 chars of user input as trace name
         user_id=os.getenv("USER", "default_user"),
         metadata={
-            'medium': 'slack'
+            'medium': 'slackk'
         },
         session_id=state.conversation_uuid,
         input=state.messages[-1].content,

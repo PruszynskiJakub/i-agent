@@ -8,8 +8,8 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from agent.assistant import agent_run
 from agent.state import create_or_restore_state, add_message
 from llm.tracing import flush
-from utils.logger import log_info
-from slack.utils import preprocess_message, process_attachments, get_conversation_id
+from logger.logger import log_info
+from slackk.utils import preprocess_message, get_conversation_id
 
 # Initialize core services
 load_dotenv()
@@ -22,18 +22,17 @@ app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 def handle_message(message, say):
     """Handle incoming messages and respond using the agent"""
     try:
+        conversation_id = get_conversation_id(message)
         # Preprocess the message
-        preprocess_message(message)
-        
-        # Process any attachments
-        process_attachments(message)
-        
+        preprocess_message(message, conversation_id)
+
         # Initialize state for this conversation
-        state = create_or_restore_state(conversation_uuid=get_conversation_id(message))
-        
+        state = create_or_restore_state(conversation_uuid=conversation_id)
+
         # Log initial state counts
-        log_info(f"Initial state - Actions: {len(state.taken_actions)}, Documents: {len(state.documents)}, Messages: {len(state.messages)}")
-        
+        log_info(
+            f"Initial state - Actions: {len(state.taken_actions)}, Documents: {len(state.documents)}, Messages: {len(state.messages)}")
+
         state = add_message(state, content=message["text"], role="user")
 
         response = asyncio.run(agent_run(in_state=state))
