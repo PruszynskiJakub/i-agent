@@ -31,7 +31,8 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
         )
         system_prompt = prompt.compile(
             taken_actions=format_actions(state.taken_actions),
-            understanding=state.understanding
+            understanding=state.understanding,
+            documents=state.documents
         )
         model = prompt.config.get("model", "gpt-4o")
 
