@@ -1,6 +1,6 @@
 import os
 import uuid
-import urllib.request
+import requests
 from typing import Dict, Any
 from datetime import datetime
 
@@ -31,8 +31,10 @@ def process_attachments(message: Dict[str, Any]) -> None:
         try:
             url = file["url_private_download"] if "url_private_download" in file else file["url_private"]
             headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
-            req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req) as response, open(save_path, 'wb') as out_file:
-                out_file.write(response.read())
+            response = requests.get(url, headers=headers, stream=True)
+            response.raise_for_status()
+            with open(save_path, 'wb') as out_file:
+                for chunk in response.iter_content(chunk_size=8192):
+                    out_file.write(chunk)
         except Exception as e:
             print(f"Error saving file {new_filename}: {str(e)}")
