@@ -1,4 +1,6 @@
 import os
+import uuid
+
 import requests
 from typing import Dict, Any, Optional, List
 from logger.logger import log_info, log_error
@@ -40,6 +42,7 @@ def _process_attachments(files: List[Dict[str, Any]], conversation_uuid) -> None
             doc = create_document(
                 content=content,
                 metadata={
+                    'uuid': uuid.uuid4(),
                     "type": DocumentType.TEXT,
                     "source": url,
                     "mime_type": "text/markdown",
