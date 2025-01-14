@@ -4,6 +4,8 @@ import requests
 from typing import Dict, Any
 from datetime import datetime
 from utils.logger import log_info, log_error
+from document.utils import create_document
+from db.document import save_document
 
 def process_attachments(message: Dict[str, Any]) -> None:
     """Process and save image and audio attachments from Slack messages"""
@@ -40,5 +42,22 @@ def process_attachments(message: Dict[str, Any]) -> None:
                 for chunk in response.iter_content(chunk_size=8192):
                     out_file.write(chunk)
             log_info(f"Successfully saved file: {new_filename}")
+            
+            # Create document for markdown files
+            if ext.lower() in ['.md', '.markdown']:
+                with open(save_path, 'r') as md_file:
+                    content = md_file.read()
+                    doc = create_document(
+                        content=content,
+                        metadata={
+                            "source": "slack_upload",
+                            "mime_type": "text/markdown",
+                            "name": file["name"],
+                            "description": f"Markdown file uploaded from Slack: {file['name']}",
+                            "conversation_uuid": message.get("conversation_uuid", "")
+                        }
+                    )
+                    save_document(doc.__dict__)
+                    log_info(f"Created document from markdown file: {file['name']}")
         except Exception as e:
             log_error(f"Error saving file {new_filename}: {str(e)}")
