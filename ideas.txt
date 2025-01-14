@@ -1,3 +1,4 @@
 - json fix tool
 - decode base64 tool
-- 
+- check portfolio
+- prepare invoice

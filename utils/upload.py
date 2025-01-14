@@ -11,7 +11,7 @@ def process_attachments(message: Dict[str, Any]) -> None:
     # Create base upload directory if it doesn't exist
     base_upload_dir = os.path.join(os.getcwd(), "_upload")
     os.makedirs(base_upload_dir, exist_ok=True)
-    
+
     if "files" not in message:
         log_info("No files found in message")
         return
@@ -34,7 +34,7 @@ def process_attachments(message: Dict[str, Any]) -> None:
         try:
             url = file["url_private_download"] if "url_private_download" in file else file["url_private"]
             log_info(f"Downloading file: {file['name']} -> {new_filename}")
-            response = requests.get(url, stream=True)
+            response = requests.get(url, stream=True, headers={'Authorization': f'Bearer {os.getenv("SLACK_BOT_TOKEN")}'})
             response.raise_for_status()
             with open(save_path, 'wb') as out_file:
                 for chunk in response.iter_content(chunk_size=8192):

@@ -1,0 +1,119 @@
+{
+  "text": "Foo",
+  "files": [
+    {
+      "id": "F085QSEP95K",
+      "created": 1734600833,
+      "timestamp": 1734600833,
+      "name": "Commits Over Time from Contributors.png",
+      "title": "Commits Over Time from Contributors.png",
+      "mimetype": "image/png",
+      "filetype": "png",
+      "pretty_type": "PNG",
+      "user": "U086CDL1QGY",
+      "user_team": "T08593FTDPH",
+      "editable": false,
+      "size": 59090,
+      "mode": "hosted",
+      "is_external": false,
+      "external_type": "",
+      "is_public": true,
+      "public_url_shared": false,
+      "display_as_bot": false,
+      "username": "",
+      "url_private": "https://files.slack.com/files-pri/T08593FTDPH-F085QSEP95K/commits_over_time_from_contributors.png",
+      "url_private_download": "https://files.slack.com/files-pri/T08593FTDPH-F085QSEP95K/download/commits_over_time_from_contributors.png",
+      "media_display_type": "unknown",
+      "thumb_64": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_64.png",
+      "thumb_80": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_80.png",
+      "thumb_360": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_360.png",
+      "thumb_360_w": 360,
+      "thumb_360_h": 154,
+      "thumb_480": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_480.png",
+      "thumb_480_w": 480,
+      "thumb_480_h": 205,
+      "thumb_160": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_160.png",
+      "thumb_720": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_720.png",
+      "thumb_720_w": 720,
+      "thumb_720_h": 307,
+      "thumb_800": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_800.png",
+      "thumb_800_w": 800,
+      "thumb_800_h": 341,
+      "thumb_960": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_960.png",
+      "thumb_960_w": 960,
+      "thumb_960_h": 410,
+      "thumb_1024": "https://files.slack.com/files-tmb/T08593FTDPH-F085QSEP95K-5a2bd22848/commits_over_time_from_contributors_1024.png",
+      "thumb_1024_w": 1024,
+      "thumb_1024_h": 437,
+      "original_w": 1200,
+      "original_h": 512,
+      "thumb_tiny": "AwAUADCh5jetISTyeaOpo7YpiDFGKXpRmgBtFLikoGLQO9A70DoaAAd6BQO9A70AAo9aB3oHegD/2Q==",
+      "permalink": "https://iagenttalk.slack.com/files/U086CDL1QGY/F085QSEP95K/commits_over_time_from_contributors.png",
+      "permalink_public": "https://slack-files.com/T08593FTDPH-F085QSEP95K-71b4be7179",
+      "has_rich_preview": false,
+      "file_access": "visible"
+    },
+    {
+      "id": "F085QSFK23X",
+      "created": 1734600844,
+      "timestamp": 1734600844,
+      "name": "audio_message.m4a",
+      "title": "audio_message.m4a",
+      "mimetype": "audio/mp4",
+      "filetype": "m4a",
+      "pretty_type": "MPEG 4 Audio",
+      "user": "U086CDL1QGY",
+      "user_team": "T08593FTDPH",
+      "editable": false,
+      "size": 52589,
+      "mode": "hosted",
+      "is_external": false,
+      "external_type": "",
+      "is_public": true,
+      "public_url_shared": false,
+      "display_as_bot": false,
+      "username": "",
+      "subtype": 'slack_audio',
+      "transcription":
+        {
+         "status":"processing"
+        },
+      "url_private":"https://files.slack.com/files-tmb/T08593FTDPH-F085QSFK23X-ec05667fd2/audio_message_audio.mp4", 
+      "url_private_download":"https://files.slack.com/files-tmb/T08593FTDPH-F085QSFK23X-ec05667fd2/download/audio_message_audio.mp4", 
+      "duration_ms":"3140", 
+      "aac":"https://files.slack.com/files-tmb/T08593FTDPH-F085QSFK23X-ec05667fd2/audio_message_audio.mp4", 
+      "audio_wave_samples":[4,2,3,1,1,1,1,1,1,0,1,1,3,47,84,100,98,69,54,91,84,97,81,48,32,56,43,39,33,36,46,40,45,34,10,5,2,24,40,45,36,41,47,38,34,49,31,9,3,1,4,31,43,67,64,56,49,"51",43,"27","22","58","42","44","63","68","76","84","83","55","17","11","7","3","1","1","1","18","46","54","63","53","30","18","30","28","10","2","1","1",13,"34",22,"36",31,"29",25,"6",1,"1"], 
+      "media_display_type":"audio", 
+      "permalink":"https://iagenttalk.slack.com/files/U086CDL1QGY/F085QSFK23X/audio_message.m4a", 
+      "permalink_public":"https://slack-files.com/T08593FTDPH-F085QSFK23X-4cc575d716", 
+      "has_rich_preview":"false", 
+      "file_access":"visible"
+    }
+  ],
+ "upload":"false", 
+  "user":"U086CDL1QGY", 
+  "blocks":[
+     {
+      "type":"rich_text", 
+       "block_id":"nffbZ", 
+       "elements":[
+          {
+           "type":"rich_text_section", 
+           "elements":[
+              {
+               "type":"text", 
+               "text":"Foo"
+              }
+            ]
+          }
+        ]
+     }
+   ], 
+  "type":"message", 
+  "ts":"1734600849.373029", // -> thread_ts:1734600849.373029
+  "client_msg_id":"3deb9224-eb4e-429d-9970-2431d639aefd", 
+  "channel":"C085S79LJ3W", 
+  "subtype":"file_share", 
+  "event_ts":"1734600849.373029", 
+  "channel_type":"channel"
+}
