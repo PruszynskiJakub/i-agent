@@ -4,4 +4,4 @@
 .aider*
 __pycache__
 *.db
-_uploads/
+/_upload/
