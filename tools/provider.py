@@ -35,6 +35,15 @@ def get_tools():
                 "params": {}
             }
             Use: Retrieves all projects from Todoist
+
+            2. ADD TODOS
+            {
+                "action": "add_todos",
+                "params": {
+                    "todos": ["todo1", "todo2", ...]
+                }
+            }
+            Use: Adds one or more todos to the Inbox project
             """
         }
     ]
