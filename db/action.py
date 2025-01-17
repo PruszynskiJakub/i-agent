@@ -114,7 +114,7 @@ def create_action(
     if action.documents:
         doc_query = "INSERT INTO action_documents (action_uuid, document_uuid) VALUES (?, ?)"
         for document in action.documents:
-            doc_uuid = str(document.uuid) if isinstance(document, Document) else str(document['uuid'])
+            doc_uuid = str(document.uuid)
             execute(doc_query, (str(action.uuid), doc_uuid))
 
     return action

@@ -13,11 +13,11 @@ def save_document(document: Document | Dict[str, Any]) -> None:
     Args:
         document: Document object or dictionary containing uuid, conversation_uuid, text, and metadata
     """
-    # Convert Document object to dict if needed
+    # Handle Document object
     if isinstance(document, Document):
         metadata = document.metadata.copy()
         # Convert enum to string for JSON serialization
-        if 'type' in metadata:
+        if metadata.get('type'):
             metadata['type'] = metadata['type'].value if hasattr(metadata['type'], 'value') else str(metadata['type'])
             
         doc_dict = {
@@ -27,7 +27,14 @@ def save_document(document: Document | Dict[str, Any]) -> None:
             'metadata': metadata
         }
     else:
-        doc_dict = document
+        # Handle dictionary input
+        doc_dict = document.copy()  # Make a copy to avoid modifying the original
+        if doc_dict.get('metadata', {}).get('type'):
+            doc_dict['metadata']['type'] = (
+                doc_dict['metadata']['type'].value 
+                if hasattr(doc_dict['metadata']['type'], 'value') 
+                else str(doc_dict['metadata']['type'])
+            )
     query = """
         INSERT INTO documents (uuid, conversation_uuid, text, metadata)
         VALUES (?, ?, ?, ?)
