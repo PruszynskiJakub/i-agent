@@ -226,7 +226,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
         metadata=DocumentMetadata(
             type=DocumentType.DOCUMENT,
             source="ynab",
-            description="",
+            description=format_document_description(transaction_results),
             name="transaction_results",
             content_type="full",
         )
@@ -287,5 +287,10 @@ def format_transaction_results(transaction_results: list) -> str:
 
     return "\n".join(summary)
 
-def format_document_description(transaction_results) -> str:
-    pass
+def format_document_description(transaction_results: list) -> str:
+    """Format a concise description of the transaction processing results."""
+    total = len(transaction_results)
+    successful = sum(1 for t in transaction_results if t["status"] == "success")
+    failed = total - successful
+    
+    return f"Processed {total} transaction{'s' if total != 1 else ''}: {successful} successful, {failed} failed"
