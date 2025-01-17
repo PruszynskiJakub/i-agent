@@ -45,7 +45,7 @@ def find_actions_by_conversation(conversation_uuid: str) -> List[Action]:
         List of Action objects
     """
     query = """
-        SELECT uuid, name, tool_uuid, payload, result, status, conversation_uuid, documents, step_description
+        SELECT uuid, name, tool_uuid, payload, result, status, conversation_uuid, step_description
         FROM actions 
         WHERE conversation_uuid = ?
         ORDER BY created_at
