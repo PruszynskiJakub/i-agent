@@ -15,11 +15,16 @@ def save_document(document: Document | Dict[str, Any]) -> None:
     """
     # Convert Document object to dict if needed
     if isinstance(document, Document):
+        metadata = document.metadata.copy()
+        # Convert enum to string for JSON serialization
+        if 'type' in metadata:
+            metadata['type'] = metadata['type'].value if hasattr(metadata['type'], 'value') else str(metadata['type'])
+            
         doc_dict = {
             'uuid': document.uuid,
             'conversation_uuid': document.conversation_uuid,
             'text': document.text,
-            'metadata': document.metadata
+            'metadata': metadata
         }
     else:
         doc_dict = document
