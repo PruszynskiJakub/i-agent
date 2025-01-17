@@ -158,11 +158,13 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
             return {
                 "status": "success",
                 "details": {
-                    "transaction_id": transaction_id,
-                    "query": query,
-                    "category": category_name,
-                    "account": account_name,
-                    "payee": payee_name
+                    "details": {  # Nested details to match expected structure
+                        "transaction_id": transaction_id,
+                        "query": query,
+                        "category": category_name,
+                        "account": account_name,
+                        "payee": payee_name
+                    }
                 }
             }
 
@@ -213,10 +215,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
                 "error": str(result)
             })
         else:
-            transaction_results.append({
-                "status": "success",
-                "details": result
-            })
+            transaction_results.append(result)  # result already has the correct structure
 
     return Document(
         uuid=uuid4(),
