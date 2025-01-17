@@ -219,7 +219,19 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
                 "details": result
             })
 
-    # Prepare structured output text
+    return Document(
+        uuid=uuid4(),
+        conversation_uuid=params.get("conversation_uuid", ""),
+        text=format_transaction_results(transaction_results),
+        metadata=DocumentMetadata(
+            type=DocumentType.TEXT,
+            source="YNAB",
+            description="YNAB Transaction Processing Results",
+            name="transaction_results"
+        )
+    )
+
+def format_transaction_results(transaction_results: list) -> str:
     total_transactions = len(transaction_results)
     successful = sum(1 for t in transaction_results if t["status"] == "success")
     failed = total_transactions - successful
@@ -272,15 +284,4 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
     else:
         summary.append("No failed transactions\n")
 
-    # Create and return document
-    return Document(
-        uuid=uuid4(),
-        conversation_uuid=params.get("conversation_uuid", ""),
-        text="\n".join(summary),
-        metadata=DocumentMetadata(
-            type=DocumentType.TEXT,
-            source="YNAB",
-            description="YNAB Transaction Processing Results",
-            name="transaction_results"
-        )
-    )
+    return "\n".join(summary)
