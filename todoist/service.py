@@ -1,6 +1,6 @@
 from todoist.internal.add_todos import add_todos
 from todoist.internal.get_projects import get_projects
-from tools.types import ActionResult, ActionStatus
+from tools.types import ActionResult
 
 
 async def execute_todoist(action: str, params: dict[str, any], span) -> ActionResult:
@@ -18,6 +18,5 @@ async def execute_todoist(action: str, params: dict[str, any], span) -> ActionRe
         )
 
     return ActionResult(
-        status=ActionStatus.FAILURE,
         result=f"Unknown action: {action}"
     )
