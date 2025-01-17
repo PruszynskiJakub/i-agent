@@ -2,7 +2,7 @@ from typing import Dict, Any
 from tools.types import ActionResult, ActionStatus
 from todoist import todoist_client
 
-async def add_todos(params: Dict[str, Any], trace) -> str:
+async def add_todos(params: Dict[str, Any], span) -> str:
     """Add todo items to the Inbox project"""
     try:
         # Get the todos from params
