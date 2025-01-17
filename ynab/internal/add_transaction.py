@@ -3,8 +3,11 @@ import json
 import os
 from datetime import datetime
 from typing import Dict, Any
+from uuid import uuid4
 
 import requests
+
+from document.types import Document, DocumentType, DocumentMetadata
 
 from llm import open_ai
 from llm.prompts import get_prompt
@@ -12,7 +15,7 @@ from llm.tracing import create_generation, end_generation, create_event
 from ynab import _ynab_accounts, _ynab_categories
 
 
-async def add_transaction(params: Dict[str, Any], trace) -> str:
+async def add_transaction(params: Dict[str, Any], trace) -> Document:
     query = params.get("query")
 
     async def split_transaction(q: str) -> list[Dict[str, Any]]:
@@ -145,8 +148,23 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
             if response.status_code != 201:
                 raise Exception(f"Failed to add transaction: {response.text}")
 
-            category_info = f" with category '{category_result['category']['name']}'" if category_result and category_result.get('category', {}).get('name') else ""
-            return f"Added transaction '{query}'{category_info} successfully"
+            response_data = response.json()
+            transaction_id = response_data.get('data', {}).get('transaction', {}).get('id', 'unknown')
+            
+            category_name = category_result.get('category', {}).get('name') if category_result else None
+            account_name = sides_result.get('account', {}).get('name', 'Unknown Account')
+            payee_name = sides_result.get('payee', {}).get('name', 'Unknown Payee')
+            
+            return {
+                "status": "success",
+                "details": {
+                    "transaction_id": transaction_id,
+                    "query": query,
+                    "category": category_name,
+                    "account": account_name,
+                    "payee": payee_name
+                }
+            }
 
         amount_task = asyncio.create_task(pick_amount(transaction_query))
         sides_task = asyncio.create_task(pick_sides(transaction_query))
@@ -201,20 +219,68 @@ async def add_transaction(params: Dict[str, Any], trace) -> str:
                 "details": result
             })
 
-    # Prepare summary
+    # Prepare structured output text
     total_transactions = len(transaction_results)
     successful = sum(1 for t in transaction_results if t["status"] == "success")
     failed = total_transactions - successful
 
-    # Create a human-readable summary header
-    summary = f"Processed {total_transactions} transaction{'s' if total_transactions != 1 else ''}: "
-    summary += f"{successful} successful, {failed} failed\n"
-    
-    # Add details for all transactions
-    for t in transaction_results:
-        if t['status'] == 'success':
-            summary += f"\n✓ {t['details']}"
-        else:
-            summary += f"\n✗ {t['query']}: {t['error']}"
+    # Section 1: General summary
+    summary = [
+        "Transaction Processing Summary",
+        "----------------------------",
+        f"Total transactions processed: {total_transactions}",
+        f"Successful transactions: {successful}",
+        f"Failed transactions: {failed}",
+        ""
+    ]
 
-    return summary
+    # Section 2: Successful transactions
+    summary.extend([
+        "Successful Transactions",
+        "---------------------"
+    ])
+    
+    successful_transactions = [t for t in transaction_results if t["status"] == "success"]
+    if successful_transactions:
+        for t in successful_transactions:
+            details = t["details"]
+            summary.extend([
+                f"Transaction ID: {details['transaction_id']}",
+                f"Description: {details['query']}",
+                f"Category: {details['category'] or 'Not categorized'}",
+                f"Account: {details['account']}",
+                f"Payee: {details['payee']}",
+                ""
+            ])
+    else:
+        summary.append("No successful transactions\n")
+
+    # Section 3: Failed transactions
+    summary.extend([
+        "Failed Transactions",
+        "-----------------"
+    ])
+    
+    failed_transactions = [t for t in transaction_results if t["status"] == "error"]
+    if failed_transactions:
+        for t in failed_transactions:
+            summary.extend([
+                f"Description: {t['query']}",
+                f"Error: {t['error']}",
+                ""
+            ])
+    else:
+        summary.append("No failed transactions\n")
+
+    # Create and return document
+    return Document(
+        uuid=uuid4(),
+        conversation_uuid=params.get("conversation_uuid", ""),
+        text="\n".join(summary),
+        metadata=DocumentMetadata(
+            type=DocumentType.TEXT,
+            source="YNAB",
+            description="YNAB Transaction Processing Results",
+            name="transaction_results"
+        )
+    )
