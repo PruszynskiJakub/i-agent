@@ -1,10 +1,10 @@
+from uuid import uuid4
 from todoist import todoist_client
-from llm.tracing import create_generation, end_generation, create_event
-from llm.open_ai import completion
-from llm.prompts import get_prompt
+from llm.tracing import create_event
+from document.types import Document, DocumentType, DocumentMetadata
 
-async def get_projects(span) -> str:
-    """Get all Todoist projects and format them nicely"""
+async def get_projects(span) -> Document:
+    """Get all Todoist projects and return as a Document"""
     try:
         event = create_event(span, "fetch_projects", input="Fetching all Todoist projects")
         projects = todoist_client.get_projects()
@@ -15,11 +15,36 @@ async def get_projects(span) -> str:
             for project in projects
         ])
         
-        result = f"Your Todoist projects:\n{projects_text}"
-        create_event(span, "projects_formatted", output=result)
-        return result
+        doc = Document(
+            uuid=uuid4(),
+            conversation_uuid="",  # This should be passed in from the caller
+            text=projects_text,
+            metadata=DocumentMetadata(
+                type=DocumentType.DOCUMENT,
+                source="todoist",
+                description=f"List of {len(projects)} Todoist projects",
+                name="todoist_projects",
+                content_type="list"
+            )
+        )
+        
+        create_event(span, "projects_formatted", output=projects_text)
+        return doc
         
     except Exception as e:
         error_msg = f"Error retrieving projects: {str(e)}"
         create_event(span, "projects_error", level="ERROR", output=error_msg)
-        return error_msg
+        
+        # Return error as document
+        return Document(
+            uuid=uuid4(),
+            conversation_uuid="",
+            text=error_msg,
+            metadata=DocumentMetadata(
+                type=DocumentType.DOCUMENT,
+                source="todoist",
+                description="Error retrieving Todoist projects",
+                name="todoist_projects_error",
+                content_type="error"
+            )
+        )
