@@ -14,7 +14,15 @@ def save_document(document: Document | Dict[str, Any]) -> None:
         document: Document object or dictionary containing uuid, conversation_uuid, text, and metadata
     """
     # Convert Document object to dict if needed
-    doc_dict = document.__dict__ if isinstance(document, Document) else document
+    if isinstance(document, Document):
+        doc_dict = {
+            'uuid': document.uuid,
+            'conversation_uuid': document.conversation_uuid,
+            'text': document.text,
+            'metadata': document.metadata
+        }
+    else:
+        doc_dict = document
     query = """
         INSERT INTO documents (uuid, conversation_uuid, text, metadata)
         VALUES (?, ?, ?, ?)
