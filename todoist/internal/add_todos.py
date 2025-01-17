@@ -3,21 +3,34 @@ from tools.types import ActionResult, ActionStatus
 from todoist import todoist_client
 
 async def add_todos(params: Dict[str, Any], span) -> str:
-    """Add todo items to the Inbox project"""
+    """Add todo items with optional metadata"""
     try:
-        # Get the todos from params
         todos = params.get("todos", [])
         if not todos:
             return "No todos provided"
 
-        # Add each todo to the Inbox project
         for todo in todos:
-            task = todoist_client.add_task(
-                content=todo,
-                project_id="2334150459"  # Inbox project ID
-            )
-            
-        return "Successfully added todos to Inbox"
+            if not todo.get("title"):
+                continue
+
+            task_args = {
+                "content": todo["title"],
+                "project_id": todo.get("projectId", "2334150459"),  # Default to Inbox if not specified
+            }
+
+            # Add optional parameters if present
+            if todo.get("description"):
+                task_args["description"] = todo["description"]
+            if todo.get("priority"):
+                task_args["priority"] = max(1, min(4, todo["priority"]))  # Clamp between 1-4
+            if todo.get("labelIds"):
+                task_args["label_ids"] = todo["labelIds"]
+            if todo.get("dueDate"):
+                task_args["due_date"] = todo["dueDate"]
+
+            task = todoist_client.add_task(**task_args)
+
+        return "Successfully added todos"
         
     except Exception as error:
         return f"Failed to add todos: {str(error)}"

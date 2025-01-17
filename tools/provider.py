@@ -40,10 +40,20 @@ def get_tools():
             {
                 "action": "add_todos",
                 "params": {
-                    "todos": ["todo1", "todo2", ...]
+                    "todos": [{
+                        "title": "Task title",
+                        "description": "Task description", 
+                        "priority": 1-4,
+                        "projectId": "project_uuid",
+                        "stateId": "state_uuid",
+                        "estimate": number,
+                        "labelIds": ["label_uuid1", "label_uuid2"],
+                        "startDate": "YYYY-MM-DD",
+                        "dueDate": "YYYY-MM-DD"
+                    }]
                 }
             }
-            Use: Adds one or more todos to the Inbox project
+            Use: Adds one or more todos. Only title is required, other fields are optional
             """
         }
     ]
