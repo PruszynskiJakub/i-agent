@@ -6,22 +6,24 @@ import json
 from db import connection, execute
 
 
-def save_document(document: Dict[str, Any]) -> None:  # Takes dict to handle both Document.__dict__ and legacy dict inputs
+def save_document(document: Document | Dict[str, Any]) -> None:
     """
     Save a document to the database
     
     Args:
-        document: Document dictionary containing uuid, conversation_uuid, text, and metadata
+        document: Document object or dictionary containing uuid, conversation_uuid, text, and metadata
     """
+    # Convert Document object to dict if needed
+    doc_dict = document.__dict__ if isinstance(document, Document) else document
     query = """
         INSERT INTO documents (uuid, conversation_uuid, text, metadata)
         VALUES (?, ?, ?, ?)
     """
     execute(query, (
-        str(document['uuid']),
-        document['conversation_uuid'],
-        document['text'],
-        json.dumps(document['metadata'])
+        str(doc_dict['uuid']),
+        doc_dict['conversation_uuid'],
+        doc_dict['text'],
+        json.dumps(doc_dict['metadata'])
     ))
 
 
