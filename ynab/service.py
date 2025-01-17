@@ -9,8 +9,8 @@ async def execute_ynab(action, params: Dict[str, Any], trace) -> ActionResult:
         case "add_transaction":
             result = await add_transaction(params, trace)
             return ActionResult(
-                result=result,
-                documents=[]
+                result="",
+                documents=[result]
             )
         case _:
             return ActionResult(

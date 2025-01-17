@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Some small manual improvements">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove status from ActionResult">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ynab/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,14 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00023" summary="simplify">
-      <option name="closed" value="true" />
-      <created>1735651608160</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1735651608160</updated>
     </task>
     <task id="LOCAL-00024" summary="simplify">
       <option name="closed" value="true" />
@@ -558,7 +551,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737102291979</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="Remove status from ActionResult">
+      <option name="closed" value="true" />
+      <created>1737106772929</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1737106772929</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -573,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add extra icons" />
     <MESSAGE value="Remove instructions part from planning" />
     <MESSAGE value="Use system prompt as input for generatin at answe" />
     <MESSAGE value="Clean up" />
@@ -598,6 +598,7 @@
     <MESSAGE value="Add missing uuid" />
     <MESSAGE value="Fix param name" />
     <MESSAGE value="Some small manual improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some small manual improvements" />
+    <MESSAGE value="Remove status from ActionResult" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove status from ActionResult" />
   </component>
 </project>
