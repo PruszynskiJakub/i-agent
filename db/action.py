@@ -13,13 +13,14 @@ def _row_to_action(row: tuple) -> Action:
     
     # Get associated document UUIDs
     query = "SELECT document_uuid FROM action_documents WHERE action_uuid = ?"
-    document_rows = execute(query, (str(row[0]),))
+    document_rows = execute(query, (row[0],))  # row[0] is already a string
     
     # Load each document
     documents = []
-    for doc_row in document_rows:
-        if doc := find_document_by_uuid(UUID(doc_row[0])):
-            documents.append(doc)
+    if document_rows:  # Check if we got any results
+        for doc_row in document_rows:
+            if doc := find_document_by_uuid(UUID(doc_row[0])):
+                documents.append(doc)
     
     return Action(
         uuid=UUID(row[0]),
