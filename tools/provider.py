@@ -47,9 +47,12 @@ def get_tools():
                         "projectId": "project_uuid",
                         "stateId": "state_uuid",
                         "estimate": number,
-                        "labelIds": ["label_uuid1", "label_uuid2"],
-                        "startDate": "YYYY-MM-DD",
-                        "dueDate": "YYYY-MM-DD"
+                        "labels": ["label1", "label2"],
+                        "dueString": "tomorrow at 3pm",
+                        "dueLang": "en",
+                        "dueDate": "YYYY-MM-DD",
+                        "duration": 30,
+                        "durationUnit": "minute"
                     }]
                 }
             }

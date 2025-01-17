@@ -23,10 +23,21 @@ async def add_todos(params: Dict[str, Any], span) -> str:
                 task_args["description"] = todo["description"]
             if todo.get("priority"):
                 task_args["priority"] = max(1, min(4, todo["priority"]))  # Clamp between 1-4
-            if todo.get("labelIds"):
-                task_args["label_ids"] = todo["labelIds"]
-            if todo.get("dueDate"):
+            if todo.get("labels"):
+                task_args["labels"] = todo["labels"]  # Using label names instead of IDs
+            
+            # Handle due date options
+            if todo.get("dueString"):
+                task_args["due_string"] = todo["dueString"]
+                if todo.get("dueLang"):
+                    task_args["due_lang"] = todo["dueLang"]
+            elif todo.get("dueDate"):
                 task_args["due_date"] = todo["dueDate"]
+            
+            # Handle duration if specified
+            if todo.get("duration") and todo.get("durationUnit"):
+                task_args["duration"] = todo["duration"]
+                task_args["duration_unit"] = todo["durationUnit"]
 
             task = todoist_client.add_task(**task_args)
 
