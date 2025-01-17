@@ -6,16 +6,12 @@ from uuid import UUID
 from document.types import Document
 
 
-class ActionStatus(Enum):
-    SUCCESS = "success"
-    FAILURE = "failure"
 
 
 @dataclass
 class ActionResult:
     """Result of an action performed by a tool"""
     result: str
-    status: ActionStatus
     documents: List[Document] = field(default_factory=list)
 
 
@@ -28,6 +24,6 @@ class Action:
     conversation_uuid: str
     payload: Dict
     result: str
-    status: ActionStatus
+    status: str
     documents: List[Document] = field(default_factory=list)
     step_description: str = ""

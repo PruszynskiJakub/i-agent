@@ -38,7 +38,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'tool_uuid': UUID(state.step_info.tool_uuid),
             'payload': state.step_info.tool_action_params,
             'result': action_result.result,
-            'status': action_result.status,
+            'status': '',
             'documents': action_result.documents,
             'step_description': state.step_info.overview
         }

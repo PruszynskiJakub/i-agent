@@ -1,7 +1,8 @@
 from typing import Dict, Any
-from tools.types import ActionResult, ActionStatus
-from todoist import todoist_client
+
 from llm.tracing import create_event
+from todoist import todoist_client
+
 
 async def add_todos(params: Dict[str, Any], span) -> str:
     """Add todo items with optional metadata"""
@@ -27,7 +28,7 @@ async def add_todos(params: Dict[str, Any], span) -> str:
                 task_args["priority"] = max(1, min(4, todo["priority"]))  # Clamp between 1-4
             if todo.get("labels"):
                 task_args["labels"] = todo["labels"]  # Using label names instead of IDs
-            
+
             # Handle due date options
             if todo.get("dueString"):
                 task_args["due_string"] = todo["dueString"]
@@ -35,7 +36,7 @@ async def add_todos(params: Dict[str, Any], span) -> str:
                     task_args["due_lang"] = todo["dueLang"]
             elif todo.get("dueDate"):
                 task_args["due_date"] = todo["dueDate"]
-            
+
             # Handle duration if specified
             if todo.get("duration") and todo.get("durationUnit"):
                 task_args["duration"] = todo["duration"]
@@ -47,7 +48,7 @@ async def add_todos(params: Dict[str, Any], span) -> str:
         result = "Successfully added todos"
         create_event(span, "add_todos_complete", output={"status": "success"})
         return result
-        
+
     except Exception as error:
         error_msg = f"Failed to add todos: {str(error)}"
         create_event(span, "add_todos_error", level="ERROR", output={"error": str(error)})

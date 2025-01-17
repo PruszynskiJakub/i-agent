@@ -3,7 +3,7 @@ from typing import List, Dict, Any, Optional
 from uuid import UUID, uuid4
 
 from db import execute
-from tools.types import Action, ActionStatus
+from tools.types import Action
 from document.types import Document
 
 
@@ -18,7 +18,7 @@ def _row_to_action(row: tuple) -> Action:
         tool_uuid=UUID(row[2]),
         payload=json.loads(row[3]),
         result=row[4],
-        status=ActionStatus(row[5]),
+        status=row[5],
         conversation_uuid=row[6],
         documents=documents,
         step_description=row[8]
@@ -51,7 +51,7 @@ def create_action(
     tool_uuid: UUID,
     payload: Dict[str, Any],
     result: str,
-    status: ActionStatus,
+    status: str,
     documents: Optional[List[Document]] = None,
     step_description: str = ""
 ) -> Action:
@@ -98,7 +98,7 @@ def create_action(
         str(action.tool_uuid),
         json.dumps(action.payload),
         action.result,
-        action.status.value,
+        action.status,
         conversation_uuid,
         json.dumps(documents_json),
         action.step_description

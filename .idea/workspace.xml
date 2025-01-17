@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix param name">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Some small manual improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/document/types.py" beforeDir="false" afterPath="$PROJECT_DIR$/document/types.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,14 +165,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00022" summary="simplify">
-      <option name="closed" value="true" />
-      <created>1735651159555</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1735651159555</updated>
     </task>
     <task id="LOCAL-00023" summary="simplify">
       <option name="closed" value="true" />
@@ -561,7 +550,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737096186418</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Some small manual improvements">
+      <option name="closed" value="true" />
+      <created>1737102291979</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1737102291979</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -576,7 +573,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix uuid" />
     <MESSAGE value="Add extra icons" />
     <MESSAGE value="Remove instructions part from planning" />
     <MESSAGE value="Use system prompt as input for generatin at answe" />
@@ -601,6 +597,7 @@
     <MESSAGE value="Some refactoring" />
     <MESSAGE value="Add missing uuid" />
     <MESSAGE value="Fix param name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix param name" />
+    <MESSAGE value="Some small manual improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some small manual improvements" />
   </component>
 </project>
