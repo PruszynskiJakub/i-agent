@@ -11,9 +11,10 @@ async def execute_todoist(action: str, params: dict[str, any], span) -> ActionRe
             documents=[doc]
         )
     elif action == "add_todos":
-        result = await add_todos(params, span)
+        doc = await add_todos(params, span)
         return ActionResult(
-            result=result
+            result=doc.text,
+            documents=[doc]
         )
 
     return ActionResult(
