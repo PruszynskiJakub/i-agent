@@ -177,8 +177,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
             category_result = await pick_category(transaction_query)
 
 
-        api_result = call_api(sides_result, amount_result, category_result, transaction_query)
-        return api_result
+        return call_api(sides_result, amount_result, category_result, transaction_query)
 
     split_results = await split_transaction(query)
 
@@ -256,13 +255,13 @@ def format_transaction_results(transaction_results: list) -> str:
     successful_transactions = [t for t in transaction_results if t["status"] == "success"]
     if successful_transactions:
         for t in successful_transactions:
-            details = t["details"]
+            details = t.get("details", {}).get("details", {})  # Handle nested details structure
             summary.extend([
-                f"Transaction ID: {details['transaction_id']}",
-                f"Description: {details['query']}",
-                f"Category: {details['category'] or 'Not categorized'}",
-                f"Account: {details['account']}",
-                f"Payee: {details['payee']}",
+                f"Transaction ID: {details.get('transaction_id', 'Unknown')}",
+                f"Description: {details.get('query', 'No description')}",
+                f"Category: {details.get('category', 'Not categorized')}",
+                f"Account: {details.get('account', 'Unknown account')}",
+                f"Payee: {details.get('payee', 'Unknown payee')}",
                 ""
             ])
     else:
