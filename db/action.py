@@ -110,10 +110,13 @@ def create_action(
         action.step_description
     ))
 
-    # Insert document relations
+    # Save documents and insert relations
     if action.documents:
+        from db.document import save_document
         doc_query = "INSERT INTO action_documents (action_uuid, document_uuid) VALUES (?, ?)"
         for document in action.documents:
+            # Ensure document is saved first
+            save_document(document)
             doc_uuid = str(document.uuid)
             execute(doc_query, (str(action.uuid), doc_uuid))
 
