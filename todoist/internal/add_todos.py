@@ -1,11 +1,13 @@
 from typing import Dict, Any
 from tools.types import ActionResult, ActionStatus
 from todoist import todoist_client
+from llm.tracing import create_event
 
 async def add_todos(params: Dict[str, Any], span) -> str:
     """Add todo items with optional metadata"""
     try:
         todos = params.get("todos", [])
+        create_event(span, "add_todos_start", input={"todo_count": len(todos)})
         if not todos:
             return "No todos provided"
 
@@ -40,8 +42,13 @@ async def add_todos(params: Dict[str, Any], span) -> str:
                 task_args["duration_unit"] = todo["durationUnit"]
 
             task = todoist_client.add_task(**task_args)
+            create_event(span, "todo_added", input=task_args, output={"task_id": task.id})
 
-        return "Successfully added todos"
+        result = "Successfully added todos"
+        create_event(span, "add_todos_complete", output={"status": "success"})
+        return result
         
     except Exception as error:
-        return f"Failed to add todos: {str(error)}"
+        error_msg = f"Failed to add todos: {str(error)}"
+        create_event(span, "add_todos_error", level="ERROR", output={"error": str(error)})
+        return error_msg
