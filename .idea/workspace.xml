@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove status from ActionResult">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/service.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="passign result as document">
+      <change beforePath="$PROJECT_DIR$/llm/format.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/format.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,14 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00024" summary="simplify">
-      <option name="closed" value="true" />
-      <created>1735651663471</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1735651663471</updated>
     </task>
     <task id="LOCAL-00025" summary="simplify">
       <option name="closed" value="true" />
@@ -559,7 +551,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737106772929</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="passign result as document">
+      <option name="closed" value="true" />
+      <created>1737108552333</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1737108552333</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -574,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Remove instructions part from planning" />
     <MESSAGE value="Use system prompt as input for generatin at answe" />
     <MESSAGE value="Clean up" />
     <MESSAGE value="Fix model" />
@@ -599,6 +598,7 @@
     <MESSAGE value="Fix param name" />
     <MESSAGE value="Some small manual improvements" />
     <MESSAGE value="Remove status from ActionResult" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove status from ActionResult" />
+    <MESSAGE value="passign result as document" />
+    <option name="LAST_COMMIT_MESSAGE" value="passign result as document" />
   </component>
 </project>

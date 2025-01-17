@@ -29,8 +29,8 @@ def format_actions(actions: List[Action]) -> str:
         if action.documents:
             desc += "    <documents>\n"
             for doc in action.documents:
-                desc += f"      <document source='{doc['metadata'].get('source', '')}'>\n"
-                desc += f"        <description>{doc['metadata'].get('description', '')}</description>\n"
+                desc += f"      <document source='{doc.metadata.get('source', '')}'>\n"
+                desc += f"        <description>{doc.metadata.get('description', '')}</description>\n"
                 desc += "      </document>\n"
             desc += "    </documents>\n"
         desc += "  </result>\n"

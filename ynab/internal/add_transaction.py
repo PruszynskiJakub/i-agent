@@ -229,10 +229,6 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
             content_type="full",
         )
     )
-    
-    # Save the document before returning
-    from db.document import save_document
-    save_document(doc)
     return doc
 
 def format_transaction_results(transaction_results: list) -> str:
