@@ -13,12 +13,12 @@ projects = """
     <project>
         <name>iAgent</name>
         <id>2345453677</id>
-        <description>AI agent development and implementation tasks</description>
+        <description>A project focused on creating a personal AI assistant in Python with Slack as frontend client</description>
     </project>
     <project>
         <name>AI-augemented developer</name>
         <id>2345454404</id>
-        <description>Tasks related to AI-assisted software development and automation</description>
+        <description>Educational course creation for developers focusing on AI tools application and building AI-oriented mindset</description>
     </project>
     <project>
         <name>Urgent &amp; Important</name>
