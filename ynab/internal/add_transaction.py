@@ -95,7 +95,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
 
         def call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any],
                      category_result: Dict[str, Any] | None,
-                     query: str) -> str:
+                     query: str) -> dict:
             if not sides_result or not amount_result:
                 raise ValueError("Missing required parameters: sides_result and amount_result are required")
 
@@ -224,10 +224,11 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
         conversation_uuid=params.get("conversation_uuid", ""),
         text=format_transaction_results(transaction_results),
         metadata=DocumentMetadata(
-            type=DocumentType.TEXT,
-            source="YNAB",
-            description="YNAB Transaction Processing Results",
-            name="transaction_results"
+            type=DocumentType.DOCUMENT,
+            source="ynab",
+            description="",
+            name="transaction_results",
+            content_type="full",
         )
     )
 
@@ -285,3 +286,6 @@ def format_transaction_results(transaction_results: list) -> str:
         summary.append("No failed transactions\n")
 
     return "\n".join(summary)
+
+def format_document_description(transaction_results) -> str:
+    pass
