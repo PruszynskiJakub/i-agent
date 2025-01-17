@@ -112,7 +112,9 @@ def format_documents(documents: List[Document]) -> str:
                 desc += f"  <desc>{document.metadata['description']}</desc>\n"
             if 'mime_type' in document.metadata:
                 desc += f"  <mime_type>{document.metadata['mime_type']}</mime_type>\n"
-
+        
+        # Add document text
+        desc += f"  <text>{document.text}</text>\n"
         desc += "</document>"
         doc_descriptions.append(desc)
 
