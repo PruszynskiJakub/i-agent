@@ -9,8 +9,17 @@ from document.types import Document
 
 def _row_to_action(row: tuple) -> Action:
     """Convert a database row to an Action object"""
-    documents_json = json.loads(row[7])
-    documents = [Document(**doc) for doc in documents_json] if documents_json else []
+    from db.document import find_document_by_uuid
+    
+    # Get associated document UUIDs
+    query = "SELECT document_uuid FROM action_documents WHERE action_uuid = ?"
+    document_rows = execute(query, (str(row[0]),))
+    
+    # Load each document
+    documents = []
+    for doc_row in document_rows:
+        if doc := find_document_by_uuid(UUID(doc_row[0])):
+            documents.append(doc)
     
     return Action(
         uuid=UUID(row[0]),
@@ -21,7 +30,7 @@ def _row_to_action(row: tuple) -> Action:
         status=row[5],
         conversation_uuid=row[6],
         documents=documents,
-        step_description=row[8]
+        step_description=row[7]
     )
 
 
@@ -82,15 +91,12 @@ def create_action(
         step_description=step_description
     )
 
-    # Convert documents to JSON-serializable format
-    documents_json = [doc.__dict__ for doc in action.documents]
-
     query = """
         INSERT INTO actions (
             uuid, name, tool_uuid, payload, result, status, 
-            conversation_uuid, documents, step_description, created_at
+            conversation_uuid, step_description, created_at
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
     """
     execute(query, (
         str(action.uuid),
@@ -100,16 +106,21 @@ def create_action(
         action.result,
         action.status,
         conversation_uuid,
-        json.dumps(documents_json),
         action.step_description
     ))
+
+    # Insert document relations
+    if action.documents:
+        doc_query = "INSERT INTO action_documents (action_uuid, document_uuid) VALUES (?, ?)"
+        for document in action.documents:
+            execute(doc_query, (str(action.uuid), str(document.uuid)))
 
     return action
 
 
 def ensure_action_table() -> None:
-    """Ensure the actions table exists in the database"""
-    query = """
+    """Ensure the actions and action_documents tables exist in the database"""
+    action_query = """
         CREATE TABLE IF NOT EXISTS actions (
             uuid TEXT PRIMARY KEY,
             name TEXT NOT NULL,
@@ -118,12 +129,23 @@ def ensure_action_table() -> None:
             result TEXT NOT NULL,
             status TEXT NOT NULL,
             conversation_uuid TEXT NOT NULL,
-            documents TEXT NOT NULL,
             step_description TEXT NOT NULL DEFAULT '',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """
-    execute(query)
+    execute(action_query)
+
+    relation_query = """
+        CREATE TABLE IF NOT EXISTS action_documents (
+            action_uuid TEXT NOT NULL,
+            document_uuid TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (action_uuid, document_uuid),
+            FOREIGN KEY (action_uuid) REFERENCES actions(uuid),
+            FOREIGN KEY (document_uuid) REFERENCES documents(uuid)
+        )
+    """
+    execute(relation_query)
 
 
 ensure_action_table()
