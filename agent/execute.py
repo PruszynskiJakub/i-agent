@@ -19,7 +19,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             "tool": state.step_info.tool,
             "action": state.step_info.tool_action
         },
-        metadata={"conversation_id": state.conversation_uuid}
+        metadata={"conversation_uuid": state.conversation_uuid}
     )
 
     try:
@@ -27,7 +27,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         tool_handler = tool_handlers.get(tool)
         params = {
             **state.step_info.tool_action_params,
-            "conversation_id": state.conversation_uuid
+            "conversation_uuid": state.conversation_uuid
         }
         action_result = await tool_handler(state.step_info.tool_action, params, execution_span)
 
