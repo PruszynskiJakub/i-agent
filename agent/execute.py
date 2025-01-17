@@ -25,8 +25,11 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
     try:
         tool = state.step_info.tool
         tool_handler = tool_handlers.get(tool)
-        params = state.step_info.tool_action_params
-        action_result = await tool_handler(state.step_info.tool_action, state.step_info.tool_action_params, execution_span)
+        params = {
+            **state.step_info.tool_action_params,
+            "conversation_id": state.conversation_uuid
+        }
+        action_result = await tool_handler(state.step_info.tool_action, params, execution_span)
 
         print(f"Action result: {action_result}")
 
