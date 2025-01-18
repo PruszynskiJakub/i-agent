@@ -174,7 +174,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
         sides_result, amount_result = await asyncio.gather(sides_task, amount_task)
 
         category_result = None
-        if sides_result['account']['type'] == 'checking' and (
+        if sides_result['account']['type'] in ['checking','creditCard'] and (
                 'payee' not in sides_result or sides_result['payee']['type'] != 'checking'):
             category_result = await pick_category(transaction_query)
 

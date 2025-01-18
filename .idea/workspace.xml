@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix naming">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix imports">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/todoist/service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/internal/add_transaction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,14 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Implement naively ynab adding transactions">
-      <option name="closed" value="true" />
-      <created>1735665875162</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1735665875162</updated>
     </task>
     <task id="LOCAL-00028" summary="Making ynab api call">
       <option name="closed" value="true" />
@@ -559,7 +551,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737109259237</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Fix imports">
+      <option name="closed" value="true" />
+      <created>1737119148379</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1737119148379</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -574,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix model" />
     <MESSAGE value="Pass proper data to agent_define prompt" />
     <MESSAGE value="Pass understanding to answer.pyr" />
     <MESSAGE value="Increase max steps to 3" />
@@ -599,6 +598,7 @@
     <MESSAGE value="passign result as document" />
     <MESSAGE value="minor fixes" />
     <MESSAGE value="Fix naming" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix naming" />
+    <MESSAGE value="Fix imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix imports" />
   </component>
 </project>
