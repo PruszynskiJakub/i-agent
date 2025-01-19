@@ -50,7 +50,9 @@ async def list_todos(params: dict, span) -> Document:
             
             formatted_tasks.append("\n".join(task_details) + "\n")
 
-        content = "\n".join(formatted_tasks) if formatted_tasks else "No tasks found"
+        task_count = len(formatted_tasks)
+        summary = f"Successfully fetched {task_count} {'todo' if task_count == 1 else 'todos'}"
+        content = f"{summary}\n\n" + ("\n".join(formatted_tasks) if formatted_tasks else "No tasks found")
         
         description = "List of Todoist tasks"
         if project_id:
@@ -70,14 +72,7 @@ async def list_todos(params: dict, span) -> Document:
                 "type": "document",
                 "source": "todoist",
                 "name": "todo_list",
-                "description": description,
-                "task_count": len(formatted_tasks),
-                "filters": {
-                    "project_id": project_id,
-                    "label": label,
-                    "section_id": section_id,
-                    "ids": task_ids
-                }
+                "description": description
             }
         )
 
