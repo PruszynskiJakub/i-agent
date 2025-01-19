@@ -59,7 +59,7 @@ def find_messages_by_conversation(conversation_uuid: str) -> List[Message]:
 
 def create_message(conversation_uuid: str, content: str, role: str) -> Message:
     """
-    Create and save a new message
+    Create a new message without saving
     
     Args:
         conversation_uuid: UUID of the conversation
@@ -69,16 +69,13 @@ def create_message(conversation_uuid: str, content: str, role: str) -> Message:
     Returns:
         Created Message object
     """
-    message = Message(
+    return Message(
         uuid=str(uuid.uuid4()),
         conversation_uuid=conversation_uuid,
         content=content,
         role=role,
         created_at=datetime.utcnow()
     )
-
-    save_message(message)
-    return message
 
 
 def ensure_message_table() -> None:

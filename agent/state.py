@@ -70,6 +70,7 @@ def increment_current_step(state: AgentState) -> AgentState:
 
 def add_message(state: AgentState, content, role) -> AgentState:
     message = create_message(state.conversation_uuid, content, role)
+    save_message(message)
     return state.copy(messages=[*state.messages, message])
 
 
