@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from typing import List, Dict, Any
 
-from db.message import find_messages_by_conversation, create_message, save_message
+from db.message import find_messages_by_conversation, save_message
+from message.utils import create_message
 from db.action import find_actions_by_conversation
 from db.document import find_documents_by_conversation
 from document.types import Document
