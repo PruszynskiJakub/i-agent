@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from agent.types import Message
+from message.types import Message
 
 
 def create_message(conversation_uuid: str, content: str, role: str) -> Message:
