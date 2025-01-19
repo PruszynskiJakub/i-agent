@@ -116,28 +116,6 @@ def find_documents_by_conversation(conversation_uuid: str) -> List[Document]:
     return documents
 
 
-def create_document(conversation_uuid: str, text: str, metadata: Dict[str, Any]) -> Document:
-    """
-    Create and save a new document
-    
-    Args:
-        conversation_uuid: UUID of the conversation
-        text: Document text content
-        metadata: Document metadata
-            
-    Returns:
-        Created document dictionary
-    """
-    document = Document(
-        uuid=UUID(),
-        conversation_uuid=conversation_uuid,
-        text=text,
-        metadata=metadata
-    )
-    
-    save_document(document.__dict__)
-    return document
-
 def ensure_document_table() -> None:
     """Ensure the documents table exists in the database"""
     query = """
