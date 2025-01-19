@@ -116,16 +116,3 @@ def find_documents_by_conversation(conversation_uuid: str) -> List[Document]:
     return documents
 
 
-def ensure_document_table() -> None:
-    """Ensure the documents table exists in the database"""
-    query = """
-        CREATE TABLE IF NOT EXISTS documents (
-            uuid TEXT PRIMARY KEY,
-            conversation_uuid TEXT NOT NULL,
-            text TEXT NOT NULL,
-            metadata TEXT NOT NULL
-        )
-    """
-    execute(query)
-
-ensure_document_table()
