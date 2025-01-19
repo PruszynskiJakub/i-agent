@@ -1,9 +1,7 @@
 from typing import List, Optional, Dict, Any
 from document.types import Document
 from uuid import UUID
-import json
-
-from db import connection, execute
+from db.models import DocumentModel
 
 
 def save_document(document: Document | Dict[str, Any]) -> None:
@@ -21,30 +19,23 @@ def save_document(document: Document | Dict[str, Any]) -> None:
             metadata['type'] = metadata['type'].value if hasattr(metadata['type'], 'value') else str(metadata['type'])
             
         doc_dict = {
-            'uuid': document.uuid,
+            'uuid': str(document.uuid),
             'conversation_uuid': document.conversation_uuid,
             'text': document.text,
             'metadata': metadata
         }
     else:
         # Handle dictionary input
-        doc_dict = document.copy()  # Make a copy to avoid modifying the original
+        doc_dict = document.copy()
         if doc_dict.get('metadata', {}).get('type'):
             doc_dict['metadata']['type'] = (
                 doc_dict['metadata']['type'].value 
                 if hasattr(doc_dict['metadata']['type'], 'value') 
                 else str(doc_dict['metadata']['type'])
             )
-    query = """
-        INSERT INTO documents (uuid, conversation_uuid, text, metadata)
-        VALUES (?, ?, ?, ?)
-    """
-    execute(query, (
-        str(doc_dict['uuid']),
-        doc_dict['conversation_uuid'],
-        doc_dict['text'],
-        json.dumps(doc_dict['metadata'])
-    ))
+        doc_dict['uuid'] = str(doc_dict['uuid'])
+
+    DocumentModel.create(**doc_dict)
 
 
 def find_document_by_uuid(document_uuid: UUID) -> Optional[Document]:
@@ -57,28 +48,21 @@ def find_document_by_uuid(document_uuid: UUID) -> Optional[Document]:
     Returns:
         Document dictionary if found, None otherwise
     """
-    query = """
-        SELECT uuid, conversation_uuid, text, metadata
-        FROM documents WHERE uuid = ?
-    """
-    rows = execute(query, (str(document_uuid),))
-    row = rows[0]
-    
-    if not row:
+    try:
+        doc = DocumentModel.get(DocumentModel.uuid == str(document_uuid))
+        metadata = doc.metadata
+        
+        if parent_uuid := metadata.get('parent_document_uuid'):
+            metadata['parent_document_uuid'] = UUID(parent_uuid)
+            
+        return Document(
+            uuid=UUID(doc.uuid),
+            conversation_uuid=doc.conversation_uuid,
+            text=doc.text,
+            metadata=metadata
+        )
+    except DocumentModel.DoesNotExist:
         return None
-
-    metadata = json.loads(row[3])
-    
-    # Convert parent_document_uuid back to UUID if it exists
-    if parent_uuid := metadata.get('parent_document_uuid'):
-        metadata['parent_document_uuid'] = UUID(parent_uuid)
-
-    return Document(
-        uuid=UUID(row[0]),
-        conversation_uuid=row[1],
-        text=row[2],
-        metadata=metadata
-    )
 
 
 def find_documents_by_conversation(conversation_uuid: str) -> List[Document]:
@@ -91,25 +75,18 @@ def find_documents_by_conversation(conversation_uuid: str) -> List[Document]:
     Returns:
         List of document dictionaries
     """
-    query = """
-        SELECT uuid, conversation_uuid, text, metadata
-        FROM documents WHERE conversation_uuid = ?
-    """
-    rows = execute(query, (conversation_uuid,))
+    query = DocumentModel.select().where(DocumentModel.conversation_uuid == conversation_uuid)
     
     documents = []
-    for row in rows:
-        if row[0] is None:
-            continue
-            
-        metadata = json.loads(row[3])
+    for doc in query:
+        metadata = doc.metadata
         if parent_uuid := metadata.get('parent_document_uuid'):
             metadata['parent_document_uuid'] = UUID(parent_uuid)
             
         documents.append(Document(
-            uuid=UUID(row[0]),
-            conversation_uuid=row[1],
-            text=row[2],
+            uuid=UUID(doc.uuid),
+            conversation_uuid=doc.conversation_uuid,
+            text=doc.text,
             metadata=metadata
         ))
     
