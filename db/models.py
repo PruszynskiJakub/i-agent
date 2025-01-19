@@ -2,8 +2,7 @@ from datetime import datetime
 import json
 from peewee import *
 from uuid import UUID
-
-db = SqliteDatabase('chat_history.db')
+from . import db
 
 class JSONField(TextField):
     def python_value(self, value):

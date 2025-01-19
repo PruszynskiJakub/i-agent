@@ -1,6 +1,9 @@
 import sqlite3
 from contextlib import contextmanager
 from typing import Optional, List, Tuple
+from peewee import SqliteDatabase
+
+db = SqliteDatabase('chat_history.db')
 
 
 @contextmanager
