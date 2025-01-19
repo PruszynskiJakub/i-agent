@@ -22,10 +22,7 @@ def format_actions(actions: List[Action]) -> str:
         for param_name, param_value in action.payload.items():
             desc += f"    <param name='{param_name}'>{param_value}</param>\n"
         desc += "  </parameters>\n"
-
-        # Add result information
-        desc += "  <result>\n"
-        desc += f"    {action.result}"
+        desc += f"    <status>{action.status}</status>\n"
         if action.documents:
             desc += "    <documents>\n"
             for doc in action.documents:
@@ -34,7 +31,6 @@ def format_actions(actions: List[Action]) -> str:
                 desc += f"        <text>{doc.text}</text>\n"
                 desc += "      </document>\n"
             desc += "    </documents>\n"
-        desc += "  </result>\n"
         desc += "</action>"
         action_descriptions.append(desc)
     return "\n".join(action_descriptions)
