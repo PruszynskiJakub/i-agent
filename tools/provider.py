@@ -57,6 +57,23 @@ def get_tools():
                 }
             }
             Use: Adds one or more todos. Only title is required, other fields are optional
+
+            3. LIST TODOS
+            {
+                "action": "list_todos",
+                "params": {
+                    "project_id": "optional_project_id",
+                    "label": "optional_label_name",
+                    "section_id": "optional_section_id",
+                    "ids": ["optional_task_id1", "optional_task_id2"]
+                }
+            }
+            Use: Lists tasks filtered by any combination of:
+            - project_id: Show tasks from a specific project
+            - label: Show tasks with a specific label
+            - section_id: Show tasks from a specific section
+            - ids: Show specific tasks by their IDs
+            Returns formatted list with task details including priority, due dates, and labels
             """
         }
     ]
