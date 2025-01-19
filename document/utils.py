@@ -1,8 +1,41 @@
 import re
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from uuid import UUID
 
 from document.types import Document, DocumentMetadata
+
+
+def create_error_document(
+    error: Exception,
+    error_context: str,
+    conversation_uuid: str,
+    source_uuid: Optional[str] = None
+) -> Document:
+    """Creates a Document object from an error and its context
+
+    Args:
+        error: The exception that occurred
+        error_context: Description of what was being attempted when the error occurred
+        conversation_uuid: UUID of the conversation this error is associated with
+        source_uuid: Optional UUID of the source document/operation that caused the error
+
+    Returns:
+        Document object containing error details
+    """
+    error_message = str(error)
+    error_text = f"Error: {error_message}\nContext: {error_context}"
+
+    return create_document(
+        content=error_text,
+        metadata={
+            "conversation_uuid": conversation_uuid,
+            "source_uuid": source_uuid or conversation_uuid,
+            "mime_type": "text/plain",
+            "name": "error_report", 
+            "source": "system",
+            "description": f"Failed to process operation: {error_message}"
+        }
+    )
 
 
 def create_document(content: str, metadata: Dict[str, Any] = None) -> Document:
