@@ -31,23 +31,18 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         }
         documents = await tool_handler(state.step_info.tool_action, params, execution_span)
         
-        # Use the first document's text as the result
-        result = documents[0].text if documents else "No result"
-        print(f"Action result: {result}")
-
         action_dict = {
             'name': state.step_info.tool_action,
             'tool_uuid': UUID(state.step_info.tool_uuid),
             'payload': state.step_info.tool_action_params,
-            'result': result,
-            'status': '',
+            'status': 'SUCCESS',
             'documents': documents,
             'step_description': state.step_info.overview
         }
 
         end_span(
             execution_span,
-            output={"result": result, "documents": documents},
+            output={"documents": documents},
             level="DEFAULT",
             status_message="Tool execution successful"
         )
@@ -62,4 +57,14 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             level="ERROR",
             status_message=error_msg
         )
-        raise Exception(error_msg)
+        
+        action_dict = {
+            'name': state.step_info.tool_action,
+            'tool_uuid': UUID(state.step_info.tool_uuid),
+            'payload': state.step_info.tool_action_params,
+            'status': 'ERROR',
+            'documents': [],
+            'step_description': state.step_info.overview
+        }
+        
+        return add_taken_action(state, action_dict)
