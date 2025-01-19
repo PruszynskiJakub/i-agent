@@ -44,7 +44,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
         end_span(
             execution_span,
-            output={"documents": documents, "action": action_dict},
+            output=updated_state.taken_actions[-1],
             level="DEFAULT",
             status_message="Tool execution successful"
         )
@@ -67,7 +67,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         
         end_span(
             execution_span,
-            output={"error": str(e), "action": action_dict},
+            output=updated_state.taken_actions[-1],
             level="ERROR",
             status_message=error_msg
         )
