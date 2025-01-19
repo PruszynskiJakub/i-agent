@@ -47,7 +47,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
         end_span(
             execution_span,
-            output=action_result,
+            output={"result": result, "documents": documents},
             level="DEFAULT",
             status_message="Tool execution successful"
         )
