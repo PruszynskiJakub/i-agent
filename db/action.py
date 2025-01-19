@@ -2,37 +2,11 @@ import json
 from typing import List, Dict, Any, Optional
 from uuid import UUID, uuid4
 
-from db import execute
+from db.models import ActionModel, DocumentModel
+from db.action_document import ActionDocumentModel
 from tools.types import Action
 from document.types import Document
-
-
-def _row_to_action(row: tuple) -> Action:
-    """Convert a database row to an Action object"""
-    from db.document import find_document_by_uuid
-    
-    # Get associated document UUIDs
-    query = "SELECT document_uuid FROM action_documents WHERE action_uuid = ?"
-    document_rows = execute(query, (row[0],))  # row[0] is already a string
-    
-    # Load each document
-    documents = []
-    if document_rows:  # Check if we got any results
-        for doc_row in document_rows:
-            if doc := find_document_by_uuid(UUID(doc_row[0])):
-                documents.append(doc)
-    
-    return Action(
-        uuid=UUID(row[0]),
-        name=row[1],
-        tool_uuid=UUID(row[2]),
-        payload=json.loads(row[3]),
-        result=row[4],
-        status=row[5],
-        conversation_uuid=row[6],
-        documents=documents,
-        step_description=row[7]
-    )
+from db.document import find_document_by_uuid
 
 
 def find_actions_by_conversation(conversation_uuid: str) -> List[Action]:
@@ -45,14 +19,31 @@ def find_actions_by_conversation(conversation_uuid: str) -> List[Action]:
     Returns:
         List of Action objects
     """
-    query = """
-        SELECT uuid, name, tool_uuid, payload, result, status, conversation_uuid, step_description
-        FROM actions 
-        WHERE conversation_uuid = ?
-        ORDER BY created_at
-    """
-    rows = execute(query, (str(conversation_uuid),))
-    return [_row_to_action(row) for row in rows]
+    query = ActionModel.select().where(
+        ActionModel.conversation_uuid == conversation_uuid
+    ).order_by(ActionModel.created_at)
+    
+    actions = []
+    for action_model in query:
+        # Get associated documents
+        documents = []
+        for action_doc in action_model.action_documents:
+            if doc := find_document_by_uuid(UUID(action_doc.document.uuid)):
+                documents.append(doc)
+                
+        actions.append(Action(
+            uuid=UUID(action_model.uuid),
+            name=action_model.name,
+            tool_uuid=UUID(action_model.tool_uuid),
+            payload=action_model.payload,
+            result=action_model.result,
+            status=action_model.status,
+            conversation_uuid=action_model.conversation_uuid,
+            documents=documents,
+            step_description=action_model.step_description
+        ))
+    
+    return actions
 
 
 def create_action(
@@ -80,8 +71,23 @@ def create_action(
     Returns:
         Created Action object
     """
+    action_uuid = uuid4()
+    
+    # Create action record
+    action_model = ActionModel.create(
+        uuid=str(action_uuid),
+        name=name,
+        tool_uuid=str(tool_uuid),
+        payload=payload,
+        result=result,
+        status=status,
+        conversation_uuid=conversation_uuid,
+        step_description=step_description
+    )
+
+    # Create action object
     action = Action(
-        uuid=uuid4(),
+        uuid=action_uuid,
         name=name,
         tool_uuid=tool_uuid,
         conversation_uuid=conversation_uuid,
@@ -92,65 +98,16 @@ def create_action(
         step_description=step_description
     )
 
-    query = """
-        INSERT INTO actions (
-            uuid, name, tool_uuid, payload, result, status, 
-            conversation_uuid, step_description, created_at
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-    """
-    execute(query, (
-        str(action.uuid),
-        action.name,
-        str(action.tool_uuid),
-        json.dumps(action.payload),
-        action.result,
-        action.status,
-        conversation_uuid,
-        action.step_description
-    ))
-
-    # Save documents and insert relations
+    # Save documents and create relations
     if action.documents:
         from db.document import save_document
-        doc_query = "INSERT INTO action_documents (action_uuid, document_uuid) VALUES (?, ?)"
         for document in action.documents:
-            # Ensure document is saved first
             save_document(document)
-            doc_uuid = str(document.uuid)
-            execute(doc_query, (str(action.uuid), doc_uuid))
+            ActionDocumentModel.create(
+                action=action_model,
+                document=document.uuid
+            )
 
     return action
 
 
-def ensure_action_table() -> None:
-    """Ensure the actions and action_documents tables exist in the database"""
-    action_query = """
-        CREATE TABLE IF NOT EXISTS actions (
-            uuid TEXT PRIMARY KEY,
-            name TEXT NOT NULL,
-            tool_uuid TEXT NOT NULL,
-            payload TEXT NOT NULL,
-            result TEXT NOT NULL,
-            status TEXT NOT NULL,
-            conversation_uuid TEXT NOT NULL,
-            step_description TEXT NOT NULL DEFAULT '',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """
-    execute(action_query)
-
-    relation_query = """
-        CREATE TABLE IF NOT EXISTS action_documents (
-            action_uuid TEXT NOT NULL,
-            document_uuid TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (action_uuid, document_uuid),
-            FOREIGN KEY (action_uuid) REFERENCES actions(uuid),
-            FOREIGN KEY (document_uuid) REFERENCES documents(uuid)
-        )
-    """
-    execute(relation_query)
-
-
-ensure_action_table()
