@@ -35,7 +35,6 @@ def find_actions_by_conversation(conversation_uuid: str) -> List[Action]:
             name=action_model.name,
             tool_uuid=UUID(action_model.tool_uuid),
             payload=action_model.payload,
-            result=action_model.result,
             status=action_model.status,
             conversation_uuid=action_model.conversation_uuid,
             documents=documents,
@@ -50,7 +49,6 @@ def create_action(
     name: str,
     tool_uuid: UUID,
     payload: Dict[str, Any],
-    result: str,
     status: str,
     documents: Optional[List[Document]] = None,
     step_description: str = ""
@@ -78,7 +76,6 @@ def create_action(
         name=name,
         tool_uuid=str(tool_uuid),
         payload=payload,
-        result=result,
         status=status,
         conversation_uuid=conversation_uuid,
         step_description=step_description
@@ -91,7 +88,6 @@ def create_action(
         tool_uuid=tool_uuid,
         conversation_uuid=conversation_uuid,
         payload=payload,
-        result=result,
         status=status,
         documents=documents or [],
         step_description=step_description

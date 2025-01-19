@@ -43,7 +43,6 @@ class ActionModel(BaseModel):
     name = CharField()
     tool_uuid = CharField()
     payload = JSONField()
-    result = TextField()
     status = CharField()
     conversation_uuid = CharField()
     step_description = CharField(default='')
