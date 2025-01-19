@@ -8,7 +8,7 @@ from db.document import find_documents_by_conversation
 from document.types import Document
 from tools.types import Action
 
-from agent.types import Message
+from message.types import Message
 
 
 @dataclass(frozen=True)
