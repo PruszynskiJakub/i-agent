@@ -61,9 +61,3 @@ class ActionDocumentModel(BaseModel):
         table_name = 'action_documents'
         primary_key = CompositeKey('action', 'document')
 
-def initialize_db():
-    db.connect()
-    db.create_tables([MessageModel, DocumentModel, ActionModel, ActionDocumentModel])
-    db.close()
-
-initialize_db()
