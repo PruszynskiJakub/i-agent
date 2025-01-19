@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add peewee docs">
-      <change afterPath="$PROJECT_DIR$/_AI_DOCS/peewee.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/action/utils.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
