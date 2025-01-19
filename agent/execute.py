@@ -40,23 +40,19 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'step_description': state.step_info.overview
         }
 
+        updated_state = add_taken_action(state, action_dict)
+
         end_span(
             execution_span,
-            output={"documents": documents},
+            output={"documents": documents, "action": action_dict},
             level="DEFAULT",
             status_message="Tool execution successful"
         )
 
-        return add_taken_action(state, action_dict)
+        return updated_state
 
     except Exception as e:
         error_msg = f"Error executing tool '{state.step_info.tool}': {str(e)}"
-        end_span(
-            execution_span,
-            output={"error": str(e)},
-            level="ERROR",
-            status_message=error_msg
-        )
         
         action_dict = {
             'name': state.step_info.tool_action,
@@ -67,4 +63,13 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'step_description': state.step_info.overview
         }
         
-        return add_taken_action(state, action_dict)
+        updated_state = add_taken_action(state, action_dict)
+        
+        end_span(
+            execution_span,
+            output={"error": str(e), "action": action_dict},
+            level="ERROR",
+            status_message=error_msg
+        )
+        
+        return updated_state
