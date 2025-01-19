@@ -93,7 +93,6 @@ def add_taken_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentSta
         name=action_dict['name'],
         tool_uuid=action_dict['tool_uuid'],
         payload=action_dict['payload'],
-        result=action_dict['result'],
         status=action_dict['status'],
         documents=action_dict.get('documents', []),
         step_description=action_dict.get('step_description', '')
