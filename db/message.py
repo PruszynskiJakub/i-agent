@@ -1,8 +1,8 @@
 import uuid
 from datetime import datetime
-from typing import List, Tuple
+from typing import List
 
-from db import execute
+from db.models import MessageModel
 from agent.types import Message
 
 
@@ -13,27 +13,12 @@ def save_message(message: Message) -> None:
     Args:
         message: Message object to save
     """
-    query = '''
-        INSERT INTO messages (uuid, conversation_uuid, content, role, created_at)
-        VALUES (?, ?, ?, ?, ?)
-    '''
-    execute(query, (
-        message.uuid,
-        message.conversation_uuid,
-        message.content,
-        message.role,
-        message.created_at.isoformat()
-    ))
-
-
-def _row_to_message(row: Tuple) -> Message:
-    """Convert a database row to a Message object"""
-    return Message(
-        uuid=row[0],
-        conversation_uuid=row[1],
-        content=row[2],
-        role=row[3],
-        created_at=datetime.fromisoformat(row[4])
+    MessageModel.create(
+        uuid=message.uuid,
+        conversation_uuid=message.conversation_uuid,
+        content=message.content,
+        role=message.role,
+        created_at=message.created_at
     )
 
 
@@ -47,14 +32,19 @@ def find_messages_by_conversation(conversation_uuid: str) -> List[Message]:
     Returns:
         List of Message objects
     """
-    query = '''
-        SELECT uuid, conversation_uuid, content, role, created_at 
-        FROM messages 
-        WHERE conversation_uuid = ?
-        ORDER BY created_at
-    '''
-    rows = execute(query, (conversation_uuid,))
-    return [_row_to_message(row) for row in rows]
+    query = MessageModel.select().where(
+        MessageModel.conversation_uuid == conversation_uuid
+    ).order_by(MessageModel.created_at)
+    
+    return [
+        Message(
+            uuid=msg.uuid,
+            conversation_uuid=msg.conversation_uuid,
+            content=msg.content,
+            role=msg.role,
+            created_at=msg.created_at
+        ) for msg in query
+    ]
 
 
 def create_message(conversation_uuid: str, content: str, role: str) -> Message:
@@ -76,20 +66,3 @@ def create_message(conversation_uuid: str, content: str, role: str) -> Message:
         role=role,
         created_at=datetime.utcnow()
     )
-
-
-def ensure_message_table() -> None:
-    """Ensure the messages table exists in the database"""
-    query = '''
-        CREATE TABLE IF NOT EXISTS messages (
-            uuid TEXT PRIMARY KEY,
-            conversation_uuid TEXT NOT NULL,
-            content TEXT NOT NULL,
-            role TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    '''
-    execute(query)
-
-
-ensure_message_table()
