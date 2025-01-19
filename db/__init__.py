@@ -5,6 +5,22 @@ from peewee import SqliteDatabase
 
 db = SqliteDatabase('chat_history.db')
 
+def initialize_peewee_db():
+    """Initialize Peewee database and create all required tables"""
+    from .models import MessageModel, DocumentModel, ActionModel, ActionDocumentModel
+    
+    db.connect()
+    db.create_tables([
+        MessageModel,
+        DocumentModel, 
+        ActionModel,
+        ActionDocumentModel
+    ])
+    db.close()
+
+# Initialize Peewee tables on module import
+initialize_peewee_db()
+
 
 @contextmanager
 def connection():
