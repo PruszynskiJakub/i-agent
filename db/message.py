@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List
 
 from db.models import MessageModel
-from agent.types import Message
+from message.types import Message
 
 
 def save_message(message: Message) -> None:
