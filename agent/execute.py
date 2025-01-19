@@ -29,17 +29,19 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             **state.step_info.tool_action_params,
             "conversation_uuid": state.conversation_uuid
         }
-        action_result = await tool_handler(state.step_info.tool_action, params, execution_span)
-
-        print(f"Action result: {action_result}")
+        documents = await tool_handler(state.step_info.tool_action, params, execution_span)
+        
+        # Use the first document's text as the result
+        result = documents[0].text if documents else "No result"
+        print(f"Action result: {result}")
 
         action_dict = {
             'name': state.step_info.tool_action,
             'tool_uuid': UUID(state.step_info.tool_uuid),
             'payload': state.step_info.tool_action_params,
-            'result': action_result.result,
+            'result': result,
             'status': '',
-            'documents': action_result.documents,
+            'documents': documents,
             'step_description': state.step_info.overview
         }
 
