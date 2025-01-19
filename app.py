@@ -45,8 +45,10 @@ def handle_message(message, say):
 
     except Exception as e:
         flush()
-        # Handle errors gracefully
-        raise e
+        # Log the full error with traceback
+        log_exception("Error handling Slack message", e)
+        
+        # Send simplified message to user
         error_message = f"Sorry, I encountered an error: {str(e)}"
         say(
             text=error_message,
