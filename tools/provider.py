@@ -36,9 +36,9 @@ def get_tools():
             }
             Use: Retrieves all projects from Todoist
 
-            2. ADD TODOS
+            2. ADD TASKS
             {
-                "action": "add_todos",
+                "action": "add_tasks",
                 "params": {
                     "todos": [{
                         "title": "Task title",
