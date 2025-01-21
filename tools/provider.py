@@ -94,6 +94,15 @@ def get_tools():
                 }
             }
             Use: Updates existing tasks. Task ID is required, other fields are optional and will only be updated if provided
+
+            5. COMPLETE TASKS
+            {
+                "action": "complete_tasks", 
+                "params": {
+                    "task_ids": ["task_id1", "task_id2"]
+                }
+            }
+            Use: Marks one or more tasks as complete. Requires task IDs.
             """
         }
     ]
