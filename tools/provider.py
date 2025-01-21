@@ -73,7 +73,7 @@ def get_tools():
             - label: Show tasks with a specific label
             - section_id: Show tasks from a specific section
             - ids: Show specific tasks by their IDs
-            Returns formatted list with task details including priority, due dates, and labels
+            Returns formatted list with task details including ids, title, priority, due dates, labels etc.
 
             4. UPDATE TASKS
             {
