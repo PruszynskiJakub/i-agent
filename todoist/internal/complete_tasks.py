@@ -1,9 +1,8 @@
 from typing import Dict, Any, List
-from uuid import uuid4
 
 from llm.tracing import create_event
 from todoist import todoist_client
-from document.types import Document, DocumentType, DocumentMetadata
+from document.utils import create_document, create_error_document
 
 
 async def complete_tasks(params: Dict[str, Any], span) -> Document:
@@ -13,17 +12,14 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
         create_event(span, "complete_tasks_start", input={"task_count": len(task_ids)})
         
         if not task_ids:
-            return Document(
-                uuid=uuid4(),
-                conversation_uuid=params.get("conversation_uuid", ""),
-                text="No task IDs provided",
-                metadata=DocumentMetadata(
-                    type=DocumentType.DOCUMENT,
-                    source="todoist",
-                    description="No tasks to complete",
-                    name="todoist_tasks",
-                    content_type="error"
-                )
+            return create_document(
+                content="No task IDs provided",
+                metadata={
+                    "conversation_uuid": params.get("conversation_uuid", ""),
+                    "source": "todoist",
+                    "description": "No tasks to complete",
+                    "name": "todoist_tasks"
+                }
             )
 
         successful_tasks = []
@@ -99,32 +95,20 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
         create_event(span, "complete_tasks_complete", 
                     output={"status": "success", "successful": successful, "failed": failed})
         
-        return Document(
-            uuid=uuid4(),
-            conversation_uuid=params.get("conversation_uuid", ""),
-            text=result,
-            metadata=DocumentMetadata(
-                type=DocumentType.DOCUMENT,
-                source="todoist",
-                description=f"Completed {successful} tasks successfully, {failed} failed",
-                name="todoist_tasks",
-                content_type="report"
-            )
+        return create_document(
+            content=result,
+            metadata={
+                "conversation_uuid": params.get("conversation_uuid", ""),
+                "source": "todoist", 
+                "description": f"Completed {successful} tasks successfully, {failed} failed",
+                "name": "todoist_tasks"
+            }
         )
 
     except Exception as error:
-        error_msg = f"Failed to complete tasks: {str(error)}"
         create_event(span, "complete_tasks_error", level="ERROR", output={"error": str(error)})
-        
-        return Document(
-            uuid=uuid4(),
+        return create_error_document(
+            error=error,
+            error_context="Failed to complete tasks",
             conversation_uuid=params.get("conversation_uuid", ""),
-            text=error_msg,
-            metadata=DocumentMetadata(
-                type=DocumentType.DOCUMENT,
-                source="todoist",
-                description="Error completing tasks",
-                name="todoist_tasks",
-                content_type="error"
-            )
         )
