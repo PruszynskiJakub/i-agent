@@ -2,6 +2,7 @@ from typing import Dict, Any, List
 
 from llm.tracing import create_event
 from todoist import todoist_client
+from document.types import Document
 from document.utils import create_document, create_error_document
 
 
