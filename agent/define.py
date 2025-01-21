@@ -1,5 +1,6 @@
 import json
 
+from todoist import get_dynamic_context
 from agent.state import AgentState, update_step_info
 from llm import open_ai
 from llm.format import format_messages, format_tool_instructions
@@ -14,6 +15,11 @@ async def agent_define(state: AgentState, trace) -> AgentState:
     Updates and returns AgentState with complete step_info including parameters.
     """
     try:
+        # Set dynamic context based on tool
+        dynamic_context = ""
+        if state.step_info.tool == "todoist":
+            dynamic_context = get_dynamic_context()
+
         # Get the definition prompt from repository
         prompt = get_prompt(
             name="agent_define",
@@ -24,7 +30,8 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         system_prompt = prompt.compile(
             tool_instructions=format_tool_instructions(get_tool_by_name(state.step_info.tool)),
             understanding=state.understanding,
-            current_step=state.step_info.overview
+            current_step=state.step_info.overview,
+            dynamic_context=dynamic_context
         )
 
         # Create generation trace
