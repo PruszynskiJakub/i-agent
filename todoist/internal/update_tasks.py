@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from llm.tracing import create_event
 from todoist import todoist_client
+from document.types import Document
 from document.utils import create_document
 
 
