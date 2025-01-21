@@ -9,10 +9,10 @@ from document.types import Document, DocumentType, DocumentMetadata
 async def add_tasks(params: Dict[str, Any], span) -> Document:
     """Add task items with optional metadata"""
     try:
-        todos = params.get("todos", [])
-        create_event(span, "add_tasks_start", input={"task_count": len(todos)})
+        tasks = params.get("tasks", [])
+        create_event(span, "add_tasks_start", input={"task_count": len(tasks)})
         
-        if not todos:
+        if not tasks:
             return Document(
                 uuid=uuid4(),
                 conversation_uuid=params.get("conversation_uuid", ""),
@@ -29,35 +29,35 @@ async def add_tasks(params: Dict[str, Any], span) -> Document:
         successful_tasks = []
         failed_tasks = []
 
-        for todo in todos:
-            if not todo.get("title"):
+        for task in tasks:
+            if not task.get("title"):
                 continue
 
             task_args = {
-                "content": todo["title"],
-                "project_id": todo.get("projectId", "2334150459"),  # Default to Inbox if not specified
+                "content": task["title"],
+                "project_id": task.get("projectId", "2334150459"),  # Default to Inbox if not specified
             }
 
             # Add optional parameters if present
-            if todo.get("description"):
-                task_args["description"] = todo["description"]
-            if todo.get("priority"):
-                task_args["priority"] = max(1, min(4, todo["priority"]))  # Clamp between 1-4
-            if todo.get("labels"):
-                task_args["labels"] = todo["labels"]  # Using label names instead of IDs
+            if task.get("description"):
+                task_args["description"] = task["description"]
+            if task.get("priority"):
+                task_args["priority"] = max(1, min(4, task["priority"]))  # Clamp between 1-4
+            if task.get("labels"):
+                task_args["labels"] = task["labels"]  # Using label names instead of IDs
 
             # Handle due date options
-            if todo.get("dueString"):
-                task_args["due_string"] = todo["dueString"]
-                if todo.get("dueLang"):
-                    task_args["due_lang"] = todo["dueLang"]
-            elif todo.get("dueDate"):
-                task_args["due_date"] = todo["dueDate"]
+            if task.get("dueString"):
+                task_args["due_string"] = task["dueString"]
+                if task.get("dueLang"):
+                    task_args["due_lang"] = task["dueLang"]
+            elif task.get("dueDate"):
+                task_args["due_date"] = task["dueDate"]
 
             # Handle duration if specified
-            if todo.get("duration") and todo.get("durationUnit"):
-                task_args["duration"] = todo["duration"]
-                task_args["duration_unit"] = todo["durationUnit"]
+            if task.get("duration") and task.get("durationUnit"):
+                task_args["duration"] = task["duration"]
+                task_args["duration_unit"] = task["durationUnit"]
 
             try:
                 task = todoist_client.add_task(**task_args)
@@ -89,7 +89,7 @@ async def add_tasks(params: Dict[str, Any], span) -> Document:
         sections = []
         
         # Section 1: General Info
-        total = len(todos)
+        total = len(tasks)
         successful = len(successful_tasks)
         failed = len(failed_tasks)
         

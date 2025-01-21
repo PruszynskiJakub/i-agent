@@ -40,7 +40,7 @@ def get_tools():
             {
                 "action": "add_tasks",
                 "params": {
-                    "todos": [{
+                    "tasks": [{
                         "title": "Task title",
                         "description": "Task description", 
                         "priority": 1-4,
