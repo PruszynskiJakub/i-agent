@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from llm.tracing import create_event
 from todoist import todoist_client
-from document.types import Document, DocumentType, DocumentMetadata
+from document.utils import create_document
 
 
 async def update_tasks(params: Dict[str, Any], span) -> Document:
@@ -13,17 +13,15 @@ async def update_tasks(params: Dict[str, Any], span) -> Document:
         create_event(span, "update_tasks_start", input={"task_count": len(tasks)})
         
         if not tasks:
-            return Document(
-                uuid=uuid4(),
-                conversation_uuid=params.get("conversation_uuid", ""),
-                text="No tasks provided for update",
-                metadata=DocumentMetadata(
-                    type=DocumentType.DOCUMENT,
-                    source="todoist",
-                    description="No tasks to update",
-                    name="todoist_tasks",
-                    content_type="error"
-                )
+            return create_document(
+                content="No tasks provided for update",
+                metadata={
+                    "uuid": uuid4(),
+                    "conversation_uuid": params.get("conversation_uuid", ""),
+                    "source": "todoist",
+                    "name": "todoist_tasks",
+                    "description": "No tasks to update"
+                }
             )
 
         successful_updates = []
@@ -129,32 +127,28 @@ async def update_tasks(params: Dict[str, Any], span) -> Document:
         create_event(span, "update_tasks_complete", 
                     output={"status": "success", "successful": successful, "failed": failed})
         
-        return Document(
-            uuid=uuid4(),
-            conversation_uuid=params.get("conversation_uuid", ""),
-            text=result,
-            metadata=DocumentMetadata(
-                type=DocumentType.DOCUMENT,
-                source="todoist",
-                description=f"Updated {successful} tasks successfully, {failed} failed",
-                name="todoist_tasks",
-                content_type="report"
-            )
+        return create_document(
+            content=result,
+            metadata={
+                "uuid": uuid4(),
+                "conversation_uuid": params.get("conversation_uuid", ""),
+                "source": "todoist",
+                "name": "todoist_tasks",
+                "description": f"Updated {successful} tasks successfully, {failed} failed"
+            }
         )
 
     except Exception as error:
         error_msg = f"Failed to update tasks: {str(error)}"
         create_event(span, "update_tasks_error", level="ERROR", output={"error": str(error)})
         
-        return Document(
-            uuid=uuid4(),
-            conversation_uuid=params.get("conversation_uuid", ""),
-            text=error_msg,
-            metadata=DocumentMetadata(
-                type=DocumentType.DOCUMENT,
-                source="todoist",
-                description="Error updating tasks",
-                name="todoist_tasks",
-                content_type="error"
-            )
+        return create_document(
+            content=error_msg,
+            metadata={
+                "uuid": uuid4(),
+                "conversation_uuid": params.get("conversation_uuid", ""),
+                "source": "todoist",
+                "name": "todoist_tasks", 
+                "description": "Error updating tasks"
+            }
         )
