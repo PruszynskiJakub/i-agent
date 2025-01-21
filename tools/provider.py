@@ -58,9 +58,9 @@ def get_tools():
             }
             Use: Adds one or more todos. Only title is required, other fields are optional
 
-            3. LIST TODOS
+            3. SEARCH TASKS
             {
-                "action": "list_todos",
+                "action": "search_tasks",
                 "params": {
                     "project_id": "optional_project_id",
                     "label": "optional_label_name",
