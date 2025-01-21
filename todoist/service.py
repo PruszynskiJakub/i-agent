@@ -5,6 +5,7 @@ from document.utils import create_error_document
 from todoist.internal.add_tasks import add_tasks
 from todoist.internal.get_projects import get_projects
 from todoist.internal.search_tasks import search_tasks
+from todoist.internal.update_tasks import update_tasks
 
 
 async def execute_todoist(action: str, params: dict[str, any], span) -> List[Document]:
@@ -17,6 +18,9 @@ async def execute_todoist(action: str, params: dict[str, any], span) -> List[Doc
             return [doc]
         elif action == "search_tasks":
             doc = await search_tasks(params, span)
+            return [doc]
+        elif action == "update_tasks":
+            doc = await update_tasks(params, span)
             return [doc]
         else:
             return [create_error_document(

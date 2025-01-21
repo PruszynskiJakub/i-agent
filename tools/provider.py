@@ -74,6 +74,26 @@ def get_tools():
             - section_id: Show tasks from a specific section
             - ids: Show specific tasks by their IDs
             Returns formatted list with task details including priority, due dates, and labels
+
+            4. UPDATE TASKS
+            {
+                "action": "update_tasks",
+                "params": {
+                    "tasks": [{
+                        "id": "task_id",
+                        "content": "Updated task title",
+                        "description": "Updated description",
+                        "priority": 1-4,
+                        "labels": ["label1", "label2"],
+                        "dueString": "tomorrow at 3pm",
+                        "dueLang": "en",
+                        "dueDate": "YYYY-MM-DD",
+                        "duration": 30,
+                        "durationUnit": "minute"
+                    }]
+                }
+            }
+            Use: Updates existing tasks. Task ID is required, other fields are optional and will only be updated if provided
             """
         }
     ]
