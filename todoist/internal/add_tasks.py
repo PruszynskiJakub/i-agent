@@ -81,7 +81,7 @@ async def add_tasks(params: Dict[str, Any], span) -> Document:
                 })
             except Exception as e:
                 failed_tasks.append({
-                    "content": todo.get("title", "Unknown"),
+                    "content": task.get("title", "Unknown"),
                     "error": str(e)
                 })
 
