@@ -2,6 +2,7 @@ import uuid
 import json
 from uuid import UUID
 
+from document.utils import create_error_document
 from logger.logger import log_info, log_error, log_tool_call
 from agent.state import AgentState, add_taken_action
 from llm.tracing import create_span, end_span
@@ -74,12 +75,18 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         error_msg = f"Error executing tool '{state.step_info.tool}': {str(e)}"
         log_error(error_msg)
         
+        error_doc = create_error_document(
+            error=e,
+            error_context=f"Executing tool '{state.step_info.tool}' with action '{state.step_info.tool_action}'",
+            conversation_uuid=state.conversation_uuid
+        )
+        
         action_dict = {
             'name': state.step_info.tool_action,
             'tool_uuid': UUID(state.step_info.tool_uuid),
             'payload': state.step_info.tool_action_params,
             'status': 'ERROR',
-            'documents': [],
+            'documents': [error_doc],
             'step_description': state.step_info.overview
         }
         
