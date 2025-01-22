@@ -1,7 +1,8 @@
 import uuid
+import json
 from uuid import UUID
 
-from logger.logger import log_info, log_error
+from logger.logger import log_info, log_error, log_tool_call
 from agent.state import AgentState, add_taken_action
 from llm.tracing import create_span, end_span
 from tools.types import Action
@@ -26,7 +27,11 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
     try:
         tool = state.step_info.tool
         tool_action = state.step_info.tool_action
-        log_info(f"🔧 Executing tool '{tool}' with action '{tool_action}'")
+        params = {
+            **state.step_info.tool_action_params,
+            "conversation_uuid": state.conversation_uuid
+        }
+        log_info(f"🔧 Executing tool '{tool}' with action '{tool_action}'\nParameters: {json.dumps(params, indent=2)}")
         
         tool_handler = tool_handlers.get(tool)
         params = {
@@ -34,6 +39,12 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             "conversation_uuid": state.conversation_uuid
         }
         documents = await tool_handler(state.step_info.tool_action, params, execution_span)
+        
+        log_tool_call(
+            f"{tool}.{tool_action}",
+            params,
+            {"document_count": len(documents)}
+        )
         
         action_dict = {
             'name': state.step_info.tool_action,
@@ -46,7 +57,9 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
         updated_state = add_taken_action(state, action_dict)
         
-        log_info(f"✅ Tool execution successful: {tool} - {state.step_info.tool_action}")
+        log_info(f"✅ Tool execution successful: {tool} - {state.step_info.tool_action}\nResult documents: {len(documents)} document(s)")
+        for idx, doc in enumerate(documents, 1):
+            log_info(f"Document {idx}: {doc.type.value} - {len(doc.content)} chars")
         
         end_span(
             execution_span,
