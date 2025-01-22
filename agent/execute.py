@@ -1,6 +1,7 @@
 import uuid
 from uuid import UUID
 
+from logger.logger import log_info, log_error
 from agent.state import AgentState, add_taken_action
 from llm.tracing import create_span, end_span
 from tools.types import Action
@@ -24,6 +25,9 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
     try:
         tool = state.step_info.tool
+        tool_action = state.step_info.tool_action
+        log_info(f"🔧 Executing tool '{tool}' with action '{tool_action}'")
+        
         tool_handler = tool_handlers.get(tool)
         params = {
             **state.step_info.tool_action_params,
@@ -41,7 +45,9 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         }
 
         updated_state = add_taken_action(state, action_dict)
-
+        
+        log_info(f"✅ Tool execution successful: {tool} - {state.step_info.tool_action}")
+        
         end_span(
             execution_span,
             output=updated_state.taken_actions[-1],
@@ -53,6 +59,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
     except Exception as e:
         error_msg = f"Error executing tool '{state.step_info.tool}': {str(e)}"
+        log_error(error_msg)
         
         action_dict = {
             'name': state.step_info.tool_action,
