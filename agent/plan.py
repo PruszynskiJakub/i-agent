@@ -1,6 +1,6 @@
 import json
 
-from agent.state import AgentState, update_step_info
+from agent.state import AgentState, update_interaction
 from llm import open_ai
 from llm.format import format_actions, format_messages, format_tools, format_documents
 from llm.prompts import get_prompt
@@ -11,7 +11,7 @@ from tools.provider import get_tools
 async def agent_plan(state: AgentState, trace) -> AgentState:
     """
     Creates a plan based on the current state.
-    Updates and returns AgentState with new step_info.
+    Updates and returns AgentState with new interaction info.
     """
     try:
         # Get the planning prompt from repository
@@ -24,7 +24,6 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
         system_prompt = prompt.compile(
             formatted_tools=format_tools(get_tools()),
             taken_actions=format_actions(state.taken_actions),
-            understanding=state.understanding,
             documents=format_documents(state.documents)
         )
 
@@ -49,10 +48,12 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
 
         try:
             response_data = json.loads(completion)
-            updated_state = update_step_info(state, {
+            updated_state = update_interaction(state, {
                 'overview': response_data.get("step", ""),
                 'tool': response_data.get("tool", ""),
                 'tool_uuid': response_data.get("tool_uuid", ""),
+                'tool_action': response_data.get("tool_action", ""),
+                'tool_action_params': response_data.get("tool_action_params", {})
             })
         except json.JSONDecodeError as e:
             generation.end(
