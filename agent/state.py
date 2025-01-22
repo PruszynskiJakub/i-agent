@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import List, Dict, Any, Optional
+from uuid import UUID
 
 from db.message import find_messages_by_conversation, save_message
 from message.utils import create_message
@@ -25,7 +26,7 @@ class Thoughts:
 class Interaction:
     overview: str
     tool: str
-    tool_uuid: str
+    tool_uuid: UUID
     tool_action: str
     tool_action_params: Dict[str, Any]
 
@@ -67,7 +68,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         interaction=Interaction(
             overview="",
             tool="",
-            tool_uuid="",
+            tool_uuid=None,
             tool_action="",
             tool_action_params={}
         ),
