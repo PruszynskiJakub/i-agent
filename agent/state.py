@@ -22,7 +22,7 @@ class Thoughts:
     tools: List[ToolThought]
 
 @dataclass(frozen=True)
-class StepInfo:
+class Interaction:
     overview: str
     tool: str
     tool_uuid: str
@@ -38,7 +38,7 @@ class AgentState:
     documents: List[Document]
     current_step: int
     max_steps: int
-    step_info: StepInfo
+    interaction: Interaction
     thoughts: Optional[Thoughts] = None
 
     def copy(self, **kwargs) -> 'AgentState':
@@ -49,7 +49,7 @@ class AgentState:
             'documents': self.documents.copy(),
             'current_step': self.current_step,
             'max_steps': self.max_steps,
-            'step_info': self.step_info,
+            'interaction': self.interaction,
             'thoughts': self.thoughts
         }
         current_values.update(kwargs)
@@ -64,7 +64,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         documents=find_documents_by_conversation(conversation_uuid),
         current_step=0,
         max_steps=4,
-        step_info=StepInfo(
+        interaction=Interaction(
             overview="",
             tool="",
             tool_uuid="",
@@ -117,13 +117,13 @@ def add_documents(state: AgentState, documents: List[Document]) -> AgentState:
 def should_continue(state: AgentState) -> bool:
     return state.current_step < state.max_steps
 
-def update_step_info(state: AgentState, updates: Dict[str, Any]) -> AgentState:
+def update_interaction(state: AgentState, updates: Dict[str, Any]) -> AgentState:
     current_values = {
-        'overview': state.step_info.overview,
-        'tool': state.step_info.tool,
-        'tool_uuid': state.step_info.tool_uuid,
-        'tool_action': state.step_info.tool_action,
-        'tool_action_params': state.step_info.tool_action_params
+        'overview': state.interaction.overview,
+        'tool': state.interaction.tool,
+        'tool_uuid': state.interaction.tool_uuid,
+        'tool_action': state.interaction.tool_action,
+        'tool_action_params': state.interaction.tool_action_params
     }
     current_values.update(updates)
-    return state.copy(step_info=StepInfo(**current_values))
+    return state.copy(interaction=Interaction(**current_values))

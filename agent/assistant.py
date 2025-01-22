@@ -34,8 +34,8 @@ async def agent_run(in_state: AgentState) -> str:
                 log_info("🎯 Reached final answer step")
                 break
 
-            log_info(f"🔧 Using tool: {state.step_info.tool}")
-            log_info(f"📝 Step overview: {state.step_info.overview}")
+            log_info(f"🔧 Using tool: {state.interaction.tool}")
+            log_info(f"📝 Step overview: {state.interaction.overview}")
             
             state = await agent_define(state, trace)
             state = await agent_execute(state, trace)
