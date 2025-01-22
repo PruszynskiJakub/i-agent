@@ -28,7 +28,7 @@ class Interaction:
     tool: str
     tool_uuid: UUID
     tool_action: str
-    tool_action_params: Dict[str, Any]
+    payload: Dict[str, Any]
 
 
 @dataclass(frozen=True)
@@ -70,7 +70,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
             tool="",
             tool_uuid=None,
             tool_action="",
-            tool_action_params={}
+            payload={}
         ),
         thoughts=None
     )
@@ -124,7 +124,7 @@ def update_interaction(state: AgentState, updates: Dict[str, Any]) -> AgentState
         'tool': state.interaction.tool,
         'tool_uuid': state.interaction.tool_uuid,
         'tool_action': state.interaction.tool_action,
-        'tool_action_params': state.interaction.tool_action_params
+        'payload': state.interaction.payload
     }
     current_values.update(updates)
     return state.copy(interaction=Interaction(**current_values))

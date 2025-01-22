@@ -53,7 +53,7 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
                 'tool': response_data.get("tool", ""),
                 'tool_uuid': response_data.get("tool_uuid", ""),
                 'tool_action': response_data.get("tool_action", ""),
-                'tool_action_params': response_data.get("tool_action_params", {})
+                'payload': response_data.get("payload", {})
             })
         except json.JSONDecodeError as e:
             generation.end(
