@@ -93,7 +93,8 @@ def get_tools():
                     }]
                 }
             }
-            Use: Updates existing tasks. Task ID is required, other fields are optional and will only be updated if provided
+            Use: Updates existing tasks. Task ID is required, other fields are optional and will only be updated if provided. 
+            Don't use it to complete tasks, use the complete_tasks action instead.
 
             5. COMPLETE TASKS
             {

@@ -1,6 +1,6 @@
 import re
 from typing import Dict, Any, Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from document.types import Document, DocumentMetadata, DocumentType
 
@@ -61,7 +61,7 @@ def create_document(content: str, metadata: Dict[str, Any] = None) -> Document:
         content = extracted["content"]
 
     return Document(
-        uuid=metadata.get("uuid", UUID(int=0)),
+        uuid=metadata.get("uuid", uuid4()),
         conversation_uuid=metadata.get("conversation_uuid", ""),
         text=content,
         metadata=document_metadata
