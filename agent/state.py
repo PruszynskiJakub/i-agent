@@ -33,12 +33,12 @@ class Interaction:
 
 @dataclass(frozen=True)
 class AgentState:
+    current_step: int
+    max_steps: int
     conversation_uuid: str
     messages: List[Message]
     taken_actions: List[Action]
     documents: List[Document]
-    current_step: int
-    max_steps: int
     interaction: Interaction
     thoughts: Optional[Thoughts] = None
 
