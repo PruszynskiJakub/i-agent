@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove old files">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Set max_steps to 4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/document/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/document/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/provider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,22 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Remove extra param">
-      <option name="closed" value="true" />
-      <created>1735936420282</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1735936420282</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Use purely state to pass data">
-      <option name="closed" value="true" />
-      <created>1736187235233</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1736187235233</updated>
     </task>
     <task id="LOCAL-00037" summary="Pass uuid properly">
       <option name="closed" value="true" />
@@ -560,7 +543,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737480035676</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1737548162540</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1737548162540</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Set max_steps to 4">
+      <option name="closed" value="true" />
+      <created>1737549018302</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1737549018302</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -575,8 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add spec template to project" />
-    <MESSAGE value="Fix condition" />
     <MESSAGE value="Commit" />
     <MESSAGE value="Remove some details from passing" />
     <MESSAGE value="Add todoist docs" />
@@ -600,6 +597,8 @@
     <MESSAGE value="Simplify" />
     <MESSAGE value="Remove empty lines" />
     <MESSAGE value="Remove old files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove old files" />
+    <MESSAGE value="Fixes" />
+    <MESSAGE value="Set max_steps to 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set max_steps to 4" />
   </component>
 </project>
