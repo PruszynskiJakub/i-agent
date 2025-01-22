@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 from db.message import find_messages_by_conversation, save_message
 from message.utils import create_message
@@ -10,6 +10,16 @@ from tools.types import Action
 
 from message.types import Message
 
+
+@dataclass(frozen=True)
+class ToolThought:
+    reason: str
+    tool: str
+    query: str
+
+@dataclass(frozen=True)
+class Thoughts:
+    tools: List[ToolThought]
 
 @dataclass(frozen=True)
 class StepInfo:
@@ -29,7 +39,7 @@ class AgentState:
     current_step: int
     max_steps: int
     step_info: StepInfo
-    understanding: str = ""
+    thoughts: Optional[Thoughts] = None
 
     def copy(self, **kwargs) -> 'AgentState':
         current_values = {
@@ -40,7 +50,7 @@ class AgentState:
             'current_step': self.current_step,
             'max_steps': self.max_steps,
             'step_info': self.step_info,
-            'understanding': self.understanding
+            'thoughts': self.thoughts
         }
         current_values.update(kwargs)
         return AgentState(**current_values)
@@ -61,7 +71,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
             tool_action="",
             tool_action_params={}
         ),
-        understanding=""
+        thoughts=None
     )
 
 
