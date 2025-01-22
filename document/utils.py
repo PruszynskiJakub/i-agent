@@ -2,7 +2,7 @@ import re
 from typing import Dict, Any, Optional
 from uuid import UUID
 
-from document.types import Document, DocumentMetadata
+from document.types import Document, DocumentMetadata, DocumentType
 
 
 def create_error_document(
@@ -44,6 +44,7 @@ def create_document(content: str, metadata: Dict[str, Any] = None) -> Document:
         metadata = {}
 
     document_metadata: DocumentMetadata = {
+        "type": metadata.get("type", DocumentType.TEXT),
         "source": metadata.get("source", ""),
         "mime_type": metadata.get("mime_type", "text/plain"),
         "name": metadata.get("name", ""),
