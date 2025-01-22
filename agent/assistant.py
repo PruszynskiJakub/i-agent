@@ -5,7 +5,6 @@ from agent.answer import agent_answer
 from agent.define import agent_define
 from agent.execute import agent_execute
 from agent.plan import agent_plan
-from agent.understand import agent_understand
 from agent.state import AgentState, should_continue, increment_current_step
 from llm.tracing import create_trace, end_trace
 
@@ -27,10 +26,6 @@ async def agent_run(in_state: AgentState) -> str:
     )
 
     try:
-        # First understand the user's request
-        # log_info("🤔 Understanding user request...")
-        # state = await agent_understand(state, trace)
-        
         while should_continue(state):
             log_info(f"📍 Step {state.current_step + 1}/{state.max_steps}")
             state = await agent_plan(state, trace)
