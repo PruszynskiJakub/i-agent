@@ -210,28 +210,22 @@ def update_interaction(state: AgentState, updates: Dict[str, Any]) -> AgentState
     current_values.update(updates)
     return state.copy(interaction=Interaction(**current_values))
 
-def new_interaction(state: AgentState, overview: str, tool: str, tool_uuid: UUID, 
-                   tool_action: str, payload: Dict[str, Any]) -> AgentState:
+def new_interaction(state: AgentState) -> AgentState:
     """
-    Create a new Interaction object and update the state with it.
+    Create a new empty Interaction object with PENDING status and update the state with it.
 
     Args:
         state: Current agent state
-        overview: Description of the interaction
-        tool: Name of the tool to use
-        tool_uuid: UUID of the tool
-        tool_action: Name of the action to perform
-        payload: Parameters for the action
 
     Returns:
-        Updated AgentState with new interaction
+        Updated AgentState with new empty interaction
     """
     interaction = Interaction(
-        overview=overview,
-        tool=tool,
-        tool_uuid=tool_uuid,
-        tool_action=tool_action,
-        payload=payload,
+        overview="",
+        tool="",
+        tool_uuid=UUID(int=0),
+        tool_action="",
+        payload={},
         status="PENDING"
     )
     return state.copy(interaction=interaction)
