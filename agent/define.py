@@ -6,7 +6,7 @@ from llm import open_ai
 from llm.format import format_messages, format_tool_instructions, format_actions, format_documents
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from tools.provider import get_tool_by_name
+from agent.tools import get_tool_by_name
 
 
 async def agent_define(state: AgentState, trace) -> AgentState:
