@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Set max_steps to 4">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Reorder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/agent_decide.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/decide.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,22 +167,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Pass uuid properly">
-      <option name="closed" value="true" />
-      <created>1736187447657</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1736187447657</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Properly build action result">
-      <option name="closed" value="true" />
-      <created>1736187942497</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1736187942497</updated>
     </task>
     <task id="LOCAL-00039" summary="Update the answer so it's represent the results">
       <option name="closed" value="true" />
@@ -559,7 +544,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737549018302</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Comment out some code">
+      <option name="closed" value="true" />
+      <created>1737561937941</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1737561937941</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Reorder">
+      <option name="closed" value="true" />
+      <created>1737584632653</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1737584632653</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -574,8 +575,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Commit" />
-    <MESSAGE value="Remove some details from passing" />
     <MESSAGE value="Add todoist docs" />
     <MESSAGE value="Fix status type" />
     <MESSAGE value="Support uploading files" />
@@ -599,6 +598,8 @@
     <MESSAGE value="Remove old files" />
     <MESSAGE value="Fixes" />
     <MESSAGE value="Set max_steps to 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set max_steps to 4" />
+    <MESSAGE value="Comment out some code" />
+    <MESSAGE value="Reorder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reorder" />
   </component>
 </project>
