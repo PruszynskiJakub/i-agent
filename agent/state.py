@@ -132,36 +132,26 @@ def add_message(state: AgentState, content, role) -> AgentState:
 
 def record_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentState:
     """
-    Create an Action in the database and add it to the state's action_history
+    Create an ActionRecord in the database and add it to the state's action_history
 
     Args:
         state: Current agent state
         action_dict: Dictionary containing action data
 
     Returns:
-        Updated AgentState with new action in action_history
+        Updated AgentState with new action record in action_history
     """
-    from db.action import create_action
+    from db.action import save_action_record
 
-    action = create_action(
+    action_record = save_action_record(
         conversation_uuid=state.conversation_uuid,
         name=action_dict['name'],
-        tool_uuid=action_dict['tool_uuid'],
-        payload=action_dict['payload'],
-        status=action_dict['status'],
-        documents=action_dict.get('documents', []),
-        step_description=action_dict.get('step_description', '')
-    )
-
-    # Create an ActionRecord and add it to action_history
-    action_record = ActionRecord(
-        name=action.name,
         tool=action_dict.get('tool', ''),
-        tool_uuid=action.tool_uuid,
-        status=action.status,
-        input_payload=action.payload,
-        output_documents=action.documents,
-        step_description=action.step_description
+        tool_uuid=action_dict.get('tool_uuid'),
+        input_payload=action_dict['payload'],
+        status=action_dict['status'],
+        output_documents=action_dict.get('documents', []),
+        step_description=action_dict.get('step_description', '')
     )
 
     return state.copy(action_history=state.action_history + [action_record])

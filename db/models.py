@@ -38,7 +38,7 @@ class DocumentModel(BaseModel):
     class Meta:
         table_name = 'documents'
 
-class ActionModel(BaseModel):
+class ActionRecordModel(BaseModel):
     uuid = CharField(primary_key=True)
     name = CharField()
     tool_uuid = CharField()
@@ -52,7 +52,7 @@ class ActionModel(BaseModel):
         table_name = 'actions'
 
 class ActionDocumentModel(BaseModel):
-    action = ForeignKeyField(ActionModel, backref='action_documents')
+    action = ForeignKeyField(ActionRecordModel, backref='action_documents')
     document = ForeignKeyField(DocumentModel, backref='document_actions')
     created_at = DateTimeField(default=datetime.utcnow)
 

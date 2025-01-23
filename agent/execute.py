@@ -49,6 +49,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         
         action_dict = {
             'name': state.step_info.tool_action,
+            'tool': tool,
             'tool_uuid': UUID(state.step_info.tool_uuid),
             'payload': state.step_info.tool_action_params,
             'status': 'SUCCESS',
@@ -83,6 +84,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         
         action_dict = {
             'name': state.step_info.tool_action,
+            'tool': state.step_info.tool,
             'tool_uuid': UUID(state.step_info.tool_uuid),
             'payload': state.step_info.tool_action_params,
             'status': 'ERROR',

@@ -8,7 +8,7 @@ from document.types import Document
 from db.document import find_document_by_uuid
 
 
-def find_actions_by_conversation(conversation_uuid: str) -> List[Action]:
+def find_action_records_by_conversation(conversation_uuid: str) -> List[ActionRecord]:
     """
     Retrieve all actions for a given conversation
     
@@ -18,91 +18,92 @@ def find_actions_by_conversation(conversation_uuid: str) -> List[Action]:
     Returns:
         List of Action objects
     """
-    query = ActionModel.select().where(
-        ActionModel.conversation_uuid == conversation_uuid
-    ).order_by(ActionModel.created_at)
+    query = ActionRecordModel.select().where(
+        ActionRecordModel.conversation_uuid == conversation_uuid
+    ).order_by(ActionRecordModel.created_at)
     
-    actions = []
-    for action_model in query:
+    records = []
+    for record_model in query:
         # Get associated documents
         documents = []
-        for action_doc in action_model.action_documents:
+        for action_doc in record_model.action_documents:
             if doc := find_document_by_uuid(UUID(action_doc.document.uuid)):
                 documents.append(doc)
                 
-        actions.append(Action(
-            uuid=UUID(action_model.uuid),
-            name=action_model.name,
-            tool_uuid=UUID(action_model.tool_uuid),
-            payload=action_model.payload,
-            status=action_model.status,
-            conversation_uuid=action_model.conversation_uuid,
-            documents=documents,
-            step_description=action_model.step_description
+        records.append(ActionRecord(
+            name=record_model.name,
+            tool=record_model.tool,
+            tool_uuid=UUID(record_model.tool_uuid) if record_model.tool_uuid else None,
+            status=record_model.status,
+            input_payload=record_model.payload,
+            output_documents=documents,
+            step_description=record_model.step_description
         ))
     
-    return actions
+    return records
 
 
-def create_action(
+def save_action_record(
     conversation_uuid: str,
     name: str,
-    tool_uuid: UUID,
-    payload: Dict[str, Any],
+    tool: str,
+    tool_uuid: Optional[UUID],
+    input_payload: Dict[str, Any],
     status: str,
-    documents: Optional[List[Document]] = None,
+    output_documents: Optional[List[Document]] = None,
     step_description: str = ""
-) -> Action:
+) -> ActionRecord:
     """
-    Create and save a new action
+    Create and save a new action record
     
     Args:
         conversation_uuid: UUID of the conversation
         name: Name of the action
+        tool: Name of the tool
         tool_uuid: UUID of the tool that performed the action
-        payload: Action payload
-        result: Action result
+        input_payload: Action input payload
         status: Action status
-        documents: List of documents associated with the action
+        output_documents: List of output documents
+        step_description: Description of the step
             
     Returns:
-        Created Action object
+        Created ActionRecord object
     """
-    action_uuid = uuid4()
+    record_uuid = uuid4()
     
-    # Create action record
-    action_model = ActionModel.create(
-        uuid=str(action_uuid),
+    # Create action record in DB
+    record_model = ActionRecordModel.create(
+        uuid=str(record_uuid),
         name=name,
-        tool_uuid=str(tool_uuid),
-        payload=payload,
+        tool=tool,
+        tool_uuid=str(tool_uuid) if tool_uuid else None,
+        payload=input_payload,
         status=status,
         conversation_uuid=conversation_uuid,
         step_description=step_description
     )
 
-    # Create action object
-    action = Action(
-        uuid=action_uuid,
+    # Create ActionRecord object
+    record = ActionRecord(
         name=name,
+        tool=tool,
         tool_uuid=tool_uuid,
-        conversation_uuid=conversation_uuid,
-        payload=payload,
         status=status,
-        documents=documents or [],
+        input_payload=input_payload,
+        output_documents=output_documents or [],
         step_description=step_description
     )
 
     # Save documents and create relations
-    if action.documents:
+    if output_documents:
         from db.document import save_document
-        for document in action.documents:
+        for document in output_documents:
             save_document(document)
             ActionDocumentModel.create(
-                action=action_model,
+                action=record_model,
                 document=document.uuid
             )
 
-    return action
+    return record
 
 
