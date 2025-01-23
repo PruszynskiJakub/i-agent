@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rename file">
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Repackage tools">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,9 +66,9 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/agent" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/tools" />
-      <recent name="$PROJECT_DIR$/agent" />
       <recent name="$PROJECT_DIR$/llm" />
       <recent name="$PROJECT_DIR$/app/agents" />
     </key>
@@ -165,22 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Extract add_transaction to new file">
-      <option name="closed" value="true" />
-      <created>1736240085626</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1736240085626</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Simplify service">
-      <option name="closed" value="true" />
-      <created>1736240162418</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1736240162418</updated>
     </task>
     <task id="LOCAL-00042" summary="Clean up">
       <option name="closed" value="true" />
@@ -558,7 +543,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737619256410</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="Reformat">
+      <option name="closed" value="true" />
+      <created>1737619816654</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1737619816654</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Repackage tools">
+      <option name="closed" value="true" />
+      <created>1737619872069</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1737619872069</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -573,8 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix status type" />
-    <MESSAGE value="Support uploading files" />
     <MESSAGE value="Add docs formatting" />
     <MESSAGE value="Add upload to gitignore" />
     <MESSAGE value="Some refactoring" />
@@ -598,6 +597,8 @@
     <MESSAGE value="Comment out some code" />
     <MESSAGE value="Reorder" />
     <MESSAGE value="Rename file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename file" />
+    <MESSAGE value="Reformat" />
+    <MESSAGE value="Repackage tools" />
+    <option name="LAST_COMMIT_MESSAGE" value="Repackage tools" />
   </component>
 </project>

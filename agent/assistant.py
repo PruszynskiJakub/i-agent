@@ -23,7 +23,7 @@ async def agent_run(in_state: AgentState) -> str:
             'medium': 'slackk'
         },
         session_id=state.conversation_uuid,
-        input=state.messages[-1].content,
+        input=state.user_query
     )
 
     try:
