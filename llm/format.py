@@ -72,11 +72,30 @@ def format_tools(tools: List[Dict]) -> str:
         desc = f"<tool uuid='{tool['uuid']}'>\n"
         desc += f"  <name>{tool['name']}</name>\n"
         desc += f"  <description>{tool['description']}</description>\n"
-        desc += f"  <instructions>{tool['instructions']}</instructions>\n"
         desc += "</tool>"
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)
 
+
+def format_tools_with_instructions(tools: List[Dict]) -> str:
+    """
+    Formats a list of tools into an XML-like string representation.
+
+    Args:
+        tools: List of tool dictionaries
+
+    Returns:
+        str: Formatted string describing all tools
+    """
+    tool_descriptions = []
+    for tool in tools:
+        desc = f"<tool uuid='{tool['uuid']}'>\n"
+        desc += f"  <name>{tool['name']}</name>\n"
+        desc += f"  <description>{tool['description']}</description>\n"
+        desc += f"  <instructions>{tool['instructions']}</instructions>\n"
+        desc += "</tool>"
+        tool_descriptions.append(desc)
+    return "\n".join(tool_descriptions)
 
 def format_tool_instructions(tool) -> str:
     desc = f"  <name>{tool['name']}</name>\n"
