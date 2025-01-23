@@ -5,7 +5,8 @@ from agent.answer import agent_answer
 from agent.define import agent_define
 from agent.execute import agent_execute
 from agent.plan import agent_plan
-from agent.state import AgentState, should_interact, complete_iteration
+from agent.agent_decide import agent_decide
+from agent.state import AgentState, should_interact, complete_iteration, new_interaction
 from llm.tracing import create_trace, end_trace
 
 
@@ -28,14 +29,18 @@ async def agent_run(in_state: AgentState) -> str:
     try:
         while should_interact(state):
             log_info(f"📍 Step {state.current_step + 1}/{state.max_steps}")
+            
+            state = new_interaction(state)
             state = await agent_plan(state, trace)
+            state = await agent_decide(state, trace)
 
-            if state.step_info.tool == 'final_answer':
+            if state.interaction and state.interaction.tool == 'final_answer':
                 log_info("🎯 Reached final answer step")
                 break
 
-            log_info(f"🔧 Using tool: {state.interaction.tool}")
-            log_info(f"📝 Step overview: {state.interaction.overview}")
+            if state.interaction:
+                log_info(f"🔧 Using tool: {state.interaction.tool}")
+                log_info(f"📝 Step overview: {state.interaction.overview}")
             
             state = await agent_define(state, trace)
             state = await agent_execute(state, trace)
