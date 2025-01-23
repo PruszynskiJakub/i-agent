@@ -35,7 +35,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         log_info(f"🔧 Executing tool '{tool}' with action '{tool_action}'\nParameters: {json.dumps(params, indent=2)}")
         
         tool_handler = tool_handlers.get(tool)
-        documents = await tool_handler(state.step_info.tool_action, params, execution_span)
+        documents = await tool_handler(state.interaction.tool_action, params, execution_span)
         
         log_tool_call(
             f"{tool}.{tool_action}",
@@ -55,7 +55,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
         updated_state = record_action(state, action_dict)
         
-        log_info(f"✅ Tool execution successful: {tool} - {state.step_info.tool_action}\nResult documents: {len(documents)} document(s)")
+        log_info(f"✅ Tool execution successful: {tool} - {state.interaction.tool_action}\nResult documents: {len(documents)} document(s)")
         # for idx, doc in enumerate(documents, 1):
         #     log_info(f"Document {idx}: {doc.type.value} - {len(doc.content)} chars")
         #

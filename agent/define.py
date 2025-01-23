@@ -1,7 +1,7 @@
 import json
 
 from todoist import get_dynamic_context
-from agent.state import AgentState, update_step_info
+from agent.state import AgentState, update_interaction
 from llm import open_ai
 from llm.format import format_messages, format_tool_instructions, format_actions, format_documents
 from llm.prompts import get_prompt
@@ -58,9 +58,9 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         try:
             response_data = json.loads(completion)
             # Update state with response data
-            updated_state = update_step_info(state, {
-                'tool_action': response_data.get("action", state.step_info.tool_action),
-                'tool_action_params': response_data.get("params", {})
+            updated_state = update_interaction(state, {
+                'tool_action': response_data.get("action", state.interaction.tool_action),
+                'payload': response_data.get("params", {})
             })
         except json.JSONDecodeError as e:
             generation.end(
