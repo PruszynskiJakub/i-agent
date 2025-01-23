@@ -2,9 +2,9 @@ import json
 
 from agent.state import (
     AgentState,
-    Decision,
     AgentPhase,
-    update_phase
+    update_phase,
+    update_interaction
 )
 from llm import open_ai
 from llm.format import format_actions_history, format_messages, format_tools, format_documents
@@ -69,14 +69,14 @@ async def agent_decide(state: AgentState, trace) -> AgentState:
         try:
             response_data = json.loads(completion)
             
-            # Create decision from response
-            decision = Decision(
-                overview=response_data.get("overview", ""),
-                chosen_tool=response_data.get("chosen_tool"),
-                chosen_action=response_data.get("chosen_action")
-            )
-            
-            updated_state = state.copy(decision=decision)
+            # Update interaction with chosen tool
+            updated_state = update_interaction(state, {
+                'overview': response_data.get("overview", ""),
+                'tool': response_data.get("chosen_tool", ""),
+                'tool_uuid': None,
+                'tool_action': response_data.get("chosen_action", ""),
+                'payload': {}
+            })
 
         except json.JSONDecodeError as e:
             generation.end(
