@@ -3,7 +3,7 @@ from typing import List
 
 from message.types import Message
 from document.types import Document
-from agent.state import ActionRecord
+from agent.state import ActionRecord, ToolCandidate
 
 
 def format_actions_history(actions: List[ActionRecord]) -> str:
@@ -82,6 +82,27 @@ def format_tool_instructions(tool) -> str:
     desc += f"  <description>{tool['description']}</description>\n"
     desc += f"  <instructions>{tool['instructions']}</instructions>\n"
     return desc
+
+
+def format_tool_candidates(tool_candidates: List[ToolCandidate]) -> str:
+    """
+    Formats tool candidates into an XML-like string representation.
+
+    Args:
+        tool_candidates: List of ToolCandidate objects
+
+    Returns:
+        str: Formatted string describing all tool candidates
+    """
+    candidate_descriptions = []
+    for candidate in tool_candidates:
+        desc = "<tool_candidate>\n"
+        desc += f"  <tool>{candidate.tool_name}</tool>\n"
+        desc += f"  <reason>{candidate.reason}</reason>\n"
+        desc += f"  <query>{candidate.query}</query>\n"
+        desc += "</tool_candidate>"
+        candidate_descriptions.append(desc)
+    return "\n".join(candidate_descriptions)
 
 
 def format_documents(documents: List[Document]) -> str:
