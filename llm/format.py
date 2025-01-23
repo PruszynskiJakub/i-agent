@@ -27,7 +27,7 @@ def format_actions_history(actions: List[ActionRecord]) -> str:
         if action.output_documents:
             desc += "  <documents>\n"
             for doc in action.output_documents:
-                desc += f"    <document type='{doc.metadata['type'].value}'>\n"
+                desc += f"    <document type='{doc.metadata['type']}'>\n"
                 desc += f"      <text>{doc.text}</text>\n"
                 desc += "    </document>\n"
             desc += "  </documents>\n"
