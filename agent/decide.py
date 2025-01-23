@@ -16,7 +16,7 @@ from llm.format import (
 )
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from agent.tools import get_tools
+from agent.tools import get_tools_by_names
 
 
 async def agent_decide(state: AgentState, trace) -> AgentState:
@@ -42,7 +42,7 @@ async def agent_decide(state: AgentState, trace) -> AgentState:
 
         # Format system prompt with current state
         system_prompt = prompt.compile(
-            tools=format_tools(get_tools()),
+            tools=format_tools(get_tools_by_names([c.tool_name for c in state.thoughts.tool_candidates])) if state.thoughts else [],
             actions=format_actions_history(state.action_history),
             documents=format_documents(state.documents),
             tool_candidates=format_tool_candidates(state.thoughts.tool_candidates) if state.thoughts else "",
