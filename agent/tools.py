@@ -119,6 +119,27 @@ def get_tools_by_names(names: List[str]) -> List[Dict[str, Any]]:
     return tools
 
 
+def get_tool_action_instructions(tool_name: str, action_name: str) -> str:
+    """Get the instructions for a specific tool action
+
+    Args:
+        tool_name: Name of the tool
+        action_name: Name of the action
+
+    Returns:
+        str: Instructions for the specified tool action, or empty string if not found
+    """
+    tool = get_tool_by_name(tool_name)
+    if not tool or 'instructions' not in tool:
+        return ""
+        
+    instructions = tool['instructions'].get(action_name)
+    if not instructions:
+        return ""
+        
+    return instructions
+
+
 tool_handlers = {
     "ynab": execute_ynab,
     "todoist": execute_todoist
