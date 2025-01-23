@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Refactor">
-      <change afterPath="$PROJECT_DIR$/action/types.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/action.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/action.py" afterDir="false" />
-    </list>
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fixes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -168,22 +163,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Simplify">
-      <option name="closed" value="true" />
-      <created>1736454996594</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1736454996594</updated>
-    </task>
-    <task id="LOCAL-00053" summary="Pass understanding to answer.pyr">
-      <option name="closed" value="true" />
-      <created>1736456234365</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1736456234365</updated>
     </task>
     <task id="LOCAL-00054" summary="Increase max steps to 3">
       <option name="closed" value="true" />
@@ -561,7 +540,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737630099040</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1737630406848</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1737630406848</updated>
+    </task>
+    <task id="LOCAL-00102" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1737630474213</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1737630474214</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -589,7 +584,6 @@
     <MESSAGE value="Remove old file" />
     <MESSAGE value="Remove empty lines" />
     <MESSAGE value="Remove old files" />
-    <MESSAGE value="Fixes" />
     <MESSAGE value="Set max_steps to 4" />
     <MESSAGE value="Comment out some code" />
     <MESSAGE value="Reorder" />
@@ -601,6 +595,7 @@
     <MESSAGE value="Simplify" />
     <MESSAGE value="Add method" />
     <MESSAGE value="Refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
+    <MESSAGE value="Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
   </component>
 </project>
