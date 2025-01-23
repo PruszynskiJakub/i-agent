@@ -2,8 +2,8 @@ import json
 from typing import List, Dict, Any, Optional
 from uuid import UUID, uuid4
 
-from db.models import ActionModel, DocumentModel, ActionDocumentModel
-from tools.types import Action
+from db.models import ActionRecordModel, DocumentModel, ActionDocumentModel
+from agent.state import ActionRecord
 from document.types import Document
 from db.document import find_document_by_uuid
 
