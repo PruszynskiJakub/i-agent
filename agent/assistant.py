@@ -47,7 +47,7 @@ async def agent_run(in_state: AgentState) -> str:
             state = complete_iteration(state)
 
         state = await agent_answer(state, trace)
-        final_answer = state.messages[-1].content
+        final_answer = state.assistant_response
         
         log_info("✅ Agent run completed")
         log_info(f"📊 Stats: {state.current_step} steps, {len(state.action_history)} actions")
