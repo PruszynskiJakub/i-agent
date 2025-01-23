@@ -105,6 +105,33 @@ def format_tool_candidates(tool_candidates: List[ToolCandidate]) -> str:
     return "\n".join(candidate_descriptions)
 
 
+def format_interaction(interaction) -> str:
+    """
+    Formats an Interaction object into an XML-like string representation.
+
+    Args:
+        interaction: Interaction object to format
+
+    Returns:
+        str: Formatted string describing the interaction
+    """
+    desc = "<interaction>\n"
+    desc += f"  <overview>{interaction.overview}</overview>\n"
+    desc += f"  <tool>{interaction.tool}</tool>\n"
+    if interaction.tool_uuid:
+        desc += f"  <tool_uuid>{interaction.tool_uuid}</tool_uuid>\n"
+    desc += f"  <tool_action>{interaction.tool_action}</tool_action>\n"
+    desc += f"  <query>{interaction.query}</query>\n"
+    if interaction.payload:
+        desc += "  <payload>\n"
+        for key, value in interaction.payload.items():
+            desc += f"    <param name='{key}'>{value}</param>\n"
+        desc += "  </payload>\n"
+    desc += f"  <status>{interaction.status}</status>\n"
+    desc += "</interaction>"
+    return desc
+
+
 def format_documents(documents: List[Document]) -> str:
     """
     Formats multiple documents' metadata into an XML-like string representation with JSON metadata,
