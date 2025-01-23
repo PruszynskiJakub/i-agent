@@ -49,6 +49,7 @@ class Interaction:
     tool: str
     tool_uuid: Optional[UUID]
     tool_action: str
+    query: str
     payload: Dict[str, Any]
     status: str = "PENDING"
 
@@ -203,6 +204,7 @@ def update_interaction(state: AgentState, updates: Dict[str, Any]) -> AgentState
         'tool': state.interaction.tool,
         'tool_uuid': state.interaction.tool_uuid,
         'tool_action': state.interaction.tool_action,
+        'query': state.interaction.query,
         'payload': state.interaction.payload
     }
     current_values.update(updates)
@@ -223,6 +225,7 @@ def new_interaction(state: AgentState) -> AgentState:
         tool="",
         tool_uuid=None,
         tool_action="",
+        query="",
         payload={},
         status="PENDING"
     )
