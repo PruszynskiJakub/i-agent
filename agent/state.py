@@ -28,12 +28,6 @@ class Thoughts:
     chain_of_thought: Optional[str]  # Hidden or partial reasoning text
     tool_candidates: List[ToolCandidate] = field(default_factory=list)
 
-@dataclass(frozen=True)
-class Decision:
-    """High-level plan or next step the agent wants to take."""
-    overview: str
-    chosen_tool: Optional[str] = None
-    chosen_action: Optional[str] = None
 
 @dataclass(frozen=True)
 class ActionRecord:
@@ -100,7 +94,6 @@ class AgentState:
             'phase': self.phase,
             'interaction': self.interaction,
             'thoughts': self.thoughts,
-            'decision': self.decision,
             'dynamic_context': self.dynamic_context,
             'final_answer': self.final_answer
         }
@@ -118,7 +111,6 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         phase=AgentPhase.PLAN,
         interaction=None,
         thoughts=None,
-        decision=None,
         dynamic_context="",
         final_answer=None
     )
