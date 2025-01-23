@@ -1,6 +1,6 @@
 import json
 
-from agent.state import AgentState, update_interaction
+from agent.state import AgentState, update_interaction, AgentPhase, update_phase
 from llm import open_ai
 from llm.format import format_actions_history, format_messages, format_tools, format_documents
 from llm.prompts import get_prompt
@@ -14,6 +14,9 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
     Updates and returns AgentState with new interaction info.
     """
     try:
+        # Update phase to PLAN
+        state = update_phase(state, AgentPhase.PLAN)
+        
         # Get the planning prompt from repository
         prompt = get_prompt(
             name="agent_plan",
