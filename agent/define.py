@@ -1,7 +1,7 @@
 import json
 
 from agent.state import AgentState, update_interaction, update_phase, AgentPhase
-from agent.tools import get_tool_by_name
+from agent.tools import get_tool_by_name, get_tool_action_instructions
 from llm import open_ai
 from llm.format import format_messages, format_actions_history, format_documents, \
     format_interaction, format_tool_instructions
@@ -33,7 +33,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         system_prompt = prompt.compile(
             documents=format_documents(state.documents),
             tool=format_interaction(state.interaction),
-            instructions=format_tool_instructions(get_tool_by_name(state.interaction.tool)),
+            instructions=get_tool_action_instructions(state.interaction.tool, state.interaction.tool_action),
             dynamic_context=dynamic_context,
             actions=format_actions_history(state.action_history)
         )

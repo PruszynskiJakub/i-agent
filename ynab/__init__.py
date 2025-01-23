@@ -575,7 +575,7 @@ async def get_dynamic_context(user_query: str, span) -> str:
             f"Amount: {result['amount'].get('amount')}\n"
             f"Category: {result['category'].get('category', {}).get('name', 'Not categorized')}\n"
             f"Account: {result['sides'].get('account', {}).get('name', 'Unknown')}\n"
-            f"Payee: {result['sides'].get('payee', {}).get('name', 'Unknown')}\n"
+            f"Payee: {result['sides'].get('payee', {}).get('name', '')}\n"
         )
     
     return "\n".join(formatted_results)
