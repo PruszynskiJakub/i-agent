@@ -7,7 +7,13 @@ from agent.state import (
     update_interaction
 )
 from llm import open_ai
-from llm.format import format_actions_history, format_messages, format_tools, format_documents
+from llm.format import (
+    format_actions_history,
+    format_messages,
+    format_tools,
+    format_documents,
+    format_tool_candidates
+)
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from agent.tools import get_tools
@@ -39,11 +45,7 @@ async def agent_decide(state: AgentState, trace) -> AgentState:
             tools=format_tools(get_tools()),
             actions=format_actions_history(state.action_history),
             documents=format_documents(state.documents),
-            tool_candidates=[{
-                "tool": c.tool_name,
-                "reason": c.reason,
-                "query": c.query
-            } for c in state.thoughts.tool_candidates] if state.thoughts else [],
+            tool_candidates=format_tool_candidates(state.thoughts.tool_candidates) if state.thoughts else "",
             overview=state.thoughts.chain_of_thought if state.thoughts else ""
         )
 
