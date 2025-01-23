@@ -52,7 +52,7 @@ class Interaction:
     """
     overview: str
     tool: str
-    tool_uuid: UUID
+    tool_uuid: Optional[UUID]
     tool_action: str
     payload: Dict[str, Any]
     status: str = "PENDING"
@@ -223,7 +223,7 @@ def new_interaction(state: AgentState) -> AgentState:
     interaction = Interaction(
         overview="",
         tool="",
-        tool_uuid=UUID(int=0),
+        tool_uuid=None,
         tool_action="",
         payload={},
         status="PENDING"
