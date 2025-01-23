@@ -456,13 +456,13 @@ from typing import Dict, Any
 
 from llm import open_ai
 from llm.prompts import get_prompt
-from llm.tracing import create_generation, end_generation
+from llm.tracing import create_generation, end_generation, create_event
 
-async def get_dynamic_context(user_query: str) -> str:
+async def get_dynamic_context(user_query: str, span) -> str:
     async def split_transaction(q: str) -> list[Dict[str, Any]]:
         prompt = get_prompt(name="ynab_split")
         system_prompt = prompt.compile()
-        generation = create_generation(None, "split_transaction", "gpt-4o", system_prompt)
+        generation = create_generation(span, "split_transaction", "gpt-4o", system_prompt)
 
         try:
             completion = await open_ai.completion(
@@ -487,7 +487,7 @@ async def get_dynamic_context(user_query: str) -> str:
         async def pick_amount(q: str) -> Dict[str, Any]:
             prompt = get_prompt(name="ynab_amount")
             system_prompt = prompt.compile()
-            generation = create_generation(None, "pick_amount", "gpt-4o", system_prompt)
+            generation = create_generation(span, "pick_amount", "gpt-4o", system_prompt)
 
             completion = await open_ai.completion(
                 messages=[
@@ -505,7 +505,7 @@ async def get_dynamic_context(user_query: str) -> str:
             system_prompt = prompt.compile(
                 accounts=_ynab_accounts
             )
-            generation = create_generation(None, "pick_sides", "gpt-4o", system_prompt)
+            generation = create_generation(span, "pick_sides", "gpt-4o", system_prompt)
             completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -522,7 +522,7 @@ async def get_dynamic_context(user_query: str) -> str:
             system_prompt = prompt.compile(
                 categories=_ynab_categories
             )
-            generation = create_generation(None, "pick_category", "gpt-4o", system_prompt)
+            generation = create_generation(span, "pick_category", "gpt-4o", system_prompt)
             completion = await open_ai.completion(
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -551,7 +551,9 @@ async def get_dynamic_context(user_query: str) -> str:
         }
 
     # First split the transaction
+    create_event(span, "processing_query", {"query": user_query})
     split_results = await split_transaction(user_query)
+    create_event(span, "split_results", {"results": split_results})
 
     # Process each split transaction in parallel
     transaction_tasks = [process_transaction(result["query"]) for result in split_results 
@@ -563,6 +565,7 @@ async def get_dynamic_context(user_query: str) -> str:
 
     # Gather all results
     results = await asyncio.gather(*transaction_tasks)
+    create_event(span, "processed_results", {"results": results})
     
     # Format results into a string
     formatted_results = []
