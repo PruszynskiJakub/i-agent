@@ -12,12 +12,12 @@ from llm.tracing import create_trace, end_trace
 
 async def agent_run(in_state: AgentState) -> str:
     state = in_state
-    user_query = state.messages[-1].content
+    user_query = state.user_query
     
     log_info(f"🚀 Starting agent run for query: {user_query[:200]}...")
     
     trace = create_trace(
-        name=in_state.messages[-1].content[:45],  # First 45 chars of user input as trace name
+        name=user_query[:45],  # First 45 chars of user input as trace name
         user_id=os.getenv("USER", "default_user"),
         metadata={
             'medium': 'slackk'
