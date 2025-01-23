@@ -6,7 +6,7 @@ from document.types import Document
 from agent.state import ActionRecord
 
 
-def format_actions(actions: List[ActionRecord]) -> str:
+def format_actions_history(actions: List[ActionRecord]) -> str:
     """Formats the executed actions into a string for the prompt
 
     Args:
@@ -27,8 +27,8 @@ def format_actions(actions: List[ActionRecord]) -> str:
         if action.output_documents:
             desc += "  <documents>\n"
             for doc in action.output_documents:
-                desc += f"    <document type='{doc.type.value}'>\n"
-                desc += f"      <text>{doc.content}</text>\n"
+                desc += f"    <document type='{doc.metadata['type'].value}'>\n"
+                desc += f"      <text>{doc.text}</text>\n"
                 desc += "    </document>\n"
             desc += "  </documents>\n"
         desc += "</action>"

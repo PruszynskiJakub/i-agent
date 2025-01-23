@@ -3,7 +3,7 @@ import json
 from todoist import get_dynamic_context
 from agent.state import AgentState, update_interaction
 from llm import open_ai
-from llm.format import format_messages, format_tool_instructions, format_actions, format_documents
+from llm.format import format_messages, format_tool_instructions, format_actions_history, format_documents
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from agent.tools import get_tool_by_name
@@ -31,7 +31,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             tool=format_tool_instructions(get_tool_by_name(state.interaction.tool)),
             step=state.interaction.overview,
             context=dynamic_context,
-            actions=format_actions(state.action_history),
+            actions=format_actions_history(state.action_history),
             documents=format_documents(state.documents)
         )
 
