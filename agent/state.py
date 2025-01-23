@@ -1,78 +1,113 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional
 from uuid import UUID
-
-from db.message import find_messages_by_conversation, save_message
-from message.utils import create_message
-from db.action import find_actions_by_conversation
-from db.document import find_documents_by_conversation
-from document.types import Document
-from tools.types import Action
-
+import enum
 from message.types import Message
+from document.types import Document
 
+class AgentPhase(enum.Enum):
+    PLAN = "plan"
+    DEFINE = "define" 
+    EXECUTE = "execute"
+    ANSWER = "answer"
 
 @dataclass(frozen=True)
-class ToolThought:
+class ToolCandidate:
+    """A single potential tool usage or action idea."""
+    tool_name: str
     reason: str
-    tool: str
-    query: str
+    confidence: float = 0.0
 
 @dataclass(frozen=True)
 class Thoughts:
-    tools: List[ToolThought]
+    """Internal reasoning plus recommended tool candidates."""
+    chain_of_thought: Optional[str]  # Hidden or partial reasoning text
+    tool_candidates: List[ToolCandidate] = field(default_factory=list)
+
+@dataclass(frozen=True)
+class Decision:
+    """High-level plan or next step the agent wants to take."""
+    overview: str
+    chosen_tool: Optional[str] = None
+    chosen_action: Optional[str] = None
+
+@dataclass(frozen=True)
+class ActionRecord:
+    """A record of an executed tool action."""
+    name: str  # e.g. "complete_task", "create_transaction"
+    tool: str
+    tool_uuid: Optional[UUID]
+    status: str  # "SUCCESS" or "ERROR"
+    input_payload: Dict[str, Any]
+    output_documents: List[Document]
+    step_description: str
 
 @dataclass(frozen=True)
 class Interaction:
+    """
+    Represents the current (or latest) interaction step
+    """
     overview: str
     tool: str
     tool_uuid: UUID
     tool_action: str
     payload: Dict[str, Any]
+    status: str = "PENDING"
 
+@dataclass(frozen=True)
+class DynamicContext:
+    """
+    Holds any domain-specific data fetched from external sources
+    """
+    data: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass(frozen=True)
 class AgentState:
+    conversation_uuid: str
     current_step: int
     max_steps: int
-    conversation_uuid: str
+    phase: AgentPhase
     messages: List[Message]
-    taken_actions: List[Action]
-    documents: List[Document]
-    interaction: Interaction
+    action_history: List[ActionRecord]
+    interaction: Optional[Interaction]
     thoughts: Optional[Thoughts] = None
+    decision: Optional[Decision] = None
+    documents: List[Document] = field(default_factory=list)
+    dynamic_context: Optional[DynamicContext] = None
+    final_answer: Optional[str] = None
 
     def copy(self, **kwargs) -> 'AgentState':
         current_values = {
             'conversation_uuid': self.conversation_uuid,
             'messages': self.messages.copy(),
-            'taken_actions': self.taken_actions.copy(),
+            'action_history': self.action_history.copy(),
             'documents': self.documents.copy(),
             'current_step': self.current_step,
             'max_steps': self.max_steps,
+            'phase': self.phase,
             'interaction': self.interaction,
-            'thoughts': self.thoughts
+            'thoughts': self.thoughts,
+            'decision': self.decision,
+            'dynamic_context': self.dynamic_context,
+            'final_answer': self.final_answer
         }
         current_values.update(kwargs)
         return AgentState(**current_values)
-
 
 def create_or_restore_state(conversation_uuid: str) -> AgentState:
     return AgentState(
         conversation_uuid=conversation_uuid,
         messages=find_messages_by_conversation(conversation_uuid),
-        taken_actions=find_actions_by_conversation(conversation_uuid),
+        action_history=[],  # Will be populated from actions DB
         documents=find_documents_by_conversation(conversation_uuid),
         current_step=0,
         max_steps=4,
-        interaction=Interaction(
-            overview="",
-            tool="",
-            tool_uuid=None,
-            tool_action="",
-            payload={}
-        ),
-        thoughts=None
+        phase=AgentPhase.PLAN,
+        interaction=None,
+        thoughts=None,
+        decision=None,
+        dynamic_context=None,
+        final_answer=None
     )
 
 
