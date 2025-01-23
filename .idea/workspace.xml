@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Refactor">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Simplify">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/define.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/define.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ynab/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,22 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Add spec template to project">
-      <option name="closed" value="true" />
-      <created>1736588768952</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1736588768952</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Fix condition">
-      <option name="closed" value="true" />
-      <created>1736619617916</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1736619617916</updated>
     </task>
     <task id="LOCAL-00061" summary="Commit">
       <option name="closed" value="true" />
@@ -560,7 +543,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737637576076</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="Improvements">
+      <option name="closed" value="true" />
+      <created>1737662575351</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1737662575351</updated>
+    </task>
+    <task id="LOCAL-00109" summary="Simplify">
+      <option name="closed" value="true" />
+      <created>1737662838678</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1737662838678</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -575,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix param name" />
     <MESSAGE value="Some small manual improvements" />
     <MESSAGE value="Remove status from ActionResult" />
     <MESSAGE value="passign result as document" />
@@ -596,10 +594,11 @@
     <MESSAGE value="Reformat" />
     <MESSAGE value="Rename method" />
     <MESSAGE value="Small fixes" />
-    <MESSAGE value="Simplify" />
     <MESSAGE value="Add method" />
     <MESSAGE value="Fixes" />
     <MESSAGE value="Refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
+    <MESSAGE value="Improvements" />
+    <MESSAGE value="Simplify" />
+    <option name="LAST_COMMIT_MESSAGE" value="Simplify" />
   </component>
 </project>
