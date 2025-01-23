@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 from uuid import UUID
 
 from todoist.service import execute_todoist
@@ -114,6 +114,22 @@ def get_tool_by_name(name)->Dict[str, Any]:
         if tool['name'] == name:
             return tool
     return {}
+
+def get_tools_by_names(names: List[str]) -> List[Dict[str, Any]]:
+    """Get multiple tools by their names
+    
+    Args:
+        names: List of tool names to fetch
+        
+    Returns:
+        List of matching tool dictionaries
+    """
+    tools = []
+    for name in names:
+        tool = get_tool_by_name(name)
+        if tool:
+            tools.append(tool)
+    return tools
 
 
 tool_handlers = {
