@@ -1,5 +1,17 @@
-from agent.state import AgentState
-from llm.tracing import create_span, end_span
+import json
+
+from agent.state import (
+    AgentState,
+    Decision,
+    AgentPhase,
+    update_phase
+)
+from llm import open_ai
+from llm.format import format_actions_history, format_messages, format_tools, format_documents
+from llm.prompts import get_prompt
+from llm.tracing import create_generation, end_generation
+from agent.tools import get_tools
+
 
 async def agent_decide(state: AgentState, trace) -> AgentState:
     """
@@ -10,12 +22,74 @@ async def agent_decide(state: AgentState, trace) -> AgentState:
         trace: Current trace context
         
     Returns:
-        Updated AgentState
+        Updated AgentState with decision
     """
-    span = create_span(trace, "agent_decide", input=state.decision)
-    
-    # For now just pass through the state
-    # Future: Add decision processing logic here
-    
-    end_span(span, output=state.decision)
-    return state
+    try:
+        # Update phase to DEFINE
+        state = update_phase(state, AgentPhase.DEFINE)
+        
+        # Get the decision prompt
+        prompt = get_prompt(
+            name="agent_decide",
+            label="latest"
+        )
+
+        # Format system prompt with current state
+        system_prompt = prompt.compile(
+            tools=format_tools(get_tools()),
+            actions=format_actions_history(state.action_history),
+            documents=format_documents(state.documents),
+            tool_candidates=[{
+                "tool": c.tool_name,
+                "reason": c.reason,
+                "query": c.query
+            } for c in state.thoughts.tool_candidates] if state.thoughts else [],
+            overview=state.thoughts.chain_of_thought if state.thoughts else ""
+        )
+
+        # Create generation trace
+        generation = create_generation(
+            trace=trace,
+            name="agent_decide",
+            model=prompt.config.get("model", "gpt-4o"),
+            input=system_prompt,
+            metadata={"conversation_id": state.conversation_uuid}
+        )
+
+        # Get completion from LLM
+        completion = await open_ai.completion(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                *format_messages(state.messages)
+            ],
+            model=prompt.config.get("model", "gpt-4o"),
+            json_mode=True
+        )
+
+        try:
+            response_data = json.loads(completion)
+            
+            # Create decision from response
+            decision = Decision(
+                overview=response_data.get("overview", ""),
+                chosen_tool=response_data.get("chosen_tool"),
+                chosen_action=response_data.get("chosen_action")
+            )
+            
+            updated_state = state.copy(decision=decision)
+
+        except json.JSONDecodeError as e:
+            generation.end(
+                output=None,
+                level="ERROR",
+                status_message=f"Failed to parse JSON response: {str(e)}"
+            )
+            raise Exception(f"Failed to parse JSON response: {str(e)}")
+
+        # End the generation trace
+        end_generation(generation, output=response_data)
+
+        return updated_state
+
+    except Exception as e:
+        raise Exception(f"Error in agent decide: {str(e)}")
