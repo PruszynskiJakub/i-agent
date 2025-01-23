@@ -142,12 +142,6 @@ def format_interaction(interaction) -> str:
         desc += f"  <tool_uuid>{interaction.tool_uuid}</tool_uuid>\n"
     desc += f"  <tool_action>{interaction.tool_action}</tool_action>\n"
     desc += f"  <query>{interaction.query}</query>\n"
-    if interaction.payload:
-        desc += "  <payload>\n"
-        for key, value in interaction.payload.items():
-            desc += f"    <param name='{key}'>{value}</param>\n"
-        desc += "  </payload>\n"
-    desc += f"  <status>{interaction.status}</status>\n"
     desc += "</interaction>"
     return desc
 
