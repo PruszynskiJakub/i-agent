@@ -41,7 +41,8 @@ class DocumentModel(BaseModel):
 class ActionRecordModel(BaseModel):
     uuid = CharField(primary_key=True)
     name = CharField()
-    tool_uuid = CharField()
+    tool = CharField()
+    tool_uuid = CharField(null=True)
     payload = JSONField()
     status = CharField()
     conversation_uuid = CharField()
