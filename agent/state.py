@@ -6,6 +6,7 @@ from message.types import Message
 from document.types import Document
 from db.message import find_messages_by_conversation, save_message
 from db.document import find_documents_by_conversation
+from db.action import find_action_records_by_conversation
 from message.utils import create_message
 
 class AgentPhase(enum.Enum):
@@ -94,7 +95,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
     return AgentState(
         conversation_uuid=conversation_uuid,
         messages=find_messages_by_conversation(conversation_uuid),
-        action_history=[],  # Will be populated from actions DB
+        action_history=find_action_records_by_conversation(conversation_uuid),
         documents=find_documents_by_conversation(conversation_uuid),
         current_step=0,
         max_steps=4,
