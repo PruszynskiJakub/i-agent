@@ -1,12 +1,9 @@
-import uuid
 import json
-from uuid import UUID
 
-from document.utils import create_error_document
-from logger.logger import log_info, log_error, log_tool_call
 from agent.state import AgentState, record_action
+from document.utils import create_error_document
 from llm.tracing import create_span, end_span
-from tools.types import Action
+from logger.logger import log_info, log_error, log_tool_call
 from tools.provider import tool_handlers
 
 
@@ -33,16 +30,16 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             "conversation_uuid": state.conversation_uuid
         }
         log_info(f"🔧 Executing tool '{tool}' with action '{tool_action}'\nParameters: {json.dumps(params, indent=2)}")
-        
+
         tool_handler = tool_handlers.get(tool)
         documents = await tool_handler(state.interaction.tool_action, params, execution_span)
-        
+
         log_tool_call(
             f"{tool}.{tool_action}",
             params,
             {"document_count": len(documents)}
         )
-        
+
         action_dict = {
             'name': state.interaction.tool_action,
             'tool': tool,
@@ -54,8 +51,9 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         }
 
         updated_state = record_action(state, action_dict)
-        
-        log_info(f"✅ Tool execution successful: {tool} - {state.interaction.tool_action}\nResult documents: {len(documents)} document(s)")
+
+        log_info(
+            f"✅ Tool execution successful: {tool} - {state.interaction.tool_action}\nResult documents: {len(documents)} document(s)")
         # for idx, doc in enumerate(documents, 1):
         #     log_info(f"Document {idx}: {doc.type.value} - {len(doc.content)} chars")
         #
@@ -71,13 +69,13 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
     except Exception as e:
         error_msg = f"Error executing tool '{state.interaction.tool}': {str(e)}"
         log_error(error_msg)
-        
+
         error_doc = create_error_document(
             error=e,
             error_context=f"Executing tool '{state.interaction.tool}' with action '{state.interaction.tool_action}'",
             conversation_uuid=state.conversation_uuid
         )
-        
+
         action_dict = {
             'name': state.interaction.tool_action,
             'tool': state.interaction.tool,
@@ -87,14 +85,14 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'documents': [error_doc],
             'step_description': state.interaction.overview
         }
-        
+
         updated_state = record_action(state, action_dict)
-        
+
         end_span(
             execution_span,
             output=updated_state.action_history[-1],
             level="ERROR",
             status_message=error_msg
         )
-        
+
         return updated_state
