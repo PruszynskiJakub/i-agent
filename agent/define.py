@@ -1,13 +1,12 @@
 import json
 
-from todoist import get_dynamic_context
 from agent.state import AgentState, update_interaction, update_phase, AgentPhase
 from llm import open_ai
-from llm.format import format_messages, format_tool_instructions, format_actions_history, format_documents, \
+from llm.format import format_messages, format_actions_history, format_documents, \
     format_interaction
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from agent.tools import get_tool_by_name
+from todoist import get_dynamic_context
 
 
 async def agent_define(state: AgentState, trace) -> AgentState:
@@ -59,23 +58,10 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         # Parse response into Definition object
         try:
             response_data = json.loads(completion)
-            
-            # Validate response structure
-            if "_reasoning" not in response_data:
-                raise ValueError("Response missing required '_reasoning' field")
-                
-            # Update state with response data
-            update_data = {
-                'dynamic_context': response_data.get("_reasoning", ""),
+            updated_state = update_interaction(state, {
                 'payload': response_data.get("payload", {})
-            }
-            
-            # If payload is null, mark interaction as failed
-            if response_data.get("payload") is None:
-                update_data['status'] = "ERROR"
-                
-            updated_state = update_interaction(state, update_data)
-            
+            })
+
         except (json.JSONDecodeError, ValueError) as e:
             generation.end(
                 output=None,
@@ -86,7 +72,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
 
         # End the generation trace
         end_generation(generation, output=response_data)
-        
+
         return updated_state
 
     except Exception as e:
