@@ -5,7 +5,7 @@ from agent.answer import agent_answer
 from agent.define import agent_define
 from agent.execute import agent_execute
 from agent.plan import agent_plan
-from agent.state import AgentState, should_continue, increment_current_step
+from agent.state import AgentState, next_iteration, complete_iteration
 from llm.tracing import create_trace, end_trace
 
 

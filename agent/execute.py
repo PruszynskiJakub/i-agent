@@ -4,7 +4,7 @@ from uuid import UUID
 
 from document.utils import create_error_document
 from logger.logger import log_info, log_error, log_tool_call
-from agent.state import AgentState, add_taken_action
+from agent.state import AgentState, record_action
 from llm.tracing import create_span, end_span
 from tools.types import Action
 from tools.provider import tool_handlers
