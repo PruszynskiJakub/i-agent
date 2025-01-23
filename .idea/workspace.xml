@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rename method" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Small fixes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,22 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Fix uuid">
-      <option name="closed" value="true" />
-      <created>1736281983935</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1736281983935</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Add extra icons">
-      <option name="closed" value="true" />
-      <created>1736282502980</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1736282502980</updated>
     </task>
     <task id="LOCAL-00047" summary="Remove instructions part from planning">
       <option name="closed" value="true" />
@@ -556,7 +543,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737624616587</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="Rename method">
+      <option name="closed" value="true" />
+      <created>1737624836467</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1737624836467</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Small fixes">
+      <option name="closed" value="true" />
+      <created>1737625002026</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1737625002026</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -571,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add upload to gitignore" />
     <MESSAGE value="Some refactoring" />
     <MESSAGE value="Add missing uuid" />
     <MESSAGE value="Fix param name" />
@@ -596,6 +598,7 @@
     <MESSAGE value="Reformat" />
     <MESSAGE value="Simplify" />
     <MESSAGE value="Rename method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename method" />
+    <MESSAGE value="Small fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small fixes" />
   </component>
 </project>

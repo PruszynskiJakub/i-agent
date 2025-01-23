@@ -69,21 +69,11 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
             ]
             
             thoughts = Thoughts(
-                chain_of_thought=response_data.get("reasoning"),
+                chain_of_thought=response_data.get("overview", ""),
                 tool_candidates=tool_candidates
             )
             
-            # Select first tool candidate if available
-            first_candidate = tool_candidates[0] if tool_candidates else None
-            
-            # Update interaction state
-            updated_state = update_interaction(state, {
-                'overview': response_data.get("overview", ""),
-                'tool': first_candidate.tool_name if first_candidate else "",
-                'tool_uuid': None,
-                'tool_action': first_candidate.query if first_candidate else "",
-                'payload': {}
-            })
+            updated_state = state.copy(thoughts=thoughts)
         except json.JSONDecodeError as e:
             generation.end(
                 output=None,
