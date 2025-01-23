@@ -196,7 +196,7 @@ def set_dynamic_context(state: AgentState, context: str) -> AgentState:
     """
     return state.copy(dynamic_context=context)
 
-def next_iteration(state: AgentState) -> bool:
+def should_interact(state: AgentState) -> bool:
     return state.current_step < state.max_steps
 
 def update_interaction(state: AgentState, updates: Dict[str, Any]) -> AgentState:
@@ -209,3 +209,29 @@ def update_interaction(state: AgentState, updates: Dict[str, Any]) -> AgentState
     }
     current_values.update(updates)
     return state.copy(interaction=Interaction(**current_values))
+
+def new_interaction(state: AgentState, overview: str, tool: str, tool_uuid: UUID, 
+                   tool_action: str, payload: Dict[str, Any]) -> AgentState:
+    """
+    Create a new Interaction object and update the state with it.
+
+    Args:
+        state: Current agent state
+        overview: Description of the interaction
+        tool: Name of the tool to use
+        tool_uuid: UUID of the tool
+        tool_action: Name of the action to perform
+        payload: Parameters for the action
+
+    Returns:
+        Updated AgentState with new interaction
+    """
+    interaction = Interaction(
+        overview=overview,
+        tool=tool,
+        tool_uuid=tool_uuid,
+        tool_action=tool_action,
+        payload=payload,
+        status="PENDING"
+    )
+    return state.copy(interaction=interaction)
