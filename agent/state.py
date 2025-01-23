@@ -124,7 +124,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
     )
 
 
-def complete_iteration(state: AgentState) -> AgentState:
+def complete_interaction(state: AgentState) -> AgentState:
     """
     Increments current_step by 1 and clears interaction and dynamic_context.
 

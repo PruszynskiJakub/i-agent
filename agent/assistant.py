@@ -6,7 +6,7 @@ from agent.define import agent_define
 from agent.execute import agent_execute
 from agent.plan import agent_plan
 from agent.decide import agent_decide
-from agent.state import AgentState, should_interact, complete_iteration, new_interaction
+from agent.state import AgentState, should_interact, complete_interaction, new_interaction
 from llm.tracing import create_trace, end_trace
 
 
@@ -42,7 +42,7 @@ async def agent_run(in_state: AgentState) -> str:
             
             state = await agent_define(state, trace)
             state = await agent_execute(state, trace)
-            state = complete_iteration(state)
+            state = complete_interaction(state)
 
         state = await agent_answer(state, trace)
         final_answer = state.assistant_response
