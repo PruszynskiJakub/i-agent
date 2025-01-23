@@ -3,34 +3,34 @@ from typing import List
 
 from message.types import Message
 from document.types import Document
-from tools.types import Action
+from agent.state import ActionRecord
 
 
-def format_actions(actions: List[Action]) -> str:
+def format_actions(actions: List[ActionRecord]) -> str:
     """Formats the executed actions into a string for the prompt
 
     Args:
-        actions: List of Action objects
+        actions: List of ActionRecord objects
 
     Returns:
         str: Formatted string describing all executed actions
     """
     action_descriptions = []
     for action in actions:
-        desc = f"<action name='{action.name}' step='{action.step_description}'>\n"
+        desc = f"<action name='{action.name}' tool='{action.tool}'>\n"
         desc += "  <parameters>\n"
-        for param_name, param_value in action.payload.items():
+        for param_name, param_value in action.input_payload.items():
             desc += f"    <param name='{param_name}'>{param_value}</param>\n"
         desc += "  </parameters>\n"
-        desc += f"    <status>{action.status}</status>\n"
-        if action.documents:
-            desc += "    <documents>\n"
-            for doc in action.documents:
-                desc += f"      <document source='{doc.metadata.get('source', '')}' name='{doc.metadata.get('name', '')}'>\n"
-                desc += f"        <description>{doc.metadata.get('description', '')}</description>\n"
-                desc += f"        <text>{doc.text}</text>\n"
-                desc += "      </document>\n"
-            desc += "    </documents>\n"
+        desc += f"  <status>{action.status}</status>\n"
+        desc += f"  <description>{action.step_description}</description>\n"
+        if action.output_documents:
+            desc += "  <documents>\n"
+            for doc in action.output_documents:
+                desc += f"    <document type='{doc.type.value}'>\n"
+                desc += f"      <text>{doc.content}</text>\n"
+                desc += "    </document>\n"
+            desc += "  </documents>\n"
         desc += "</action>"
         action_descriptions.append(desc)
     return "\n".join(action_descriptions)
