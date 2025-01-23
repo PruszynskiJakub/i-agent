@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Small fixes">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,22 +165,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Remove instructions part from planning">
-      <option name="closed" value="true" />
-      <created>1736283093479</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1736283093479</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Use system prompt as input for generatin at answe">
-      <option name="closed" value="true" />
-      <created>1736283319283</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1736283319283</updated>
     </task>
     <task id="LOCAL-00049" summary="Clean up">
       <option name="closed" value="true" />
@@ -559,7 +542,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737625002026</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Simplify">
+      <option name="closed" value="true" />
+      <created>1737626549682</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1737626549682</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Refactor">
+      <option name="closed" value="true" />
+      <created>1737627075231</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1737627075231</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -574,7 +573,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Some refactoring" />
     <MESSAGE value="Add missing uuid" />
     <MESSAGE value="Fix param name" />
     <MESSAGE value="Some small manual improvements" />
@@ -596,9 +594,10 @@
     <MESSAGE value="Rename file" />
     <MESSAGE value="Repackage tools" />
     <MESSAGE value="Reformat" />
-    <MESSAGE value="Simplify" />
     <MESSAGE value="Rename method" />
     <MESSAGE value="Small fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small fixes" />
+    <MESSAGE value="Simplify" />
+    <MESSAGE value="Refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
   </component>
 </project>
