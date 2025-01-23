@@ -85,14 +85,18 @@ def format_tools_with_instructions(tools: List[Dict]) -> str:
         tools: List of tool dictionaries
 
     Returns:
-        str: Formatted string describing all tools
+        str: Formatted string describing all tools with their action instructions
     """
     tool_descriptions = []
     for tool in tools:
         desc = f"<tool uuid='{tool['uuid']}'>\n"
         desc += f"  <name>{tool['name']}</name>\n"
         desc += f"  <description>{tool['description']}</description>\n"
-        desc += f"  <instructions>{tool['instructions']}</instructions>\n"
+        desc += "  <instructions>\n"
+        if 'instructions' in tool:
+            for action, instruction in tool['instructions'].items():
+                desc += f"    <action name='{action}'>{instruction}</action>\n"
+        desc += "  </instructions>\n"
         desc += "</tool>"
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)
@@ -100,7 +104,11 @@ def format_tools_with_instructions(tools: List[Dict]) -> str:
 def format_tool_instructions(tool) -> str:
     desc = f"  <name>{tool['name']}</name>\n"
     desc += f"  <description>{tool['description']}</description>\n"
-    desc += f"  <instructions>{tool['instructions']}</instructions>\n"
+    desc += "  <instructions>\n"
+    if 'instructions' in tool:
+        for action, instruction in tool['instructions'].items():
+            desc += f"    <action name='{action}'>{instruction}</action>\n"
+    desc += "  </instructions>\n"
     return desc
 
 
