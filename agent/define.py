@@ -7,7 +7,8 @@ from llm.format import format_messages, format_actions_history, format_documents
     format_interaction, format_tool_instructions
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from todoist import get_dynamic_context
+from todoist import get_dynamic_context as get_todoist_context
+from ynab import get_dynamic_context as get_ynab_context
 
 
 async def agent_define(state: AgentState, trace) -> AgentState:
@@ -18,10 +19,12 @@ async def agent_define(state: AgentState, trace) -> AgentState:
     try:
         # Update phase to DEFINE
         state = update_phase(state, AgentPhase.DEFINE)
-        # Set dynamic context based on tool
+        # Set dynamic context based on tool and action
         dynamic_context = ""
         if state.interaction.tool == "todoist":
-            dynamic_context = get_dynamic_context()
+            dynamic_context = get_todoist_context()
+        elif state.interaction.tool == "ynab" and state.interaction.tool_action == "add_transaction":
+            dynamic_context = await get_ynab_context(state.messages[-1].content, trace)
 
         # Get the definition prompt from repository
         prompt = get_prompt(
