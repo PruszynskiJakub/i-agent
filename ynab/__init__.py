@@ -450,6 +450,133 @@ _ynab_categories = """
     </category_group>
 """
 
+import asyncio
+import json
+from typing import Dict, Any
+
+from llm import open_ai
+from llm.prompts import get_prompt
+from llm.tracing import create_generation, end_generation
+
+async def get_dynamic_context(user_query: str) -> str:
+    async def split_transaction(q: str) -> list[Dict[str, Any]]:
+        prompt = get_prompt(name="ynab_split")
+        system_prompt = prompt.compile()
+        generation = create_generation(None, "split_transaction", "gpt-4o", system_prompt)
+
+        try:
+            completion = await open_ai.completion(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": q}
+                ],
+                model=prompt.config.get("model", "gpt-4o"),
+                json_mode=True
+            )
+            end_generation(generation, completion)
+            json_completion = json.loads(completion)
+            return json_completion['result']
+        except Exception as e:
+            return [{
+                "query": q,
+                "error_code": "SPLIT_FAILED",
+                "error_message": f"Failed to split transaction: {str(e)}"
+            }]
+
+    async def process_transaction(transaction_query: str):
+        async def pick_amount(q: str) -> Dict[str, Any]:
+            prompt = get_prompt(name="ynab_amount")
+            system_prompt = prompt.compile()
+            generation = create_generation(None, "pick_amount", "gpt-4o", system_prompt)
+
+            completion = await open_ai.completion(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": q}
+                ],
+                model=prompt.config.get("model", "gpt-4o"),
+                json_mode=True
+            )
+            end_generation(generation, completion)
+            return json.loads(completion)
+
+        async def pick_sides(q: str) -> Dict[str, Any]:
+            prompt = get_prompt(name="ynab_accounts")
+            system_prompt = prompt.compile(
+                accounts=_ynab_accounts
+            )
+            generation = create_generation(None, "pick_sides", "gpt-4o", system_prompt)
+            completion = await open_ai.completion(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": q}
+                ],
+                model=prompt.config.get("model", "gpt-4o"),
+                json_mode=True
+            )
+            end_generation(generation, completion)
+            return json.loads(completion)
+
+        async def pick_category(q: str) -> Dict[str, Any]:
+            prompt = get_prompt(name="ynab_category")
+            system_prompt = prompt.compile(
+                categories=_ynab_categories
+            )
+            generation = create_generation(None, "pick_category", "gpt-4o", system_prompt)
+            completion = await open_ai.completion(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": q}
+                ],
+                model=prompt.config.get("model", "gpt-4o"),
+                json_mode=True
+            )
+            end_generation(generation, completion)
+            return json.loads(completion)
+
+        # Run amount, sides and category in parallel
+        amount_task = asyncio.create_task(pick_amount(transaction_query))
+        sides_task = asyncio.create_task(pick_sides(transaction_query))
+        category_task = asyncio.create_task(pick_category(transaction_query))
+
+        amount_result, sides_result, category_result = await asyncio.gather(
+            amount_task, sides_task, category_task
+        )
+
+        return {
+            "amount": amount_result,
+            "sides": sides_result,
+            "category": category_result,
+            "query": transaction_query
+        }
+
+    # First split the transaction
+    split_results = await split_transaction(user_query)
+
+    # Process each split transaction in parallel
+    transaction_tasks = [process_transaction(result["query"]) for result in split_results 
+                        if "error_code" not in result]
+
+    # If no valid transactions after split, process original query
+    if not transaction_tasks:
+        transaction_tasks = [process_transaction(user_query)]
+
+    # Gather all results
+    results = await asyncio.gather(*transaction_tasks)
+    
+    # Format results into a string
+    formatted_results = []
+    for result in results:
+        formatted_results.append(
+            f"Transaction: {result['query']}\n"
+            f"Amount: {result['amount'].get('amount')}\n"
+            f"Category: {result['category'].get('category', {}).get('name', 'Not categorized')}\n"
+            f"Account: {result['sides'].get('account', {}).get('name', 'Unknown')}\n"
+            f"Payee: {result['sides'].get('payee', {}).get('name', 'Unknown')}\n"
+        )
+    
+    return "\n".join(formatted_results)
+
 _ynab_accounts = """
     <account>
         <id>f642f5db-efcc-425e-a69e-59242628d143</id>
