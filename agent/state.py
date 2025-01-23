@@ -20,7 +20,7 @@ class ToolCandidate:
     """A single potential tool usage or action idea."""
     tool_name: str
     reason: str
-    confidence: float = 0.0
+    query: str
 
 @dataclass(frozen=True)
 class Thoughts:
