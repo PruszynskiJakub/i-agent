@@ -1,6 +1,13 @@
 import json
 
-from agent.state import AgentState, update_interaction, AgentPhase, update_phase
+from agent.state import (
+    AgentState, 
+    update_interaction, 
+    AgentPhase, 
+    update_phase,
+    Thoughts,
+    ToolCandidate
+)
 from llm import open_ai
 from llm.format import format_actions_history, format_messages, format_tools, format_documents
 from llm.prompts import get_prompt
@@ -51,12 +58,31 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
 
         try:
             response_data = json.loads(completion)
+            
+            # Create thoughts from response
+            tool_candidates = [
+                ToolCandidate(
+                    tool_name=t["tool"],
+                    reason=t["reason"],
+                    query=t["query"]
+                ) for t in response_data.get("tool_candidates", [])
+            ]
+            
+            thoughts = Thoughts(
+                chain_of_thought=response_data.get("reasoning"),
+                tool_candidates=tool_candidates
+            )
+            
+            # Select first tool candidate if available
+            first_candidate = tool_candidates[0] if tool_candidates else None
+            
+            # Update interaction state
             updated_state = update_interaction(state, {
-                'overview': response_data.get("step", ""),
-                'tool': response_data.get("tool", ""),
-                'tool_uuid': response_data.get("tool_uuid", ""),
-                'tool_action': response_data.get("tool_action", ""),
-                'payload': response_data.get("payload", {})
+                'overview': response_data.get("overview", ""),
+                'tool': first_candidate.tool_name if first_candidate else "",
+                'tool_uuid': None,
+                'tool_action': first_candidate.query if first_candidate else "",
+                'payload': {}
             })
         except json.JSONDecodeError as e:
             generation.end(
