@@ -59,18 +59,30 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         # Parse response into Definition object
         try:
             response_data = json.loads(completion)
+            
+            # Validate response structure
+            if "_reasoning" not in response_data:
+                raise ValueError("Response missing required '_reasoning' field")
+                
             # Update state with response data
-            updated_state = update_interaction(state, {
-                'tool_action': response_data.get("action", state.interaction.tool_action),
-                'payload': response_data.get("params", {})
-            })
-        except json.JSONDecodeError as e:
+            update_data = {
+                'dynamic_context': response_data.get("_reasoning", ""),
+                'payload': response_data.get("payload", {})
+            }
+            
+            # If payload is null, mark interaction as failed
+            if response_data.get("payload") is None:
+                update_data['status'] = "ERROR"
+                
+            updated_state = update_interaction(state, update_data)
+            
+        except (json.JSONDecodeError, ValueError) as e:
             generation.end(
                 output=None,
                 level="ERROR",
-                status_message=f"Failed to parse JSON response: {str(e)}"
+                status_message=f"Failed to process response: {str(e)}"
             )
-            raise Exception(f"Failed to parse JSON response: {str(e)}")
+            raise Exception(f"Failed to process response: {str(e)}")
 
         # End the generation trace
         end_generation(generation, output=response_data)
