@@ -24,7 +24,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         if state.interaction.tool == "todoist":
             dynamic_context = get_todoist_context()
         elif state.interaction.tool == "ynab" and state.interaction.tool_action == "add_transaction":
-            dynamic_context = await get_ynab_context(state.messages[-1].content, trace)
+            dynamic_context = await get_ynab_context(state.user_query, trace)
 
         # Get the definition prompt from repository
         prompt = get_prompt(
