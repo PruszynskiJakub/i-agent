@@ -1,6 +1,6 @@
 from agent.state import AgentState, add_message
 from llm import open_ai
-from llm.format import format_actions
+from llm.format import format_actions, format_documents
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 
