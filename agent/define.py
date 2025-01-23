@@ -17,7 +17,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
     try:
         # Set dynamic context based on tool
         dynamic_context = ""
-        if state.step_info.tool == "todoist":
+        if state.interaction.tool == "todoist":
             dynamic_context = get_dynamic_context()
 
         # Get the definition prompt from repository
@@ -28,10 +28,10 @@ async def agent_define(state: AgentState, trace) -> AgentState:
 
         # Format the system prompt with current state
         system_prompt = prompt.compile(
-            tool_instructions=format_tool_instructions(get_tool_by_name(state.step_info.tool)),
-            current_step=state.step_info.overview,
+            tool_instructions=format_tool_instructions(get_tool_by_name(state.interaction.tool)),
+            current_step=state.interaction.overview,
             dynamic_context=dynamic_context,
-            taken_actions=format_actions(state.taken_actions),
+            taken_actions=format_actions(state.action_history),
             documents=format_documents(state.documents)
         )
 
