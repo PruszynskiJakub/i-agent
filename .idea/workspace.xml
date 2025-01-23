@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Repackage tools">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
-    </list>
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rename method" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -166,30 +163,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Clean up">
-      <option name="closed" value="true" />
-      <created>1736240288752</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1736240288752</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Clean up">
-      <option name="closed" value="true" />
-      <created>1736240361512</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1736240361512</updated>
-    </task>
-    <task id="LOCAL-00044" summary="Clean up">
-      <option name="closed" value="true" />
-      <created>1736242265558</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1736242265558</updated>
     </task>
     <task id="LOCAL-00045" summary="Fix uuid">
       <option name="closed" value="true" />
@@ -559,7 +532,31 @@
       <option name="project" value="LOCAL" />
       <updated>1737619872069</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="Reformat">
+      <option name="closed" value="true" />
+      <created>1737624356652</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1737624356652</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Simplify">
+      <option name="closed" value="true" />
+      <created>1737624530337</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1737624530337</updated>
+    </task>
+    <task id="LOCAL-00093" summary="Rename method">
+      <option name="closed" value="true" />
+      <created>1737624616587</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1737624616587</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -574,7 +571,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add docs formatting" />
     <MESSAGE value="Add upload to gitignore" />
     <MESSAGE value="Some refactoring" />
     <MESSAGE value="Add missing uuid" />
@@ -589,7 +585,6 @@
     <MESSAGE value="Remove unused methods" />
     <MESSAGE value="Add peewee docs" />
     <MESSAGE value="Remove old file" />
-    <MESSAGE value="Simplify" />
     <MESSAGE value="Remove empty lines" />
     <MESSAGE value="Remove old files" />
     <MESSAGE value="Fixes" />
@@ -597,8 +592,10 @@
     <MESSAGE value="Comment out some code" />
     <MESSAGE value="Reorder" />
     <MESSAGE value="Rename file" />
-    <MESSAGE value="Reformat" />
     <MESSAGE value="Repackage tools" />
-    <option name="LAST_COMMIT_MESSAGE" value="Repackage tools" />
+    <MESSAGE value="Reformat" />
+    <MESSAGE value="Simplify" />
+    <MESSAGE value="Rename method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename method" />
   </component>
 </project>

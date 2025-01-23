@@ -2,7 +2,7 @@ import json
 
 from agent.state import AgentState, update_interaction
 from llm import open_ai
-from llm.format import format_actions, format_messages, format_tools, format_documents
+from llm.format import format_actions_history, format_messages, format_tools, format_documents
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from agent.tools import get_tools
@@ -23,7 +23,7 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
         # Format the system prompt with current state
         system_prompt = prompt.compile(
             tools=format_tools(get_tools()),
-            actions=format_actions(state.action_history),
+            actions=format_actions_history(state.action_history),
             documents=format_documents(state.documents)
         )
 
