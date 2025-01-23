@@ -81,6 +81,14 @@ class AgentState:
                 return message.content
         return ""
 
+    @property
+    def assistant_response(self) -> str:
+        """Returns the content of the last assistant message"""
+        for message in reversed(self.messages):
+            if message.role == "assistant":
+                return message.content
+        return ""
+
     def copy(self, **kwargs) -> 'AgentState':
         current_values = {
             'conversation_uuid': self.conversation_uuid,
