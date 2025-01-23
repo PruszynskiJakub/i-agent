@@ -15,10 +15,29 @@ def get_tools():
                 "add_transaction": """
                 {
                     "params": {
-                        "query": "The query representing a full transaction or list of transactions including amount, accounts, currencies and key details required to categorize it properly"
+                        "transactions": [{
+                            "account_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "date": "2025-01-23",
+                            "amount": 0,
+                            "payee_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "payee_name": "string",
+                            "category_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "memo": "string",
+                            "cleared": "cleared",
+                            "approved": true,
+                            "flag_color": "red",
+                            "subtransactions": [{
+                                "amount": 0,
+                                "payee_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "payee_name": "string",
+                                "category_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "memo": "string"
+                            }],
+                            "import_id": "string"
+                        }]
                     }
                 }
-                Use: Creates one or multiple transactions in the user's budget
+                Use: Creates one or multiple transactions in the user's budget. Required fields are account_id, date, and amount. Amount must be in milliunits (e.g. $10.00 = 10000).
                 """
             }
         },
