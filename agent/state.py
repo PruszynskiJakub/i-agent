@@ -107,8 +107,21 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
     )
 
 
-def increment_current_step(state: AgentState) -> AgentState:
-    return state.copy(current_step=state.current_step + 1)
+def complete_iteration(state: AgentState) -> AgentState:
+    """
+    Increments current_step by 1 and clears interaction and dynamic_context.
+
+    Args:
+        state: Current agent state
+
+    Returns:
+        Updated AgentState with incremented current_step and cleared fields
+    """
+    return state.copy(
+        current_step=state.current_step + 1,
+        interaction=None,
+        dynamic_context=""
+    )
 
 
 def add_message(state: AgentState, content, role) -> AgentState:
@@ -117,19 +130,19 @@ def add_message(state: AgentState, content, role) -> AgentState:
     return state.copy(messages=[*state.messages, message])
 
 
-def add_taken_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentState:
+def record_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentState:
     """
-    Create an Action in the database and add it to the state
-    
+    Create an Action in the database and add it to the state's action_history
+
     Args:
         state: Current agent state
         action_dict: Dictionary containing action data
-            
+
     Returns:
-        Updated AgentState with new action
+        Updated AgentState with new action in action_history
     """
     from db.action import create_action
-    
+
     action = create_action(
         conversation_uuid=state.conversation_uuid,
         name=action_dict['name'],
@@ -139,14 +152,51 @@ def add_taken_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentSta
         documents=action_dict.get('documents', []),
         step_description=action_dict.get('step_description', '')
     )
-    
-    return state.copy(taken_actions=[*state.taken_actions, action])
+
+    # Create an ActionRecord and add it to action_history
+    action_record = ActionRecord(
+        name=action.name,
+        tool=action_dict.get('tool', ''),
+        tool_uuid=action.tool_uuid,
+        status=action.status,
+        input_payload=action.payload,
+        output_documents=action.documents,
+        step_description=action.step_description
+    )
+
+    return state.copy(action_history=state.action_history + [action_record])
 
 
 def add_documents(state: AgentState, documents: List[Document]) -> AgentState:
     return state.copy(documents=[*state.documents, *documents])
 
-def should_continue(state: AgentState) -> bool:
+def update_phase(state: AgentState, new_phase: AgentPhase) -> AgentState:
+    """
+    Update the phase of the AgentState
+
+    Args:
+        state: Current agent state
+        new_phase: The new phase to set
+
+    Returns:
+        Updated AgentState with new phase
+    """
+    return state.copy(phase=new_phase)
+
+def set_dynamic_context(state: AgentState, context: str) -> AgentState:
+    """
+    Set the dynamic context in the AgentState
+
+    Args:
+        state: Current agent state
+        context: New dynamic context string
+
+    Returns:
+        Updated AgentState with updated dynamic_context
+    """
+    return state.copy(dynamic_context=context)
+
+def next_iteration(state: AgentState) -> bool:
     return state.current_step < state.max_steps
 
 def update_interaction(state: AgentState, updates: Dict[str, Any]) -> AgentState:

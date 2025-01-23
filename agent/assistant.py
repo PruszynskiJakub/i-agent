@@ -26,7 +26,7 @@ async def agent_run(in_state: AgentState) -> str:
     )
 
     try:
-        while should_continue(state):
+        while next_iteration(state):
             log_info(f"📍 Step {state.current_step + 1}/{state.max_steps}")
             state = await agent_plan(state, trace)
 
@@ -39,7 +39,7 @@ async def agent_run(in_state: AgentState) -> str:
             
             state = await agent_define(state, trace)
             state = await agent_execute(state, trace)
-            state = increment_current_step(state)
+            state = complete_iteration(state)
 
         state = await agent_answer(state, trace)
         final_answer = state.messages[-1].content

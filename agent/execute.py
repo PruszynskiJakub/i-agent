@@ -56,7 +56,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'step_description': state.step_info.overview
         }
 
-        updated_state = add_taken_action(state, action_dict)
+        updated_state = record_action(state, action_dict)
         
         log_info(f"✅ Tool execution successful: {tool} - {state.step_info.tool_action}\nResult documents: {len(documents)} document(s)")
         # for idx, doc in enumerate(documents, 1):
@@ -90,7 +90,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'step_description': state.step_info.overview
         }
         
-        updated_state = add_taken_action(state, action_dict)
+        updated_state = record_action(state, action_dict)
         
         end_span(
             execution_span,
