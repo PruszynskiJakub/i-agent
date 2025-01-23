@@ -2,6 +2,8 @@ from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional
 from uuid import UUID
 import enum
+
+from action.types import ActionRecord
 from message.types import Message
 from document.types import Document
 from db.message import find_messages_by_conversation, save_message
@@ -27,18 +29,6 @@ class Thoughts:
     """Internal reasoning plus recommended tool candidates."""
     chain_of_thought: Optional[str]  # Hidden or partial reasoning text
     tool_candidates: List[ToolCandidate] = field(default_factory=list)
-
-
-@dataclass(frozen=True)
-class ActionRecord:
-    """A record of an executed tool action."""
-    name: str  # e.g. "complete_task", "create_transaction"
-    tool: str
-    tool_uuid: Optional[UUID]
-    status: str  # "SUCCESS" or "ERROR"
-    input_payload: Dict[str, Any]
-    output_documents: List[Document]
-    step_description: str
 
 @dataclass(frozen=True)
 class Interaction:
