@@ -62,7 +62,6 @@ class AgentState:
     action_history: List[ActionRecord]
     interaction: Optional[Interaction]
     thoughts: Optional[Thoughts] = None
-    decision: Optional[Decision] = None
     documents: List[Document] = field(default_factory=list)
     dynamic_context: str = ""
     final_answer: Optional[str] = None
