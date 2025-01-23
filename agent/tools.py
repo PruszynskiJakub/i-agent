@@ -14,7 +14,6 @@ def get_tools():
             "instructions": {
                 "add_transaction": """
                 {
-                    "action": "add_transaction",
                     "params": {
                         "query": "The query representing a full transaction or list of transactions including amount, accounts, currencies and key details required to categorize it properly"
                     }
@@ -30,43 +29,37 @@ def get_tools():
             "instructions": {
                 "get_projects": """
                 {
-                    "action": "get_projects",
                     "params": {}
                 }
                 Use: Retrieves all projects from Todoist
                 """,
                 "add_tasks": """
                 {
-                    "action": "add_tasks",
-                    "params": {
-                        "tasks": [{
-                            "title": "Task title",
-                            "description": "Task description", 
-                            "priority": 1-4,
-                            "projectId": "project_uuid",
-                            "stateId": "state_uuid",
-                            "estimate": number,
-                            "labels": ["label1", "label2"],
-                            "dueString": "tomorrow at 3pm",
-                            "dueLang": "en",
-                            "dueDate": "YYYY-MM-DD",
-                            "duration": 30,
-                            "durationUnit": "minute"
-                        }]
-                    }
+                    "tasks": [{
+                        "title": "Task title",
+                        "description": "Task description", 
+                        "priority": 1-4,
+                        "projectId": "project_uuid",
+                        "stateId": "state_uuid",
+                        "estimate": number,
+                        "labels": ["label1", "label2"],
+                        "dueString": "tomorrow at 3pm",
+                        "dueLang": "en",
+                        "dueDate": "YYYY-MM-DD",
+                        "duration": 30,
+                        "durationUnit": "minute"
+                    }]
                 }
                 Use: Adds one or more todos. Only title is required, other fields are optional
                 """,
                 "search_tasks": """
                 {
-                    "action": "search_tasks",
-                    "params": {
-                        "project_id": "optional_project_id",
-                        "label": "optional_label_name",
-                        "section_id": "optional_section_id",
-                        "ids": ["optional_task_id1", "optional_task_id2"]
-                    }
+                    "project_id": "optional_project_id",
+                    "label": "optional_label_name",
+                    "section_id": "optional_section_id",
+                    "ids": ["optional_task_id1", "optional_task_id2"]
                 }
+                
                 Use: Lists tasks filtered by any combination of:
                 - project_id: Show tasks from a specific project
                 - label: Show tasks with a specific label
@@ -76,31 +69,25 @@ def get_tools():
                 """,
                 "update_tasks": """
                 {
-                    "action": "update_tasks",
-                    "params": {
-                        "tasks": [{
-                            "id": "task_id",
-                            "content": "Updated task title",
-                            "description": "Updated description",
-                            "priority": 1-4,
-                            "labels": ["label1", "label2"],
-                            "dueString": "tomorrow at 3pm",
-                            "dueLang": "en",
-                            "dueDate": "YYYY-MM-DD",
-                            "duration": 30,
-                            "durationUnit": "minute"
-                        }]
-                    }
+                    "tasks": [{
+                        "id": "task_id",
+                        "content": "Updated task title",
+                        "description": "Updated description",
+                        "priority": 1-4,
+                        "labels": ["label1", "label2"],
+                        "dueString": "tomorrow at 3pm",
+                        "dueLang": "en",
+                        "dueDate": "YYYY-MM-DD",
+                        "duration": 30,
+                        "durationUnit": "minute"
+                    }]
                 }
                 Use: Updates existing tasks. Task ID is required, other fields are optional and will only be updated if provided. 
                 Don't use it to complete tasks, use the complete_tasks action instead.
                 """,
                 "complete_tasks": """
                 {
-                    "action": "complete_tasks", 
-                    "params": {
-                        "task_ids": ["task_id1", "task_id2"]
-                    }
+                    "task_ids": ["task_id1", "task_id2"]
                 }
                 Use: Marks one or more tasks as complete. Requires task IDs.
                 """
