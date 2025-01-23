@@ -58,13 +58,6 @@ class Interaction:
     status: str = "PENDING"
 
 @dataclass(frozen=True)
-class DynamicContext:
-    """
-    Holds any domain-specific data fetched from external sources
-    """
-    data: Dict[str, Any] = field(default_factory=dict)
-
-@dataclass(frozen=True)
 class AgentState:
     conversation_uuid: str
     current_step: int
@@ -76,7 +69,7 @@ class AgentState:
     thoughts: Optional[Thoughts] = None
     decision: Optional[Decision] = None
     documents: List[Document] = field(default_factory=list)
-    dynamic_context: Optional[DynamicContext] = None
+    dynamic_context: str = ""
     final_answer: Optional[str] = None
 
     def copy(self, **kwargs) -> 'AgentState':
@@ -109,7 +102,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         interaction=None,
         thoughts=None,
         decision=None,
-        dynamic_context=None,
+        dynamic_context="",
         final_answer=None
     )
 
@@ -166,104 +159,3 @@ def update_interaction(state: AgentState, updates: Dict[str, Any]) -> AgentState
     }
     current_values.update(updates)
     return state.copy(interaction=Interaction(**current_values))
-
-
-# from dataclasses import dataclass, field
-# from typing import List, Dict, Any, Optional, Union
-# from uuid import UUID
-# import enum
-#
-# class AgentPhase(enum.Enum):
-#     PLAN = "plan"
-#     DEFINE = "define"
-#     EXECUTE = "execute"
-#     ANSWER = "answer"
-#     # possibly more
-#
-# @dataclass(frozen=True)
-# class ToolCandidate:
-#     """A single potential tool usage or action idea."""
-#     tool_name: str
-#     reason: str
-#     confidence: float = 0.0
-#
-# @dataclass(frozen=True)
-# class Thoughts:
-#     """Internal reasoning plus recommended tool candidates."""
-#     chain_of_thought: Optional[str]  # Hidden or partial reasoning text
-#     tool_candidates: List[ToolCandidate] = field(default_factory=list)
-#
-# @dataclass(frozen=True)
-# class Decision:
-#     """High-level plan or next step the agent wants to take."""
-#     overview: str
-#     chosen_tool: Optional[str] = None
-#     chosen_action: Optional[str] = None
-#     # Possibly store any relevant rationale or final decision text
-#
-# @dataclass(frozen=True)
-# class ActionRecord:
-#     """A record of an executed tool action."""
-#     name: str  # e.g. "complete_task", "create_transaction"
-#     tool: str
-#     tool_uuid: Optional[UUID]
-#     status: str  # "SUCCESS" or "ERROR"
-#     input_payload: Dict[str, Any]
-#     output_documents: List[Any]  # or a custom Document type
-#     step_description: str
-#
-# @dataclass(frozen=True)
-# class Interaction:
-#     """
-#     Represents the current (or latest) interaction step:
-#       - which tool is being invoked,
-#       - action name,
-#       - the parameters/payload,
-#       - status, etc.
-#     """
-#     overview: str
-#     tool: str
-#     tool_uuid: UUID
-#     tool_action: str
-#     payload: Dict[str, Any]
-#     status: str = "PENDING"  # or "RUNNING", "DONE"
-#
-# @dataclass(frozen=True)
-# class DynamicContext:
-#     """
-#     Holds any domain-specific data fetched from external sources, e.g.:
-#       - YNAB accounts, categories,
-#       - Todoist tasks/projects,
-#       - user preferences, etc.
-#     """
-#     data: Dict[str, Any] = field(default_factory=dict)
-#
-# @dataclass(frozen=True)
-# class AgentState:
-#     # Basic control fields
-#     conversation_uuid: str
-#     current_step: int
-#     max_steps: int
-#     phase: AgentPhase
-#
-#     # Conversation logs
-#     messages: List[Any]  # or a dedicated Message type
-#     action_history: List[ActionRecord]  # records of completed actions
-#
-#     # Current step's planned or in-progress interaction
-#     interaction: Optional[Interaction]
-#
-#     # Last set of thoughts from the LLM
-#     thoughts: Optional[Thoughts] = None
-#
-#     # A high-level plan for the next step
-#     decision: Optional[Decision] = None
-#
-#     # Document store or knowledge base objects
-#     documents: List[Any] = field(default_factory=list)
-#
-#     # Holds the data we fetch from external APIs or user sessions
-#     dynamic_context: Optional[DynamicContext] = None
-#
-#     # Possibly store final answer or partial
-#     final_answer: Optional[str] = None
