@@ -73,11 +73,10 @@ async def agent_decide(state: AgentState, trace) -> AgentState:
             
             # Update interaction with chosen tool
             updated_state = update_interaction(state, {
+                'tool': response_data.get("tool", ""),
+                'tool_uuid': response_data.get("tool_uuid", ""),
+                'tool_action': response_data.get("tool_action", ""),
                 'overview': response_data.get("overview", ""),
-                'tool': response_data.get("chosen_tool", ""),
-                'tool_uuid': None,
-                'tool_action': response_data.get("chosen_action", ""),
-                'payload': {}
             })
 
         except json.JSONDecodeError as e:
