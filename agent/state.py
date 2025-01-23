@@ -73,6 +73,14 @@ class AgentState:
     dynamic_context: str = ""
     final_answer: Optional[str] = None
 
+    @property
+    def user_query(self) -> str:
+        """Returns the content of the last user message"""
+        for message in reversed(self.messages):
+            if message.role == "user":
+                return message.content
+        return ""
+
     def copy(self, **kwargs) -> 'AgentState':
         current_values = {
             'conversation_uuid': self.conversation_uuid,
