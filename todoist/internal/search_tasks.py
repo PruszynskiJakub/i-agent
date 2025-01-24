@@ -11,6 +11,7 @@ async def search_tasks(params: dict, span) -> Document:
     """
     try:
         # Extract filter parameters and conversation_uuid
+        filter_query = params.get("filter")
         project_id = params.get("project_id")
         label = params.get("label")
         section_id = params.get("section_id")
@@ -22,6 +23,7 @@ async def search_tasks(params: dict, span) -> Document:
 
         # Get tasks with filters
         tasks = todoist_client.get_tasks(
+            filter=filter_query,
             project_id=project_id,
             label=label,
             section_id=section_id,
@@ -55,6 +57,8 @@ async def search_tasks(params: dict, span) -> Document:
         content = f"{summary}\n\n" + ("\n".join(formatted_tasks) if formatted_tasks else "No tasks found")
         
         description = "List of Todoist tasks"
+        if filter_query:
+            description += f" matching filter '{filter_query}'"
         if project_id:
             description += f" from project {project_id}"
         if label:
