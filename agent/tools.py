@@ -62,15 +62,26 @@ def get_tools():
                 """,
                 "search_tasks": """
                 {
+                    "filter": "filter query string",
                     "project_id": "optional_project_id",
-                    "label": "optional_label_name",
+                    "label": "optional_label_name", 
                     "section_id": "optional_section_id",
                     "ids": ["optional_task_id1", "optional_task_id2"]
                 }
                 
                 Use: Lists tasks filtered by any combination of:
+                - filter: Powerful query string supporting combinations with & (AND), | (OR), ! (NOT). Examples:
+                  - "today | overdue" - Due today or overdue
+                  - "p1 & @work" - Priority 1 tasks with work label
+                  - "7 days & !@waiting" - Due in next 7 days, not waiting
+                  - "##Work & !#Science" - All Work project and sub-projects except Science
+                  - "created: today" - Created today
+                  - "assigned to: me" - Assigned to me
+                  - "no date" - No due date set
+                  - "recurring" - Recurring tasks
+                  - Multiple queries separated by comma show separate lists
                 - project_id: Show tasks from a specific project
-                - label: Show tasks with a specific label
+                - label: Show tasks with a specific label  
                 - section_id: Show tasks from a specific section
                 - ids: Show specific tasks by their IDs
                 Returns formatted list with task details including ids, title, priority, due dates, labels etc.
