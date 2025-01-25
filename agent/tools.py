@@ -98,7 +98,8 @@ def get_tools():
                         "dueLang": "en",
                         "dueDate": "YYYY-MM-DD",
                         "duration": 30,
-                        "durationUnit": "minute"
+                        "durationUnit": "minute",
+                        "projectId": "project_uuid"
                     }]
                 }
                 Use: Updates existing tasks. Task ID is required, other fields are optional and will only be updated if provided. 

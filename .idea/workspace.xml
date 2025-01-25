@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improvements">
-      <change afterPath="$PROJECT_DIR$/_AI_DOCS/todoist_filters.md" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add filters docs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todoist/internal/update_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/todoist/internal/update_tasks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +37,9 @@
     &quot;accountId&quot;: &quot;63fe3fdc-2778-4a55-9fa5-5a310ce467ac&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/.venv/lib/python3.12/site-packages/todoist_api_python/api.py" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
@@ -166,14 +170,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Add todoist docs">
-      <option name="closed" value="true" />
-      <created>1736796875817</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1736796875817</updated>
     </task>
     <task id="LOCAL-00064" summary="Fix status type">
       <option name="closed" value="true" />
@@ -559,7 +555,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737663890240</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="Add filters docs">
+      <option name="closed" value="true" />
+      <created>1737706522855</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1737706522855</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -574,7 +578,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Some small manual improvements" />
     <MESSAGE value="Remove status from ActionResult" />
     <MESSAGE value="passign result as document" />
     <MESSAGE value="minor fixes" />
@@ -599,6 +602,7 @@
     <MESSAGE value="Refactor" />
     <MESSAGE value="Simplify" />
     <MESSAGE value="Improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improvements" />
+    <MESSAGE value="Add filters docs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add filters docs" />
   </component>
 </project>
