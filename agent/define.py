@@ -1,10 +1,10 @@
 import json
 
 from agent.state import AgentState, update_interaction, update_phase, AgentPhase
-from agent.tools import get_tool_by_name, get_tool_action_instructions
+from agent.tools import get_tool_action_instructions
 from llm import open_ai
 from llm.format import format_messages, format_actions_history, format_documents, \
-    format_interaction, format_tool_instructions
+    format_interaction
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
 from todoist import get_dynamic_context
@@ -24,7 +24,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         # Set dynamic context based on tool
         dynamic_context = ""
         if state.interaction.tool == "todoist":
-            dynamic_context = get_todoist_context()
+            dynamic_context = get_dynamic_context()
             create_event(span, "dynamic_context_todoist", output=dynamic_context)
 
         # Get the definition prompt from repository
