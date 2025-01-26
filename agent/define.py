@@ -6,7 +6,7 @@ from llm import open_ai
 from llm.format import format_messages, format_actions_history, format_documents, \
     format_interaction, format_tool_instructions
 from llm.prompts import get_prompt
-from llm.tracing import create_generation, end_generation
+from llm.tracing import create_generation, end_generation, create_span, end_span
 from todoist import get_dynamic_context as get_todoist_context
 from ynab import get_dynamic_context as get_ynab_context
 
@@ -16,6 +16,9 @@ async def agent_define(state: AgentState, trace) -> AgentState:
     Creates a definition based on the current state and plan.
     Updates and returns AgentState with complete step_info including parameters.
     """
+    # Create span for the define phase
+    span = create_span(trace, "agent_define")
+    
     try:
         # Update phase to DEFINE
         state = update_phase(state, AgentPhase.DEFINE)
@@ -41,10 +44,10 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             actions=format_actions_history(state.action_history)
         )
 
-        # Create generation trace
+        # Create generation trace as part of the span
         generation = create_generation(
-            trace=trace,
-            name="agent_define",
+            trace=span,
+            name="define_completion",
             model=prompt.config.get("model", "gpt-4o"),
             input=system_prompt,
             metadata={"conversation_id": state.conversation_uuid}
@@ -78,7 +81,10 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         # End the generation trace
         end_generation(generation, output=response_data)
 
+        end_span(span, output=updated_state)
         return updated_state
 
     except Exception as e:
-        raise Exception(f"Error in agent define: {str(e)}")
+        error_msg = f"Error in agent define: {str(e)}"
+        end_span(span, level="ERROR", status_message=error_msg)
+        raise Exception(error_msg)
