@@ -6,7 +6,7 @@ from llm import open_ai
 from llm.format import format_messages, format_actions_history, format_documents, \
     format_interaction, format_tool_instructions
 from llm.prompts import get_prompt
-from llm.tracing import create_generation, end_generation, create_span, end_span
+from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
 from todoist import get_dynamic_context as get_todoist_context
 from ynab import get_dynamic_context as get_ynab_context
 
