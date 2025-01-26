@@ -7,8 +7,7 @@ from llm.format import format_messages, format_actions_history, format_documents
     format_interaction, format_tool_instructions
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
-from todoist import get_dynamic_context as get_todoist_context
-from ynab import get_dynamic_context as get_ynab_context
+from todoist import get_dynamic_context
 
 
 async def agent_define(state: AgentState, trace) -> AgentState:
@@ -18,18 +17,15 @@ async def agent_define(state: AgentState, trace) -> AgentState:
     """
     # Create span for the define phase
     span = create_span(trace, "agent_define")
-    
+
     try:
         # Update phase to DEFINE
         state = update_phase(state, AgentPhase.DEFINE)
-        # Set dynamic context based on tool and action
+        # Set dynamic context based on tool
         dynamic_context = ""
         if state.interaction.tool == "todoist":
             dynamic_context = get_todoist_context()
             create_event(span, "dynamic_context_todoist", output=dynamic_context)
-        elif state.interaction.tool == "ynab" and state.interaction.tool_action == "add_transaction":
-            dynamic_context = await get_ynab_context(state.interaction.query, span)
-            create_event(span, "dynamic_context_ynab", input=state.interaction.query, output=dynamic_context)
 
         # Get the definition prompt from repository
         prompt = get_prompt(
@@ -46,10 +42,10 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             actions=format_actions_history(state.action_history)
         )
 
-        # Create generation trace as part of the span
+        # Create generation trace
         generation = create_generation(
             trace=span,
-            name="define_completion",
+            name="agent_define",
             model=prompt.config.get("model", "gpt-4o"),
             input=system_prompt,
             metadata={"conversation_id": state.conversation_uuid}
