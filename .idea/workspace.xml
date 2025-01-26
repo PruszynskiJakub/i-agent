@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add filters docs">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="small improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/tools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/internal/update_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/todoist/internal/update_tasks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,14 +168,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Fix status type">
-      <option name="closed" value="true" />
-      <created>1736796888159</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1736796888159</updated>
     </task>
     <task id="LOCAL-00065" summary="Support uploading files">
       <option name="closed" value="true" />
@@ -563,7 +553,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737706522855</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="small improvements">
+      <option name="closed" value="true" />
+      <created>1737827351109</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1737827351109</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -578,7 +576,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Remove status from ActionResult" />
     <MESSAGE value="passign result as document" />
     <MESSAGE value="minor fixes" />
     <MESSAGE value="Fix naming" />
@@ -603,6 +600,7 @@
     <MESSAGE value="Simplify" />
     <MESSAGE value="Improvements" />
     <MESSAGE value="Add filters docs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add filters docs" />
+    <MESSAGE value="small improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="small improvements" />
   </component>
 </project>
