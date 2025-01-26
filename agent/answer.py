@@ -1,6 +1,7 @@
 from agent.state import AgentState, add_message
+from agent.tools import get_tools
 from llm import open_ai
-from llm.format import format_actions_history, format_documents
+from llm.format import format_actions_history, format_documents, format_tools
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 
@@ -31,7 +32,8 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
         )
         system_prompt = prompt.compile(
             actions=format_actions_history(state.action_history),
-            documents=format_documents(state.documents)
+            documents=format_documents(state.documents),
+            tools=format_tools(get_tools())
         )
         model = prompt.config.get("model", "gpt-4o")
 
