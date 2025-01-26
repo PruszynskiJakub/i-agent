@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="generate requirements">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Pass interaction query instead of user query">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/define.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/define.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,14 +169,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Add docs formatting">
-      <option name="closed" value="true" />
-      <created>1736849473194</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1736849473194</updated>
     </task>
     <task id="LOCAL-00067" summary="Add upload to gitignore">
       <option name="closed" value="true" />
@@ -562,7 +554,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737879770970</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="Pass interaction query instead of user query">
+      <option name="closed" value="true" />
+      <created>1737901122737</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1737901122739</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -577,7 +577,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="minor fixes" />
     <MESSAGE value="Fix naming" />
     <MESSAGE value="Fix imports" />
     <MESSAGE value="Pick category also if the account type is creditCard" />
@@ -602,6 +601,7 @@
     <MESSAGE value="Add filters docs" />
     <MESSAGE value="small improvements" />
     <MESSAGE value="generate requirements" />
-    <option name="LAST_COMMIT_MESSAGE" value="generate requirements" />
+    <MESSAGE value="Pass interaction query instead of user query" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pass interaction query instead of user query" />
   </component>
 </project>

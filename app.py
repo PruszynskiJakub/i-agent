@@ -40,6 +40,15 @@ def handle_message(message, say):
         # Send response back to Slack
         say(
             text=response,
+            blocks = [
+              {
+                  "type": "section",
+                  "text": {
+                      "type": "mrkdwn",
+                      "text": f"{response}"
+                  }
+              }
+            ],
             thread_ts=message.get("thread_ts", message["ts"])  # Reply in thread
         )
 
