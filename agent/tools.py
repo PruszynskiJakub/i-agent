@@ -14,19 +14,10 @@ def get_tools():
             "instructions": {
                 "add_transaction": """
                 {
-                    "transactions": [{
-                        "account_id": "account_uuid",
-                        "date": "2025-01-23",
-                        "amount": 0,
-                        "payee_id": "payee_uuid",
-                        "category_id": "category_uuid",
-                        "memo": "string",
-                        "approved": false,
-                    }]
+                    "query": "string describing the transaction"
                 }
-                Use: Creates one or multiple transactions in the user's budget. 
-                Required fields are account_id, date, and amount. 
-                Amount must be in milliunits (e.g. $10.00 = 10000).
+                Use: Creates one or multiple transactions in the user's budget based on the natural language description in the query field.
+                The query should contain all necessary transaction details like amount, payee, account, etc.
                 """
             }
         },
