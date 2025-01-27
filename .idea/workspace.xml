@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix missing import">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add task id above title in add_tasks">
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/internal/add_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/todoist/internal/add_tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,14 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00071" summary="Some small manual improvements">
-      <option name="closed" value="true" />
-      <created>1737102291979</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1737102291979</updated>
     </task>
     <task id="LOCAL-00072" summary="Remove status from ActionResult">
       <option name="closed" value="true" />
@@ -586,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737914653993</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="Add task id above title in add_tasks">
+      <option name="closed" value="true" />
+      <created>1737975330379</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1737975330379</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -613,7 +614,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add peewee docs" />
     <MESSAGE value="Remove old file" />
     <MESSAGE value="Remove empty lines" />
     <MESSAGE value="Remove old files" />
@@ -638,6 +638,7 @@
     <MESSAGE value="Add tools to the answer" />
     <MESSAGE value="Resign from dynamic_context for ynab" />
     <MESSAGE value="Fix missing import" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix missing import" />
+    <MESSAGE value="Add task id above title in add_tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add task id above title in add_tasks" />
   </component>
 </project>

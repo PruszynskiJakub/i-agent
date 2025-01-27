@@ -53,7 +53,7 @@ def get_tools():
                 """,
                 "search_tasks": """
                 {
-                    "filter": "filter query string",
+                    "filter": "filter keyword-based query string",
                     "project_id": "optional_project_id",
                     "label": "optional_label_name", 
                     "section_id": "optional_section_id",
@@ -70,6 +70,7 @@ def get_tools():
                   - "assigned to: me" - Assigned to me
                   - "no date" - No due date set
                   - "recurring" - Recurring tasks
+                  - "search: keyword" - Search for keyword in task content
                   - Multiple queries separated by comma show separate lists
                 - project_id: Show tasks from a specific project
                 - label: Show tasks with a specific label  
