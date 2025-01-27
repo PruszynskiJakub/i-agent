@@ -1,5 +1,6 @@
 from ast import Dict
 from typing import List
+from datetime import datetime
 
 from message.types import Message
 from document.types import Document
@@ -186,3 +187,14 @@ def format_documents(documents: List[Document]) -> str:
         doc_descriptions.append(desc)
 
     return "\n".join(doc_descriptions)
+
+
+def format_facts() -> str:
+    """
+    Returns formatted facts about current date.
+
+    Returns:
+        str: Current date in YYYY-MM-DD format
+    """
+    today = datetime.now()
+    return f"Current date - {today.strftime('%Y-%m-%d')}"
