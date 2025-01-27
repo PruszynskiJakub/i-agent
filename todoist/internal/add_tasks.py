@@ -105,7 +105,7 @@ async def add_tasks(params: Dict[str, Any], span) -> Document:
         sections.append("-" * 22)
         if successful_tasks:
             for task in successful_tasks:
-                sections.append(f"Task ID: {task['id']}")
+                sections.append(f"Task ID: {task['task_id']}")
                 sections.append(f"Title: {task['content']}")
                 if task['description']:
                     sections.append(f"Description: {task['description']}")
