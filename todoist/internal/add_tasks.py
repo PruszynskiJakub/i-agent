@@ -73,6 +73,7 @@ async def add_tasks(params: Dict[str, Any], span) -> Document:
                     pass  # Keep default project name if lookup fails
                 
                 successful_tasks.append({
+                    "task_id": task.id,
                     "content": task.content,
                     "description": task.description,
                     "labels": task.labels if hasattr(task, 'labels') else [],
