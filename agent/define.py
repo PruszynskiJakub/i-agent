@@ -39,7 +39,8 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             tool=format_interaction(state.interaction),
             instructions=get_tool_action_instructions(state.interaction.tool, state.interaction.tool_action),
             dynamic_context=dynamic_context,
-            actions=format_actions_history(state.action_history)
+            actions=format_actions_history(state.action_history),
+            facts=format_facts()
         )
 
         # Create generation trace
