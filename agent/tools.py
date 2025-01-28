@@ -17,7 +17,24 @@ def get_tools():
                     "query": "string describing the transaction"
                 }
                 Use: Creates one or multiple transactions in the user's budget based on the natural language description in the query field.
-                The query should contain all necessary transaction details like amount, payee, account, etc.
+                The query should contain all necessary transaction details like amount, payee, account, etc. or at least amount and accounts.
+                
+                Examples:
+                User: "Spent $10 at Starbucks"
+                AI: {
+                    "query": "The user spent $10 at Starbucks"
+                }
+                
+                User: "Transferred 19.99PLN to my savings account"
+                AI: {
+                    "query": "The user transferred 19.99PLN to their savings account"
+                }
+                
+                User: "Transferred to my savings account"
+                User: "19.99PLN"
+                AI: {
+                    "query": "The user transferred 19.99PLN to their savings account"
+                }
                 """
             }
         },

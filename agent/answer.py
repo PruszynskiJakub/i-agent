@@ -34,7 +34,7 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
             actions=format_actions_history(state.action_history),
             documents=format_documents(state.documents),
             tools=format_tools(get_tools()),
-            query=state.interaction.query if state.interaction else state.user_query
+            query=state.interaction.query if state.interaction else ""
         )
         model = prompt.config.get("model", "gpt-4o")
 
