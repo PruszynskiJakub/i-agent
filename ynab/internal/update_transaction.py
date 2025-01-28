@@ -15,6 +15,7 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
         raise ValueError("Transaction ID is required")
 
     # Build transaction payload with only provided fields
+    # Note: amount should be in milliunits (1000 = $1.00, 12340 = $12.34)
     transaction = {"id": transaction_id}
     optional_fields = [
         "account_id", "date", "amount", "payee_id",

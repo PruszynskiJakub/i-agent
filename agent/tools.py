@@ -25,7 +25,7 @@ def get_tools():
                     "id": "transaction_id",
                     "account_id": "optional account uuid",
                     "date": "optional YYYY-MM-DD",
-                    "amount": "optional integer in milliunits",
+                    "amount": "optional integer in milliunits (e.g. 10025 for $10.025)",
                     "payee_id": "optional payee uuid",
                     "category_id": "optional category uuid",
                     "memo": "optional string",
