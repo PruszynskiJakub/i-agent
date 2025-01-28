@@ -1,8 +1,3 @@
-import os
-from todoist_api_python.api import TodoistAPI
-
-todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
-
 def get_dynamic_context() -> str:
     """Returns the list of available Todoist projects with an introduction."""
     return """Here is the current list of available projects in Todoist, represented in XML format:

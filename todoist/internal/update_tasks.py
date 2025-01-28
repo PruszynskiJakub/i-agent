@@ -1,8 +1,9 @@
+import os
 from typing import Dict, Any
 from uuid import uuid4
 
 from llm.tracing import create_event
-from todoist import todoist_client
+from todoist_api_python.api import TodoistAPI
 from document.types import Document
 from document.utils import create_document
 
@@ -10,6 +11,7 @@ from document.utils import create_document
 async def update_tasks(params: Dict[str, Any], span) -> Document:
     """Update existing Todoist tasks with new information"""
     try:
+        todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
         tasks = params.get("tasks", [])
         create_event(span, "update_tasks_start", input={"task_count": len(tasks)})
         

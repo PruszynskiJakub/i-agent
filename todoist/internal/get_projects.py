@@ -1,11 +1,13 @@
+import os
 from uuid import uuid4
-from todoist import todoist_client
+from todoist_api_python.api import TodoistAPI
 from llm.tracing import create_event
 from document.types import Document, DocumentType, DocumentMetadata
 
 async def get_projects(span) -> Document:
     """Get all Todoist projects and return as a Document"""
     try:
+        todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
         event = create_event(span, "fetch_projects", input="Fetching all Todoist projects")
         projects = todoist_client.get_projects()
         

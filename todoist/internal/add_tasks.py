@@ -1,14 +1,16 @@
+import os
 from typing import Dict, Any, List
 from uuid import uuid4
 
 from llm.tracing import create_event
-from todoist import todoist_client
+from todoist_api_python.api import TodoistAPI
 from document.types import Document, DocumentType, DocumentMetadata
 
 
 async def add_tasks(params: Dict[str, Any], span) -> Document:
     """Add task items with optional metadata"""
     try:
+        todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
         tasks = params.get("tasks", [])
         create_event(span, "add_tasks_start", input={"task_count": len(tasks)})
         

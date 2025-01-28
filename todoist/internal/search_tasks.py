@@ -1,8 +1,9 @@
+import os
 from typing import List, Optional
 from uuid import uuid4
 from document.types import Document 
 from document.utils import create_document, create_error_document
-from todoist import todoist_client
+from todoist_api_python.api import TodoistAPI
 
 async def search_tasks(params: dict, span) -> Document:
     """
@@ -10,6 +11,7 @@ async def search_tasks(params: dict, span) -> Document:
     Returns a Document containing the formatted task list with detailed information
     """
     try:
+        todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
         # Extract filter parameters and conversation_uuid
         filter_query = params.get("filter")
         project_id = params.get("project_id")

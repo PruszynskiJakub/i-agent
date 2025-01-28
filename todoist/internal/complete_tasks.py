@@ -1,7 +1,8 @@
+import os
 from typing import Dict, Any, List
 
 from llm.tracing import create_event
-from todoist import todoist_client
+from todoist_api_python.api import TodoistAPI
 from document.types import Document
 from document.utils import create_document, create_error_document
 
@@ -9,6 +10,7 @@ from document.utils import create_document, create_error_document
 async def complete_tasks(params: Dict[str, Any], span) -> Document:
     """Complete one or more Todoist tasks"""
     try:
+        todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
         task_ids = params.get("task_ids", [])
         create_event(span, "complete_tasks_start", input={"task_count": len(task_ids)})
         
