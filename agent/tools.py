@@ -19,6 +19,20 @@ def get_tools():
                 Use: Creates one or multiple transactions in the user's budget based on the natural language description in the query field.
                 The query should contain all necessary transaction details like amount, payee, account, etc. or at least amount.
                 
+                """,
+                "update_transaction": """
+                {
+                    "id": "transaction_id",
+                    "account_id": "optional account uuid",
+                    "date": "optional YYYY-MM-DD",
+                    "amount": "optional integer in milliunits",
+                    "payee_id": "optional payee uuid",
+                    "category_id": "optional category uuid",
+                    "memo": "optional string",
+                    "cleared": "optional cleared status",
+                    "approved": "optional boolean"
+                }
+                Use: Updates an existing transaction. Only transaction id is required, other fields are optional and will only be updated if provided.
                 """
             }
         },

@@ -3,6 +3,7 @@ from typing import Dict, Any, List
 from document.types import Document
 from document.utils import create_error_document
 from ynab.internal.add_transaction import add_transaction
+from ynab.internal.update_transaction import update_transaction
 
 
 async def execute_ynab(action, params: Dict[str, Any], trace) -> List[Document]:
@@ -10,6 +11,9 @@ async def execute_ynab(action, params: Dict[str, Any], trace) -> List[Document]:
         match action:
             case "add_transaction":
                 result = await add_transaction(params, trace)
+                return [result]
+            case "update_transaction":
+                result = await update_transaction(params, trace)
                 return [result]
             case _:
                 return [create_error_document(
