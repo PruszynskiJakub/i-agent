@@ -105,12 +105,11 @@ def get_tools():
                         "dueLang": "en",
                         "dueDate": "YYYY-MM-DD",
                         "duration": 30,
-                        "durationUnit": "minute",
-                        "projectId": "project_uuid"
+                        "durationUnit": "minute"
                     }]
                 }
-                Use: Updates existing tasks. Task ID is required, other fields are optional and will only be updated if provided. 
-                Don't use it to complete tasks, use the complete_tasks action instead.
+                Use: Updates existing tasks' content and metadata. Task ID is required, other fields are optional and will only be updated if provided.
+                Don't use it to complete tasks (use complete_tasks) or move tasks between projects/sections (use move_tasks).
                 """,
                 "complete_tasks": """
                 {
