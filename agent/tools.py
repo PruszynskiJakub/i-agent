@@ -117,6 +117,18 @@ def get_tools():
                     "task_ids": ["task_id1", "task_id2"]
                 }
                 Use: Marks one or more tasks as complete. Requires task IDs.
+                """,
+                "move_tasks": """
+                {
+                    "tasks": [{
+                        "id": "task_id",
+                        "project_id": "optional target project id",
+                        "section_id": "optional target section id", 
+                        "parent_id": "optional parent task id"
+                    }]
+                }
+                Use: Moves tasks between projects, sections, or changes their parent task. Task ID is required, provide at least one destination (project_id, section_id, or parent_id).
+                Only one destination type should be specified per task move operation.
                 """
             }
         }

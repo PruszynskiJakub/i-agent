@@ -7,6 +7,7 @@ from todoist.internal.complete_tasks import complete_tasks
 from todoist.internal.get_projects import get_projects
 from todoist.internal.search_tasks import search_tasks
 from todoist.internal.update_tasks import update_tasks
+from todoist.internal.move_tasks import move_tasks
 
 
 async def execute_todoist(action: str, params: dict[str, any], span) -> List[Document]:
@@ -25,6 +26,9 @@ async def execute_todoist(action: str, params: dict[str, any], span) -> List[Doc
             return [doc]
         elif action == "complete_tasks":
             doc = await complete_tasks(params, span)
+            return [doc]
+        elif action == "move_tasks":
+            doc = await move_tasks(params, span)
             return [doc]
         else:
             return [create_error_document(

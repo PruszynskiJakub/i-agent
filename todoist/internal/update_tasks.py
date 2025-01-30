@@ -52,8 +52,6 @@ async def update_tasks(params: Dict[str, Any], span) -> Document:
                 update_args["priority"] = max(1, min(4, task["priority"]))
             if "labels" in task:
                 update_args["labels"] = task["labels"]
-            if "projectId" in task:
-                update_args["project_id"] = task["projectId"]
             
             # Handle due date updates
             if "dueString" in task:
