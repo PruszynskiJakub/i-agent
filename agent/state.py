@@ -14,6 +14,7 @@ from message.utils import create_message
 class AgentPhase(enum.Enum):
     PLAN = "plan"
     DEFINE = "define" 
+    DECIDE = "decide"
     EXECUTE = "execute"
     ANSWER = "answer"
 

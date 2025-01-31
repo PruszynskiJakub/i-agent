@@ -32,7 +32,7 @@ async def agent_decide(state: AgentState, trace) -> AgentState:
     """
     try:
         # Update phase to DEFINE
-        state = update_phase(state, AgentPhase.DEFINE)
+        state = update_phase(state, AgentPhase.DECIDE)
         
         # Get the decision prompt
         prompt = get_prompt(
