@@ -76,7 +76,8 @@ def get_tools():
                 }
                 
                 Use: Lists tasks filtered by any combination of:
-                - filter: Powerful query string supporting combinations with & (AND), | (OR), ! (NOT). Examples:
+                - filter: Powerful query string supporting combinations with & (AND), | (OR), ! (NOT), not useful for looking by project, label or section.
+                    Examples:
                   - "today | overdue" - Due today or overdue
                   - "p1 & @work" - Priority 1 tasks with work label
                   - "7 days & !@waiting" - Due in next 7 days, not waiting
