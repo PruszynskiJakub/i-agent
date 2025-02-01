@@ -90,10 +90,10 @@ def get_tools():
                 
                 3) Synonym and Morphological Expansion:
                    - When the user query suggests synonyms or variant forms 
-                     (e.g. "invoice" ↔ "faktura/faktury/faktur"), 
+                     (e.g. "invoice" ↔ "faktura/faktury/faktur/invoice/invoices/invoicing"), 
                      the LLM should expand the terms to increase the likelihood of matches.
                    - Example:
-                       "search: (invoice OR faktura OR faktury OR faktur)"
+                       "search: invoice | search: faktura | search: faktury search: faktur)"
                      This ensures tasks referencing any of those variations are included.
                 
                 4) Fuzzy Matching or Partial Matching (optional enhancement):
@@ -104,7 +104,7 @@ def get_tools():
                 5) Multi-Condition Combining:
                    - Combine synonyms with other logical filters.
                    - Example:
-                       "search: (invoice OR faktura OR faktury) & !status: done"
+                       "(search: invoice | search: faktura | search: faktury) & !status: done"
                      This finds tasks mentioning “invoice” or “faktura/faktury,” excluding completed ones.
                 
                 6) Additional Filtering Fields:
@@ -121,7 +121,7 @@ def get_tools():
                 For a user request: “Mark as complete a task related to invoice - faktury”
                 the system might expand synonyms and produce a filter:
                   {
-                    "filter": "search: (invoice OR faktura OR faktury OR faktur) & !status: done"
+                    "filter": "(search: invoice | search: faktura | search: faktury | search: faktur) & !status: done"
                   }
                 This ensures capturing multiple linguistic variations of "invoice."
              
