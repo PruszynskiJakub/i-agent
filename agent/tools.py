@@ -182,7 +182,8 @@ def get_tools():
                 This ensures capturing multiple linguistic variations of "invoice."
              
                 Returns formatted list with task details including ids, title, priority, due dates, labels etc.
-                """,
+                """
+                },
                 "update_tasks": {
                     "description": "Updates existing tasks with new content, metadata, or settings while preserving task history and relationships",
                     "instructions": """
@@ -202,7 +203,8 @@ def get_tools():
                 }
                 Use: Updates existing tasks' content and metadata. Task ID is required, other fields are optional and will only be updated if provided.
                 Don't use it to complete tasks (use complete_tasks) or move tasks between projects/sections (use move_tasks).
-                """,
+                """
+                },
                 "complete_tasks": {
                     "description": "Marks one or more tasks as complete, updating their status and completion timestamp",
                     "instructions": """
@@ -210,7 +212,8 @@ def get_tools():
                     "task_ids": ["task_id1", "task_id2"]
                 }
                 Use: Marks one or more tasks as complete. Requires task IDs.
-                """,
+                """
+                },
                 "move_tasks": {
                     "description": "Reorganizes tasks by moving them between projects, sections, or parent tasks while maintaining their metadata",
                     "instructions": """
@@ -225,6 +228,7 @@ def get_tools():
                 Use: Moves tasks between projects, sections, or changes their parent task. Task ID is required, provide at least one destination (project_id, section_id, or parent_id).
                 Only one destination type should be specified per task move operation.
                 """
+                }
             }
         }
     ]
