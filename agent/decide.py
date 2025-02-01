@@ -11,7 +11,9 @@ from llm.format import (
     format_actions_history,
     format_messages,
     format_documents,
-    format_tool_candidates, format_tools_with_descriptions
+    format_tool_candidates,
+    format_tools_with_descriptions,
+    format_facts
 )
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
@@ -45,7 +47,8 @@ async def agent_decide(state: AgentState, trace) -> AgentState:
             actions=format_actions_history(state.action_history),
             documents=format_documents(state.documents),
             tool_candidates=format_tool_candidates(state.thoughts.tool_candidates) if state.thoughts else "",
-            overview=state.thoughts.chain_of_thought if state.thoughts else ""
+            overview=state.thoughts.chain_of_thought if state.thoughts else "",
+            facts=format_facts()
         )
 
         # Create generation trace
