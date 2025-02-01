@@ -11,61 +11,115 @@ def get_tools():
             "uuid": UUID("a3bb189e-8bf9-4c8b-9beb-5de10a41cf62"),
             "name": "ynab",
             "description": "responsible for managing budget, transactions etc., available only on direct request",
-            "instructions": {
-                "add_transaction": """
-                {
-                    "query": "string describing the transaction"
+            "actions": {
+                "add_transaction": {
+                    "description": "Creates one or multiple transactions in the user's budget based on natural language description. Can handle single transactions or split transactions with multiple parts.",
+                    "instructions": """
+                    {
+                        "query": "string describing the transaction"
+                    }
+                    
+                    The query should contain transaction details like:
+                    - Amount (required)
+                    - Payee (optional)
+                    - Account (optional)
+                    - Category (optional)
+                    - Date (optional)
+                    - Split details (optional)
+                    
+                    Examples:
+                    - "spent $50 at walmart yesterday"
+                    - "transfer $1000 from checking to savings"
+                    - "split $120 restaurant bill: $100 dining out, $20 tip"
+                    """
+                },
+                "update_transaction": {
+                    "description": "Updates an existing transaction's details. Only transaction ID is required, other fields are optional and will only be updated if provided.",
+                    "instructions": """
+                    {
+                        "id": "transaction_id",
+                        "account_id": "optional account uuid",
+                        "date": "optional YYYY-MM-DD",
+                        "amount": "optional integer in milliunits (e.g. -10025 for -$10.025 spending, 10025 for $10.025 income)",
+                        "payee_id": "optional payee uuid",
+                        "category_id": "optional category uuid",
+                        "memo": "optional string",
+                        "cleared": "optional cleared status",
+                        "approved": "optional boolean"
+                    }
+                    
+                    Field details:
+                    - amount: Use negative for spending, positive for income
+                    - cleared: Can be "cleared", "uncleared", or "reconciled"
+                    - approved: Set to true to approve the transaction
+                    
+                    Example:
+                    {
+                        "id": "abc-123",
+                        "amount": -5000,
+                        "memo": "Monthly subscription",
+                        "cleared": "cleared"
+                    }
+                    """
                 }
-                Use: Creates one or multiple transactions in the user's budget based on the natural language description in the query field.
-                The query should contain all necessary transaction details like amount, payee, account, etc. or at least amount.
-                
-                """,
-                "update_transaction": """
-                {
-                    "id": "transaction_id",
-                    "account_id": "optional account uuid",
-                    "date": "optional YYYY-MM-DD",
-                    "amount": "optional integer in milliunits (e.g. -10025 for -$10.025 spending, 10025 for $10.025 income)",
-                    "payee_id": "optional payee uuid",
-                    "category_id": "optional category uuid",
-                    "memo": "optional string",
-                    "cleared": "optional cleared status",
-                    "approved": "optional boolean"
-                }
-                Use: Updates an existing transaction. Only transaction id is required, other fields are optional and will only be updated if provided.
-                """
             }
         },
         {
             "uuid": UUID("b4cc290f-9c8a-4d87-8c2c-5de21b52df73"),
             "name": "todoist",
             "description": "responsible for managing tasks and projects in Todoist",
-            "instructions": {
-                "get_projects": """
-                {
-                    "params": {}
-                }
-                Use: Retrieves all projects from Todoist
-                """,
-                "add_tasks": """
-                {
-                    "tasks": [{
-                        "title": "Task title",
-                        "description": "Task description", 
-                        "priority": 1-4,
-                        "projectId": "project_uuid",
-                        "stateId": "state_uuid",
-                        "estimate": number,
-                        "labels": ["label1", "label2"],
-                        "dueString": "tomorrow at 3pm",
-                        "dueLang": "en",
-                        "dueDate": "YYYY-MM-DD",
-                        "duration": 30,
+            "actions": {
+                "get_projects": {
+                    "description": "Retrieves all projects from Todoist with their hierarchical structure and metadata",
+                    "instructions": """
+                    {
+                        "params": {}
+                    }
+                    
+                    Returns:
+                    - List of all projects with their IDs, names, colors
+                    - Project hierarchy (parent-child relationships)
+                    - View settings and other metadata
+                    """
+                },
+                "add_tasks": {
+                    "description": "Creates one or more tasks in Todoist. Supports natural language for dates and rich task metadata.",
+                    "instructions": """
+                    {
+                        "tasks": [{
+                            "title": "Task title",
+                            "description": "Task description", 
+                            "priority": 1-4,
+                            "projectId": "project_uuid",
+                            "stateId": "state_uuid",
+                            "estimate": number,
+                            "labels": ["label1", "label2"],
+                            "dueString": "tomorrow at 3pm",
+                            "dueLang": "en",
+                            "dueDate": "YYYY-MM-DD",
+                            "duration": 30,
+                            "durationUnit": "minute"
+                        }]
+                    }
+                    
+                    Field details:
+                    - title: Required, task name
+                    - priority: 4 (highest) to 1 (lowest)
+                    - dueString: Natural language date ("tomorrow", "next monday 2pm")
+                    - duration: Task duration number
+                    - durationUnit: "minute", "hour", "day"
+                    
+                    Examples:
+                    - Simple task: {"title": "Buy groceries"}
+                    - Complex task: {
+                        "title": "Quarterly review",
+                        "priority": 4,
+                        "dueString": "next friday 2pm",
+                        "duration": 60,
                         "durationUnit": "minute"
-                    }]
-                }
-                Use: Adds one or more todos. Only title is required, other fields are optional
-                """,
+                      }
+                    """
+                },
                 "search_tasks": """
                 {
                   "filter": "Optional advanced query string with logical operators, field filters, and synonym expansions",
