@@ -1,9 +1,10 @@
-from utils.state import AgentState, add_message
+from models.state import AgentState
 from tools.__init__ import get_tools
 from llm import open_ai
 from llm.format import format_actions_history, format_documents, format_tools
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
+from utils.state import add_message
 
 
 async def agent_answer(state: AgentState, parent_trace) -> AgentState:
