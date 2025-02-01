@@ -120,7 +120,9 @@ def get_tools():
                       }
                     """
                 },
-                "search_tasks": """
+                "search_tasks": {
+                    "description": "Searches and retrieves tasks using advanced filters, supporting complex queries with logical operators and field-based filtering",
+                    "instructions": """
                 {
                   "filter": "Optional advanced query string with logical operators, field filters, and synonym expansions",
                   "project_id": "Optional project ID to narrow down tasks",
@@ -181,7 +183,9 @@ def get_tools():
              
                 Returns formatted list with task details including ids, title, priority, due dates, labels etc.
                 """,
-                "update_tasks": """
+                "update_tasks": {
+                    "description": "Updates existing tasks with new content, metadata, or settings while preserving task history and relationships",
+                    "instructions": """
                 {
                     "tasks": [{
                         "id": "task_id",
@@ -199,13 +203,17 @@ def get_tools():
                 Use: Updates existing tasks' content and metadata. Task ID is required, other fields are optional and will only be updated if provided.
                 Don't use it to complete tasks (use complete_tasks) or move tasks between projects/sections (use move_tasks).
                 """,
-                "complete_tasks": """
+                "complete_tasks": {
+                    "description": "Marks one or more tasks as complete, updating their status and completion timestamp",
+                    "instructions": """
                 {
                     "task_ids": ["task_id1", "task_id2"]
                 }
                 Use: Marks one or more tasks as complete. Requires task IDs.
                 """,
-                "move_tasks": """
+                "move_tasks": {
+                    "description": "Reorganizes tasks by moving them between projects, sections, or parent tasks while maintaining their metadata",
+                    "instructions": """
                 {
                     "tasks": [{
                         "id": "task_id",
