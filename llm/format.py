@@ -93,11 +93,18 @@ def format_tools_with_instructions(tools: List[Dict]) -> str:
         desc = f"<tool uuid='{tool['uuid']}'>\n"
         desc += f"  <name>{tool['name']}</name>\n"
         desc += f"  <description>{tool['description']}</description>\n"
-        desc += "  <instructions>\n"
-        if 'instructions' in tool:
-            for action, instruction in tool['instructions'].items():
-                desc += f"    <action name='{action}'>{instruction}</action>\n"
-        desc += "  </instructions>\n"
+        desc += "  <actions>\n"
+        if 'actions' in tool:
+            for action_name, action_info in tool['actions'].items():
+                desc += f"    <action name='{action_name}'>\n"
+                if isinstance(action_info, dict):
+                    desc += f"      <description>{action_info['description']}</description>\n"
+                    desc += f"      <instructions>{action_info['instructions']}</instructions>\n"
+                else:
+                    # Handle legacy format where action_info is just instructions string
+                    desc += f"      <instructions>{action_info}</instructions>\n"
+                desc += "    </action>\n"
+        desc += "  </actions>\n"
         desc += "</tool>"
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)
@@ -105,11 +112,18 @@ def format_tools_with_instructions(tools: List[Dict]) -> str:
 def format_tool_instructions(tool) -> str:
     desc = f"  <name>{tool['name']}</name>\n"
     desc += f"  <description>{tool['description']}</description>\n"
-    desc += "  <instructions>\n"
-    if 'instructions' in tool:
-        for action, instruction in tool['instructions'].items():
-            desc += f"    <action name='{action}'>{instruction}</action>\n"
-    desc += "  </instructions>\n"
+    desc += "  <actions>\n"
+    if 'actions' in tool:
+        for action_name, action_info in tool['actions'].items():
+            desc += f"    <action name='{action_name}'>\n"
+            if isinstance(action_info, dict):
+                desc += f"      <description>{action_info['description']}</description>\n"
+                desc += f"      <instructions>{action_info['instructions']}</instructions>\n"
+            else:
+                # Handle legacy format where action_info is just instructions string
+                desc += f"      <instructions>{action_info}</instructions>\n"
+            desc += "    </action>\n"
+    desc += "  </actions>\n"
     return desc
 
 

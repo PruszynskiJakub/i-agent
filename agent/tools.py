@@ -256,14 +256,18 @@ def get_tool_action_instructions(tool_name: str, action_name: str) -> str:
         str: Instructions for the specified tool action, or empty string if not found
     """
     tool = get_tool_by_name(tool_name)
-    if not tool or 'instructions' not in tool:
+    if not tool or 'actions' not in tool:
         return ""
         
-    instructions = tool['instructions'].get(action_name)
-    if not instructions:
+    action = tool['actions'].get(action_name)
+    if not action:
         return ""
         
-    return instructions
+    if isinstance(action, dict):
+        return action.get('instructions', "")
+    
+    # Handle legacy format where action is just instructions string
+    return action
 
 
 tool_handlers = {
