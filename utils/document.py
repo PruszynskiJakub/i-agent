@@ -2,7 +2,7 @@ import re
 from typing import Dict, Any, Optional
 from uuid import UUID, uuid4
 
-from models.document import Document
+from models.document import Document, DocumentMetadata, DocumentType
 
 
 def create_error_document(
