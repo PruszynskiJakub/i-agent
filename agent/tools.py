@@ -68,30 +68,63 @@ def get_tools():
                 """,
                 "search_tasks": """
                 {
-                    "filter": "filter keyword-based query string",
-                    "project_id": "optional_project_id",
-                    "label": "optional_label_name", 
-                    "section_id": "optional_section_id",
-                    "ids": ["optional_task_id1", "optional_task_id2"]
+                  "filter": "Optional advanced query string with logical operators, field filters, and synonym expansions",
+                  "project_id": "Optional project ID to narrow down tasks",
+                  "label": "Optional label name to narrow down tasks",
+                  "section_id": "Optional section ID to narrow down tasks",
+                  "ids": ["Optional list of exact task IDs"]
                 }
                 
-                Use: Lists tasks filtered by any combination of:
-                - filter: Powerful query string supporting combinations with & (AND), | (OR), ! (NOT), not useful for looking by project, label or section.
-                    Examples:
-                  - "today | overdue" - Due today or overdue
-                  - "p1 & @work" - Priority 1 tasks with work label
-                  - "7 days & !@waiting" - Due in next 7 days, not waiting
-                  - "##Work & !#Science" - All Work project and sub-projects except Science
-                  - "created: today" - Created today
-                  - "assigned to: me" - Assigned to me
-                  - "no date" - No due date set
-                  - "recurring" - Recurring tasks
-                  - "search: keyword" - Search for keyword in task content
-                  - Multiple queries separated by comma show separate lists
-                - project_id: Show tasks from a specific project
-                - label: Show tasks with a specific label  
-                - section_id: Show tasks from a specific section
-                - ids: Show specific tasks by their IDs
+                
+                Usage:
+                Fetch based on an advanced search.  
+                The "filter" field can include:
+                
+                1) Logical Operators:
+                   - & (AND), | (OR), ! (NOT)
+                   - Parentheses for grouping (e.g., "(p1 | p2) & overdue")
+                
+                2) Field-based Filters:
+                   - Examples: "title:", "assigned to:", "created:", "status:", "due:", etc.
+                   - "search:" for free-text searches over task content/title.
+                
+                3) Synonym and Morphological Expansion:
+                   - When the user query suggests synonyms or variant forms 
+                     (e.g. "invoice" ↔ "faktura/faktury/faktur"), 
+                     the LLM should expand the terms to increase the likelihood of matches.
+                   - Example:
+                       "search: (invoice OR faktura OR faktury OR faktur)"
+                     This ensures tasks referencing any of those variations are included.
+                
+                4) Fuzzy Matching or Partial Matching (optional enhancement):
+                   - You might integrate partial matches or wildcard expansions 
+                     (e.g., "factur" to capture “facture,” “factur,” “factury,” etc.).
+                   - Implement as relevant to your system’s capabilities.
+                
+                5) Multi-Condition Combining:
+                   - Combine synonyms with other logical filters.
+                   - Example:
+                       "search: (invoice OR faktura OR faktury) & !status: done"
+                     This finds tasks mentioning “invoice” or “faktura/faktury,” excluding completed ones.
+                
+                6) Additional Filtering Fields:
+                   - "project_id": Restrict results to a specific project by its ID.
+                   - "label": Filter by a specific label (like “urgent”).
+                   - "section_id": Filter tasks in a specific project section.
+                   - "ids": Retrieve a specific list of tasks by their unique IDs.
+                
+                Returns:
+                - A structured JSON list containing relevant task details 
+                  (task IDs, title, priority, due dates, labels, assignments, etc.).
+                
+                Example:
+                For a user request: “Mark as complete a task related to invoice - faktury”
+                the system might expand synonyms and produce a filter:
+                  {
+                    "filter": "search: (invoice OR faktura OR faktury OR faktur) & !status: done"
+                  }
+                This ensures capturing multiple linguistic variations of "invoice."
+             
                 Returns formatted list with task details including ids, title, priority, due dates, labels etc.
                 """,
                 "update_tasks": """
