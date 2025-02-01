@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 class Message(BaseModel):
     """
     Represents a message in a conversation
-    
+
     Attributes:
         uuid: Unique identifier for the message
         conversation_uuid: UUID of the conversation this message belongs to

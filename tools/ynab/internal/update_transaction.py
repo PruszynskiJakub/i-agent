@@ -2,8 +2,8 @@ import os
 from typing import Dict, Any
 import requests
 
-from document.types import Document
-from document.utils import create_document
+from models.document import Document
+from utils.document import create_document
 from llm.tracing import create_event
 
 async def update_transaction(params: Dict[str, Any], span) -> Document:

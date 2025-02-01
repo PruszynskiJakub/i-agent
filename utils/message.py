@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
-from message.types import Message
+
+from models.message import Message
 
 
 def create_message(conversation_uuid: str, content: str, role: str) -> Message:

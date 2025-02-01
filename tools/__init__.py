@@ -1,8 +1,8 @@
 from typing import Any, Dict, List
 from uuid import UUID
 
-from todoist.service import execute_todoist
-from ynab.service import execute_ynab
+from tools.todoist.service import execute_todoist
+from tools.ynab.service import execute_ynab
 
 
 def get_tools():

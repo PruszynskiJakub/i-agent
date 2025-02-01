@@ -1,10 +1,11 @@
 import os
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 from llm.tracing import create_event
 from todoist_api_python.api import TodoistAPI
-from document.types import Document
-from document.utils import create_document, create_error_document
+
+from models.document import Document
+from utils.document import create_document, create_error_document
 
 
 async def complete_tasks(params: Dict[str, Any], span) -> Document:

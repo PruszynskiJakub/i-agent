@@ -1,5 +1,5 @@
-from web import firecrawl_client
-from web.types import WebContent
+from tools.web import firecrawl_client
+from tools.web.types import WebContent
 
 
 async def scrape_webpage(url: str, format_type: str = 'md') -> WebContent:

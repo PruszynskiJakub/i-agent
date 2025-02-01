@@ -6,7 +6,7 @@ from agent.define import agent_define
 from agent.execute import agent_execute
 from agent.plan import agent_plan
 from agent.decide import agent_decide
-from agent.state import AgentState, should_interact, complete_interaction, new_interaction
+from utils.state import AgentState, should_interact, complete_interaction, new_interaction
 from llm.tracing import create_trace, end_trace
 
 

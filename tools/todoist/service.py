@@ -1,13 +1,13 @@
 from typing import List
 
-from document.types import Document
-from document.utils import create_error_document
-from todoist.internal.add_tasks import add_tasks
-from todoist.internal.complete_tasks import complete_tasks
-from todoist.internal.get_projects import get_projects
-from todoist.internal.search_tasks import search_tasks
-from todoist.internal.update_tasks import update_tasks
-from todoist.internal.move_tasks import move_tasks
+from models.document import Document
+from utils.document import create_error_document
+from tools.todoist.internal.add_tasks import add_tasks
+from tools.todoist.internal.complete_tasks import complete_tasks
+from tools.todoist.internal.get_projects import get_projects
+from tools.todoist.internal.search_tasks import search_tasks
+from tools.todoist.internal.update_tasks import update_tasks
+from tools.todoist.internal.move_tasks import move_tasks
 
 
 async def execute_todoist(action: str, params: dict[str, any], span) -> List[Document]:

@@ -2,10 +2,10 @@ import json
 from typing import List, Dict, Any, Optional
 from uuid import UUID, uuid4
 
-from action.types import ActionRecord
-from db.models import ActionRecordModel, ActionDocumentModel
-from document.types import Document
 from db.document import find_document_by_uuid
+from db.models import ActionRecordModel, ActionDocumentModel
+from models.action import ActionRecord
+from models.document import Document
 
 
 def find_action_records_by_conversation(conversation_uuid: str) -> List[ActionRecord]:

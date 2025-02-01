@@ -7,7 +7,7 @@ from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 from agent.assistant import agent_run
-from agent.state import create_or_restore_state, add_message
+from utils.state import create_or_restore_state, add_message
 from llm.tracing import flush
 from logger.logger import log_info, log_exception
 from slackk.utils import preprocess_message, get_conversation_id

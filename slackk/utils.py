@@ -1,12 +1,13 @@
 import os
 import uuid
+from typing import Dict, Any, List
 
 import requests
-from typing import Dict, Any, Optional, List
-from logger.logger import log_info, log_error
-from document.utils import create_document
+from models.document import DocumentType
+
 from db.document import save_document
-from document.types import DocumentType
+from logger.logger import log_info, log_error
+from utils.document import create_document
 
 
 def get_conversation_id(message: Dict[str, Any]) -> str:
@@ -27,17 +28,17 @@ def _process_attachments(files: List[Dict[str, Any]], conversation_uuid) -> None
         _, ext = os.path.splitext(file["name"])
         if ext.lower() not in ['.md', '.markdown']:
             continue
-            
+
         try:
             # Get file URL and download content
             url = file.get("url_private", "")
             response = requests.get(
-                url, 
+                url,
                 headers={'Authorization': f'Bearer {os.getenv("SLACK_BOT_TOKEN")}'}
             )
             response.raise_for_status()
             content = response.text
-            
+
             # Create document record
             doc = create_document(
                 content=content,
@@ -53,6 +54,6 @@ def _process_attachments(files: List[Dict[str, Any]], conversation_uuid) -> None
             )
             save_document(doc.__dict__)
             log_info(f"Created document record for: {file.get('title', '')}")
-            
+
         except Exception as e:
             log_error(f"Error processing file {file.get('name', 'unknown')}: {str(e)}")

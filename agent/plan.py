@@ -1,10 +1,8 @@
 import json
 
-from agent.state import (
-    AgentState, 
-    update_interaction, 
-    AgentPhase, 
-    update_phase,
+from models.state import (
+    AgentState,
+    AgentPhase,
     Thoughts,
     ToolCandidate
 )
@@ -12,7 +10,8 @@ from llm import open_ai
 from llm.format import format_actions_history, format_messages, format_tools, format_documents
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from agent.tools import get_tools
+from tools import get_tools
+from utils.state import update_phase
 
 
 async def agent_plan(state: AgentState, trace) -> AgentState:

@@ -1,13 +1,12 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, TypedDict
+from typing import TypedDict, List
 from uuid import UUID
-
 
 class DocumentType(Enum):
     """Type of document content"""
     IMAGE = "image"
-    DOCUMENT = "document" 
+    DOCUMENT = "document"
     AUDIO = "audio"
     TEXT = "text"
 

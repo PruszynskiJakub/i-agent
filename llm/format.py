@@ -2,9 +2,10 @@ from ast import Dict
 from typing import List
 from datetime import datetime
 
-from message.types import Message
-from document.types import Document
-from agent.state import ActionRecord, ToolCandidate
+from models.action import ActionRecord
+from models.document import Document
+from models.message import Message
+from models.state import ToolCandidate
 
 
 def format_actions_history(actions: List[ActionRecord]) -> str:
@@ -180,7 +181,6 @@ def format_documents(documents: List[Document]) -> str:
     Returns:
         str: Formatted string describing the documents' metadata
     """
-    import json
 
     doc_descriptions = []
     for document in documents:

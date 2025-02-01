@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional, Dict, Any, List
 from uuid import UUID
 
-from document.types import Document
+from models.document import Document
 
 
 @dataclass(frozen=True)

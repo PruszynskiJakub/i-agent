@@ -1,7 +1,7 @@
 from typing import List, Optional, Dict, Any
-from document.types import Document
 from uuid import UUID
 from db.models import DocumentModel
+from models.document import Document
 
 
 def save_document(document: Document | Dict[str, Any]) -> None:

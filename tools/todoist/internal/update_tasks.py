@@ -4,8 +4,9 @@ from uuid import uuid4
 
 from llm.tracing import create_event
 from todoist_api_python.api import TodoistAPI
-from document.types import Document
-from document.utils import create_document
+
+from models.document import Document
+from utils.document import create_document
 
 
 async def update_tasks(params: Dict[str, Any], span) -> Document:

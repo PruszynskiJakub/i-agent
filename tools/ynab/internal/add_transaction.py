@@ -7,12 +7,12 @@ from uuid import uuid4
 
 import requests
 
-from document.types import Document, DocumentType, DocumentMetadata
 
 from llm import open_ai
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_event
-from ynab import _ynab_accounts, _ynab_categories
+from tools.ynab import _ynab_accounts, _ynab_categories
+from models.document import Document, DocumentMetadata, DocumentType
 
 
 async def add_transaction(params: Dict[str, Any], trace) -> Document:

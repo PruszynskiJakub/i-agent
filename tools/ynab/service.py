@@ -1,9 +1,9 @@
 from typing import Dict, Any, List
 
-from document.types import Document
-from document.utils import create_error_document
-from ynab.internal.add_transaction import add_transaction
-from ynab.internal.update_transaction import update_transaction
+from models.document import Document
+from utils.document import create_error_document
+from tools.ynab.internal.add_transaction import add_transaction
+from tools.ynab.internal.update_transaction import update_transaction
 
 
 async def execute_ynab(action, params: Dict[str, Any], trace) -> List[Document]:

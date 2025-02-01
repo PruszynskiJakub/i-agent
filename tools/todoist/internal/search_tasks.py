@@ -1,8 +1,8 @@
 import os
-from typing import List, Optional
 from uuid import uuid4
-from document.types import Document 
-from document.utils import create_document, create_error_document
+
+from models.document import Document
+from utils.document import create_document, create_error_document
 from todoist_api_python.api import TodoistAPI
 
 async def search_tasks(params: dict, span) -> Document:

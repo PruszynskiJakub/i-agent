@@ -1,6 +1,6 @@
 import json
 
-from agent.state import (
+from utils.state import (
     AgentState,
     AgentPhase,
     update_phase,
@@ -10,13 +10,12 @@ from llm import open_ai
 from llm.format import (
     format_actions_history,
     format_messages,
-    format_tools,
     format_documents,
-    format_tool_candidates, format_tools_with_instructions, format_tools_with_descriptions
+    format_tool_candidates, format_tools_with_descriptions
 )
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from agent.tools import get_tools_by_names
+from tools.__init__ import get_tools_by_names
 
 
 async def agent_decide(state: AgentState, trace) -> AgentState:

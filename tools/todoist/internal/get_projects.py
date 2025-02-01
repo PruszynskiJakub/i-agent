@@ -2,7 +2,8 @@ import os
 from uuid import uuid4
 from todoist_api_python.api import TodoistAPI
 from llm.tracing import create_event
-from document.types import Document, DocumentType, DocumentMetadata
+from models.document import Document, DocumentMetadata, DocumentType
+
 
 async def get_projects(span) -> Document:
     """Get all Todoist projects and return as a Document"""
