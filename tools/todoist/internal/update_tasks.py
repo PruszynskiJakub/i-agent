@@ -5,7 +5,7 @@ from uuid import uuid4
 from llm.tracing import create_event
 from todoist_api_python.api import TodoistAPI
 
-from models.document import Document
+from models.document import Document, DocumentType
 from utils.document import create_document
 
 
@@ -140,7 +140,8 @@ async def update_tasks(params: Dict[str, Any], span) -> Document:
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
                 "name": "todoist_tasks",
-                "description": f"Updated {successful} tasks successfully, {failed} failed"
+                "description": f"Updated {successful} tasks successfully, {failed} failed",
+                "type": DocumentType.DOCUMENT
             }
         )
 
