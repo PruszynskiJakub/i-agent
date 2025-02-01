@@ -203,6 +203,37 @@ def format_documents(documents: List[Document]) -> str:
     return "\n".join(doc_descriptions)
 
 
+def format_tools_with_descriptions(tools: List[Dict]) -> str:
+    """
+    Formats a list of tools into an XML-like string representation including action descriptions.
+
+    Args:
+        tools: List of tool dictionaries
+
+    Returns:
+        str: Formatted string describing all tools with their action descriptions
+    """
+    tool_descriptions = []
+    for tool in tools:
+        desc = f"<tool uuid='{tool['uuid']}'>\n"
+        desc += f"  <name>{tool['name']}</name>\n"
+        desc += f"  <description>{tool['description']}</description>\n"
+        desc += "  <actions>\n"
+        if 'actions' in tool:
+            for action_name, action_info in tool['actions'].items():
+                desc += f"    <action name='{action_name}'>\n"
+                if isinstance(action_info, dict):
+                    desc += f"      <description>{action_info['description']}</description>\n"
+                else:
+                    # Handle legacy format where action_info is just instructions string
+                    desc += f"      <description>Legacy action - see instructions for details</description>\n"
+                desc += "    </action>\n"
+        desc += "  </actions>\n"
+        desc += "</tool>"
+        tool_descriptions.append(desc)
+    return "\n".join(tool_descriptions)
+
+
 def format_facts() -> str:
     """
     Returns formatted facts about current date.
