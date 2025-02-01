@@ -1,8 +1,7 @@
 import json
 
+from models.state import AgentState, AgentPhase
 from utils.state import (
-    AgentState,
-    AgentPhase,
     update_phase,
     update_interaction
 )

@@ -4,49 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve tools, and decide tool">
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/todoist/internal/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/ynab/internal/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/action/types.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/action.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/decide.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/decide.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/define.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/define.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/action.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/action.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/document.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/document.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/document/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/document/types.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/document.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/document/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/document.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llm/format.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/format.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/message/types.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/message/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slackk/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slackk/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/internal/add_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/add_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/internal/complete_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/internal/get_projects.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/get_projects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/internal/move_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/move_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/internal/search_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/search_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/internal/update_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/update_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoist/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/types.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/types.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/add_transaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/internal/update_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ynab/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/service.py" afterDir="false" />
-    </list>
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Repackage" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,8 +67,8 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/tools" />
       <recent name="$PROJECT_DIR$/utils" />
+      <recent name="$PROJECT_DIR$/tools" />
       <recent name="$PROJECT_DIR$/agent" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/llm" />
@@ -233,22 +191,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00083" summary="Remove old files">
-      <option name="closed" value="true" />
-      <created>1737480035676</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1737480035676</updated>
-    </task>
-    <task id="LOCAL-00084" summary="Fixes">
-      <option name="closed" value="true" />
-      <created>1737548162540</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1737548162540</updated>
     </task>
     <task id="LOCAL-00085" summary="Set max_steps to 4">
       <option name="closed" value="true" />
@@ -626,7 +568,23 @@
       <option name="project" value="LOCAL" />
       <updated>1738412933448</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="Repackage">
+      <option name="closed" value="true" />
+      <created>1738415936671</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1738415936672</updated>
+    </task>
+    <task id="LOCAL-00133" summary="Repackage">
+      <option name="closed" value="true" />
+      <created>1738416012640</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1738416012641</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -641,7 +599,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Small fixes" />
     <MESSAGE value="Add method" />
     <MESSAGE value="Fixes" />
     <MESSAGE value="Refactor" />
@@ -666,6 +623,7 @@
     <MESSAGE value="Improve instructions for search_tasks" />
     <MESSAGE value="improve instructions" />
     <MESSAGE value="Improve tools, and decide tool" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve tools, and decide tool" />
+    <MESSAGE value="Repackage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Repackage" />
   </component>
 </project>
