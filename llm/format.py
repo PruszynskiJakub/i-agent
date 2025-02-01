@@ -222,11 +222,7 @@ def format_tools_with_descriptions(tools: List[Dict]) -> str:
         if 'actions' in tool:
             for action_name, action_info in tool['actions'].items():
                 desc += f"    <action name='{action_name}'>\n"
-                if isinstance(action_info, dict):
-                    desc += f"      <description>{action_info['description']}</description>\n"
-                else:
-                    # Handle legacy format where action_info is just instructions string
-                    desc += f"      <description>Legacy action - see instructions for details</description>\n"
+                desc += f"      <description>{action_info['description']}</description>\n"
                 desc += "    </action>\n"
         desc += "  </actions>\n"
         desc += "</tool>"
