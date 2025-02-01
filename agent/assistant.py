@@ -6,8 +6,9 @@ from agent.define import agent_define
 from agent.execute import agent_execute
 from agent.plan import agent_plan
 from agent.decide import agent_decide
-from utils.state import AgentState, should_interact, complete_interaction, new_interaction
 from llm.tracing import create_trace, end_trace
+from models.state import AgentState
+from utils.state import should_interact, new_interaction, complete_interaction
 
 
 async def agent_run(in_state: AgentState) -> str:
