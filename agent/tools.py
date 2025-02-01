@@ -174,10 +174,12 @@ def get_tools():
                   (task IDs, title, priority, due dates, labels, assignments, etc.).
                 
                 Example:
-                For a user request: “Mark as complete a task related to invoice - faktury”
+                For a user request: “Mark as complete a task labeled pc related to invoice - faktury in project Inbox”
                 the system might expand synonyms and produce a filter:
                   {
-                    "filter": "(search: invoice | search: faktura | search: faktury | search: faktur) & !status: done"
+                    "filter": "(search: invoice | search: faktura | search: faktury | search: faktur) & !status: done",
+                    "project_id": "2334150459",
+                    "label": "pc"
                   }
                 This ensures capturing multiple linguistic variations of "invoice."
              
