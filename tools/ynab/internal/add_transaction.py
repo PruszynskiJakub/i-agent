@@ -241,14 +241,12 @@ def _call_api(
 
     return {
         "status": "success",
-        "details": {
-            "details": {  # Nested details to match expected structure
-                "transaction_id": transaction_id,
-                "query": query,
-                "category": category_name,
-                "account": account_name,
-                "payee": payee_name
-            }
+        "details": {  # Nested details to match expected structure
+            "transaction_id": transaction_id,
+            "query": query,
+            "category": category_name,
+            "account": account_name,
+            "payee": payee_name
         }
     }
 
@@ -277,7 +275,7 @@ def _format_transaction_results(transaction_results: list) -> str:
     successful_transactions = [t for t in transaction_results if t["status"] == "success"]
     if successful_transactions:
         for t in successful_transactions:
-            details = t.get("details", {}).get("details", {})  # Handle nested details structure
+            details = t.get("details", {})
             summary.extend([
                 f"Transaction ID: {details.get('transaction_id', 'Unknown')}",
                 f"Description: {details.get('query', 'No description')}",
