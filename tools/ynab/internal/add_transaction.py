@@ -61,7 +61,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
         metadata=DocumentMetadata(
             type=DocumentType.DOCUMENT,
             source="ynab",
-            description=format_document_description(transaction_results),
+            description=_format_document_description(transaction_results),
             name="transaction_results",
             content_type="full",
         )
@@ -99,63 +99,6 @@ async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
             "error_code": "SPLIT_FAILED",
             "error_message": f"Failed to split transaction: {str(e)}"
         }]
-
-
-def _format_transaction_results(transaction_results: list) -> str:
-    total_transactions = len(transaction_results)
-    successful = sum(1 for t in transaction_results if t["status"] == "success")
-    failed = total_transactions - successful
-
-    # Section 1: General summary
-    summary = [
-        "Transaction Processing Summary",
-        "----------------------------",
-        f"Total transactions processed: {total_transactions}",
-        f"Successful transactions: {successful}",
-        f"Failed transactions: {failed}",
-        ""
-    ]
-
-    # Section 2: Successful transactions
-    summary.extend([
-        "Successful Transactions",
-        "---------------------"
-    ])
-
-    successful_transactions = [t for t in transaction_results if t["status"] == "success"]
-    if successful_transactions:
-        for t in successful_transactions:
-            details = t.get("details", {}).get("details", {})  # Handle nested details structure
-            summary.extend([
-                f"Transaction ID: {details.get('transaction_id', 'Unknown')}",
-                f"Description: {details.get('query', 'No description')}",
-                f"Category: {details.get('category', 'Not categorized')}",
-                f"Account: {details.get('account', 'Unknown account')}",
-                f"Payee: {details.get('payee', 'Unknown payee')}",
-                ""
-            ])
-    else:
-        summary.append("No successful transactions\n")
-
-    # Section 3: Failed transactions
-    summary.extend([
-        "Failed Transactions",
-        "-----------------"
-    ])
-
-    failed_transactions = [t for t in transaction_results if t["status"] == "error"]
-    if failed_transactions:
-        for t in failed_transactions:
-            summary.extend([
-                f"Description: {t['query']}",
-                f"Error: {t['error']}",
-                ""
-            ])
-    else:
-        summary.append("No failed transactions\n")
-
-    return "\n".join(summary)
-
 
 async def _process_transaction(transaction_query: str, trace):
     amount_task = asyncio.create_task(_pick_amount(transaction_query, trace))
@@ -299,8 +242,63 @@ def _call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any],
         }
     }
 
+def _format_transaction_results(transaction_results: list) -> str:
+    total_transactions = len(transaction_results)
+    successful = sum(1 for t in transaction_results if t["status"] == "success")
+    failed = total_transactions - successful
 
-def format_document_description(transaction_results: list) -> str:
+    # Section 1: General summary
+    summary = [
+        "Transaction Processing Summary",
+        "----------------------------",
+        f"Total transactions processed: {total_transactions}",
+        f"Successful transactions: {successful}",
+        f"Failed transactions: {failed}",
+        ""
+    ]
+
+    # Section 2: Successful transactions
+    summary.extend([
+        "Successful Transactions",
+        "---------------------"
+    ])
+
+    successful_transactions = [t for t in transaction_results if t["status"] == "success"]
+    if successful_transactions:
+        for t in successful_transactions:
+            details = t.get("details", {}).get("details", {})  # Handle nested details structure
+            summary.extend([
+                f"Transaction ID: {details.get('transaction_id', 'Unknown')}",
+                f"Description: {details.get('query', 'No description')}",
+                f"Category: {details.get('category', 'Not categorized')}",
+                f"Account: {details.get('account', 'Unknown account')}",
+                f"Payee: {details.get('payee', 'Unknown payee')}",
+                ""
+            ])
+    else:
+        summary.append("No successful transactions\n")
+
+    # Section 3: Failed transactions
+    summary.extend([
+        "Failed Transactions",
+        "-----------------"
+    ])
+
+    failed_transactions = [t for t in transaction_results if t["status"] == "error"]
+    if failed_transactions:
+        for t in failed_transactions:
+            summary.extend([
+                f"Description: {t['query']}",
+                f"Error: {t['error']}",
+                ""
+            ])
+    else:
+        summary.append("No failed transactions\n")
+
+    return "\n".join(summary)
+
+
+def _format_document_description(transaction_results: list) -> str:
     """Format a concise description of the transaction processing results."""
     total = len(transaction_results)
     successful = sum(1 for t in transaction_results if t["status"] == "success")
