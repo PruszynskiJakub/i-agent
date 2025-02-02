@@ -54,7 +54,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
         else:
             transaction_results.append(result)  # result already has the correct structure
 
-    doc = Document(
+    return Document(
         uuid=uuid4(),
         conversation_uuid=params.get("conversation_uuid", ""),
         text=_format_transaction_results(transaction_results),
@@ -66,7 +66,6 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
             content_type="full",
         )
     )
-    return doc
 
 
 async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
