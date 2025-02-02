@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add todo comment">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/add_transaction.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -191,22 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00110" summary="Simplify">
-      <option name="closed" value="true" />
-      <created>1737663472362</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1737663472362</updated>
-    </task>
-    <task id="LOCAL-00111" summary="Improvements">
-      <option name="closed" value="true" />
-      <created>1737663890240</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1737663890240</updated>
     </task>
     <task id="LOCAL-00112" summary="Add filters docs">
       <option name="closed" value="true" />
@@ -584,7 +571,23 @@
       <option name="project" value="LOCAL" />
       <updated>1738528609788</updated>
     </task>
-    <option name="localTasksCounter" value="159" />
+    <task id="LOCAL-00159" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1738528842353</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1738528842353</updated>
+    </task>
+    <task id="LOCAL-00160" summary="Add todo comment">
+      <option name="closed" value="true" />
+      <created>1738528935810</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1738528935810</updated>
+    </task>
+    <option name="localTasksCounter" value="161" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -599,7 +602,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add tools to the answer" />
     <MESSAGE value="Resign from dynamic_context for ynab" />
     <MESSAGE value="Fix missing import" />
     <MESSAGE value="Add task id above title in add_tasks" />
@@ -624,6 +626,7 @@
     <MESSAGE value="Add comment" />
     <MESSAGE value="Refactor" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Add todo comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add todo comment" />
   </component>
 </project>

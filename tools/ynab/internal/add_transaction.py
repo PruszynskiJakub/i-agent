@@ -23,33 +23,33 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
 
     # Initialize results list with any split errors
     transaction_results = []
-    valid_transactions = []
+    transaction_queries = []
 
     for result in split_results:
         if "error_code" in result:
             transaction_results.append({
                 "status": "error",
                 "query": result.get("query", query),
-                "error": f"{result['error_message']}"
+                "error": result['error_message']
             })
         else:
-            valid_transactions.append(result["query"])
+            transaction_queries.append(result["query"])
 
     # If no valid transactions and no split errors, use original query
-    if not valid_transactions and not transaction_results:
-        valid_transactions = [query]
+    if not transaction_queries and not transaction_results:
+        transaction_queries = [query]
 
     # Process all valid transactions in parallel
-    transaction_tasks = [_process_transaction(transaction, trace) for transaction in valid_transactions]
+    transaction_tasks = [_process_transaction(transaction, trace) for transaction in transaction_queries]
 
     # Gather results while maintaining parallel execution
-    completed_results = await asyncio.gather(*transaction_tasks, return_exceptions=True)
+    transaction_tasks_results = await asyncio.gather(*transaction_tasks, return_exceptions=True)
 
-    for transaction, result in zip(valid_transactions, completed_results):
+    for transaction_query, result in zip(transaction_queries, transaction_tasks_results):
         if isinstance(result, Exception):
             transaction_results.append({
                 "status": "error",
-                "query": transaction,
+                "query": transaction_query,
                 "error": str(result)
             })
         else:
