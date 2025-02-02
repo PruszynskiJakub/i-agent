@@ -63,7 +63,8 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
             "source": "ynab",
             "name": "AddingTransactionsResult",
             "description": _format_document_description(transaction_results),
-            "type": DocumentType.DOCUMENT
+            "type": DocumentType.DOCUMENT,
+            "content_type": "full",
         }
     )
 

@@ -6,14 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/move_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/move_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/search_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/search_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/update_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/update_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/add_transaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/document.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/document.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/slack.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/slack.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,22 +193,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00106" summary="Fixes">
-      <option name="closed" value="true" />
-      <created>1737633440936</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1737633440936</updated>
-    </task>
-    <task id="LOCAL-00107" summary="Refactor">
-      <option name="closed" value="true" />
-      <created>1737637576076</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1737637576076</updated>
     </task>
     <task id="LOCAL-00108" summary="Improvements">
       <option name="closed" value="true" />
@@ -594,7 +570,23 @@
       <option name="project" value="LOCAL" />
       <updated>1738524241588</updated>
     </task>
-    <option name="localTasksCounter" value="155" />
+    <task id="LOCAL-00155" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1738526335579</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
+      <option name="project" value="LOCAL" />
+      <updated>1738526335579</updated>
+    </task>
+    <task id="LOCAL-00156" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1738526645552</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1738526645552</updated>
+    </task>
+    <option name="localTasksCounter" value="157" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
