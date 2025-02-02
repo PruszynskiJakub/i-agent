@@ -1,14 +1,16 @@
 import os
 from typing import Dict, Any
+
 import requests
 
+from llm.tracing import create_event
 from models.document import Document, DocumentType
 from utils.document import create_document
-from llm.tracing import create_event
+
 
 async def update_transaction(params: Dict[str, Any], span) -> Document:
     """Update an existing YNAB transaction"""
-    
+
     # Extract required transaction id
     transaction_id = params.get("id")
     if not transaction_id:
@@ -21,28 +23,27 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
         "account_id", "date", "amount", "payee_id",
         "category_id", "memo", "cleared", "approved"
     ]
-    
+
     for field in optional_fields:
         if params.get(field) is not None:
             transaction[field] = params[field]
 
-    # Prepare request
-    url = f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions"
-    headers = {
-        "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
-        "Content-Type": "application/json"
-    }
-    body = {"transactions": [transaction]}
+    response = requests.patch(
+        url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions",
+        json={"transactions": [transaction]},
+        headers={
+            "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
+            "Content-Type": "application/json"
+        }
+    )
 
-    response = requests.patch(url=url, json=body , headers=headers)
-    
     create_event(
         span,
         name="ynab_api_call",
         input={
-            "url": url,
-            "method": "PATCH",
-            "body": body
+            "url": response.request.url,
+            "method": response.request.method,
+            "body": response.request.body
         },
         output={
             "status_code": response.status_code,
@@ -58,10 +59,10 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
     # Create success document
     updated_transaction = response.json()["data"]["transactions"][0]
     content = f"Successfully updated transaction:\n" \
-             f"- ID: {updated_transaction['id']}\n" \
-             f"- Amount: {updated_transaction['amount']}\n" \
-             f"- Date: {updated_transaction['date']}\n" \
-             f"- Memo: {updated_transaction.get('memo', 'N/A')}"
+              f"- ID: {updated_transaction['id']}\n" \
+              f"- Amount: {updated_transaction['amount']}\n" \
+              f"- Date: {updated_transaction['date']}\n" \
+              f"- Memo: {updated_transaction.get('memo', 'N/A')}"
 
     return create_document(
         text=content,

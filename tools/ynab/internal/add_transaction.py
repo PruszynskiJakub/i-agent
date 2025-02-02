@@ -218,7 +218,7 @@ def _call_api(
         name="ynab_api_call",
         input={
             "url": response.request.url,
-            "method": "POST",
+            "method": response.request.method,
             "body": response.request.body
         },
         output={
