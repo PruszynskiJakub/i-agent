@@ -17,7 +17,7 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
         
         if not task_ids:
             return create_document(
-                content="No task IDs provided",
+                text="No task IDs provided",
                 metadata_override={
                     "conversation_uuid": params.get("conversation_uuid", ""),
                     "source": "todoist",
@@ -100,7 +100,7 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
                     output={"status": "success", "successful": successful, "failed": failed})
         
         return create_document(
-            content=result,
+            text=result,
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist", 

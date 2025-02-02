@@ -71,7 +71,7 @@ async def search_tasks(params: dict, span) -> Document:
             description += f" matching IDs: {', '.join(task_ids)}"
         
         return create_document(
-            content=content,
+            text=content,
             metadata_override={
                 "uuid": str(uuid4()),
                 "conversation_uuid": conversation_uuid,

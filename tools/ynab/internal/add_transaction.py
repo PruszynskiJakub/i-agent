@@ -13,6 +13,7 @@ from llm.tracing import create_generation, end_generation, create_event
 from models.document import Document, DocumentMetadata, DocumentType
 from tools.ynab import _ynab_accounts, _ynab_categories
 from utils import DEFAULT_MODEL
+from utils.document import create_document
 
 
 async def add_transaction(params: Dict[str, Any], trace) -> Document:
@@ -54,17 +55,16 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
         else:
             transaction_results.append(result)  # result already has the correct structure
 
-    return Document(
-        uuid=uuid4(),
-        conversation_uuid=params.get("conversation_uuid", ""),
-        text=_format_transaction_results(transaction_results),
-        metadata=DocumentMetadata(
-            type=DocumentType.DOCUMENT,
-            source="ynab",
-            description=_format_document_description(transaction_results),
-            name="transaction_results",
-            content_type="full",
-        )
+    return create_document(
+        text = _format_transaction_results(transaction_results),
+        metadata_override={
+            "uuid": uuid4(),
+            "conversation_uuid": params.get("conversation_uuid", ""),
+            "source": "ynab",
+            "name": "AddingTransactionsResult",
+            "description": _format_document_description(transaction_results),
+            "type": DocumentType.DOCUMENT
+        }
     )
 
 

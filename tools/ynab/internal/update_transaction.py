@@ -64,7 +64,7 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
              f"- Memo: {updated_transaction.get('memo', 'N/A')}"
 
     return create_document(
-        content=content,
+        text=content,
         metadata_override={
             "type": DocumentType.DOCUMENT,
             "source": "ynab",

@@ -26,7 +26,7 @@ def create_error_document(
     error_text = f"Error: {error_message}\nContext: {error_context}"
 
     return create_document(
-        content=error_text,
+        text=error_text,
         metadata_override={
             "conversation_uuid": conversation_uuid,
             "source_uuid": source_uuid or conversation_uuid,
@@ -38,7 +38,7 @@ def create_error_document(
     )
 
 
-def create_document(content: str, metadata_override: Dict[str, Any] = {}) -> Document:
+def create_document(text: str, metadata_override: Dict[str, Any] = {}) -> Document:
     """Creates a Document object from content and metadata"""
 
     document_metadata: DocumentMetadata = {
@@ -54,7 +54,7 @@ def create_document(content: str, metadata_override: Dict[str, Any] = {}) -> Doc
     return Document(
         uuid=metadata_override.get("uuid", uuid4()),
         conversation_uuid=metadata_override.get("conversation_uuid", ""),
-        text=content,
+        text=text,
         metadata=document_metadata
     )
 
