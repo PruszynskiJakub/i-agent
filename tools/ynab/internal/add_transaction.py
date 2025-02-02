@@ -100,6 +100,7 @@ async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
             "error_message": f"Failed to split transaction: {str(e)}"
         }]
 
+
 # TODO - return JSON objects to create transactions in bulk
 async def _process_transaction(transaction_query: str, trace):
     amount_task = asyncio.create_task(_pick_amount(transaction_query, trace))
@@ -201,25 +202,24 @@ def _call_api(
     if category_result:
         transaction["category_id"] = category_result.get('category', {}).get('id')
 
-    body = {
-        "transaction": transaction
-    }
-
-    url = f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions"
-    headers = {
-        "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
-        "Content-Type": "application/json"
-    }
-
-    response = requests.post(url=url, json=body, headers=headers)
+    response = requests.post(
+        url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions",
+        json={
+            "transaction": transaction
+        },
+        headers={
+            "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
+            "Content-Type": "application/json"
+        }
+    )
 
     create_event(
         trace,
         name="ynab_api_call",
         input={
-            "url": url,
+            "url": response.request.url,
             "method": "POST",
-            "body": body
+            "body": response.request.body
         },
         output={
             "status_code": response.status_code,
