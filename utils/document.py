@@ -44,7 +44,7 @@ def create_document(content: str, metadata: Dict[str, Any] = None) -> Document:
         metadata = {}
 
     document_metadata: DocumentMetadata = {
-        "type": metadata.get("type", DocumentType.TEXT),
+        "type": metadata.get("type", DocumentType.DOCUMENT),
         "source": metadata.get("source", ""),
         "mime_type": metadata.get("mime_type", "text/plain"),
         "name": metadata.get("name", ""),

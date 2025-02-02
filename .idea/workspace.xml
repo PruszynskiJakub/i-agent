@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add missing type">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add some improvemetns.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/move_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/move_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/document.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/document.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,14 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00092" summary="Simplify">
-      <option name="closed" value="true" />
-      <created>1737624530337</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1737624530337</updated>
     </task>
     <task id="LOCAL-00093" summary="Rename method">
       <option name="closed" value="true" />
@@ -589,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738446168352</updated>
     </task>
-    <option name="localTasksCounter" value="141" />
+    <task id="LOCAL-00141" summary="Add some improvemetns.">
+      <option name="closed" value="true" />
+      <created>1738487550690</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1738487550690</updated>
+    </task>
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -604,7 +602,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Simplify" />
     <MESSAGE value="Improvements" />
     <MESSAGE value="Add filters docs" />
     <MESSAGE value="small improvements" />
@@ -629,6 +626,7 @@
     <MESSAGE value="Fix imports" />
     <MESSAGE value="Create resend_sample.py" />
     <MESSAGE value="Add missing type" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add missing type" />
+    <MESSAGE value="Add some improvemetns." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add some improvemetns." />
   </component>
 </project>
