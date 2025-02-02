@@ -100,6 +100,7 @@ async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
             "error_message": f"Failed to split transaction: {str(e)}"
         }]
 
+
 async def _process_transaction(transaction_query: str, trace):
     amount_task = asyncio.create_task(_pick_amount(transaction_query, trace))
     sides_task = asyncio.create_task(_pick_sides(transaction_query, trace))
@@ -167,9 +168,14 @@ async def _pick_category(q: str, trace) -> Dict[str, Any]:
     return json.loads(completion)
 
 
-def _call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any],
-              category_result: Dict[str, Any] | None,
-              query: str, trace) -> dict:
+def _call_api(
+        sides_result: Dict[str, Any],
+        amount_result: Dict[str, Any],
+        category_result: Dict[str, Any] | None,
+        query: str,
+        trace
+) -> dict:
+
     if not sides_result or not amount_result:
         raise ValueError("Missing required parameters: sides_result and amount_result are required")
 
@@ -241,6 +247,7 @@ def _call_api(sides_result: Dict[str, Any], amount_result: Dict[str, Any],
             }
         }
     }
+
 
 def _format_transaction_results(transaction_results: list) -> str:
     total_transactions = len(transaction_results)
