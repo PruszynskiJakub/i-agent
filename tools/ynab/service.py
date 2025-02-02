@@ -1,9 +1,9 @@
 from typing import Dict, Any, List
 
 from models.document import Document
-from utils.document import create_error_document
 from tools.ynab.internal.add_transaction import add_transaction
 from tools.ynab.internal.update_transaction import update_transaction
+from utils.document import create_error_document
 
 
 async def execute_ynab(action, params: Dict[str, Any], trace) -> List[Document]:
@@ -16,14 +16,18 @@ async def execute_ynab(action, params: Dict[str, Any], trace) -> List[Document]:
                 result = await update_transaction(params, trace)
                 return [result]
             case _:
-                return [create_error_document(
-                    Exception("Action not recognized"),
-                    f"YNAB service received unknown action: {action}",
-                    params.get("conversation_uuid", "unknown")
-                )]
-    except Exception as e:
-        return [create_error_document(
-            e,
-            f"Error executing YNAB action: {action}",
-            params.get("conversation_uuid", "unknown")
-        )]
+                return [
+                    create_error_document(
+                        error=ValueError("Action not recognized"),
+                        error_context=f"YNAB service received unknown action: {action}",
+                        conversation_uuid=params.get("conversation_uuid", "unknown")
+                    )
+                ]
+    except Exception as exception:
+        return [
+            create_error_document(
+                error=exception,
+                error_context=f"Error executing YNAB action: {action}",
+                conversation_uuid=params.get("conversation_uuid", "unknown")
+            )
+        ]
