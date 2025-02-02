@@ -230,7 +230,7 @@ def _call_api(
 
     if response.status_code != 201:
         error = response.json()['error']
-        raise Exception(f"Failed to add transaction: {error.get('detail', 'Unknown error')}")
+        raise Exception(f"Failed to add transaction '{query}' E: {error.get('detail', 'Unknown error')}")
 
     response_data = response.json()
     transaction_id = response_data.get('data', {}).get('transaction', {}).get('id', 'unknown')
