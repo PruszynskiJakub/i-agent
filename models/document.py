@@ -17,7 +17,7 @@ class DocumentMetadata(TypedDict, total=False):
     source: str
     parent_document_uuid: UUID  # UUID of the source document if this is derived from another document
     mime_type: str
-    content_type: str
+    content_type: str # chunk or full
     name: str
     description: str   # A brief description of the document's content
     images: List[str]  # List of image URLs found in the document
