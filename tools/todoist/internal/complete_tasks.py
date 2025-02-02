@@ -4,7 +4,7 @@ from typing import Dict, Any
 from llm.tracing import create_event
 from todoist_api_python.api import TodoistAPI
 
-from models.document import Document
+from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document
 
 
@@ -105,7 +105,8 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist", 
                 "description": f"Completed {successful} tasks successfully, {failed} failed",
-                "name": "todoist_tasks"
+                "name": "todoist_tasks",
+                "type": DocumentType.DOCUMENT
             }
         )
 

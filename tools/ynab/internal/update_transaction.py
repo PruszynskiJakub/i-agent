@@ -2,7 +2,7 @@ import os
 from typing import Dict, Any
 import requests
 
-from models.document import Document
+from models.document import Document, DocumentType
 from utils.document import create_document
 from llm.tracing import create_event
 
@@ -66,7 +66,7 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
     return create_document(
         content=content,
         metadata={
-            "type": "DOCUMENT",
+            "type": DocumentType.DOCUMENT,
             "source": "ynab",
             "description": "Transaction update result",
             "transaction_id": updated_transaction["id"],

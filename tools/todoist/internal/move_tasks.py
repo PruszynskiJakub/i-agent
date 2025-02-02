@@ -4,7 +4,7 @@ from uuid import uuid4
 import requests
 
 from llm.tracing import create_event
-from models.document import Document
+from models.document import Document, DocumentType
 from utils.document import create_document
 
 
@@ -23,7 +23,8 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
                     "conversation_uuid": params.get("conversation_uuid", ""),
                     "source": "todoist",
                     "name": "todoist_tasks",
-                    "description": "No tasks to move"
+                    "description": "No tasks to move",
+                    "type": DocumentType.DOCUMENT
                 }
             )
 
@@ -140,7 +141,8 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
                 "name": "todoist_tasks",
-                "description": f"Moved {successful} tasks successfully, {failed} failed"
+                "description": f"Moved {successful} tasks successfully, {failed} failed",
+                "type": DocumentType.DOCUMENT
             }
         )
 
@@ -155,6 +157,7 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
                 "name": "todoist_tasks", 
-                "description": "Error moving tasks"
+                "description": "Error moving tasks",
+                "type": DocumentType.DOCUMENT
             }
         )

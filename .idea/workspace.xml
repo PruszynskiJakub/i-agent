@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Create resend_sample.py">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add missing type">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/update_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/update_tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/move_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/move_tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,14 +196,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00091" summary="Reformat">
-      <option name="closed" value="true" />
-      <created>1737624356652</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1737624356652</updated>
     </task>
     <task id="LOCAL-00092" summary="Simplify">
       <option name="closed" value="true" />
@@ -587,7 +581,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738439483288</updated>
     </task>
-    <option name="localTasksCounter" value="140" />
+    <task id="LOCAL-00140" summary="Add missing type">
+      <option name="closed" value="true" />
+      <created>1738446168352</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1738446168352</updated>
+    </task>
+    <option name="localTasksCounter" value="141" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -602,7 +604,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor" />
     <MESSAGE value="Simplify" />
     <MESSAGE value="Improvements" />
     <MESSAGE value="Add filters docs" />
@@ -627,6 +628,7 @@
     <MESSAGE value="Repackage" />
     <MESSAGE value="Fix imports" />
     <MESSAGE value="Create resend_sample.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create resend_sample.py" />
+    <MESSAGE value="Add missing type" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add missing type" />
   </component>
 </project>
