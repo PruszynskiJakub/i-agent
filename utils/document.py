@@ -53,13 +53,6 @@ def create_document(content: str, metadata: Dict[str, Any] = None) -> Document:
         "urls": metadata.get("urls", [])
     }
 
-    # Extract images and URLs if not provided
-    if not document_metadata["images"] and not document_metadata["urls"]:
-        extracted = extract_images_and_urls(content)
-        document_metadata["images"] = extracted["images"]
-        document_metadata["urls"] = extracted["urls"]
-        content = extracted["content"]
-
     return Document(
         uuid=metadata.get("uuid", uuid4()),
         conversation_uuid=metadata.get("conversation_uuid", ""),

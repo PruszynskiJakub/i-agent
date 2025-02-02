@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Change default document type">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add comment" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -193,14 +191,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00094" summary="Rename method">
-      <option name="closed" value="true" />
-      <created>1737624836467</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1737624836467</updated>
     </task>
     <task id="LOCAL-00095" summary="Small fixes">
       <option name="closed" value="true" />
@@ -586,7 +576,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738501319583</updated>
     </task>
-    <option name="localTasksCounter" value="143" />
+    <task id="LOCAL-00143" summary="Add comment">
+      <option name="closed" value="true" />
+      <created>1738510715563</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1738510715563</updated>
+    </task>
+    <option name="localTasksCounter" value="144" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -601,7 +599,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add filters docs" />
     <MESSAGE value="small improvements" />
     <MESSAGE value="generate requirements" />
     <MESSAGE value="Pass interaction query instead of user query" />
@@ -626,6 +623,7 @@
     <MESSAGE value="Add missing type" />
     <MESSAGE value="Add some improvemetns." />
     <MESSAGE value="Change default document type" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change default document type" />
+    <MESSAGE value="Add comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add comment" />
   </component>
 </project>
