@@ -12,6 +12,7 @@ from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_event
 from models.document import Document, DocumentMetadata, DocumentType
 from tools.ynab import _ynab_accounts, _ynab_categories
+from utils import DEFAULT_MODEL
 
 
 async def add_transaction(params: Dict[str, Any], trace) -> Document:
@@ -68,18 +69,25 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
     return doc
 
 
-async def _split_transaction(q: str, trace) -> list[Dict[str, Any]]:
+async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
     prompt = get_prompt(name="ynab_split")
     system_prompt = prompt.compile()
-    generation = create_generation(trace, "split_transaction", "gpt-4o", system_prompt)
+    model = prompt.config.get("model", DEFAULT_MODEL)
+
+    generation = create_generation(
+        trace,
+        "split_transaction",
+        model,
+        system_prompt
+    )
 
     try:
         completion = await open_ai.completion(
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": q}
+                {"role": "user", "content": query}
             ],
-            model=prompt.config.get("model", "gpt-4o"),
+            model=model,
             json_mode=True
         )
         end_generation(generation, completion)
@@ -87,7 +95,7 @@ async def _split_transaction(q: str, trace) -> list[Dict[str, Any]]:
         return json_completion['result']
     except Exception as e:
         return [{
-            "query": q,
+            "query": query,
             "error_code": "SPLIT_FAILED",
             "error_message": f"Failed to split transaction: {str(e)}"
         }]
