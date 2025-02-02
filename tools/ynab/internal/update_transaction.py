@@ -5,7 +5,7 @@ import requests
 
 from llm.tracing import create_event
 from models.document import Document, DocumentType
-from utils.document import create_document
+from utils.document import create_document, create_error_document
 
 
 async def update_transaction(params: Dict[str, Any], span) -> Document:
@@ -54,7 +54,11 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
 
     if response.status_code != 200:
         error = response.json().get("error", {})
-        raise Exception(f"YNAB API error: {error.get('detail', 'Unknown error')}")
+        return create_error_document(
+            error=Exception(f"Updating transaction with id {transaction_id} failed"),
+            error_context=f"YNAB API error: {error.get('detail', 'Unknown error')}",
+            conversation_uuid=params.get("conversation_uuid", "unknown")
+        )
 
     # Create success document
     updated_transaction = response.json()["data"]["transactions"][0]
@@ -69,8 +73,8 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
         metadata_override={
             "type": DocumentType.DOCUMENT,
             "source": "ynab",
-            "description": "Transaction update result",
-            "transaction_id": updated_transaction["id"],
-            "status": "success"
+            "name": "UpdateTransactionsResult",
+            "conversation_uuid": params.get("conversation_uuid", ""),
+            "content_type": "full"
         }
     )

@@ -58,7 +58,6 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
     return create_document(
         text=_format_transaction_results(transaction_results),
         metadata_override={
-            "uuid": uuid4(),
             "conversation_uuid": params.get("conversation_uuid", ""),
             "source": "ynab",
             "name": "AddingTransactionsResult",
@@ -230,7 +229,7 @@ def _call_api(
 
     if response.status_code != 201:
         error = response.json()['error']
-        raise Exception(f"Failed to add transaction '{query}' E: {error.get('detail', 'Unknown error')}")
+        raise Exception(f"Failed to add transaction '{query}' Details: {error.get('detail', 'Unknown error')}")
 
     response_data = response.json()
     transaction_id = response_data.get('data', {}).get('transaction', {}).get('id', 'unknown')
