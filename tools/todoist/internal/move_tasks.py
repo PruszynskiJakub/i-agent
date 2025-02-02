@@ -18,7 +18,7 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
         if not tasks:
             return create_document(
                 content="No tasks provided to move",
-                metadata={
+                metadata_override={
                     "uuid": uuid4(),
                     "conversation_uuid": params.get("conversation_uuid", ""),
                     "source": "todoist",
@@ -136,7 +136,7 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
         
         return create_document(
             content=result,
-            metadata={
+            metadata_override={
                 "uuid": uuid4(),
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
@@ -152,7 +152,7 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
         
         return create_document(
             content=error_msg,
-            metadata={
+            metadata_override={
                 "uuid": uuid4(),
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",

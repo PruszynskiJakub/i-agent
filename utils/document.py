@@ -27,7 +27,7 @@ def create_error_document(
 
     return create_document(
         content=error_text,
-        metadata={
+        metadata_override={
             "conversation_uuid": conversation_uuid,
             "source_uuid": source_uuid or conversation_uuid,
             "mime_type": "text/plain",
@@ -38,24 +38,22 @@ def create_error_document(
     )
 
 
-def create_document(content: str, metadata: Dict[str, Any] = None) -> Document:
+def create_document(content: str, metadata_override: Dict[str, Any] = {}) -> Document:
     """Creates a Document object from content and metadata"""
-    if metadata is None:
-        metadata = {}
 
     document_metadata: DocumentMetadata = {
-        "type": metadata.get("type", DocumentType.DOCUMENT),
-        "source": metadata.get("source", ""),
-        "mime_type": metadata.get("mime_type", "text/plain"),
-        "name": metadata.get("name", ""),
-        "description": metadata.get("description", ""),
-        "images": metadata.get("images", []),
-        "urls": metadata.get("urls", [])
+        "type": metadata_override.get("type", DocumentType.DOCUMENT),
+        "source": metadata_override.get("source", ""),
+        "mime_type": metadata_override.get("mime_type", "text/plain"),
+        "name": metadata_override.get("name", ""),
+        "description": metadata_override.get("description", ""),
+        "images": metadata_override.get("images", []),
+        "urls": metadata_override.get("urls", [])
     }
 
     return Document(
-        uuid=metadata.get("uuid", uuid4()),
-        conversation_uuid=metadata.get("conversation_uuid", ""),
+        uuid=metadata_override.get("uuid", uuid4()),
+        conversation_uuid=metadata_override.get("conversation_uuid", ""),
         text=content,
         metadata=document_metadata
     )

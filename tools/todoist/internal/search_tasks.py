@@ -72,7 +72,7 @@ async def search_tasks(params: dict, span) -> Document:
         
         return create_document(
             content=content,
-            metadata={
+            metadata_override={
                 "uuid": str(uuid4()),
                 "conversation_uuid": conversation_uuid,
                 "type": "document",

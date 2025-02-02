@@ -65,7 +65,7 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
 
     return create_document(
         content=content,
-        metadata={
+        metadata_override={
             "type": DocumentType.DOCUMENT,
             "source": "ynab",
             "description": "Transaction update result",

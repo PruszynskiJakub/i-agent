@@ -42,7 +42,7 @@ def _process_attachments(files: List[Dict[str, Any]], conversation_uuid) -> None
             # Create document record
             doc = create_document(
                 content=content,
-                metadata={
+                metadata_override={
                     'uuid': uuid.uuid4(),
                     "type": DocumentType.TEXT,
                     "source": url,
