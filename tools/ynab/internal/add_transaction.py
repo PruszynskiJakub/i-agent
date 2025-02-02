@@ -100,7 +100,7 @@ async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
             "error_message": f"Failed to split transaction: {str(e)}"
         }]
 
-
+# TODO - return JSON objects to create transactions in bulk
 async def _process_transaction(transaction_query: str, trace):
     amount_task = asyncio.create_task(_pick_amount(transaction_query, trace))
     sides_task = asyncio.create_task(_pick_sides(transaction_query, trace))
