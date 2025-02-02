@@ -46,7 +46,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'tool': tool,
             'tool_uuid': state.interaction.tool_uuid,
             'payload': state.interaction.payload,
-            'status': 'SUCCESS',
+            # 'status': 'SUCCESS',
             'documents': documents,
             'step_description': state.interaction.overview
         }
@@ -82,7 +82,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'tool': state.interaction.tool,
             'tool_uuid': state.interaction.tool_uuid,
             'payload': state.interaction.payload,
-            'status': 'ERROR',
+            # 'status': 'ERROR',
             'documents': [error_doc],
             'step_description': state.interaction.overview
         }

@@ -67,7 +67,7 @@ def record_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentState:
         tool=action_dict.get('tool', ''),
         tool_uuid=action_dict.get('tool_uuid'),
         input_payload=action_dict['payload'],
-        status=action_dict['status'],
+        status="",
         output_documents=action_dict.get('documents', []),
         step_description=action_dict.get('step_description', '')
     )
