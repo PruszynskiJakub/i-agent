@@ -32,9 +32,9 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
         "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
         "Content-Type": "application/json"
     }
-    payload = {"transactions": [transaction]}
+    body = {"transactions": [transaction]}
 
-    response = requests.patch(url=url, json=payload, headers=headers)
+    response = requests.patch(url=url, json=body , headers=headers)
     
     create_event(
         span,
@@ -42,7 +42,7 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
         input={
             "url": url,
             "method": "PATCH",
-            "body": payload
+            "body": body
         },
         output={
             "status_code": response.status_code,
