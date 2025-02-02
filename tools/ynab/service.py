@@ -19,11 +19,11 @@ async def execute_ynab(action, params: Dict[str, Any], trace) -> List[Document]:
                 return [create_error_document(
                     Exception("Action not recognized"),
                     f"YNAB service received unknown action: {action}",
-                    params.get("conversation_uuid", "")
+                    params.get("conversation_uuid", "unknown")
                 )]
     except Exception as e:
         return [create_error_document(
             e,
             f"Error executing YNAB action: {action}",
-            params.get("conversation_uuid", "")
+            params.get("conversation_uuid", "unknown")
         )]
