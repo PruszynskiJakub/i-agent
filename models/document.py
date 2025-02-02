@@ -14,7 +14,7 @@ class DocumentType(Enum):
 class DocumentMetadata(TypedDict, total=False):
     """Metadata for a document"""
     type: DocumentType  # Type of document content
-    source: str # url or path
+    source: str # url or path or tool or system
     parent_document_uuid: UUID  # UUID of the source document if this is derived from another document
     mime_type: str
     content_type: str # chunk or full
