@@ -115,17 +115,18 @@ async def _process_transaction(transaction_query: str, trace):
     return _call_api(sides_result, amount_result, category_result, transaction_query, trace)
 
 
-async def _pick_amount(q: str, trace) -> Dict[str, Any]:
+async def _pick_amount(query: str, trace) -> Dict[str, Any]:
     prompt = get_prompt(name="ynab_amount")
     system_prompt = prompt.compile()
-    generation = create_generation(trace, "pick_amount", "gpt-4o", system_prompt)
+    model = prompt.config.get("model", DEFAULT_MODEL)
+    generation = create_generation(trace, "pick_amount", model, system_prompt)
 
     completion = await open_ai.completion(
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": q}
+            {"role": "user", "content": query}
         ],
-        model=prompt.config.get("model", "gpt-4o"),
+        model=model,
         json_mode=True
     )
     end_generation(generation, completion)
