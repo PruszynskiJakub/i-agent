@@ -132,36 +132,40 @@ async def _pick_amount(q: str, trace) -> Dict[str, Any]:
     return json.loads(completion)
 
 
-async def _pick_sides(q: str, trace) -> Dict[str, Any]:
+async def _pick_sides(query: str, trace) -> Dict[str, Any]:
     prompt = get_prompt(name="ynab_accounts")
     system_prompt = prompt.compile(
         accounts=_ynab_accounts
     )
-    generation = create_generation(trace, "pick_sides", "gpt-4o", system_prompt)
+    model = prompt.config.get("model", DEFAULT_MODEL)
+
+    generation = create_generation(trace, "pick_sides", model, system_prompt)
     completion = await open_ai.completion(
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": q}
+            {"role": "user", "content": query}
         ],
-        model=prompt.config.get("model", "gpt-4o"),
+        model=model,
         json_mode=True
     )
     end_generation(generation, completion)
     return json.loads(completion)
 
 
-async def _pick_category(q: str, trace) -> Dict[str, Any]:
+async def _pick_category(query: str, trace) -> Dict[str, Any]:
     prompt = get_prompt(name="ynab_category")
     system_prompt = prompt.compile(
         categories=_ynab_categories
     )
-    generation = create_generation(trace, "pick_category", "gpt-4o", system_prompt)
+    model = prompt.config.get("model", DEFAULT_MODEL)
+
+    generation = create_generation(trace, "pick_category", model, system_prompt)
     completion = await open_ai.completion(
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": q}
+            {"role": "user", "content": query}
         ],
-        model=prompt.config.get("model", "gpt-4o"),
+        model=model,
         json_mode=True
     )
     end_generation(generation, completion)
@@ -175,7 +179,6 @@ def _call_api(
         query: str,
         trace
 ) -> dict:
-
     if not sides_result or not amount_result:
         raise ValueError("Missing required parameters: sides_result and amount_result are required")
 
