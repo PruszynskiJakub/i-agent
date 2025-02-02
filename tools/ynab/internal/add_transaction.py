@@ -10,7 +10,7 @@ import requests
 from llm import open_ai
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_event
-from models.document import Document, DocumentMetadata, DocumentType
+from models.document import Document, DocumentType
 from tools.ynab import _ynab_accounts, _ynab_categories
 from utils import DEFAULT_MODEL
 from utils.document import create_document
@@ -56,7 +56,7 @@ async def add_transaction(params: Dict[str, Any], trace) -> Document:
             transaction_results.append(result)  # result already has the correct structure
 
     return create_document(
-        text = _format_transaction_results(transaction_results),
+        text=_format_transaction_results(transaction_results),
         metadata_override={
             "uuid": uuid4(),
             "conversation_uuid": params.get("conversation_uuid", ""),
@@ -201,7 +201,7 @@ def _call_api(
     if category_result:
         transaction["category_id"] = category_result.get('category', {}).get('id')
 
-    model = {
+    body = {
         "transaction": transaction
     }
 
@@ -211,7 +211,7 @@ def _call_api(
         "Content-Type": "application/json"
     }
 
-    response = requests.post(url=url, json=model, headers=headers)
+    response = requests.post(url=url, json=body, headers=headers)
 
     create_event(
         trace,
@@ -219,7 +219,7 @@ def _call_api(
         input={
             "url": url,
             "method": "POST",
-            "body": model
+            "body": body
         },
         output={
             "status_code": response.status_code,
@@ -228,20 +228,19 @@ def _call_api(
         level="ERROR" if response.status_code != 201 else "DEFAULT"
     )
 
-    response.raise_for_status()
     if response.status_code != 201:
-        raise Exception(f"Failed to add transaction: {response.text}")
+        error = response.json()['error']
+        raise Exception(f"Failed to add transaction: {error.get('detail', 'Unknown error')}")
 
     response_data = response.json()
     transaction_id = response_data.get('data', {}).get('transaction', {}).get('id', 'unknown')
-
     category_name = category_result.get('category', {}).get('name') if category_result else None
     account_name = sides_result.get('account', {}).get('name', 'Unknown Account')
     payee_name = sides_result.get('payee', {}).get('name', 'Unknown Payee')
 
     return {
         "status": "success",
-        "details": {  # Nested details to match expected structure
+        "details": {
             "transaction_id": transaction_id,
             "query": query,
             "category": category_name,
