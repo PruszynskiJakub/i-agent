@@ -58,53 +58,39 @@ async def add_tasks(params: Dict[str, Any], span) -> Document:
                     "error": str(e)
                 })
 
-        # Format the results into sections
-        sections = []
-
-        # Section 1: General Info
+        # Format the results
         total = len(tasks)
         successful = len(successful_tasks)
         failed = len(failed_tasks)
 
-        sections.append("Summary")
-        sections.append("-" * 7)
-        sections.append(f"Total tasks processed: {total}")
-        sections.append(f"Successfully added: {successful}")
-        sections.append(f"Failed: {failed}")
-        sections.append("")
-
-        # Section 2: Successful Tasks
-        sections.append("Successfully Added Tasks")
-        sections.append("-" * 22)
-        if successful_tasks:
-            for task in successful_tasks:
-                sections.append(f"Task ID: {task['task_id']}")
-                sections.append(f"Title: {task['content']}")
-                if task['description']:
-                    sections.append(f"Description: {task['description']}")
-                if task['labels']:
-                    sections.append(f"Labels: {', '.join(task['labels'])}")
-                sections.append(f"Project: {task['project']['name']} (ID: {task['project']['id']})")
-                if task['due']:
-                    sections.append(f"Due: {task['due']}")
-                sections.append("")
-        else:
-            sections.append("No tasks were successfully added")
-            sections.append("")
-
-        # Section 3: Failed Tasks
-        sections.append("Failed Tasks")
-        sections.append("-" * 11)
-        if failed_tasks:
-            for task in failed_tasks:
-                sections.append(f"Title: {task['content']}")
-                sections.append(f"Error: {task['error']}")
-                sections.append("")
-        else:
-            sections.append("No failed tasks")
-            sections.append("")
-
-        document_text = "\n".join(sections)
+        result = (
+            f"Add Tasks Summary\n"
+            f"----------------\n"
+            f"Total tasks processed: {total}\n"
+            f"Successfully added: {successful}\n"
+            f"Failed adds: {failed}\n\n"
+            f"Successfully Added Tasks\n"
+            f"----------------------\n"
+            + (
+                "\n".join(
+                    f"Task ID: {task['task_id']}\n"
+                    f"Title: {task['content']}\n"
+                    + (f"Description: {task['description']}\n" if task['description'] else "")
+                    + (f"Labels: {', '.join(task['labels'])}\n" if task['labels'] else "")
+                    + f"Project: {task['project']['name']}\n"
+                    + (f"Due: {task['due']}\n" if task['due'] else "")
+                    for task in successful_tasks
+                ) if successful_tasks else "No tasks were successfully added"
+            )
+            + "\n\nFailed Tasks\n------------\n"
+            + (
+                "\n".join(
+                    f"Title: {task['content']}\n"
+                    f"Error: {task['error']}\n"
+                    for task in failed_tasks
+                ) if failed_tasks else "No failed tasks"
+            )
+        )
 
         create_event(
             span,
@@ -114,7 +100,7 @@ async def add_tasks(params: Dict[str, Any], span) -> Document:
         )
 
         return create_document(
-            text=document_text,
+            text=result,
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
