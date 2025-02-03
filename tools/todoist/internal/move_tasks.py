@@ -30,7 +30,9 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
 
         successful_moves = []
         failed_moves = []
+        commands = []
 
+        # First prepare all commands
         for task in tasks:
             task_id = task.get("id")
             if not task_id:
@@ -40,7 +42,6 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
                 })
                 continue
 
-            # Prepare move command
             command = {
                 "type": "item_move",
                 "uuid": uuid4().hex,
@@ -57,46 +58,54 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
             if "parent_id" in task:
                 command["args"]["parent_id"] = task["parent_id"]
 
+            commands.append((command, task))
+
+        # Execute all commands in a single API call if we have any
+        if commands:
             try:
                 response = requests.post(
                     url="https://api.todoist.com/sync/v9/sync",
                     headers={"Authorization": f"Bearer {api_token}"},
-                    json={"commands": [command]}
+                    json={"commands": [cmd[0] for cmd in commands]}
                 )
                 response.raise_for_status()
-
                 result = response.json()
-                if result["sync_status"][command["uuid"]] == "ok":
-                    create_event(
-                        span,
-                        "move_todoist_single_task",
-                        input={"task_id": task_id, "command": command},
-                        output=result
-                    )
-                    successful_moves.append({
-                        "id": task_id,
-                        "project_id": task.get("project_id", "Not specified"),
-                        "section_id": task.get("section_id", "Not specified"),
-                        "parent_id": task.get("parent_id", "Not specified")
-                    })
-                else:
-                    create_event(
-                        span,
-                        "move_todoist_tasks",
-                        input={"task_id": task_id, "command": command},
-                        output=result,
-                        level="ERROR"
-                    )
-                    error = result["sync_status"][command["uuid"]]
-                    failed_moves.append({
-                        "id": task_id,
-                        "error": f"Sync API error: {error}"
-                    })
+
+                # Process results
+                for command, task in commands:
+                    if result["sync_status"][command["uuid"]] == "ok":
+                        create_event(
+                            span,
+                            "move_todoist_single_task",
+                            input={"task_id": task["id"], "command": command},
+                            output=result
+                        )
+                        successful_moves.append({
+                            "id": task["id"],
+                            "project_id": task.get("project_id", "Not specified"),
+                            "section_id": task.get("section_id", "Not specified"),
+                            "parent_id": task.get("parent_id", "Not specified")
+                        })
+                    else:
+                        error = result["sync_status"][command["uuid"]]
+                        create_event(
+                            span,
+                            "move_todoist_tasks",
+                            input={"task_id": task["id"], "command": command},
+                            output=result,
+                            level="ERROR"
+                        )
+                        failed_moves.append({
+                            "id": task["id"],
+                            "error": f"Sync API error: {error}"
+                        })
             except Exception as e:
-                failed_moves.append({
-                    "id": task_id,
-                    "error": str(e)
-                })
+                # If the batch request fails, mark all tasks as failed
+                for command, task in commands:
+                    failed_moves.append({
+                        "id": task["id"],
+                        "error": str(e)
+                    })
 
         # Format the results
         sections = []
