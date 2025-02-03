@@ -61,45 +61,34 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
                 })
 
         # Format the results
-        sections = []
-
-        # Summary section
         total = len(task_ids)
         successful = len(successful_tasks)
         failed = len(failed_tasks)
 
-        sections.append("Task Completion Summary")
-        sections.append("-" * 21)
-        sections.append(f"Total tasks processed: {total}")
-        sections.append(f"Successfully completed: {successful}")
-        sections.append(f"Failed: {failed}")
-        sections.append("")
-
-        # Successful completions
-        sections.append("Successfully Completed Tasks")
-        sections.append("-" * 26)
-        if successful_tasks:
-            for task in successful_tasks:
-                sections.append(f"Task: {task['content']}")
-                sections.append(f"ID: {task['id']}")
-                sections.append("")
-        else:
-            sections.append("No tasks were successfully completed")
-            sections.append("")
-
-        # Failed completions
-        sections.append("Failed Tasks")
-        sections.append("-" * 11)
-        if failed_tasks:
-            for task in failed_tasks:
-                sections.append(f"Task ID: {task['id']}")
-                sections.append(f"Error: {task['error']}")
-                sections.append("")
-        else:
-            sections.append("No failed tasks")
-            sections.append("")
-
-        document_text = "\n".join(sections)
+        result = (
+            f"Complete Tasks Summary\n"
+            f"---------------------\n"
+            f"Total tasks processed: {total}\n"
+            f"Successfully completed: {successful}\n"
+            f"Failed completions: {failed}\n\n"
+            f"Successfully Completed Tasks\n"
+            f"-------------------------\n"
+            + (
+                "\n".join(
+                    f"Task: {task['content']}\n"
+                    f"ID: {task['id']}\n"
+                    for task in successful_tasks
+                ) if successful_tasks else "No tasks were successfully completed"
+            )
+            + "\n\nFailed Tasks\n------------\n"
+            + (
+                "\n".join(
+                    f"Task ID: {task['id']}\n"
+                    f"Error: {task['error']}\n"
+                    for task in failed_tasks
+                ) if failed_tasks else "No failed tasks"
+            )
+        )
         create_event(
             span,
             "complete_todoist_tasks",
@@ -108,7 +97,7 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
         )
 
         return create_document(
-            text=document_text,
+            text=result,
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
