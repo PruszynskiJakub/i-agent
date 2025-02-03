@@ -85,51 +85,37 @@ async def update_tasks(params: Dict[str, Any], span) -> Document:
                 })
 
         # Format the results
-        sections = []
-        
-        # Summary section
         total = len(tasks)
         successful = len(successful_updates)
         failed = len(failed_updates)
-        
-        sections.append("Update Summary")
-        sections.append("-" * 14)
-        sections.append(f"Total tasks processed: {total}")
-        sections.append(f"Successfully updated: {successful}")
-        sections.append(f"Failed updates: {failed}")
-        sections.append("")
-        
-        # Successful updates section
-        sections.append("Successfully Updated Tasks")
-        sections.append("-" * 24)
-        if successful_updates:
-            for task in successful_updates:
-                sections.append(f"Task ID: {task['id']}")
-                sections.append(f"Content: {task['content']}")
-                if task['description']:
-                    sections.append(f"Description: {task['description']}")
-                if task['labels']:
-                    sections.append(f"Labels: {', '.join(task['labels'])}")
-                if task['due']:
-                    sections.append(f"Due: {task['due']}")
-                sections.append("")
-        else:
-            sections.append("No tasks were successfully updated")
-            sections.append("")
-        
-        # Failed updates section
-        sections.append("Failed Updates")
-        sections.append("-" * 13)
-        if failed_updates:
-            for task in failed_updates:
-                sections.append(f"Task ID: {task['id']}")
-                sections.append(f"Error: {task['error']}")
-                sections.append("")
-        else:
-            sections.append("No failed updates")
-            sections.append("")
 
-        result = "\n".join(sections)
+        result = (
+            f"Update Tasks Summary\n"
+            f"------------------\n"
+            f"Total tasks processed: {total}\n"
+            f"Successfully updated: {successful}\n"
+            f"Failed updates: {failed}\n\n"
+            f"Successfully Updated Tasks\n"
+            f"----------------------\n"
+            + (
+                "\n".join(
+                    f"Task ID: {task['id']}\n"
+                    f"Content: {task['content']}\n"
+                    + (f"Description: {task['description']}\n" if task['description'] else "")
+                    + (f"Labels: {', '.join(task['labels'])}\n" if task['labels'] else "")
+                    + (f"Due: {task['due']}\n" if task['due'] else "")
+                    for task in successful_updates
+                ) if successful_updates else "No tasks were successfully updated"
+            )
+            + "\n\nFailed Updates\n-------------\n"
+            + (
+                "\n".join(
+                    f"Task ID: {task['id']}\n"
+                    f"Error: {task['error']}\n"
+                    for task in failed_updates
+                ) if failed_updates else "No failed updates"
+            )
+        )
         create_event(span, "update_tasks_complete", 
                     output={"status": "success", "successful": successful, "failed": failed})
         
