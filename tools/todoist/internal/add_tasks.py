@@ -21,13 +21,11 @@ async def _add_tasks(params: Dict[str, Any], span) -> Document:
             return create_document(
                 text="No tasks provided",
                 metadata_override={
-                    "uuid": uuid4(),
                     "conversation_uuid": params.get("conversation_uuid", ""),
                     "source": "todoist",
                     "name": "AddTodoistTaskResult",
                     "description": "No tasks to process",
                     "type": DocumentType.DOCUMENT,
-                    "content_type": "full"
                 }
             )
 
@@ -107,7 +105,6 @@ async def _add_tasks(params: Dict[str, Any], span) -> Document:
                 "name": "AddTodoistTaskResult",
                 "description": f"Added {successful} tasks successfully, {failed} failed",
                 "type": DocumentType.DOCUMENT,
-                "content_type": "full"
             }
         )
 

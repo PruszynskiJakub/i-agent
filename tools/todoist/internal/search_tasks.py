@@ -1,7 +1,7 @@
 import os
 from uuid import uuid4
 
-from models.document import Document
+from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document
 from todoist_api_python.api import TodoistAPI
 
@@ -64,11 +64,10 @@ async def _search_tasks(params: dict, span) -> Document:
         return create_document(
             text=result,
             metadata_override={
-                "uuid": str(uuid4()),
                 "conversation_uuid": params.get("conversation_uuid", ""),
-                "type": "document",
+                "type": DocumentType.DOCUMENT,
                 "source": "todoist",
-                "name": "task_search",
+                "name": "SearchTodoistTasksResult",
                 "description": description
             }
         )

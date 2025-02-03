@@ -1,12 +1,11 @@
 import os
 from typing import Dict, Any
-from uuid import uuid4
 
-from llm.tracing import create_event
 from todoist_api_python.api import TodoistAPI
 
+from llm.tracing import create_event
 from models.document import Document, DocumentType
-from utils.document import create_document
+from utils.document import create_document, create_error_document
 
 
 async def _update_tasks(params: Dict[str, Any], span) -> Document:
@@ -14,16 +13,15 @@ async def _update_tasks(params: Dict[str, Any], span) -> Document:
     try:
         todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
         tasks = params.get("tasks", [])
-        create_event(span, "update_tasks_start", input={"task_count": len(tasks)})
-        
+
         if not tasks:
+            create_event(span, "update_todoist_tasks", input=params, output="No tasks provided")
             return create_document(
                 text="No tasks provided for update",
                 metadata_override={
-                    "uuid": uuid4(),
                     "conversation_uuid": params.get("conversation_uuid", ""),
                     "source": "todoist",
-                    "name": "todoist_tasks",
+                    "name": "UpdateTodoistTasksResult",
                     "description": "No tasks to update"
                 }
             )
@@ -43,7 +41,7 @@ async def _update_tasks(params: Dict[str, Any], span) -> Document:
             update_args = {
                 'id': task_id
             }
-            
+
             # Add optional update parameters if present
             if "content" in task:
                 update_args["content"] = task["content"]
@@ -53,7 +51,7 @@ async def _update_tasks(params: Dict[str, Any], span) -> Document:
                 update_args["priority"] = max(1, min(4, task["priority"]))
             if "labels" in task:
                 update_args["labels"] = task["labels"]
-            
+
             # Handle due date updates
             if "dueString" in task:
                 update_args["due_string"] = task["dueString"]
@@ -61,7 +59,7 @@ async def _update_tasks(params: Dict[str, Any], span) -> Document:
                     update_args["due_lang"] = task["dueLang"]
             elif "dueDate" in task:
                 update_args["due_date"] = task["dueDate"]
-            
+
             # Handle duration updates
             if "duration" in task and "durationUnit" in task:
                 update_args["duration"] = task["duration"]
@@ -69,8 +67,9 @@ async def _update_tasks(params: Dict[str, Any], span) -> Document:
 
             try:
                 updated_task = todoist_client.update_task(task_id=task_id, **update_args)
-                create_event(span, "task_updated", input={"task_id": task_id, "updates": update_args})
-                
+                create_event(span, "update_todoist_single_tasks", input={"task_id": task_id, "updates": update_args},
+                             output=updated_task)
+
                 successful_updates.append({
                     "id": updated_task.id,
                     "content": updated_task.content,
@@ -90,42 +89,39 @@ async def _update_tasks(params: Dict[str, Any], span) -> Document:
         failed = len(failed_updates)
 
         result = (
-            f"Update Tasks Summary\n"
-            f"------------------\n"
-            f"Total tasks processed: {total}\n"
-            f"Successfully updated: {successful}\n"
-            f"Failed updates: {failed}\n\n"
-            f"Successfully Updated Tasks\n"
-            f"----------------------\n"
-            + (
-                "\n".join(
-                    f"Task ID: {task['id']}\n"
-                    f"Content: {task['content']}\n"
-                    + (f"Description: {task['description']}\n" if task['description'] else "")
-                    + (f"Labels: {', '.join(task['labels'])}\n" if task['labels'] else "")
-                    + (f"Due: {task['due']}\n" if task['due'] else "")
-                    for task in successful_updates
-                ) if successful_updates else "No tasks were successfully updated"
-            )
-            + "\n\nFailed Updates\n-------------\n"
-            + (
-                "\n".join(
-                    f"Task ID: {task['id']}\n"
-                    f"Error: {task['error']}\n"
-                    for task in failed_updates
-                ) if failed_updates else "No failed updates"
-            )
+                f"Update Tasks Summary\n"
+                f"------------------\n"
+                f"Total tasks processed: {total}\n"
+                f"Successfully updated: {successful}\n"
+                f"Failed updates: {failed}\n\n"
+                f"Successfully Updated Tasks\n"
+                f"----------------------\n"
+                + (
+                    "\n".join(
+                        f"Task ID: {task['id']}\n"
+                        f"Content: {task['content']}\n"
+                        + (f"Description: {task['description']}\n" if task['description'] else "")
+                        + (f"Labels: {', '.join(task['labels'])}\n" if task['labels'] else "")
+                        + (f"Due: {task['due']}\n" if task['due'] else "")
+                        for task in successful_updates
+                    ) if successful_updates else "No tasks were successfully updated"
+                )
+                + "\n\nFailed Updates\n-------------\n"
+                + (
+                    "\n".join(
+                        f"Task ID: {task['id']}\n"
+                        f"Error: {task['error']}\n"
+                        for task in failed_updates
+                    ) if failed_updates else "No failed updates"
+                )
         )
-        create_event(span, "update_tasks_complete", 
-                    output={"status": "success", "successful": successful, "failed": failed})
-        
+
         return create_document(
             text=result,
             metadata_override={
-                "uuid": uuid4(),
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
-                "name": "todoist_tasks",
+                "name": "UpdateTodoistTasksResult",
                 "description": f"Updated {successful} tasks successfully, {failed} failed",
                 "type": DocumentType.DOCUMENT
             }
@@ -133,15 +129,10 @@ async def _update_tasks(params: Dict[str, Any], span) -> Document:
 
     except Exception as error:
         error_msg = f"Failed to update tasks: {str(error)}"
-        create_event(span, "update_tasks_error", level="ERROR", output={"error": str(error)})
-        
-        return create_document(
-            text=error_msg,
-            metadata_override={
-                "uuid": uuid4(),
-                "conversation_uuid": params.get("conversation_uuid", ""),
-                "source": "todoist",
-                "name": "todoist_tasks", 
-                "description": "Error updating tasks"
-            }
+        create_event(span, "update_todoist_tasks", level="ERROR", output={"error": str(error)})
+
+        return create_error_document(
+            error,
+            error_msg,
+            conversation_uuid=params.get("conversation_uuid", "")
         )
