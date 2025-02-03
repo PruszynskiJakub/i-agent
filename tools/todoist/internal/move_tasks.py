@@ -108,50 +108,35 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
                     })
 
         # Format the results
-        sections = []
-
-        # Summary section
         total = len(tasks)
         successful = len(successful_moves)
         failed = len(failed_moves)
 
-        sections.append("Move Summary")
-        sections.append("-" * 12)
-        sections.append(f"Total tasks processed: {total}")
-        sections.append(f"Successfully moved: {successful}")
-        sections.append(f"Failed moves: {failed}")
-        sections.append("")
-
-        # Successful moves section
-        sections.append("Successfully Moved Tasks")
-        sections.append("-" * 22)
-        if successful_moves:
-            for task in successful_moves:
-                sections.append(f"Task ID: {task['id']}")
-                if task['project_id'] != "Not specified":
-                    sections.append(f"Moved to project: {task['project_id']}")
-                if task['section_id'] != "Not specified":
-                    sections.append(f"Moved to section: {task['section_id']}")
-                if task['parent_id'] != "Not specified":
-                    sections.append(f"New parent: {task['parent_id']}")
-                sections.append("")
-        else:
-            sections.append("No tasks were successfully moved")
-            sections.append("")
-
-        # Failed moves section
-        sections.append("Failed Moves")
-        sections.append("-" * 11)
-        if failed_moves:
-            for task in failed_moves:
-                sections.append(f"Task ID: {task['id']}")
-                sections.append(f"Error: {task['error']}")
-                sections.append("")
-        else:
-            sections.append("No failed moves")
-            sections.append("")
-
-        result = "\n".join(sections)
+        result = (
+            f"Move Summary\n"
+            f"------------\n"
+            f"Total tasks processed: {total}\n"
+            f"Successfully moved: {successful}\n"
+            f"Failed moves: {failed}\n\n"
+            f"Successfully Moved Tasks\n"
+            f"----------------------\n"
+            + (
+                "\n".join(
+                    f"Task ID: {task['id']}\n"
+                    + (f"Moved to project: {task['project_id']}\n" if task['project_id'] != "Not specified" else "")
+                    + (f"Moved to section: {task['section_id']}\n" if task['section_id'] != "Not specified" else "")
+                    + (f"New parent: {task['parent_id']}\n" if task['parent_id'] != "Not specified" else "")
+                    for task in successful_moves
+                ) if successful_moves else "No tasks were successfully moved"
+            )
+            + "\n\nFailed Moves\n-----------\n"
+            + (
+                "\n".join(
+                    f"Task ID: {task['id']}\nError: {task['error']}\n"
+                    for task in failed_moves
+                ) if failed_moves else "No failed moves"
+            )
+        )
 
         return create_document(
             text=result,
