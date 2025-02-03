@@ -32,31 +32,26 @@ async def search_tasks(params: dict, span) -> Document:
             ids=task_ids
         )
 
-        # Format tasks into detailed text
-        formatted_tasks = []
-        for task in tasks:
-            task_details = [
-                f"Task: {task.content}",
-                f"ID: {task.id}"
-            ]
-            
-            if task.labels:
-                task_details.append(f"Labels: {', '.join(task.labels)}")
-            
-            if task.description:
-                task_details.append(f"Description: {task.description}")
-            
-            if task.due:
-                due_str = f"Due: {task.due.string}"
-                if task.due.datetime:
-                    due_str += f" ({task.due.datetime})"
-                task_details.append(due_str)
-            
-            formatted_tasks.append("\n".join(task_details) + "\n")
-
-        task_count = len(formatted_tasks)
-        summary = f"Successfully fetched {task_count} {'task' if task_count == 1 else 'tasks'}"
-        content = f"{summary}\n\n" + ("\n".join(formatted_tasks) if formatted_tasks else "No tasks found")
+        # Format the results
+        task_count = len(tasks)
+        
+        result = (
+            f"Search Tasks Result\n"
+            f"-----------------\n"
+            f"Total tasks found: {task_count}\n\n"
+            f"Tasks\n"
+            f"-----\n"
+            + (
+                "\n".join(
+                    f"Task: {task.content}\n"
+                    f"ID: {task.id}\n"
+                    + (f"Labels: {', '.join(task.labels)}\n" if task.labels else "")
+                    + (f"Description: {task.description}\n" if task.description else "")
+                    + (f"Due: {task.due.string}" + (f" ({task.due.datetime})\n" if task.due.datetime else "\n") if task.due else "")
+                    for task in tasks
+                ) if tasks else "No tasks found"
+            )
+        )
         
         description = "List of Todoist tasks"
         if filter_query:
@@ -71,7 +66,7 @@ async def search_tasks(params: dict, span) -> Document:
             description += f" matching IDs: {', '.join(task_ids)}"
         
         return create_document(
-            text=content,
+            text=result,
             metadata_override={
                 "uuid": str(uuid4()),
                 "conversation_uuid": conversation_uuid,
