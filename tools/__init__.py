@@ -12,7 +12,7 @@ def get_tools():
             "name": "ynab",
             "description": "responsible for managing budget, transactions etc., available only on direct request",
             "actions": {
-                "add_transaction": {
+                "add_transactions": {
                     "description": "Creates one or multiple transactions in the user's budget based on natural language description. Can handle single transactions or split transactions with multiple parts.",
                     "instructions": """
                     {

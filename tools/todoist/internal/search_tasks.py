@@ -5,7 +5,7 @@ from models.document import Document
 from utils.document import create_document, create_error_document
 from todoist_api_python.api import TodoistAPI
 
-async def search_tasks(params: dict, span) -> Document:
+async def _search_tasks(params: dict, span) -> Document:
     """
     Search tasks based on provided filters (project, label, section, or specific ids)
     Returns a Document containing the formatted task list with detailed information

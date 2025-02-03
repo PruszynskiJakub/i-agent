@@ -8,7 +8,7 @@ from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document
 
 
-async def complete_tasks(params: Dict[str, Any], span) -> Document:
+async def _complete_tasks(params: Dict[str, Any], span) -> Document:
     """Complete one or more Todoist tasks"""
     try:
         todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))

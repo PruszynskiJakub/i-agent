@@ -1,7 +1,5 @@
 import os
 from typing import Dict, Any
-
-API_ENDPOINT = "https://api.todoist.com/sync/v9/sync"
 from uuid import uuid4
 
 import requests
@@ -11,7 +9,7 @@ from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document
 
 
-async def move_tasks(params: Dict[str, Any], span) -> Document:
+async def _move_tasks(params: Dict[str, Any], span) -> Document:
     """Move Todoist tasks between projects and sections using sync API"""
     try:
         api_token = os.getenv("TODOIST_API_TOKEN")
@@ -66,7 +64,7 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
         if commands:
             try:
                 response = requests.post(
-                    API_ENDPOINT,
+                    url="https://api.todoist.com/sync/v9/sync",
                     headers={"Authorization": f"Bearer {api_token}"},
                     json={"commands": [cmd[0] for cmd in commands]}
                 )

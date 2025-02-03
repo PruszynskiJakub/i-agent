@@ -8,7 +8,7 @@ from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document
 
 
-async def update_transaction(params: Dict[str, Any], span) -> Document:
+async def _update_transaction(params: Dict[str, Any], span) -> Document:
     """Update an existing YNAB transaction"""
 
     # Extract required transaction id

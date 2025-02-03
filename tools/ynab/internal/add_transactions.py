@@ -16,7 +16,7 @@ from utils import DEFAULT_MODEL
 from utils.document import create_document
 
 
-async def add_transaction(params: Dict[str, Any], trace) -> Document:
+async def _add_transactions(params: Dict[str, Any], trace) -> Document:
     query = params.get("query")
 
     split_results = await _split_transaction(query, trace)

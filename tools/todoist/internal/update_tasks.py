@@ -9,7 +9,7 @@ from models.document import Document, DocumentType
 from utils.document import create_document
 
 
-async def update_tasks(params: Dict[str, Any], span) -> Document:
+async def _update_tasks(params: Dict[str, Any], span) -> Document:
     """Update existing Todoist tasks with new information"""
     try:
         todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))

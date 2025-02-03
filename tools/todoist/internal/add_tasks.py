@@ -10,7 +10,7 @@ from tools.todoist import get_default_project_id, get_project_name
 from utils.document import create_document, create_error_document
 
 
-async def add_tasks(params: Dict[str, Any], span) -> Document:
+async def _add_tasks(params: Dict[str, Any], span) -> Document:
     """Add task items with optional metadata"""
     try:
         todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
