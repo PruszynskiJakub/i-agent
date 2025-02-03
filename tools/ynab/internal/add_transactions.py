@@ -161,18 +161,6 @@ async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
 
 
 # TODO - return JSON objects to create transactions in bulk
-async def _process_transaction(transaction_query: str, trace):
-    amount_task = asyncio.create_task(_pick_amount(transaction_query, trace))
-    sides_task = asyncio.create_task(_pick_sides(transaction_query, trace))
-
-    sides_result, amount_result = await asyncio.gather(sides_task, amount_task)
-
-    category_result = None
-    if sides_result['account']['type'] in ['checking', 'creditCard'] and (
-            'payee' not in sides_result or sides_result['payee']['type'] != 'checking'):
-        category_result = await _pick_category(transaction_query, trace)
-
-    return _call_api(sides_result, amount_result, category_result, transaction_query, trace)
 
 
 async def _pick_amount(query: str, trace) -> Dict[str, Any]:
@@ -233,7 +221,7 @@ async def _pick_category(query: str, trace) -> Dict[str, Any]:
     return json.loads(completion)
 
 
-def _process_transaction(transaction_query: str, trace) -> dict:
+async def _process_transaction(transaction_query: str, trace) -> dict:
     """Process a single transaction and return the transaction model for the API."""
     if not transaction_query:
         raise ValueError("Missing required transaction query")
