@@ -9,7 +9,7 @@ from utils.document import create_error_document
 async def execute_ynab(action, params: Dict[str, Any], trace) -> List[Document]:
     try:
         match action:
-            case "add_transaction":
+            case "add_transactions":
                 result = await _add_transactions(params, trace)
                 return [result]
             case "update_transaction":

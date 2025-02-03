@@ -3,7 +3,6 @@ import json
 import os
 from datetime import datetime
 from typing import Dict, Any
-from uuid import uuid4
 
 import requests
 
@@ -92,7 +91,7 @@ async def _add_transactions(params: Dict[str, Any], trace) -> Document:
 
             response_data = response.json()
             transactions = response_data.get('data', {}).get('transactions', [])
-            
+
             # Map successful transactions to results
             for transaction, model in zip(transactions, valid_transactions):
                 transaction_results.append({
@@ -158,9 +157,6 @@ async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
             "error_code": "SPLIT_FAILED",
             "error_message": f"Failed to split transaction: {str(e)}"
         }]
-
-
-# TODO - return JSON objects to create transactions in bulk
 
 
 async def _pick_amount(query: str, trace) -> Dict[str, Any]:
@@ -266,33 +262,33 @@ def _format_transaction_results(transaction_results: list) -> str:
     failed = total - successful
 
     result = (
-        f"Transaction Summary\n"
-        f"------------------\n"
-        f"Total transactions processed: {total}\n"
-        f"Successfully added: {successful}\n"
-        f"Failed adds: {failed}\n\n"
-        f"Successfully Added Transactions\n"
-        f"----------------------------\n"
-        + (
-            "\n".join(
-                f"Transaction ID: {t['details']['transaction_id']}\n"
-                f"Description: {t['details']['query']}\n"
-                f"Category: {t['details'].get('category', 'Not categorized')}\n"
-                f"Account: {t['details']['account']}\n"
-                f"Payee: {t['details']['payee']}\n"
-                for t in transaction_results if t["status"] == "success"
-            ) if any(t["status"] == "success" for t in transaction_results)
-            else "No transactions were successfully added"
-        )
-        + "\n\nFailed Transactions\n-------------------\n"
-        + (
-            "\n".join(
-                f"Description: {t['query']}\n"
-                f"Error: {t['error']}\n"
-                for t in transaction_results if t["status"] == "error"
-            ) if any(t["status"] == "error" for t in transaction_results)
-            else "No failed transactions"
-        )
+            f"Transaction Summary\n"
+            f"------------------\n"
+            f"Total transactions processed: {total}\n"
+            f"Successfully added: {successful}\n"
+            f"Failed adds: {failed}\n\n"
+            f"Successfully Added Transactions\n"
+            f"----------------------------\n"
+            + (
+                "\n".join(
+                    f"Transaction ID: {t['details']['transaction_id']}\n"
+                    f"Description: {t['details']['query']}\n"
+                    f"Category: {t['details'].get('category', 'Not categorized')}\n"
+                    f"Account: {t['details']['account']}\n"
+                    f"Payee: {t['details']['payee']}\n"
+                    for t in transaction_results if t["status"] == "success"
+                ) if any(t["status"] == "success" for t in transaction_results)
+                else "No transactions were successfully added"
+            )
+            + "\n\nFailed Transactions\n-------------------\n"
+            + (
+                "\n".join(
+                    f"Description: {t['query']}\n"
+                    f"Error: {t['error']}\n"
+                    for t in transaction_results if t["status"] == "error"
+                ) if any(t["status"] == "error" for t in transaction_results)
+                else "No failed transactions"
+            )
     )
 
     return result
