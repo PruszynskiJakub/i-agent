@@ -60,16 +60,19 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
             conversation_uuid=params.get("conversation_uuid", "unknown")
         )
 
-    # Create success document
+    # Format the results
     updated_transaction = response.json()["data"]["transactions"][0]
-    content = f"Successfully updated transaction:\n" \
-              f"- ID: {updated_transaction['id']}\n" \
-              f"- Amount: {updated_transaction['amount']}\n" \
-              f"- Date: {updated_transaction['date']}\n" \
-              f"- Memo: {updated_transaction.get('memo', 'N/A')}"
+    result = (
+        f"Update Transaction Result\n"
+        f"----------------------\n"
+        f"Transaction ID: {updated_transaction['id']}\n"
+        f"Amount: {updated_transaction['amount']}\n"
+        f"Date: {updated_transaction['date']}\n"
+        f"Memo: {updated_transaction.get('memo', 'N/A')}\n"
+    )
 
     return create_document(
-        text=content,
+        text=result,
         metadata_override={
             "type": DocumentType.DOCUMENT,
             "source": "ynab",
