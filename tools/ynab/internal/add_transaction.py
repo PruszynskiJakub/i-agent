@@ -250,59 +250,41 @@ def _call_api(
 
 
 def _format_transaction_results(transaction_results: list) -> str:
-    total_transactions = len(transaction_results)
+    total = len(transaction_results)
     successful = sum(1 for t in transaction_results if t["status"] == "success")
-    failed = total_transactions - successful
+    failed = total - successful
 
-    # Section 1: General summary
-    summary = [
-        "Transaction Processing Summary",
-        "----------------------------",
-        f"Total transactions processed: {total_transactions}",
-        f"Successful transactions: {successful}",
-        f"Failed transactions: {failed}",
-        ""
-    ]
+    result = (
+        f"Transaction Summary\n"
+        f"------------------\n"
+        f"Total transactions processed: {total}\n"
+        f"Successfully added: {successful}\n"
+        f"Failed adds: {failed}\n\n"
+        f"Successfully Added Transactions\n"
+        f"----------------------------\n"
+        + (
+            "\n".join(
+                f"Transaction ID: {t['details']['transaction_id']}\n"
+                f"Description: {t['details']['query']}\n"
+                f"Category: {t['details'].get('category', 'Not categorized')}\n"
+                f"Account: {t['details']['account']}\n"
+                f"Payee: {t['details']['payee']}\n"
+                for t in transaction_results if t["status"] == "success"
+            ) if any(t["status"] == "success" for t in transaction_results)
+            else "No transactions were successfully added"
+        )
+        + "\n\nFailed Transactions\n-------------------\n"
+        + (
+            "\n".join(
+                f"Description: {t['query']}\n"
+                f"Error: {t['error']}\n"
+                for t in transaction_results if t["status"] == "error"
+            ) if any(t["status"] == "error" for t in transaction_results)
+            else "No failed transactions"
+        )
+    )
 
-    # Section 2: Successful transactions
-    summary.extend([
-        "Successful Transactions",
-        "---------------------"
-    ])
-
-    successful_transactions = [t for t in transaction_results if t["status"] == "success"]
-    if successful_transactions:
-        for t in successful_transactions:
-            details = t.get("details", {})
-            summary.extend([
-                f"Transaction ID: {details.get('transaction_id', 'Unknown')}",
-                f"Description: {details.get('query', 'No description')}",
-                f"Category: {details.get('category', 'Not categorized')}",
-                f"Account: {details.get('account', 'Unknown account')}",
-                f"Payee: {details.get('payee', 'Unknown payee')}",
-                ""
-            ])
-    else:
-        summary.append("No successful transactions\n")
-
-    # Section 3: Failed transactions
-    summary.extend([
-        "Failed Transactions",
-        "-----------------"
-    ])
-
-    failed_transactions = [t for t in transaction_results if t["status"] == "error"]
-    if failed_transactions:
-        for t in failed_transactions:
-            summary.extend([
-                f"Description: {t['query']}",
-                f"Error: {t['error']}",
-                ""
-            ])
-    else:
-        summary.append("No failed transactions\n")
-
-    return "\n".join(summary)
+    return result
 
 
 def _format_document_description(transaction_results: list) -> str:
