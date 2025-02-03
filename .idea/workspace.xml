@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Do not pass status in action">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/__init__.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
       <change beforePath="$PROJECT_DIR$/tools/todoist/internal/add_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/add_tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,14 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00122" summary="Fix field name">
-      <option name="closed" value="true" />
-      <created>1738010290226</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1738010290226</updated>
     </task>
     <task id="LOCAL-00123" summary="Fix">
       <option name="closed" value="true" />
@@ -588,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738578806641</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1738579583662</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1738579583662</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -626,8 +625,8 @@
     <MESSAGE value="Add comment" />
     <MESSAGE value="Refactor" />
     <MESSAGE value="Add todo comment" />
-    <MESSAGE value="Improve" />
     <MESSAGE value="Do not pass status in action" />
-    <option name="LAST_COMMIT_MESSAGE" value="Do not pass status in action" />
+    <MESSAGE value="Improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>
 </project>

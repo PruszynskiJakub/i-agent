@@ -3,7 +3,6 @@ from typing import List
 from models.document import Document
 from tools.todoist.internal.add_tasks import add_tasks
 from tools.todoist.internal.complete_tasks import complete_tasks
-from tools.todoist.internal.get_projects import get_projects
 from tools.todoist.internal.move_tasks import move_tasks
 from tools.todoist.internal.search_tasks import search_tasks
 from tools.todoist.internal.update_tasks import update_tasks
@@ -12,10 +11,7 @@ from utils.document import create_error_document
 
 async def execute_todoist(action: str, params: dict[str, any], span) -> List[Document]:
     try:
-        if action == "get_projects":
-            doc = await get_projects(span)
-            return [doc]
-        elif action == "add_tasks":
+        if action == "add_tasks":
             doc = await add_tasks(params, span)
             return [doc]
         elif action == "search_tasks":
