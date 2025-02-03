@@ -12,16 +12,12 @@ async def _search_tasks(params: dict, span) -> Document:
     """
     try:
         todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
-        # Extract filter parameters and conversation_uuid
         filter_query = params.get("filter")
         project_id = params.get("project_id")
         label = params.get("label")
         section_id = params.get("section_id")
         task_ids = params.get("ids", [])
-        conversation_uuid = params.get("conversation_uuid")
 
-        if not conversation_uuid:
-            raise ValueError("conversation_uuid is required")
 
         # Get tasks with filters
         tasks = todoist_client.get_tasks(
@@ -69,7 +65,7 @@ async def _search_tasks(params: dict, span) -> Document:
             text=result,
             metadata_override={
                 "uuid": str(uuid4()),
-                "conversation_uuid": conversation_uuid,
+                "conversation_uuid": params.get("conversation_uuid", ""),
                 "type": "document",
                 "source": "todoist",
                 "name": "task_search",
