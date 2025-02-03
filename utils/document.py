@@ -51,10 +51,17 @@ def create_document(text: str, metadata_override: Dict[str, Any] = {}) -> Docume
         "urls": metadata_override.get("urls", [])
     }
 
+    extracted_text = text
+    if not document_metadata["images"] and not document_metadata["urls"]:
+        extracted = extract_images_and_urls(text)
+        document_metadata["images"] = extracted["images"]
+        document_metadata["urls"] = extracted["urls"]
+        extracted_text = extracted["content"]
+
     return Document(
         uuid=metadata_override.get("uuid", uuid4()),
         conversation_uuid=metadata_override.get("conversation_uuid", ""),
-        text=text,
+        text=extracted_text,
         metadata=document_metadata
     )
 

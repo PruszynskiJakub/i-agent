@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
-      <change beforePath="$PROJECT_DIR$/tools/ynab/internal/add_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/add_transaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ynab/internal/update_transaction.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Do not pass status in action">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,30 +193,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00118" summary="Resign from dynamic_context for ynab">
-      <option name="closed" value="true" />
-      <created>1737913668798</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1737913668798</updated>
-    </task>
-    <task id="LOCAL-00119" summary="Fix missing import">
-      <option name="closed" value="true" />
-      <created>1737914653993</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1737914653993</updated>
-    </task>
-    <task id="LOCAL-00120" summary="Add task id above title in add_tasks">
-      <option name="closed" value="true" />
-      <created>1737975330379</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1737975330379</updated>
     </task>
     <task id="LOCAL-00121" summary="Improve a bit instructions">
       <option name="closed" value="true" />
@@ -587,7 +562,31 @@
       <option name="project" value="LOCAL" />
       <updated>1738530096890</updated>
     </task>
-    <option name="localTasksCounter" value="167" />
+    <task id="LOCAL-00167" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1738530478496</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
+      <option name="project" value="LOCAL" />
+      <updated>1738530478496</updated>
+    </task>
+    <task id="LOCAL-00168" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1738530616105</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1738530616105</updated>
+    </task>
+    <task id="LOCAL-00169" summary="Do not pass status in action">
+      <option name="closed" value="true" />
+      <created>1738532271352</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1738532271352</updated>
+    </task>
+    <option name="localTasksCounter" value="170" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -602,7 +601,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Resign from dynamic_context for ynab" />
     <MESSAGE value="Fix missing import" />
     <MESSAGE value="Add task id above title in add_tasks" />
     <MESSAGE value="Improve a bit instructions" />
@@ -627,6 +625,7 @@
     <MESSAGE value="Refactor" />
     <MESSAGE value="Add todo comment" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Do not pass status in action" />
+    <option name="LAST_COMMIT_MESSAGE" value="Do not pass status in action" />
   </component>
 </project>
