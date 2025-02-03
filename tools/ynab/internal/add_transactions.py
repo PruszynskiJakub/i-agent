@@ -43,9 +43,11 @@ async def _add_transactions(params: Dict[str, Any], trace) -> Document:
     transaction_tasks = [_process_transaction(transaction, trace) for transaction in transaction_queries]
 
     # Gather results while maintaining parallel execution
-    transaction_tasks_results = await asyncio.gather(*transaction_tasks, return_exceptions=True)
+    transaction_models = await asyncio.gather(*transaction_tasks, return_exceptions=True)
 
-    for transaction_query, result in zip(transaction_queries, transaction_tasks_results):
+    # Separate successful models and errors
+    valid_transactions = []
+    for transaction_query, result in zip(transaction_queries, transaction_models):
         if isinstance(result, Exception):
             transaction_results.append({
                 "status": "error",
@@ -53,7 +55,65 @@ async def _add_transactions(params: Dict[str, Any], trace) -> Document:
                 "error": str(result)
             })
         else:
-            transaction_results.append(result)  # result already has the correct structure
+            valid_transactions.append(result)
+
+    # Make single API call if we have valid transactions
+    if valid_transactions:
+        try:
+            response = requests.post(
+                url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions",
+                json={
+                    "transactions": valid_transactions
+                },
+                headers={
+                    "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
+                    "Content-Type": "application/json"
+                }
+            )
+
+            create_event(
+                trace,
+                name="ynab_api_call",
+                input={
+                    "url": response.request.url,
+                    "method": response.request.method,
+                    "body": response.request.body
+                },
+                output={
+                    "status_code": response.status_code,
+                    "body": response.json() if response.text else None
+                },
+                level="ERROR" if response.status_code != 201 else "DEFAULT"
+            )
+
+            if response.status_code != 201:
+                error = response.json()['error']
+                raise Exception(f"Failed to add transactions. Details: {error.get('detail', 'Unknown error')}")
+
+            response_data = response.json()
+            transactions = response_data.get('data', {}).get('transactions', [])
+            
+            # Map successful transactions to results
+            for transaction, model in zip(transactions, valid_transactions):
+                transaction_results.append({
+                    "status": "success",
+                    "details": {
+                        "transaction_id": transaction.get('id', 'unknown'),
+                        "query": model['memo'].replace('iAgent: ', ''),
+                        "category": model.get('category_name', 'Not categorized'),
+                        "account": model.get('account_name', 'Unknown Account'),
+                        "payee": model.get('payee_name', 'Unknown Payee')
+                    }
+                })
+
+        except Exception as e:
+            # If bulk API call fails, mark all valid transactions as failed
+            for model in valid_transactions:
+                transaction_results.append({
+                    "status": "error",
+                    "query": model['memo'].replace('iAgent: ', ''),
+                    "error": str(e)
+                })
 
     return create_document(
         text=_format_transaction_results(transaction_results),
@@ -173,80 +233,43 @@ async def _pick_category(query: str, trace) -> Dict[str, Any]:
     return json.loads(completion)
 
 
-def _call_api(
-        sides_result: Dict[str, Any],
-        amount_result: Dict[str, Any],
-        category_result: Dict[str, Any] | None,
-        query: str,
-        trace
-) -> dict:
-    if not sides_result or not amount_result:
-        raise ValueError("Missing required parameters: sides_result and amount_result are required")
+def _process_transaction(transaction_query: str, trace) -> dict:
+    """Process a single transaction and return the transaction model for the API."""
+    if not transaction_query:
+        raise ValueError("Missing required transaction query")
 
-    # Get account_id safely with get() method
+    amount_task = asyncio.create_task(_pick_amount(transaction_query, trace))
+    sides_task = asyncio.create_task(_pick_sides(transaction_query, trace))
+
+    sides_result, amount_result = await asyncio.gather(sides_task, amount_task)
+
+    if not sides_result or not amount_result:
+        raise ValueError("Missing required parameters: sides_result and amount_result")
+
     account_id = sides_result.get('account', {}).get('id')
     if not account_id:
         raise ValueError("Missing required account_id in sides_result")
 
-    # Build transaction model with safe access to nested dictionaries
+    # Build transaction model
     transaction = {
         "account_id": account_id,
         "date": datetime.now().strftime("%Y-%m-%d"),
         "amount": int(amount_result.get('amount', 0) * 1000),  # Convert to milliunits
         "payee_id": sides_result.get('payee', {}).get('id'),
         "payee_name": sides_result.get('payee', {}).get('name'),
-        "memo": f"iAgent: {query}",
+        "memo": f"iAgent: {transaction_query}",
+        "account_name": sides_result.get('account', {}).get('name'),  # Store for result formatting
     }
 
-    if category_result:
-        transaction["category_id"] = category_result.get('category', {}).get('id')
+    # Get category if needed
+    if sides_result['account']['type'] in ['checking', 'creditCard'] and (
+            'payee' not in sides_result or sides_result['payee']['type'] != 'checking'):
+        category_result = await _pick_category(transaction_query, trace)
+        if category_result:
+            transaction["category_id"] = category_result.get('category', {}).get('id')
+            transaction["category_name"] = category_result.get('category', {}).get('name')
 
-    response = requests.post(
-        url=f"{os.getenv('YNAB_BASE_URL')}/budgets/{os.getenv('YNAB_BUDGET_ID')}/transactions",
-        json={
-            "transaction": transaction
-        },
-        headers={
-            "Authorization": f"Bearer {os.getenv('YNAB_PERSONAL_ACCESS_TOKEN')}",
-            "Content-Type": "application/json"
-        }
-    )
-
-    create_event(
-        trace,
-        name="ynab_api_call",
-        input={
-            "url": response.request.url,
-            "method": response.request.method,
-            "body": response.request.body
-        },
-        output={
-            "status_code": response.status_code,
-            "body": response.json() if response.text else None
-        },
-        level="ERROR" if response.status_code != 201 else "DEFAULT"
-    )
-
-    if response.status_code != 201:
-        error = response.json()['error']
-        raise Exception(f"Failed to add transaction '{query}' Details: {error.get('detail', 'Unknown error')}")
-
-    response_data = response.json()
-    transaction_id = response_data.get('data', {}).get('transaction', {}).get('id', 'unknown')
-    category_name = category_result.get('category', {}).get('name') if category_result else None
-    account_name = sides_result.get('account', {}).get('name', 'Unknown Account')
-    payee_name = sides_result.get('payee', {}).get('name', 'Unknown Payee')
-
-    return {
-        "status": "success",
-        "details": {
-            "transaction_id": transaction_id,
-            "query": query,
-            "category": category_name,
-            "account": account_name,
-            "payee": payee_name
-        }
-    }
+    return transaction
 
 
 def _format_transaction_results(transaction_results: list) -> str:
