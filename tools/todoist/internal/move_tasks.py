@@ -1,5 +1,7 @@
 import os
 from typing import Dict, Any
+
+API_ENDPOINT = "https://api.todoist.com/sync/v9/sync"
 from uuid import uuid4
 
 import requests
@@ -64,16 +66,18 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
         if commands:
             try:
                 response = requests.post(
-                    url="https://api.todoist.com/sync/v9/sync",
+                    API_ENDPOINT,
                     headers={"Authorization": f"Bearer {api_token}"},
                     json={"commands": [cmd[0] for cmd in commands]}
                 )
-                response.raise_for_status()
+                
+                if not response.ok:
+                    raise Exception(f"API request failed: {response.status_code} {response.text}")
+                    
                 result = response.json()
-
-                # Process results
                 for command, task in commands:
-                    if result["sync_status"][command["uuid"]] == "ok":
+                    sync_status = result.get("sync_status", {}).get(command["uuid"])
+                    if sync_status == "ok":
                         create_event(
                             span,
                             "move_todoist_single_task",
