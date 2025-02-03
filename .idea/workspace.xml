@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Do not pass status in action">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/todoist/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/add_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/add_tasks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,14 +195,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00121" summary="Improve a bit instructions">
-      <option name="closed" value="true" />
-      <created>1737988072593</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1737988072593</updated>
     </task>
     <task id="LOCAL-00122" summary="Fix field name">
       <option name="closed" value="true" />
@@ -586,7 +580,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738532271352</updated>
     </task>
-    <option name="localTasksCounter" value="170" />
+    <task id="LOCAL-00170" summary="Do not pass status in action">
+      <option name="closed" value="true" />
+      <created>1738578806641</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1738578806641</updated>
+    </task>
+    <option name="localTasksCounter" value="171" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -4,6 +4,29 @@ def get_dynamic_context() -> str:
 
 """ + projects
 
+
+def get_default_project_id() -> str:
+    """Returns the ID of the default project in Todoist."""
+    return "2334150459"
+
+
+def get_project_name(id) -> str:
+    """Returns the name of the project with the given ID."""
+    if id == "2334150459":
+        return "Inbox"
+    elif id == "2345453677":
+        return "iAgent"
+    elif id == "2345454404":
+        return "AI-augmented developer"
+    elif id == "2345453739":
+        return "Urgent & Important"
+    elif id == "2345454316":
+        return "Not Urgent & Important"
+    elif id == "2345597838":
+        return "Clients"
+    else:
+        return "Unknown"
+
 projects = """
 <projects>
     <project>
@@ -17,7 +40,7 @@ projects = """
         <description>A project focused on creating a personal AI assistant in Python with Slack as frontend client</description>
     </project>
     <project>
-        <name>AI-augemented developer</name>
+        <name>AI-augmented developer</name>
         <id>2345454404</id>
         <description>Educational course creation for developers focusing on AI tools application and building AI-oriented mindset</description>
     </project>
