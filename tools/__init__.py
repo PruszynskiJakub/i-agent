@@ -69,19 +69,6 @@ def get_tools():
             "name": "todoist",
             "description": "responsible for managing tasks and projects in Todoist",
             "actions": {
-                "get_projects": {
-                    "description": "Retrieves all projects from Todoist with their hierarchical structure and metadata",
-                    "instructions": """
-                    {
-                        "params": {}
-                    }
-                    
-                    Returns:
-                    - List of all projects with their IDs, names, colors
-                    - Project hierarchy (parent-child relationships)
-                    - View settings and other metadata
-                    """
-                },
                 "add_tasks": {
                     "description": "Creates one or more tasks in Todoist. Supports natural language for dates and rich task metadata.",
                     "instructions": """

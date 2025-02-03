@@ -1,11 +1,12 @@
 import os
 from typing import Dict, Any
 from uuid import uuid4
+
 import requests
 
 from llm.tracing import create_event
 from models.document import Document, DocumentType
-from utils.document import create_document
+from utils.document import create_document, create_error_document
 
 
 async def move_tasks(params: Dict[str, Any], span) -> Document:
@@ -13,16 +14,15 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
     try:
         api_token = os.getenv("TODOIST_API_TOKEN")
         tasks = params.get("tasks", [])
-        create_event(span, "move_tasks_start", input={"task_count": len(tasks)})
-        
+
         if not tasks:
+            create_event(span, "move_todoist_tasks", input=params, output="No tasks provided")
             return create_document(
                 text="No tasks provided to move",
                 metadata_override={
-                    "uuid": uuid4(),
                     "conversation_uuid": params.get("conversation_uuid", ""),
                     "source": "todoist",
-                    "name": "todoist_tasks",
+                    "name": "MoveTasksResult",
                     "description": "No tasks to move",
                     "type": DocumentType.DOCUMENT
                 }
@@ -48,7 +48,7 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
                     "id": task_id
                 }
             }
-            
+
             # Add optional move parameters if present
             if "project_id" in task:
                 command["args"]["project_id"] = task["project_id"]
@@ -59,15 +59,20 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
 
             try:
                 response = requests.post(
-                    "https://api.todoist.com/sync/v9/sync",
+                    url="https://api.todoist.com/sync/v9/sync",
                     headers={"Authorization": f"Bearer {api_token}"},
                     json={"commands": [command]}
                 )
                 response.raise_for_status()
-                
+
                 result = response.json()
                 if result["sync_status"][command["uuid"]] == "ok":
-                    create_event(span, "task_moved", input={"task_id": task_id, "command": command})
+                    create_event(
+                        span,
+                        "move_todoist_single_task",
+                        input={"task_id": task_id, "command": command},
+                        output=result
+                    )
                     successful_moves.append({
                         "id": task_id,
                         "project_id": task.get("project_id", "Not specified"),
@@ -75,6 +80,13 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
                         "parent_id": task.get("parent_id", "Not specified")
                     })
                 else:
+                    create_event(
+                        span,
+                        "move_todoist_tasks",
+                        input={"task_id": task_id, "command": command},
+                        output=result,
+                        level="ERROR"
+                    )
                     error = result["sync_status"][command["uuid"]]
                     failed_moves.append({
                         "id": task_id,
@@ -88,19 +100,19 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
 
         # Format the results
         sections = []
-        
+
         # Summary section
         total = len(tasks)
         successful = len(successful_moves)
         failed = len(failed_moves)
-        
+
         sections.append("Move Summary")
         sections.append("-" * 12)
         sections.append(f"Total tasks processed: {total}")
         sections.append(f"Successfully moved: {successful}")
         sections.append(f"Failed moves: {failed}")
         sections.append("")
-        
+
         # Successful moves section
         sections.append("Successfully Moved Tasks")
         sections.append("-" * 22)
@@ -117,7 +129,7 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
         else:
             sections.append("No tasks were successfully moved")
             sections.append("")
-        
+
         # Failed moves section
         sections.append("Failed Moves")
         sections.append("-" * 11)
@@ -131,16 +143,13 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
             sections.append("")
 
         result = "\n".join(sections)
-        create_event(span, "move_tasks_complete", 
-                    output={"status": "success", "successful": successful, "failed": failed})
-        
+
         return create_document(
             text=result,
             metadata_override={
-                "uuid": uuid4(),
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
-                "name": "todoist_tasks",
+                "name": "MoveTasksResult",
                 "description": f"Moved {successful} tasks successfully, {failed} failed",
                 "type": DocumentType.DOCUMENT
             }
@@ -149,15 +158,9 @@ async def move_tasks(params: Dict[str, Any], span) -> Document:
     except Exception as error:
         error_msg = f"Failed to move tasks: {str(error)}"
         create_event(span, "move_tasks_error", level="ERROR", output={"error": str(error)})
-        
-        return create_document(
-            text=error_msg,
-            metadata_override={
-                "uuid": uuid4(),
-                "conversation_uuid": params.get("conversation_uuid", ""),
-                "source": "todoist",
-                "name": "todoist_tasks", 
-                "description": "Error moving tasks",
-                "type": DocumentType.DOCUMENT
-            }
+
+        return create_error_document(
+            error=error,
+            error_context=error_msg,
+            conversation_uuid=params.get("conversation_uuid", "")
         )
