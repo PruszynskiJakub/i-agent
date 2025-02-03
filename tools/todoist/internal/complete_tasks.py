@@ -1,9 +1,9 @@
 import os
 from typing import Dict, Any
 
-from llm.tracing import create_event
 from todoist_api_python.api import TodoistAPI
 
+from llm.tracing import create_event
 from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document
 
@@ -13,16 +13,17 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
     try:
         todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
         task_ids = params.get("task_ids", [])
-        create_event(span, "complete_tasks_start", input={"task_count": len(task_ids)})
-        
+
         if not task_ids:
+            create_event(span, "complete_todoist_tasks", input=params, output="No tasks provided")
             return create_document(
                 text="No task IDs provided",
                 metadata_override={
                     "conversation_uuid": params.get("conversation_uuid", ""),
                     "source": "todoist",
                     "description": "No tasks to complete",
-                    "name": "todoist_tasks"
+                    "name": "CompleteTodoistTasksResult",
+                    "content_type": "full",
                 }
             )
 
@@ -31,13 +32,16 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
 
         for task_id in task_ids:
             try:
-                # Get task details before completing it
                 task = todoist_client.get_task(task_id)
-                
-                # Complete the task
+
                 is_success = todoist_client.close_task(task_id)
-                create_event(span, "task_completed", input={"task_id": task_id}, output={"success": is_success})
-                
+                create_event(
+                    span,
+                    "complete_todoist_single_task",
+                    input={"task_id": task_id},
+                    output={"success": is_success}
+                )
+
                 if is_success:
                     successful_tasks.append({
                         "id": task_id,
@@ -49,7 +53,7 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
                         "id": task_id,
                         "error": "Failed to complete task"
                     })
-                    
+
             except Exception as e:
                 failed_tasks.append({
                     "id": task_id,
@@ -58,19 +62,19 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
 
         # Format the results
         sections = []
-        
+
         # Summary section
         total = len(task_ids)
         successful = len(successful_tasks)
         failed = len(failed_tasks)
-        
+
         sections.append("Task Completion Summary")
         sections.append("-" * 21)
         sections.append(f"Total tasks processed: {total}")
         sections.append(f"Successfully completed: {successful}")
         sections.append(f"Failed: {failed}")
         sections.append("")
-        
+
         # Successful completions
         sections.append("Successfully Completed Tasks")
         sections.append("-" * 26)
@@ -82,7 +86,7 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
         else:
             sections.append("No tasks were successfully completed")
             sections.append("")
-        
+
         # Failed completions
         sections.append("Failed Tasks")
         sections.append("-" * 11)
@@ -95,23 +99,28 @@ async def complete_tasks(params: Dict[str, Any], span) -> Document:
             sections.append("No failed tasks")
             sections.append("")
 
-        result = "\n".join(sections)
-        create_event(span, "complete_tasks_complete", 
-                    output={"status": "success", "successful": successful, "failed": failed})
-        
+        document_text = "\n".join(sections)
+        create_event(
+            span,
+            "complete_todoist_tasks",
+            input=params,
+            output={"status": "success", "successful": successful_tasks, "failed": failed_tasks}
+        )
+
         return create_document(
-            text=result,
+            text=document_text,
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
-                "source": "todoist", 
+                "source": "todoist",
                 "description": f"Completed {successful} tasks successfully, {failed} failed",
-                "name": "todoist_tasks",
-                "type": DocumentType.DOCUMENT
+                "name": "CompleteTodoistTasksResult",
+                "type": DocumentType.DOCUMENT,
+                "content_type": "full"
             }
         )
 
     except Exception as error:
-        create_event(span, "complete_tasks_error", level="ERROR", output={"error": str(error)})
+        create_event(span, "complete_todoist_tasks", level="ERROR", input=params, output={"error": str(error)})
         return create_error_document(
             error=error,
             error_context="Failed to complete tasks",

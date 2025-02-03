@@ -110,7 +110,7 @@ async def add_tasks(params: Dict[str, Any], span) -> Document:
             span,
             "add_todoist_tasks",
             input=params,
-            output={"status": "success", "successful": successful, "failed": failed}
+            output={"status": "success", "successful": successful_tasks, "failed": failed_tasks}
         )
 
         return create_document(
