@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/add_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/add_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/complete_tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,30 +193,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00123" summary="Fix">
-      <option name="closed" value="true" />
-      <created>1738010451443</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1738010451444</updated>
-    </task>
-    <task id="LOCAL-00124" summary="Small improvements">
-      <option name="closed" value="true" />
-      <created>1738057802894</created>
-      <option name="number" value="00124" />
-      <option name="presentableId" value="LOCAL-00124" />
-      <option name="project" value="LOCAL" />
-      <updated>1738057802894</updated>
-    </task>
-    <task id="LOCAL-00125" summary="Remove examples from instructions">
-      <option name="closed" value="true" />
-      <created>1738058732199</created>
-      <option name="number" value="00125" />
-      <option name="presentableId" value="LOCAL-00125" />
-      <option name="project" value="LOCAL" />
-      <updated>1738058732199</updated>
     </task>
     <task id="LOCAL-00126" summary="Add move_tasks sample">
       <option name="closed" value="true" />
@@ -587,7 +562,31 @@
       <option name="project" value="LOCAL" />
       <updated>1738579583662</updated>
     </task>
-    <option name="localTasksCounter" value="172" />
+    <task id="LOCAL-00172" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1738579982469</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1738579982469</updated>
+    </task>
+    <task id="LOCAL-00173" summary="Remove get_projects">
+      <option name="closed" value="true" />
+      <created>1738580011581</created>
+      <option name="number" value="00173" />
+      <option name="presentableId" value="LOCAL-00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1738580011581</updated>
+    </task>
+    <task id="LOCAL-00174" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1738580453956</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1738580453956</updated>
+    </task>
+    <option name="localTasksCounter" value="175" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -602,7 +601,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix missing import" />
     <MESSAGE value="Add task id above title in add_tasks" />
     <MESSAGE value="Improve a bit instructions" />
     <MESSAGE value="Fix field name" />
@@ -626,6 +624,7 @@
     <MESSAGE value="Refactor" />
     <MESSAGE value="Add todo comment" />
     <MESSAGE value="Do not pass status in action" />
+    <MESSAGE value="Remove get_projects" />
     <MESSAGE value="Improve" />
     <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>

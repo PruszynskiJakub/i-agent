@@ -78,6 +78,7 @@ async def update_transaction(params: Dict[str, Any], span) -> Document:
             "source": "ynab",
             "name": "UpdateTransactionsResult",
             "conversation_uuid": params.get("conversation_uuid", ""),
+            "description": f"Updated transaction with id {transaction_id}",
             "content_type": "full"
         }
     )
