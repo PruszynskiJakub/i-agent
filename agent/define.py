@@ -16,7 +16,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
     Updates and returns AgentState with complete step_info including parameters.
     """
     # Create span for the define phase
-    span = create_span(trace, "agent_define")
+    span = create_span(trace, "agent_define", input=state.interaction)
 
     try:
         # Update phase to DEFINE
@@ -80,7 +80,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         # End the generation trace
         end_generation(generation, output=response_data)
 
-        end_span(span, output=updated_state)
+        end_span(span, output=response_data)
         return updated_state
 
     except Exception as e:
