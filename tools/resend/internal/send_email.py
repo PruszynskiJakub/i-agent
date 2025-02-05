@@ -23,8 +23,15 @@ async def _send_email(params: Dict, span) -> Document:
         })
 
         return create_document(
-            f"Email sent successfully with subject: {title}",
-            {"email_id": result.id if hasattr(result, 'id') else None}
+            text=f"Email sent successfully with subject: {title}",
+            metadata_override={
+                "conversation_uuid": span.trace_id,
+                "source": "resend",
+                "name": "EmailSendResult",
+                "description": f"Email sent: {title}",
+                "email_id": result.id if hasattr(result, 'id') else None,
+                "mime_type": "text/plain"
+            }
         )
 
     except Exception as e:
