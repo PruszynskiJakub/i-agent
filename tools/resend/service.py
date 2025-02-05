@@ -1,4 +1,5 @@
 from tools.resend.internal.send_email import _send_email
+from models.document import Document
 
 async def execute_resend(action: str, params: dict, span) -> Document:
     if action == "send_email":
