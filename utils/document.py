@@ -33,7 +33,8 @@ def create_error_document(
             "mime_type": "text/plain",
             "name": "error_report", 
             "source": "system",
-            "description": f"Failed to process operation: {error_message}"
+            "description": f"Failed to process operation: {error_message}",
+            "content_type": "full"
         }
     )
 
