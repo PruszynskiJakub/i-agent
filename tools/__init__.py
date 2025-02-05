@@ -3,10 +3,40 @@ from uuid import UUID
 
 from tools.todoist.service import execute_todoist
 from tools.ynab.service import execute_ynab
+from tools.resend.service import execute_resend
 
 
 def get_tools():
     return [
+        {
+            "uuid": UUID("c5dd391f-7d8a-4e99-8f3b-6de21c52ef84"),
+            "name": "resend",
+            "description": "responsible for sending emails via Resend service",
+            "actions": {
+                "send_email": {
+                    "description": "Sends an email with specified title, text content and optional attachments",
+                    "instructions": """
+                    {
+                        "title": "Email subject line",
+                        "text": "Email body content in HTML format",
+                        "attachments": ["optional list of document UUIDs to attach"]
+                    }
+                    
+                    Field details:
+                    - title: Required, the email subject line
+                    - text: Required, the email body content in HTML format
+                    - attachments: Optional list of document UUIDs to attach to the email
+                    
+                    Example:
+                    {
+                        "title": "Meeting Summary",
+                        "text": "<p>Here are the meeting notes...</p>",
+                        "attachments": ["550e8400-e29b-41d4-a716-446655440000"]
+                    }
+                    """
+                }
+            }
+        },
         {
             "uuid": UUID("a3bb189e-8bf9-4c8b-9beb-5de10a41cf62"),
             "name": "ynab",
@@ -273,5 +303,6 @@ def get_tool_action_instructions(tool_name: str, action_name: str) -> str:
 
 tool_handlers = {
     "ynab": execute_ynab,
-    "todoist": execute_todoist
+    "todoist": execute_todoist,
+    "resend": execute_resend
 }
