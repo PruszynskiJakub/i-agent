@@ -38,7 +38,6 @@ async def _send_email(params: Dict, span) -> Document:
                 "source": "resend",
                 "name": "EmailSendResult", 
                 "description": f"Email sent: {title}",
-                "email_id": result.id if hasattr(result, 'id') else None,
                 "mime_type": "text/plain"
             }
         )
