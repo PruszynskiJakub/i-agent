@@ -1,7 +1,7 @@
 import os
 import resend
 from typing import Dict
-from models.document import Document
+from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document
 
 async def _send_email(params: Dict, span) -> Document:
