@@ -39,7 +39,8 @@ async def _send_email(params: Dict, span) -> Document:
                 "name": "EmailSendResult", 
                 "description": f"Email sent: {title}",
                 "mime_type": "text/plain",
-                "content_type": "full"
+                "content_type": "full",
+                "type": DocumentType.DOCUMENT
             }
         )
 

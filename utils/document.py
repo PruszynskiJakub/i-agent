@@ -34,7 +34,8 @@ def create_error_document(
             "name": "error_report", 
             "source": "system",
             "description": f"Failed to process operation: {error_message}",
-            "content_type": "full"
+            "content_type": "full",
+            "type": DocumentType.DOCUMENT
         }
     )
 
