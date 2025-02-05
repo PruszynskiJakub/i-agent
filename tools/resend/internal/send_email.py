@@ -16,7 +16,7 @@ async def _send_email(params: Dict, span) -> Document:
         # Send email using resend
         result = resend.Emails.send({
             "from": "notifications@yourdomain.com",  # Configure as needed
-            "to": "recipient@example.com",  # Configure as needed
+            "to": "jakub.mikolaj.pruszynski@gmail.com",
             "subject": title,
             "html": text,
             # TODO: Handle attachments based on UUIDs
