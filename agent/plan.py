@@ -49,7 +49,7 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
         completion = await open_ai.completion(
             messages=[
                 {"role": "system", "content": system_prompt},
-                *format_messages(state.messages)
+                state.messages[-1]
             ],
             model=prompt.config.get("model", "gpt-4o"),
             json_mode=True
