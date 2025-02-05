@@ -22,12 +22,21 @@ async def _send_email(params: Dict, span) -> Document:
             # TODO: Handle attachments based on UUIDs
         })
 
+        result_details = [
+            "Email Send Results:",
+            f"Subject: {title}",
+            f"Status: Success",
+            f"Email ID: {result.id if hasattr(result, 'id') else 'Not available'}",
+            f"Recipient: {params.get('to', 'jakub.mikolaj.pruszynski@gmail.com')}",
+            f"Content Length: {len(text)} characters"
+        ]
+        
         return create_document(
-            text=f"Email sent successfully with subject: {title}",
+            text="\n".join(result_details),
             metadata_override={
                 "conversation_uuid": span.trace_id,
                 "source": "resend",
-                "name": "EmailSendResult",
+                "name": "EmailSendResult", 
                 "description": f"Email sent: {title}",
                 "email_id": result.id if hasattr(result, 'id') else None,
                 "mime_type": "text/plain"
