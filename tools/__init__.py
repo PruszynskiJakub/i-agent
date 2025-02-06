@@ -14,7 +14,7 @@ def get_tools():
             "description": "responsible for sending emails via Resend service",
             "actions": {
                 "send_email": {
-                    "description": "Sends an email with specified title, text content and optional attachments",
+                    "description": "Sends an email with specified title, text content and optional attachments. The recipient and sender are determined by the Resend service configuration.",
                     "instructions": """
                     {
                         "title": "Email subject line",
@@ -33,6 +33,7 @@ def get_tools():
                         "text": "<p>Here are the meeting notes...</p>",
                         "attachments": ["550e8400-e29b-41d4-a716-446655440000"]
                     }
+                    
                     """
                 }
             }
