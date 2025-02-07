@@ -18,8 +18,8 @@ async def execute_file(action: str, params: Dict, span) -> List[Document]:
     """
     try:
         if action == "process":
-            doc = await _process_file(params, span)
-            return [doc]
+            docs = await _process_file(params, span)
+            return docs
         else:
             return [create_error_document(
                 Exception(f"Unknown action: {action}"),

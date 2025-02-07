@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 from uuid import uuid4
 
 from llm.tracing import create_event
@@ -6,7 +6,7 @@ from models.document import Document, DocumentType
 from utils.document import create_document
 
 
-async def _process_file(params: Dict, span) -> Document:
+async def _process_file(params: Dict, span) -> List[Document]:
     """Process a file and create a document from it
     
     Args:
@@ -30,7 +30,7 @@ async def _process_file(params: Dict, span) -> Document:
         create_event(span, "process_file", input=params, output={"status": "success", "file": file_path})
 
         # Create document
-        return create_document(
+        return [create_document(
             text=content,
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
@@ -40,7 +40,7 @@ async def _process_file(params: Dict, span) -> Document:
                 "type": DocumentType.FILE,
                 "file_path": file_path
             }
-        )
+        )]
 
     except Exception as error:
         create_event(span, "process_file", level="ERROR", input=params, output={"error": str(error)})
