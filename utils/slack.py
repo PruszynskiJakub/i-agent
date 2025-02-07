@@ -6,6 +6,7 @@ import requests
 from models.document import DocumentType
 
 from db.document import save_document
+from db.models import ConversationDocumentModel
 from logger.logger import log_info, log_error
 from utils.document import create_document
 
@@ -52,8 +53,13 @@ def _process_attachments(files: List[Dict[str, Any]], conversation_uuid) -> None
                     "conversation_uuid": conversation_uuid
                 }
             )
+            # Save document and create conversation-document relationship
             save_document(doc.__dict__)
-            log_info(f"Created document record for: {file.get('title', '')}")
+            ConversationDocumentModel.create(
+                conversation_uuid=conversation_uuid,
+                document_id=doc.uuid
+            )
+            log_info(f"Created document and conversation relationship for: {file.get('title', '')}")
 
         except Exception as e:
             log_error(f"Error processing file {file.get('name', 'unknown')}: {str(e)}")
