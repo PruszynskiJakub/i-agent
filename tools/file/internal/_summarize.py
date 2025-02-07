@@ -1,16 +1,17 @@
 from typing import Dict, List
-from uuid import uuid4
+from uuid import UUID
 
 from llm.tracing import create_event
 from models.document import Document, DocumentType
 from utils.document import create_document
+from db.document import find_document_by_uuid
 
 
 async def _summarize(params: Dict, span) -> List[Document]:
-    """Summarize a file and create a document from it
+    """Summarize one or more documents and create a new document from their contents
     
     Args:
-        params: Parameters including file path and metadata
+        params: Parameters including document UUIDs
         span: Tracing span
         
     Returns:
@@ -18,30 +19,50 @@ async def _summarize(params: Dict, span) -> List[Document]:
     """
     try:
         # Extract parameters
-        file_path = params.get("file_path")
-        if not file_path:
-            create_event(span, "summarize_file", input=params, output="No file path provided")
-            raise ValueError("file_path is required")
+        document_uuids = params.get("document_uuids", [])
+        if not document_uuids:
+            create_event(span, "summarize", input=params, output="No document UUIDs provided")
+            raise ValueError("document_uuids is required")
 
-        # Read file content
-        with open(file_path, 'r') as f:
-            content = f.read()
+        contents = []
+        sources = []
 
-        create_event(span, "summarize_file", input=params, output={"status": "success", "file": file_path})
+        # Process documents
+        for doc_uuid in document_uuids:
+            try:
+                uuid = UUID(doc_uuid) if isinstance(doc_uuid, str) else doc_uuid
+                document = find_document_by_uuid(uuid)
+                if document:
+                    contents.append(document.text)
+                    sources.append(str(uuid))
+                    create_event(span, "summarize_document", input=doc_uuid, output="Document processed")
+                else:
+                    create_event(span, "summarize_document", level="ERROR", input=doc_uuid, output="Document not found")
+                    raise ValueError(f"Document not found: {doc_uuid}")
+            except Exception as e:
+                create_event(span, "summarize_document", level="ERROR", input=doc_uuid, output=str(e))
+                raise
+
+        if not contents:
+            raise ValueError("No content found from provided documents")
+
+        # Combine all content
+        combined_content = "\n\n".join(contents)
+        source_desc = ", ".join(sources)
 
         # Create document
         return [create_document(
-            text=content,
+            text=combined_content,
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
-                "source": "file",
-                "name": file_path.split("/")[-1],
-                "description": f"Summarized file: {file_path}",
+                "source": "summarize",
+                "name": "combined_documents",
+                "description": f"Summarized documents: {source_desc}",
                 "type": DocumentType.FILE,
-                "file_path": file_path
+                "source_documents": document_uuids
             }
         )]
 
     except Exception as error:
-        create_event(span, "process_file", level="ERROR", input=params, output={"error": str(error)})
+        create_event(span, "summarize", level="ERROR", input=params, output={"error": str(error)})
         raise

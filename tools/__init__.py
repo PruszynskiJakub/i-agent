@@ -15,18 +15,18 @@ def get_tools():
             "description": "responsible for processing documents in various ways such as summarization, extraction, etc.",
             "actions": {
                 "summarize": {
-                    "description": "Summarizes a file and creates a document from its contents",
+                    "description": "Summarizes one or more documents and creates a new document from their contents",
                     "instructions": """
                     {
-                        "file_path": "path to the file to process"
+                        "document_uuids": ["list of document UUIDs to process"]
                     }
                     
                     Field details:
-                    - file_path: Required, the path to the file to process
+                    - document_uuids: Required, list of document UUIDs to process
                     
                     Example:
                     {
-                        "file_path": "/path/to/document.txt"
+                        "document_uuids": ["550e8400-e29b-41d4-a716-446655440000"]
                     }
                     """
                 }
