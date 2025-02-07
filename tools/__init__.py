@@ -4,15 +4,15 @@ from uuid import UUID
 from tools.todoist.service import execute_todoist
 from tools.ynab.service import execute_ynab
 from tools.resend.service import execute_resend
-from tools.file.service import execute_file
+from tools.file.service import execute_document_processor
 
 
 def get_tools():
     return [
         {
             "uuid": UUID("d6ee492f-8d9a-4e88-9beb-6de21c52ef85"),
-            "name": "file",
-            "description": "responsible for processing files and creating documents",
+            "name": "document_processor",
+            "description": "responsible for processing documents",
             "actions": {
                 "summarize": {
                     "description": "Summarizes a file and creates a document from its contents",
@@ -330,5 +330,5 @@ tool_handlers = {
     "ynab": execute_ynab,
     "todoist": execute_todoist,
     "resend": execute_resend,
-    "file": execute_file
+    "file": execute_document_processor
 }

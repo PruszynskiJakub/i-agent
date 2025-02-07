@@ -1,11 +1,11 @@
 from typing import Dict, List
 
 from models.document import Document
-from tools.file.internal.summarize_file import _summarize_file
+from tools.file.internal._summarize import _summarize
 from utils.document import create_error_document
 
 
-async def execute_file(action: str, params: Dict, span) -> List[Document]:
+async def execute_document_processor(action: str, params: Dict, span) -> List[Document]:
     """Execute file-related actions
 
     Args:
@@ -18,7 +18,7 @@ async def execute_file(action: str, params: Dict, span) -> List[Document]:
     """
     try:
         if action == "summarize":
-            docs = await _summarize_file(params, span)
+            docs = await _summarize(params, span)
             return docs
         else:
             return [create_error_document(
