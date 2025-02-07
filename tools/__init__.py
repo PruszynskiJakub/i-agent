@@ -330,5 +330,5 @@ tool_handlers = {
     "ynab": execute_ynab,
     "todoist": execute_todoist,
     "resend": execute_resend,
-    "file": execute_document_processor
+    "document_processor": execute_document_processor
 }
