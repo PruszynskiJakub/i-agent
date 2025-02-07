@@ -9,6 +9,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from agent.assistant import agent_run
 from utils.state import create_or_restore_state, add_message
 from llm.tracing import flush
+from db.conversation import create_conversation_if_not_exists
 from logger.logger import log_info, log_exception
 from utils.slack import preprocess_message, get_conversation_id
 
@@ -24,6 +25,9 @@ def handle_message(message, say):
     """Handle incoming messages and respond using the agent"""
     try:
         conversation_id = get_conversation_id(message)
+        # Create or restore conversation first
+        create_conversation_if_not_exists(conversation_id)
+
         # Preprocess the message
         preprocess_message(message, conversation_id)
 
