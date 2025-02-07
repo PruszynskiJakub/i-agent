@@ -39,12 +39,9 @@ async def _summarize(params: Dict, span) -> List[Document]:
                     restored_doc = restore_placeholders(document)
                     documents.append(restored_doc)
                     sources.append(str(uuid))
-                    create_event(span, "summarize_document", input=doc_uuid, output="Document processed")
                 else:
-                    create_event(span, "summarize_document", level="ERROR", input=doc_uuid, output="Document not found")
                     raise ValueError(f"Document not found: {doc_uuid}")
             except Exception as e:
-                create_event(span, "summarize_document", level="ERROR", input=doc_uuid, output=str(e))
                 raise
 
         if not documents:
@@ -82,10 +79,10 @@ async def _summarize(params: Dict, span) -> List[Document]:
             text=completion,
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
-                "source": "summarize",
-                "name": "merged_summary",
-                "description": f"Summary of documents: {source_desc}",
-                "type": DocumentType.FILE,
+                "source": "document_processor",
+                "name": "SummarizationResult",
+                "description": f"Summary of documents with uuids: {source_desc}",
+                "type": DocumentType.DOCUMENT,
                 "source_documents": sources
             }
         )]
