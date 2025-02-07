@@ -50,46 +50,45 @@ async def _summarize(params: Dict, span) -> List[Document]:
         if not documents:
             raise ValueError("No documents found from provided UUIDs")
 
-        # Process documents in parallel with LLM
-        async def summarize_document(doc: Document):
-            prompt = get_prompt(name="tool_summarize")
-            system_prompt = prompt.compile()
-            model = prompt.config.get("model", "gpt-4")
-
-            generation = create_generation(
-                span,
-                "summarize_content",
-                model,
-                doc.text
-            )
-            
-            completion = await open_ai.completion(
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": doc.text}
-                ],
-                model=model
-            )
-            
-            end_generation(generation, completion)
-            return completion
-
-        # Run all summaries in parallel
-        summaries = await asyncio.gather(*[summarize_document(doc) for doc in documents])
+        # Merge all document contents
+        merged_content = "\n\n---\n\n".join(doc.text for doc in documents)
         source_desc = ", ".join(sources)
 
-        # Create documents from summaries
+        # Get prompt configuration
+        prompt = get_prompt(name="tool_summarize")
+        system_prompt = prompt.compile()
+        model = prompt.config.get("model", "gpt-4")
+
+        # Run single summarization on merged content
+        generation = create_generation(
+            span,
+            "summarize_content",
+            model,
+            merged_content
+        )
+        
+        completion = await open_ai.completion(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": merged_content}
+            ],
+            model=model
+        )
+        
+        end_generation(generation, completion)
+
+        # Create single summary document
         return [create_document(
-            text=summary,
+            text=completion,
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "summarize",
-                "name": f"summary_{i+1}",
-                "description": f"Summary of document: {sources[i]}",
+                "name": "merged_summary",
+                "description": f"Summary of documents: {source_desc}",
                 "type": DocumentType.FILE,
-                "source_document": sources[i]
+                "source_documents": sources
             }
-        ) for i, summary in enumerate(summaries)]
+        )]
 
     except Exception as error:
         create_event(span, "summarize", level="ERROR", input=params, output={"error": str(error)})
