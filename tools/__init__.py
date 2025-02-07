@@ -4,10 +4,34 @@ from uuid import UUID
 from tools.todoist.service import execute_todoist
 from tools.ynab.service import execute_ynab
 from tools.resend.service import execute_resend
+from tools.file.service import execute_file
 
 
 def get_tools():
     return [
+        {
+            "uuid": UUID("d6ee492f-8d9a-4e88-9beb-6de21c52ef85"),
+            "name": "file",
+            "description": "responsible for processing files and creating documents",
+            "actions": {
+                "process": {
+                    "description": "Processes a file and creates a document from its contents",
+                    "instructions": """
+                    {
+                        "file_path": "path to the file to process"
+                    }
+                    
+                    Field details:
+                    - file_path: Required, the path to the file to process
+                    
+                    Example:
+                    {
+                        "file_path": "/path/to/document.txt"
+                    }
+                    """
+                }
+            }
+        },
         {
             "uuid": UUID("c5dd391f-7d8a-4e99-8f3b-6de21c52ef84"),
             "name": "resend",
@@ -305,5 +329,6 @@ def get_tool_action_instructions(tool_name: str, action_name: str) -> str:
 tool_handlers = {
     "ynab": execute_ynab,
     "todoist": execute_todoist,
-    "resend": execute_resend
+    "resend": execute_resend,
+    "file": execute_file
 }
