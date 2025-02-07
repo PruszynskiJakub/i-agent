@@ -14,18 +14,18 @@ def create_conversation(uuid: str) -> None:
 
 
 def load_conversation_documents(uuid: str) -> List[Document]:
-    """Load all documents associated with a conversation"""
-    query = (DocumentModel
-             .select()
-             .join(ConversationDocumentModel)
+    """Load all documents associated with a conversation through conversation_documents table"""
+    query = (ConversationDocumentModel
+             .select(DocumentModel)
+             .join(DocumentModel)
              .where(ConversationDocumentModel.conversation_uuid == uuid))
     
     documents = []
-    for doc_model in query:
+    for conv_doc in query:
         document = Document(
-            uuid=UUID(doc_model.uuid),
-            text=doc_model.text,
-            metadata=doc_model.metadata
+            uuid=UUID(conv_doc.document.uuid),
+            text=conv_doc.document.text,
+            metadata=conv_doc.document.metadata
         )
         documents.append(document)
     
