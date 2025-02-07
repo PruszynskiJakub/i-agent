@@ -6,8 +6,8 @@ from models.document import Document, DocumentType
 from utils.document import create_document
 
 
-async def _process_file(params: Dict, span) -> List[Document]:
-    """Process a file and create a document from it
+async def _summarize_file(params: Dict, span) -> List[Document]:
+    """Summarize a file and create a document from it
     
     Args:
         params: Parameters including file path and metadata
@@ -20,14 +20,14 @@ async def _process_file(params: Dict, span) -> List[Document]:
         # Extract parameters
         file_path = params.get("file_path")
         if not file_path:
-            create_event(span, "process_file", input=params, output="No file path provided")
+            create_event(span, "summarize_file", input=params, output="No file path provided")
             raise ValueError("file_path is required")
 
         # Read file content
         with open(file_path, 'r') as f:
             content = f.read()
 
-        create_event(span, "process_file", input=params, output={"status": "success", "file": file_path})
+        create_event(span, "summarize_file", input=params, output={"status": "success", "file": file_path})
 
         # Create document
         return [create_document(
@@ -36,7 +36,7 @@ async def _process_file(params: Dict, span) -> List[Document]:
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "file",
                 "name": file_path.split("/")[-1],
-                "description": f"Processed file: {file_path}",
+                "description": f"Summarized file: {file_path}",
                 "type": DocumentType.FILE,
                 "file_path": file_path
             }

@@ -14,8 +14,8 @@ def get_tools():
             "name": "file",
             "description": "responsible for processing files and creating documents",
             "actions": {
-                "process": {
-                    "description": "Processes a file and creates a document from its contents",
+                "summarize": {
+                    "description": "Summarizes a file and creates a document from its contents",
                     "instructions": """
                     {
                         "file_path": "path to the file to process"
