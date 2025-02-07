@@ -61,3 +61,12 @@ class ActionDocumentModel(BaseModel):
         table_name = 'action_documents'
         primary_key = CompositeKey('action', 'document')
 
+class ConversationDocumentModel(BaseModel):
+    conversation_uuid = CharField()
+    document = ForeignKeyField(DocumentModel, backref='document_conversations')
+    created_at = DateTimeField(default=datetime.utcnow)
+
+    class Meta:
+        table_name = 'conversation_documents'
+        primary_key = CompositeKey('conversation_uuid', 'document')
+
