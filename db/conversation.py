@@ -25,6 +25,7 @@ def load_conversation_documents(uuid: str) -> List[Document]:
         document = Document(
             uuid=UUID(conv_doc.document.uuid),
             text=conv_doc.document.text,
+            conversation_uuid=uuid,
             metadata=conv_doc.document.metadata
         )
         documents.append(document)
