@@ -12,7 +12,7 @@ def get_tools():
         {
             "uuid": UUID("d6ee492f-8d9a-4e88-9beb-6de21c52ef85"),
             "name": "document_processor",
-            "description": "responsible for processing documents",
+            "description": "responsible for processing documents in various ways such as summarization, extraction, etc.",
             "actions": {
                 "summarize": {
                     "description": "Summarizes a file and creates a document from its contents",
