@@ -1,10 +1,12 @@
-from typing import Dict, List
+from typing import Dict
 from uuid import uuid4
 
+from llm.tracing import create_event
 from models.document import Document, DocumentType
+from utils.document import create_document
 
 
-async def _process_file(params: Dict, span) -> List[Document]:
+async def _process_file(params: Dict, span) -> Document:
     """Process a file and create a document from it
     
     Args:
@@ -12,26 +14,34 @@ async def _process_file(params: Dict, span) -> List[Document]:
         span: Tracing span
         
     Returns:
-        List[Document]: The created document
+        Document: The created document
     """
-    # Extract parameters
-    file_path = params.get("file_path")
-    if not file_path:
-        raise ValueError("file_path is required")
+    try:
+        # Extract parameters
+        file_path = params.get("file_path")
+        if not file_path:
+            create_event(span, "process_file", input=params, output="No file path provided")
+            raise ValueError("file_path is required")
 
-    # Read file content
-    with open(file_path, 'r') as f:
-        content = f.read()
+        # Read file content
+        with open(file_path, 'r') as f:
+            content = f.read()
 
-    # Create document
-    doc = Document(
-        uuid=uuid4(),
-        type=DocumentType.FILE,
-        content=content,
-        metadata={
-            "file_path": file_path,
-            "file_name": file_path.split("/")[-1]
-        }
-    )
+        create_event(span, "process_file", input=params, output={"status": "success", "file": file_path})
 
-    return [doc]
+        # Create document
+        return create_document(
+            text=content,
+            metadata_override={
+                "conversation_uuid": params.get("conversation_uuid", ""),
+                "source": "file",
+                "name": file_path.split("/")[-1],
+                "description": f"Processed file: {file_path}",
+                "type": DocumentType.FILE,
+                "file_path": file_path
+            }
+        )
+
+    except Exception as error:
+        create_event(span, "process_file", level="ERROR", input=params, output={"error": str(error)})
+        raise

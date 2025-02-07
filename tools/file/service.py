@@ -2,6 +2,7 @@ from typing import Dict, List
 
 from models.document import Document
 from tools.file.internal.process_file import _process_file
+from utils.document import create_error_document
 
 
 async def execute_file(action: str, params: Dict, span) -> List[Document]:
@@ -15,7 +16,19 @@ async def execute_file(action: str, params: Dict, span) -> List[Document]:
     Returns:
         List[Document]: Documents resulting from the action
     """
-    if action == "process":
-        return await _process_file(params, span)
-    
-    raise ValueError(f"Unknown file action: {action}")
+    try:
+        if action == "process":
+            doc = await _process_file(params, span)
+            return [doc]
+        else:
+            return [create_error_document(
+                Exception(f"Unknown action: {action}"),
+                f"File service received unknown action",
+                params.get("conversation_uuid", "")
+            )]
+    except Exception as exception:
+        return [create_error_document(
+            exception,
+            f"Error executing file action: {action}",
+            params.get("conversation_uuid", "")
+        )]
