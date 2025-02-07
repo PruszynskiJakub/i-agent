@@ -4,6 +4,7 @@ from uuid import UUID
 
 from llm.tracing import create_event, create_generation, end_generation
 from llm import open_ai
+from llm.prompts import get_prompt
 from models.document import Document, DocumentType
 from utils.document import create_document, restore_placeholders
 from db.document import find_document_by_uuid
@@ -51,19 +52,23 @@ async def _summarize(params: Dict, span) -> List[Document]:
 
         # Process documents in parallel with LLM
         async def summarize_document(doc: Document):
+            prompt = get_prompt(name="tool_summarize")
+            system_prompt = prompt.compile()
+            model = prompt.config.get("model", "gpt-4")
+
             generation = create_generation(
                 span,
                 "summarize_content",
-                "gpt-4",
+                model,
                 doc.text
             )
             
             completion = await open_ai.completion(
                 messages=[
-                    {"role": "system", "content": "Summarize the following content concisely while preserving key information:"},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": doc.text}
                 ],
-                model="gpt-4"
+                model=model
             )
             
             end_generation(generation, completion)
