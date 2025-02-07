@@ -5,11 +5,11 @@ from models.document import Document
 from .models import ConversationModel, ConversationDocumentModel, DocumentModel
 
 
-def create_conversation(uuid: str) -> None:
-    """Create a new conversation record"""
-    ConversationModel.create(
+def create_conversation_if_not_exists(uuid: str) -> None:
+    """Create a new conversation record if it doesn't already exist"""
+    conversation, created = ConversationModel.get_or_create(
         uuid=uuid,
-        name=f"Conversation {uuid[:8]}"  # Use first 8 chars of UUID as default name
+        defaults={'name': f"Conversation {uuid[:8]}"}  # Use first 8 chars of UUID as default name
     )
 
 
