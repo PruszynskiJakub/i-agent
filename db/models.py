@@ -19,6 +19,14 @@ class BaseModel(Model):
     class Meta:
         database = db
 
+class ConversationModel(BaseModel):
+    uuid = CharField(primary_key=True)
+    name = CharField()
+    created_at = DateTimeField(default=datetime.utcnow)
+
+    class Meta:
+        table_name = 'conversations'
+
 class MessageModel(BaseModel):
     uuid = CharField(primary_key=True)
     conversation_uuid = CharField()
