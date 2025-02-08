@@ -38,23 +38,25 @@ def get_tools():
             "description": "responsible for sending emails via Resend service",
             "actions": {
                 "send_email": {
-                    "description": "Sends an email with specified title, text content and optional attachments. The recipient and sender are determined by the Resend service configuration.",
+                    "description": "Composes and sends an email based on natural language description with optional attachments. The recipient and sender are determined by the Resend service configuration.",
                     "instructions": """
                     {
-                        "title": "Email subject line",
-                        "text": "Email body content in HTML format",
+                        "query": "Natural language description of the email to send",
                         "attachments": ["optional list of document UUIDs to attach"]
                     }
                     
                     Field details:
-                    - title: Required, the email subject line
-                    - text: Required, the email body content in HTML format
-                    - attachments: Optional list of document UUIDs to attach to the email
+                    - query: Required. Natural language description of what email to send. Should include:
+                      * Subject/topic of the email
+                      * Main content/message to convey
+                      * Any specific formatting requirements
+                      * The system will compose appropriate subject line and HTML content
+                    - attachments: Optional list of document UUIDs to attach to the email. 
+                      Referenced documents will be included as email attachments.
                     
                     Example:
                     {
-                        "title": "Meeting Summary",
-                        "text": "<p>Here are the meeting notes...</p>",
+                        "query": "Send a meeting summary email about yesterday's project review. Include the main discussion points about timeline changes and new feature requests.",
                         "attachments": ["550e8400-e29b-41d4-a716-446655440000"]
                     }
                     
