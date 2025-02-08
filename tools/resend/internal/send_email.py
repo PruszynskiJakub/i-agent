@@ -57,7 +57,7 @@ async def _send_email(params: Dict, span) -> Document:
                 "conversation_uuid": span.trace_id,
                 "source": "resend",
                 "name": "EmailSendResult", 
-                "description": f"Email sent: {title}",
+                "description": f"Email sent: {subject}",
                 "mime_type": "text/plain",
                 "content_type": "full",
                 "type": DocumentType.DOCUMENT
