@@ -5,8 +5,8 @@ token = os.getenv("SLACK_APP_TOKEN")
 
 def download_file(url: str, save_dir: str = '_upload') -> str:
     """
-    Download a file from URL and save it to the specified directory
-    Returns the path to the saved file
+    Download a document_processor from URL and save it to the specified directory
+    Returns the path to the saved document_processor
     """
     # Create upload directory if it doesn't exist
     os.makedirs(save_dir, exist_ok=True)
@@ -15,11 +15,11 @@ def download_file(url: str, save_dir: str = '_upload') -> str:
     filename = url.split('/')[-1]
     save_path = os.path.join(save_dir, filename)
     
-    # Download the file
+    # Download the document_processor
     response = requests.get(url, stream=True, headers={"Authorization": f"Bearer {token}"})
     response.raise_for_status()  # Raise exception for bad status codes
     
-    # Save the file
+    # Save the document_processor
     with open(save_path, 'wb') as f:
         for chunk in response.iter_content(chunk_size=8192):
             f.write(chunk)
@@ -32,4 +32,4 @@ if __name__ == "__main__":
         saved_path = download_file(url)
         print(f"File successfully downloaded to: {saved_path}")
     except Exception as e:
-        print(f"Error downloading file: {str(e)}")
+        print(f"Error downloading document_processor: {str(e)}")

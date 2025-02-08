@@ -4,7 +4,7 @@ from uuid import UUID
 from tools.todoist.service import execute_todoist
 from tools.ynab.service import execute_ynab
 from tools.resend.service import execute_resend
-from tools.file.service import execute_document_processor
+from tools.document_processor.service import execute_document_processor
 
 
 def get_tools():

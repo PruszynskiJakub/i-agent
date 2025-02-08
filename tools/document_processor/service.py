@@ -1,12 +1,12 @@
 from typing import Dict, List
 
 from models.document import Document
-from tools.file.internal._summarize import _summarize
+from tools.document_processor.internal._summarize import _summarize
 from utils.document import create_error_document
 
 
 async def execute_document_processor(action: str, params: Dict, span) -> List[Document]:
-    """Execute file-related actions
+    """Execute document_processor-related actions
 
     Args:
         action: The action to perform
@@ -29,6 +29,6 @@ async def execute_document_processor(action: str, params: Dict, span) -> List[Do
     except Exception as exception:
         return [create_error_document(
             exception,
-            f"Error executing file action: {action}",
+            f"Error executing document_processor action: {action}",
             params.get("conversation_uuid", "")
         )]

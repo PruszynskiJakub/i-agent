@@ -31,7 +31,7 @@ def _process_attachments(files: List[Dict[str, Any]], conversation_uuid) -> None
             continue
 
         try:
-            # Get file URL and download content
+            # Get document_processor URL and download content
             url = file.get("url_private", "")
             response = requests.get(
                 url,
