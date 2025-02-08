@@ -460,7 +460,7 @@ from llm.tracing import create_generation, end_generation, create_event
 
 async def get_dynamic_context(user_query: str, span) -> str:
     async def split_transaction(q: str) -> list[Dict[str, Any]]:
-        prompt = get_prompt(name="ynab_split")
+        prompt = get_prompt(name="tool_ynab_split")
         system_prompt = prompt.compile()
         generation = create_generation(span, "split_transaction", "gpt-4o", system_prompt)
 
@@ -485,7 +485,7 @@ async def get_dynamic_context(user_query: str, span) -> str:
 
     async def process_transaction(transaction_query: str):
         async def pick_amount(q: str) -> Dict[str, Any]:
-            prompt = get_prompt(name="ynab_amount")
+            prompt = get_prompt(name="tool_ynab_amount")
             system_prompt = prompt.compile()
             generation = create_generation(span, "pick_amount", "gpt-4o", system_prompt)
 
@@ -501,7 +501,7 @@ async def get_dynamic_context(user_query: str, span) -> str:
             return json.loads(completion)
 
         async def pick_sides(q: str) -> Dict[str, Any]:
-            prompt = get_prompt(name="ynab_accounts")
+            prompt = get_prompt(name="tool_ynab_accounts")
             system_prompt = prompt.compile(
                 accounts=_ynab_accounts
             )
@@ -518,7 +518,7 @@ async def get_dynamic_context(user_query: str, span) -> str:
             return json.loads(completion)
 
         async def pick_category(q: str) -> Dict[str, Any]:
-            prompt = get_prompt(name="ynab_category")
+            prompt = get_prompt(name="tool_ynab_category")
             system_prompt = prompt.compile(
                 categories=_ynab_categories
             )

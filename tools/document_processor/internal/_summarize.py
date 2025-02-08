@@ -52,7 +52,7 @@ async def _summarize(params: Dict, span) -> List[Document]:
         source_desc = ", ".join(sources)
 
         # Get prompt configuration
-        prompt = get_prompt(name="tool_summarize")
+        prompt = get_prompt(name="tool_document_summarize")
         system_prompt = prompt.compile()
         model = prompt.config.get("model", "gpt-4")
 

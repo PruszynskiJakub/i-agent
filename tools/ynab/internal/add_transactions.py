@@ -128,7 +128,7 @@ async def _add_transactions(params: Dict[str, Any], trace) -> Document:
 
 
 async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
-    prompt = get_prompt(name="ynab_split")
+    prompt = get_prompt(name="tool_ynab_split")
     system_prompt = prompt.compile()
     model = prompt.config.get("model", DEFAULT_MODEL)
 
@@ -160,7 +160,7 @@ async def _split_transaction(query: str, trace) -> list[Dict[str, Any]]:
 
 
 async def _pick_amount(query: str, trace) -> Dict[str, Any]:
-    prompt = get_prompt(name="ynab_amount")
+    prompt = get_prompt(name="tool_ynab_amount")
     system_prompt = prompt.compile()
     model = prompt.config.get("model", DEFAULT_MODEL)
     generation = create_generation(trace, "pick_amount", model, system_prompt)
@@ -178,7 +178,7 @@ async def _pick_amount(query: str, trace) -> Dict[str, Any]:
 
 
 async def _pick_sides(query: str, trace) -> Dict[str, Any]:
-    prompt = get_prompt(name="ynab_accounts")
+    prompt = get_prompt(name="tool_ynab_accounts")
     system_prompt = prompt.compile(
         accounts=_ynab_accounts
     )
@@ -198,7 +198,7 @@ async def _pick_sides(query: str, trace) -> Dict[str, Any]:
 
 
 async def _pick_category(query: str, trace) -> Dict[str, Any]:
-    prompt = get_prompt(name="ynab_category")
+    prompt = get_prompt(name="tool_ynab_category")
     system_prompt = prompt.compile(
         categories=_ynab_categories
     )
