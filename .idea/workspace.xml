@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rename directory">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/conversation.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/conversation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/resend/internal/send_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/resend/internal/send_email.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,30 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00141" summary="Add some improvemetns.">
-      <option name="closed" value="true" />
-      <created>1738487550690</created>
-      <option name="number" value="00141" />
-      <option name="presentableId" value="LOCAL-00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1738487550690</updated>
-    </task>
-    <task id="LOCAL-00142" summary="Change default document type">
-      <option name="closed" value="true" />
-      <created>1738501319583</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1738501319583</updated>
-    </task>
-    <task id="LOCAL-00143" summary="Add comment">
-      <option name="closed" value="true" />
-      <created>1738510715563</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1738510715563</updated>
     </task>
     <task id="LOCAL-00144" summary="Remove extracting images and urls during creation of a document">
       <option name="closed" value="true" />
@@ -587,7 +563,31 @@
       <option name="project" value="LOCAL" />
       <updated>1738961155932</updated>
     </task>
-    <option name="localTasksCounter" value="190" />
+    <task id="LOCAL-00190" summary="Fix">
+      <option name="closed" value="true" />
+      <created>1738962597157</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1738962597157</updated>
+    </task>
+    <task id="LOCAL-00191" summary="Fix">
+      <option name="closed" value="true" />
+      <created>1738962715715</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1738962715715</updated>
+    </task>
+    <task id="LOCAL-00192" summary="Rename directory">
+      <option name="closed" value="true" />
+      <created>1739032739977</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1739032739977</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -602,8 +602,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add move_tasks sample" />
-    <MESSAGE value="Register proper phase" />
     <MESSAGE value="Improve instructions for search_tasks" />
     <MESSAGE value="improve instructions" />
     <MESSAGE value="Improve tools, and decide tool" />
@@ -627,6 +625,8 @@
     <MESSAGE value="Add summarize file" />
     <MESSAGE value="replace plain secret" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Fix" />
+    <MESSAGE value="Rename directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename directory" />
   </component>
 </project>
