@@ -1,34 +1,54 @@
 import os
 import resend
-from typing import Dict
+from typing import Dict, Tuple
 from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document
+from llm.open_ai import completion
+
+async def _generate_email_content(query: str, span) -> Tuple[str, str]:
+    """Generate email subject and content from natural language query"""
+    messages = [
+        {"role": "system", "content": """You are an email composer. Given a description, create an email with:
+1. A clear, concise subject line
+2. Professional HTML-formatted content
+Return only valid JSON in this format:
+{
+    "subject": "Subject line here",
+    "html": "HTML content here"
+}"""},
+        {"role": "user", "content": query}
+    ]
+    
+    result = await completion(messages=messages, json_mode=True)
+    return result["subject"], result["html"]
 
 async def _send_email(params: Dict, span) -> Document:
     try:
         resend.api_key = os.getenv("RESEND_API_KEY")
         
         # Extract parameters
-        title = params.get("title", "")
-        text = params.get("text", "")
+        query = params.get("query", "")
         attachments = params.get("attachments", [])
+        
+        # Generate email content from query
+        subject, html = await _generate_email_content(query, span)
         
         # Send email using resend
         result = resend.Emails.send({
             "from": "iagent@pruszyn.ski",
             "to": "jakub.mikolaj.pruszynski@gmail.com",
-            "subject": title,
-            "html": text,
+            "subject": subject,
+            "html": html,
             # TODO: Handle attachments based on UUIDs
         })
 
         result_details = [
             "Email Send Results:",
-            f"Subject: {title}",
+            f"Subject: {subject}",
             f"Status: Success",
             f"Email ID: {result.id if hasattr(result, 'id') else 'Not available'}",
             f"Recipient: {params.get('to', 'jakub.mikolaj.pruszynski@gmail.com')}",
-            f"Content Length: {len(text)} characters"
+            f"Content Length: {len(html)} characters"
         ]
         
         return create_document(
