@@ -5,7 +5,7 @@ import requests
 from models.document import Document, DocumentType
 from utils.document import create_document
 
-async def scrape(params: Dict, span) -> Document:
+async def _scrape(params: Dict, span) -> Document:
     """Scrape content from a web page using Jina API
 
     Args:
