@@ -2,6 +2,7 @@ import os
 
 from logger.logger import log_info, log_error
 from agent.answer import agent_answer
+from agent.brainstorm import agent_brainstorm
 from agent.define import agent_define
 from agent.execute import agent_execute
 from agent.plan import agent_plan
@@ -26,6 +27,10 @@ async def agent_run(in_state: AgentState) -> str:
     )
 
     try:
+        # Initial brainstorming phase
+        log_info("🧠 Starting brainstorming phase...")
+        state = await agent_brainstorm(state, trace)
+        
         while should_interact(state):
             log_info(f"📍 Step {state.current_step + 1}/{state.max_steps}")
             
