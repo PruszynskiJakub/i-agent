@@ -1,8 +1,8 @@
 import os
 from typing import Dict
-import aiohttp
+import requests
 
-from models.document import Document
+from models.document import Document, DocumentType
 from utils.document import create_document
 
 async def scrape(params: Dict, span) -> Document:
@@ -29,14 +29,18 @@ async def scrape(params: Dict, span) -> Document:
         'Authorization': f'Bearer {jina_api_key}'
     }
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(jina_url, headers=headers) as response:
-            if response.status != 200:
-                raise ValueError(f"Failed to scrape URL: {url}. Status: {response.status}")
-            text = await response.text()
+    response = requests.get(jina_url, headers=headers)
+    if response.status_code != 200:
+        raise ValueError(f"Failed to scrape URL: {url}. Status: {response.status_code}")
 
-    metadata = {
-        "source_url": url
-    }
-
-    return create_document(text, metadata)
+    return create_document(
+        text=response.text,
+        metadata_override={
+            "source": "web",
+            "source_url": url,
+            "mime_type": "text/html",
+            "type": DocumentType.DOCUMENT,
+            "name": f"web_content_{url.replace('://', '_').replace('/', '_')}",
+            "description": f"Web content scraped from {url}"
+        }
+    )
