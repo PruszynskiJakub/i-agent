@@ -11,7 +11,7 @@ from llm.tracing import create_generation, end_generation
 from models.document import Document, DocumentType
 from utils.document import create_document, create_error_document, restore_placeholders
 from db.document import find_document_by_uuid
-from llm.format import format_documents
+from llm.format import format_documents, format_facts
 
 
 async def _send_email(params: Dict, span) -> Document:
@@ -32,8 +32,9 @@ async def _send_email(params: Dict, span) -> Document:
             else:
                 raise ValueError(f"Document not found: {uuid_str}")
 
-        # Format documents for prompt
+        # Format documents and facts for prompt
         formatted_documents = format_documents(documents)
+        formatted_facts = format_facts()
 
         # Get the email composition prompt
         prompt = get_prompt(
@@ -43,7 +44,8 @@ async def _send_email(params: Dict, span) -> Document:
 
         # Format the system prompt
         system_prompt = prompt.compile(
-            documents=formatted_documents
+            documents=formatted_documents,
+            facts=formatted_facts
         )
 
         # Create generation trace
