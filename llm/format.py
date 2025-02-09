@@ -242,4 +242,7 @@ def format_facts() -> str:
         str: Current date in YYYY-MM-DD format
     """
     today = datetime.now()
-    return f"Current date - {today.strftime('%Y-%m-%d')}"
+    return f"""
+    - Current date - {today.strftime('%Y-%m-%d')}
+    - Username is Kuba
+    """
