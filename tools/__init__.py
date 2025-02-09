@@ -287,18 +287,15 @@ def get_tools():
                     "description": "Scrapes content from a web page with optional CSS selector targeting",
                     "instructions": """
                     {
-                        "url": "URL to scrape",
-                        "selector": "Optional CSS selector to target specific content"
+                        "url": "URL to scrape"
                     }
                     
                     Field details:
                     - url: Required. The web page URL to scrape
-                    - selector: Optional CSS selector to target specific elements
                     
                     Example:
                     {
-                        "url": "https://example.com/article",
-                        "selector": "article.main-content"
+                        "url": "https://example.com/article"
                     }
                     """
                 }

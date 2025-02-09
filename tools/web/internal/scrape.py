@@ -18,7 +18,6 @@ async def scrape(params: Dict, span) -> Document:
         Document containing the scraped content
     """
     url = params.get("url")
-    selector = params.get("selector")
 
     if not url:
         raise ValueError("URL is required for web scraping")
@@ -28,16 +27,10 @@ async def scrape(params: Dict, span) -> Document:
             html = await response.text()
             
     soup = BeautifulSoup(html, 'html.parser')
-    
-    if selector:
-        content = soup.select(selector)
-        text = "\n".join(element.get_text(strip=True) for element in content)
-    else:
-        text = soup.get_text(strip=True)
+    text = soup.get_text(strip=True)
 
     metadata = {
-        "source_url": url,
-        "selector": selector
+        "source_url": url
     }
 
     return create_document(text, metadata)
