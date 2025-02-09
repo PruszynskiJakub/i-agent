@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove dynamic_context for ynab">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/resend/internal/send_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/resend/internal/send_email.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,14 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00147" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738523060428</created>
-      <option name="number" value="00147" />
-      <option name="presentableId" value="LOCAL-00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1738523060428</updated>
     </task>
     <task id="LOCAL-00148" summary="Refactor">
       <option name="closed" value="true" />
@@ -586,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739035832012</updated>
     </task>
-    <option name="localTasksCounter" value="196" />
+    <task id="LOCAL-00196" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739094446268</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1739094446268</updated>
+    </task>
+    <option name="localTasksCounter" value="197" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -620,12 +621,12 @@
     <MESSAGE value="Commit" />
     <MESSAGE value="Add summarize file" />
     <MESSAGE value="replace plain secret" />
-    <MESSAGE value="Improve" />
     <MESSAGE value="Fix" />
     <MESSAGE value="Rename directory" />
     <MESSAGE value="Reorder methods" />
     <MESSAGE value="Add prefixes tool_ to prompt names" />
     <MESSAGE value="Remove dynamic_context for ynab" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove dynamic_context for ynab" />
+    <MESSAGE value="Improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>
 </project>

@@ -86,7 +86,6 @@ async def _send_email(params: Dict, span) -> Document:
             "to": "jakub.mikolaj.pruszynski@gmail.com",
             "subject": subject,
             "text": body,  # Using plain text instead of HTML
-            "attachments": document_uuids,
         })
 
         result_details = [
