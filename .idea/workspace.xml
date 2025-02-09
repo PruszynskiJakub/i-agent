@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add my name to facts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/resend/internal/send_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/resend/internal/send_email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/brainstorm.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/brainstorm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,22 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00148" summary="Refactor">
-      <option name="closed" value="true" />
-      <created>1738523536396</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1738523536396</updated>
-    </task>
-    <task id="LOCAL-00149" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738523825243</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1738523825243</updated>
     </task>
     <task id="LOCAL-00150" summary="Improve">
       <option name="closed" value="true" />
@@ -587,7 +571,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739094446268</updated>
     </task>
-    <option name="localTasksCounter" value="197" />
+    <task id="LOCAL-00197" summary="Fix">
+      <option name="closed" value="true" />
+      <created>1739095189808</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1739095189808</updated>
+    </task>
+    <task id="LOCAL-00198" summary="Add my name to facts">
+      <option name="closed" value="true" />
+      <created>1739096836515</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1739096836515</updated>
+    </task>
+    <option name="localTasksCounter" value="199" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -602,7 +602,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Repackage" />
     <MESSAGE value="Fix imports" />
     <MESSAGE value="Create resend_sample.py" />
     <MESSAGE value="Add missing type" />
@@ -621,12 +620,13 @@
     <MESSAGE value="Commit" />
     <MESSAGE value="Add summarize file" />
     <MESSAGE value="replace plain secret" />
-    <MESSAGE value="Fix" />
     <MESSAGE value="Rename directory" />
     <MESSAGE value="Reorder methods" />
     <MESSAGE value="Add prefixes tool_ to prompt names" />
     <MESSAGE value="Remove dynamic_context for ynab" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Fix" />
+    <MESSAGE value="Add my name to facts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add my name to facts" />
   </component>
 </project>
