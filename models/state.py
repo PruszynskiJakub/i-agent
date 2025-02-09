@@ -8,6 +8,7 @@ from models.message import Message
 from models.document import Document
 
 class AgentPhase(enum.Enum):
+    BRAINSTORM = "brainstorm"
     PLAN = "plan"
     DEFINE = "define"
     DECIDE = "decide"
