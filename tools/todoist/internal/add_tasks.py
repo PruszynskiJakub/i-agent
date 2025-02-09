@@ -32,11 +32,11 @@ async def _add_tasks(params: Dict[str, Any], span) -> Document:
         successful_tasks = []
         failed_tasks = []
 
-        for task in tasks:
-            if not task.get("title"):
+        for item in tasks:
+            if not item.get("title"):
                 continue
 
-            task_args = _build_task_args(task)
+            task_args = _build_task_args(item)
 
             try:
                 task = todoist_client.add_task(**task_args)
@@ -46,13 +46,13 @@ async def _add_tasks(params: Dict[str, Any], span) -> Document:
                     "task_id": task.id,
                     "content": task.content,
                     "description": task.description,
-                    "labels": task.labels if hasattr(task, 'labels') else [],
+                    "labels": task.labels if hasattr(item, 'labels') else [],
                     "project": {"name": get_project_name(task.project_id), "id": task.project_id},
                     "due": task.due.string if task.due else None
                 })
             except Exception as e:
                 failed_tasks.append({
-                    "content": task.get("title", "Unknown"),
+                    "content": item.get("title", "Unknown"),
                     "error": str(e)
                 })
 
@@ -145,3 +145,5 @@ def _build_task_args(task) -> Dict:
     if task.get("duration") and task.get("durationUnit"):
         task_args["duration"] = task["duration"]
         task_args["duration_unit"] = task["durationUnit"]
+
+    return task_args
