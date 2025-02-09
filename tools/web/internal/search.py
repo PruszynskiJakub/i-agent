@@ -4,6 +4,15 @@ from duckduckgo_search import DDGS
 from models.document import Document, DocumentType
 from utils.document import create_document
 
+# Predefined list of allowed domains for filtering search results
+allowed_domains = [
+    "wikipedia.org",
+    "stackoverflow.com",
+    "python.org",
+    "github.com",
+    "docs.python.org"
+]
+
 async def _search(params: Dict, span) -> List[Document]:
     """Perform web search using DuckDuckGo
     
@@ -19,6 +28,10 @@ async def _search(params: Dict, span) -> List[Document]:
         raise ValueError("Search query is required")
         
     max_results = params.get('max_results', 10)
+    
+    # Add domain filtering using predefined allowed domains
+    domain_query = ' OR '.join(f'site:{domain}' for domain in allowed_domains)
+    query = f'({query}) ({domain_query})'
     
     results = DDGS().text(
         query,
