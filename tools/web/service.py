@@ -1,8 +1,8 @@
 from typing import Dict, List
 
 from models.document import Document
-from tools.web.internal.scrape import scrape
-from tools.web.internal.search import search
+from tools.web.internal.scrape import _scrape
+from tools.web.internal.search import _search
 
 async def execute_web(action: str, params: Dict, span) -> List[Document]:
     """Execute web-related actions like scraping and searching
@@ -16,9 +16,9 @@ async def execute_web(action: str, params: Dict, span) -> List[Document]:
         List of documents with results
     """
     if action == "scrape":
-        result = await scrape(params, span)
+        result = await _scrape(params, span)
         return [result]
     elif action == "search":
-        return await search(params, span)
+        return await _search(params, span)
     
     raise ValueError(f"Unknown web action: {action}")

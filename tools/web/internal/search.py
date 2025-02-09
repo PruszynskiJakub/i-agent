@@ -4,7 +4,7 @@ from duckduckgo_search import DDGS
 from models.document import Document, DocumentType
 from utils.document import create_document
 
-async def search(params: Dict, span) -> List[Document]:
+async def _search(params: Dict, span) -> List[Document]:
     """Perform web search using DuckDuckGo
     
     Args:
