@@ -38,9 +38,9 @@ async def scrape(params: Dict, span) -> Document:
         metadata_override={
             "source": "web",
             "source_url": url,
-            "mime_type": "text/html",
+            "mime_type": "text/markdown",
             "type": DocumentType.DOCUMENT,
-            "name": f"web_content_{url.replace('://', '_').replace('/', '_')}",
+            "name": "WebScrapeResult",
             "description": f"Web content scraped from {url}"
         }
     )
