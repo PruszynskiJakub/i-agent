@@ -298,6 +298,25 @@ def get_tools():
                         "url": "https://example.com/article"
                     }
                     """
+                },
+                "search": {
+                    "description": "Performs web search using DuckDuckGo",
+                    "instructions": """
+                    {
+                        "query": "Search query string",
+                        "max_results": 10
+                    }
+                    
+                    Field details:
+                    - query: Required. The search query to execute
+                    - max_results: Optional. Maximum number of results to return (default 10)
+                    
+                    Example:
+                    {
+                        "query": "python web scraping tutorial",
+                        "max_results": 5
+                    }
+                    """
                 }
             }
         }
