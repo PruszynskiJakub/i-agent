@@ -42,7 +42,7 @@ def get_tools():
                     "instructions": """
                     {
                         "query": "Natural language description of the email to send",
-                        "documents": ["optional list of document UUIDs to use as source material"]
+                        "documents": ["list of document UUIDs to use as source material"]
                     }
                     
                     Field details:
@@ -51,7 +51,7 @@ def get_tools():
                       * Main content/message to convey
                       * Any specific formatting requirements
                       * The system will compose appropriate subject line and HTML content
-                    - documents: Optional list of document UUIDs to use as source material.
+                    - documents: Required list of document UUIDs to use as source material.
                       Referenced documents will be used to generate the email content.
                     
                     Example:

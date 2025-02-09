@@ -15,9 +15,9 @@ async def _send_email(params: Dict, span) -> Document:
     try:
         resend.api_key = os.getenv("RESEND_API_KEY")
 
-        # Extract parameters
-        query = params.get("query", "")
-        documents = params.get("documents", [])
+        # Extract required parameters
+        query = params["query"]
+        documents = params["documents"]
 
         # Get the email composition prompt
         prompt = get_prompt(
