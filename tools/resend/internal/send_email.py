@@ -94,7 +94,7 @@ async def _send_email(params: Dict, span) -> Document:
             f"Status: Success",
             f"Email ID: {result.id if hasattr(result, 'id') else 'Not available'}",
             f"Recipient: {params.get('to', 'jakub.mikolaj.pruszynski@gmail.com')}",
-            f"Content Length: {len(body)} characters"
+            f"Content: {body}",
         ]
 
         return create_document(
