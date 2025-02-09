@@ -16,10 +16,9 @@ async def _send_email(params: Dict, span) -> Document:
         query = params.get("query", "")
         attachments = params.get("attachments", [])
 
-        # Generate email content from query
-        subject, html = await _generate_email_content(query, span)
-
-        # Send email using resend
+        # Send email using resend with basic content
+        subject = "Message from iAgent"
+        html = f"<p>Message content: {query}</p>"
         result = resend.Emails.send({
             "from": "iagent@pruszyn.ski",
             "to": "jakub.mikolaj.pruszynski@gmail.com",
@@ -57,20 +56,3 @@ async def _send_email(params: Dict, span) -> Document:
             conversation_uuid=span.trace_id
         )
 
-
-async def _generate_email_content(query: str, span) -> Tuple[str, str]:
-    """Generate email subject and content from natural language query"""
-    messages = [
-        {"role": "system", "content": """You are an email composer. Given a description, create an email with:
-1. A clear, concise subject line
-2. Professional HTML-formatted content
-Return only valid JSON in this format:
-{
-    "subject": "Subject line here",
-    "html": "HTML content here"
-}"""},
-        {"role": "user", "content": query}
-    ]
-
-    result = await completion(messages=messages, json_mode=True)
-    return result["subject"], result["html"]
