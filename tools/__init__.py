@@ -5,6 +5,7 @@ from tools.todoist.service import execute_todoist
 from tools.ynab.service import execute_ynab
 from tools.resend.service import execute_resend
 from tools.document_processor.service import execute_document_processor
+from tools.web.service import execute_web
 
 
 def get_tools():
@@ -276,6 +277,32 @@ def get_tools():
                 """
                 }
             }
+        },
+        {
+            "uuid": UUID("e7ff593f-9d9b-4f99-8c3c-7de32c63df96"),
+            "name": "web",
+            "description": "responsible for web scraping and content extraction",
+            "actions": {
+                "scrape": {
+                    "description": "Scrapes content from a web page with optional CSS selector targeting",
+                    "instructions": """
+                    {
+                        "url": "URL to scrape",
+                        "selector": "Optional CSS selector to target specific content"
+                    }
+                    
+                    Field details:
+                    - url: Required. The web page URL to scrape
+                    - selector: Optional CSS selector to target specific elements
+                    
+                    Example:
+                    {
+                        "url": "https://example.com/article",
+                        "selector": "article.main-content"
+                    }
+                    """
+                }
+            }
         }
     ]
 
@@ -332,5 +359,6 @@ tool_handlers = {
     "ynab": execute_ynab,
     "todoist": execute_todoist,
     "resend": execute_resend,
-    "document_processor": execute_document_processor
+    "document_processor": execute_document_processor,
+    "web": execute_web
 }
