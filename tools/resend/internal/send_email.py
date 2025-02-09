@@ -17,7 +17,7 @@ async def _send_email(params: Dict, span) -> Document:
 
         # Extract parameters
         query = params.get("query", "")
-        attachments = params.get("attachments", [])
+        documents = params.get("documents", [])
 
         # Get the email composition prompt
         prompt = get_prompt(
@@ -68,7 +68,7 @@ async def _send_email(params: Dict, span) -> Document:
             "to": "jakub.mikolaj.pruszynski@gmail.com",
             "subject": subject,
             "text": body,  # Using plain text instead of HTML
-            "attachments": attachments,
+            "attachments": documents,
         })
 
         result_details = [
