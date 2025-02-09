@@ -42,7 +42,7 @@ def get_tools():
                     "instructions": """
                     {
                         "query": "Natural language description of the email to send",
-                        "documents": ["optional list of document UUIDs to attach"]
+                        "documents": ["optional list of document UUIDs to use as source material"]
                     }
                     
                     Field details:
@@ -51,13 +51,13 @@ def get_tools():
                       * Main content/message to convey
                       * Any specific formatting requirements
                       * The system will compose appropriate subject line and HTML content
-                    - documents: Optional list of document UUIDs to attach to the email. 
-                      Referenced documents will be included as email attachments.
+                    - documents: Optional list of document UUIDs to use as source material.
+                      Referenced documents will be used to generate the email content.
                     
                     Example:
                     {
                         "query": "Send a meeting summary email about yesterday's project review. Include the main discussion points about timeline changes and new feature requests.",
-                        "documents": ["550e8400-e29b-41d4-a716-446655440000"]
+                        "documents": ["550e8400-e29b-41d4-a716-446655440000"] # Document containing meeting notes to summarize
                     }
                     
                     """
