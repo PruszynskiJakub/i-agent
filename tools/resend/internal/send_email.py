@@ -43,7 +43,6 @@ async def _send_email(params: Dict, span) -> Document:
 
         # Format the system prompt
         system_prompt = prompt.compile(
-            query=query,
             documents=formatted_documents
         )
 
