@@ -1,6 +1,7 @@
 import os
 import json
-from typing import Dict
+from typing import Dict, List
+from uuid import UUID
 
 import resend
 
@@ -8,7 +9,9 @@ from llm.open_ai import completion
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.document import Document, DocumentType
-from utils.document import create_document, create_error_document
+from utils.document import create_document, create_error_document, restore_placeholders
+from db.document import find_document_by_uuid
+from llm.format import format_documents
 
 
 async def _send_email(params: Dict, span) -> Document:
@@ -17,7 +20,20 @@ async def _send_email(params: Dict, span) -> Document:
 
         # Extract required parameters
         query = params["query"]
-        documents = params["documents"]
+        document_uuids = params["documents"]
+
+        # Load and process documents
+        documents: List[Document] = []
+        for uuid_str in document_uuids:
+            doc = find_document_by_uuid(UUID(uuid_str))
+            if doc:
+                doc = restore_placeholders(doc)
+                documents.append(doc)
+            else:
+                raise ValueError(f"Document not found: {uuid_str}")
+
+        # Format documents for prompt
+        formatted_documents = format_documents(documents)
 
         # Get the email composition prompt
         prompt = get_prompt(
@@ -27,7 +43,8 @@ async def _send_email(params: Dict, span) -> Document:
 
         # Format the system prompt
         system_prompt = prompt.compile(
-            query=query
+            query=query,
+            documents=formatted_documents
         )
 
         # Create generation trace
@@ -68,7 +85,7 @@ async def _send_email(params: Dict, span) -> Document:
             "to": "jakub.mikolaj.pruszynski@gmail.com",
             "subject": subject,
             "text": body,  # Using plain text instead of HTML
-            "attachments": documents,
+            "attachments": document_uuids,
         })
 
         result_details = [
