@@ -84,5 +84,20 @@ async def _search_web(params: Dict, span) -> List[Document]:
     # Run all search queries in parallel
     search_tasks = [search(q) for q in queries]
     search_results = await asyncio.gather(*search_tasks)
+
+    # Flatten and process results
+    documents = []
+    for query_info, results in zip(queries, search_results):
+        for result in results.get('organic', []):
+            documents.append(Document(
+                text=f"Query: {query_info['description']}\nTitle: {result.get('title', '')}\n"
+                     f"Snippet: {result.get('snippet', '')}\nLink: {result.get('link', '')}",
+                metadata={
+                    "url": result.get('link'),
+                    "title": result.get('title'),
+                    "query": query_info['query'],
+                    "reason": query_info['description']
+                }
+            ))
     
     return documents
