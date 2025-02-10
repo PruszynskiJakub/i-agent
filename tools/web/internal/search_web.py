@@ -86,29 +86,32 @@ async def _search_web(params: Dict, span) -> List[Document]:
     search_tasks = [search(q) for q in queries]
     search_results = await asyncio.gather(*search_tasks)
 
-    # Flatten and process results
+    # Process results by query
     documents = []
     for query_info, results in zip(queries, search_results):
+        # Collect all URLs from results
+        urls = []
+        text_parts = [f"Search Results for: {query_info['description']}\n"]
+        
         for result in results.get('organic', []):
-            text = (
-                f"Query: {query_info['description']}\n"
-                f"Title: {result.get('title', '')}\n"
-                f"Snippet: {result.get('snippet', '')}\n"
+            urls.append(result.get('link', ''))
+            text_parts.extend([
+                f"\nTitle: {result.get('title', '')}",
+                f"Snippet: {result.get('snippet', '')}",
                 f"Link: {result.get('link', '')}"
-            )
+            ])
             
-            documents.append(create_document(
-                text=text,
-                metadata_override={
-                    "conversation_uuid": params.get("conversation_uuid", ""),
-                    "source": "web_search",
-                    "name": "search_result",
-                    "description": query_info['description'],
-                    "urls": [result.get('link', '')],
-                    "content_type": "full",
-                    "query": query_info['query'],
-                    "title": result.get('title', '')
-                }
-            ))
+        documents.append(create_document(
+            text="\n".join(text_parts),
+            metadata_override={
+                "conversation_uuid": params.get("conversation_uuid", ""),
+                "source": "web_search",
+                "name": "search_results",
+                "description": f"Search results for: {query_info['description']}",
+                "urls": urls,
+                "content_type": "full",
+                "query": query_info['query']
+            }
+        ))
     
     return documents
