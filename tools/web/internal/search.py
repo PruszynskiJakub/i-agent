@@ -1,5 +1,7 @@
+import os
+import json
 from typing import Dict, List
-from duckduckgo_search import DDGS
+import requests
 
 from models.document import Document, DocumentType
 from utils.document import create_document
@@ -29,20 +31,27 @@ async def _search(params: Dict, span) -> List[Document]:
     
     # Add domain filtering using predefined allowed domains
     domain_query = ' OR '.join(f'site:{domain}' for domain in allowed_domains)
-    query = f'({query}) ({domain_query})'
+    search_query = f'({query}) ({domain_query})'
     
-    results = DDGS().text(
-        query,
-        region='wt-wt',
-        safesearch='off', 
-        timelimit='y',
-        max_results=max_results
-    )
-    
+    url = "https://google.serper.dev/search"
+    payload = json.dumps({
+        "q": search_query,
+        "num": max_results
+    })
+    headers = {
+        'X-API-KEY': os.getenv('SERPER_API_KEY'),
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.post(url, headers=headers, data=payload)
+    response.raise_for_status()
+    search_results = response.json()
+
     documents = []
-    for result in results:
+    for result in search_results.get('organic', []):
         # Create document for each search result
-        doc_text = f"Title: {result['title']}\nURL: {result['link']}\n\n{result['body']}"
+        snippet = result.get('snippet', '')
+        doc_text = f"Title: {result['title']}\nURL: {result['link']}\n\n{snippet}"
         doc = create_document(
             text=doc_text,
             metadata_override={
