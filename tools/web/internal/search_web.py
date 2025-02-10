@@ -5,6 +5,8 @@ import requests
 
 from models.document import Document, DocumentType
 from utils.document import create_document
+from llm.prompts import get_prompt
+from llm.open_ai import completion
 
 # Predefined list of allowed domains with metadata for filtering search results
 allowed_domains = [
@@ -28,10 +30,25 @@ async def _search_web(params: Dict, span) -> List[Document]:
         raise ValueError("Search query is required")
         
     max_results = params.get('max_results', 10)
+
+    async def build_queries() -> List[Dict]:
+        """Build enhanced search queries using LLM"""
+        prompt = get_prompt("tool_searchweb_queries")
+        messages = [
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": query}
+        ]
+        response = await completion(messages, json_mode=True)
+        return json.loads(response)
+
+    # Get enhanced queries from LLM
+    query_variations = await build_queries()
     
-    # Add domain filtering using predefined allowed domains
-    domain_query = ' OR '.join(f'site:{domain["url"]}' for domain in allowed_domains)
-    search_query = f'({query}) ({domain_query})'
+    documents = []
+    for variation in query_variations:
+        # Add domain filtering using predefined allowed domains
+        domain_query = ' OR '.join(f'site:{domain["url"]}' for domain in allowed_domains)
+        search_query = f'({variation["query"]}) ({domain_query})'
     
     url = "https://google.serper.dev/search"
     payload = json.dumps({
