@@ -1,9 +1,10 @@
+import asyncio
 import json
 import os
 from datetime import datetime
 from typing import Dict, List
 
-import requests
+import aiohttp
 
 from llm.open_ai import completion
 from llm.prompts import get_prompt
@@ -61,24 +62,42 @@ async def _search_web(params: Dict, span) -> List[Document]:
 
         return json.loads(result)
 
-    async def search(q) -> List[Dict]:
+    async def search(q) -> Dict:
         url = "https://google.serper.dev/search"
-        payload = json.dumps({
+        payload = {
             "q": q,
             "num": 5
-        })
+        }
         headers = {
             'X-API-KEY': os.getenv('SERPER_API_KEY'),
             'Content-Type': 'application/json'
         }
 
-        response = requests.post(url, headers=headers, data=payload)
-        response.raise_for_status()
-        return response.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=payload) as response:
+                response.raise_for_status()
+                return await response.json()
 
     # Get enhanced queries from LLM
     queries = await build_queries()
-
-
-
-    return []
+    
+    # Run all search queries in parallel
+    search_tasks = [search(variation["query"]) for variation in queries]
+    search_results = await asyncio.gather(*search_tasks)
+    
+    # Flatten and process results
+    documents = []
+    for query_info, results in zip(queries, search_results):
+        for result in results.get('organic', []):
+            documents.append(Document(
+                text=f"Query: {query_info['description']}\nTitle: {result.get('title', '')}\n"
+                     f"Snippet: {result.get('snippet', '')}\nLink: {result.get('link', '')}",
+                metadata={
+                    "url": result.get('link'),
+                    "title": result.get('title'),
+                    "query": query_info['query'],
+                    "reason": query_info['description']
+                }
+            ))
+    
+    return documents
