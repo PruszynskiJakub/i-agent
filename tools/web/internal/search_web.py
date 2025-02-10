@@ -16,7 +16,9 @@ from utils.document import create_document
 allowed_domains = [
     {"name": "Wikipedia", "url": "wikipedia.org"},
     {"name": "Anthropic", "url": "anthropic.com"},
-    {"name": "OpenAI", "url": "openai.com"}
+    {"name": "OpenAI", "url": "openai.com"},
+    {"name": "OpenAINews", "url": "openai.com/blog"},
+    {"name": "AnthropicNews", "url": "anthropic.com/news"}
 ]
 
 
