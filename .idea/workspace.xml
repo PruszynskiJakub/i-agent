@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve names">
-      <change afterPath="$PROJECT_DIR$/_samples/serper-dev.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Modify allowed domains">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/web/internal/search.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/internal/search.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/web/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,30 +220,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00157" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738528464054</created>
-      <option name="number" value="00157" />
-      <option name="presentableId" value="LOCAL-00157" />
-      <option name="project" value="LOCAL" />
-      <updated>1738528464054</updated>
-    </task>
-    <task id="LOCAL-00158" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738528609788</created>
-      <option name="number" value="00158" />
-      <option name="presentableId" value="LOCAL-00158" />
-      <option name="project" value="LOCAL" />
-      <updated>1738528609788</updated>
-    </task>
-    <task id="LOCAL-00159" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738528842353</created>
-      <option name="number" value="00159" />
-      <option name="presentableId" value="LOCAL-00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1738528842353</updated>
     </task>
     <task id="LOCAL-00160" summary="Add todo comment">
       <option name="closed" value="true" />
@@ -613,7 +589,31 @@
       <option name="project" value="LOCAL" />
       <updated>1739126988421</updated>
     </task>
-    <option name="localTasksCounter" value="206" />
+    <task id="LOCAL-00206" summary="Create sample for serper-dev.py">
+      <option name="closed" value="true" />
+      <created>1739214192975</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1739214192975</updated>
+    </task>
+    <task id="LOCAL-00207" summary="Modify allowed domains">
+      <option name="closed" value="true" />
+      <created>1739214218727</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1739214218728</updated>
+    </task>
+    <task id="LOCAL-00208" summary="Modify allowed domains">
+      <option name="closed" value="true" />
+      <created>1739215505606</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1739215505606</updated>
+    </task>
+    <option name="localTasksCounter" value="209" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -628,8 +628,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add missing type" />
-    <MESSAGE value="Add some improvemetns." />
     <MESSAGE value="Change default document type" />
     <MESSAGE value="Remove extracting images and urls during creation of a document" />
     <MESSAGE value="Simplify and rename param" />
@@ -653,6 +651,8 @@
     <MESSAGE value="Fix" />
     <MESSAGE value="Create sample" />
     <MESSAGE value="Improve names" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve names" />
+    <MESSAGE value="Create sample for serper-dev.py" />
+    <MESSAGE value="Modify allowed domains" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify allowed domains" />
   </component>
 </project>

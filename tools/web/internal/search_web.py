@@ -13,7 +13,7 @@ allowed_domains = [
     {"name": "OpenAI", "url": "openai.com"}
 ]
 
-async def _search(params: Dict, span) -> List[Document]:
+async def _search_web(params: Dict, span) -> List[Document]:
     """Perform web search using DuckDuckGo
     
     Args:
