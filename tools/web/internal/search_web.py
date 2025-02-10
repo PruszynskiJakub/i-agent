@@ -10,6 +10,7 @@ from llm.open_ai import completion
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.document import Document
+from utils.document import create_document
 
 # Predefined list of allowed domains with metadata for filtering search results
 allowed_domains = [
@@ -89,14 +90,24 @@ async def _search_web(params: Dict, span) -> List[Document]:
     documents = []
     for query_info, results in zip(queries, search_results):
         for result in results.get('organic', []):
-            documents.append(Document(
-                text=f"Query: {query_info['description']}\nTitle: {result.get('title', '')}\n"
-                     f"Snippet: {result.get('snippet', '')}\nLink: {result.get('link', '')}",
-                metadata={
-                    "url": result.get('link'),
-                    "title": result.get('title'),
+            text = (
+                f"Query: {query_info['description']}\n"
+                f"Title: {result.get('title', '')}\n"
+                f"Snippet: {result.get('snippet', '')}\n"
+                f"Link: {result.get('link', '')}"
+            )
+            
+            documents.append(create_document(
+                text=text,
+                metadata_override={
+                    "conversation_uuid": params.get("conversation_uuid", ""),
+                    "source": "web_search",
+                    "name": "search_result",
+                    "description": query_info['description'],
+                    "urls": [result.get('link', '')],
+                    "content_type": "full",
                     "query": query_info['query'],
-                    "reason": query_info['description']
+                    "title": result.get('title', '')
                 }
             ))
     
