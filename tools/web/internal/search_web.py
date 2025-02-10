@@ -33,12 +33,33 @@ async def _search_web(params: Dict, span) -> List[Document]:
 
     async def build_queries() -> List[Dict]:
         """Build enhanced search queries using LLM"""
+        from datetime import datetime
+        from llm.tracing import create_generation, end_generation
+
         prompt = get_prompt("tool_searchweb_queries")
+        formatted_domains = "\n".join([f"- {d['name']}: {d['url']}" for d in allowed_domains])
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        
+        system_prompt = prompt.compile(
+            allowed_domains=formatted_domains,
+            current_date=current_date
+        )
+        
+        generation = create_generation(
+            span,
+            "build_queries",
+            prompt.config.get("model", "gpt-3.5-turbo"),
+            system_prompt
+        )
+
         messages = [
-            {"role": "system", "content": prompt},
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": query}
         ]
+        
         response = await completion(messages, json_mode=True)
+        end_generation(generation, response)
+        
         return json.loads(response)
 
     # Get enhanced queries from LLM
