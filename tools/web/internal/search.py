@@ -6,11 +6,11 @@ import requests
 from models.document import Document, DocumentType
 from utils.document import create_document
 
-# Predefined list of allowed domains for filtering search results
+# Predefined list of allowed domains with metadata for filtering search results
 allowed_domains = [
-    "wikipedia.org",
-    "anthropic.com",
-    "openai.com",
+    {"name": "Wikipedia", "url": "wikipedia.org", "type": "encyclopedia", "priority": 1},
+    {"name": "Anthropic", "url": "anthropic.com", "type": "ai_company", "priority": 2},
+    {"name": "OpenAI", "url": "openai.com", "type": "ai_company", "priority": 2}
 ]
 
 async def _search(params: Dict, span) -> List[Document]:
@@ -30,7 +30,7 @@ async def _search(params: Dict, span) -> List[Document]:
     max_results = params.get('max_results', 10)
     
     # Add domain filtering using predefined allowed domains
-    domain_query = ' OR '.join(f'site:{domain}' for domain in allowed_domains)
+    domain_query = ' OR '.join(f'site:{domain["url"]}' for domain in allowed_domains)
     search_query = f'({query}) ({domain_query})'
     
     url = "https://google.serper.dev/search"
