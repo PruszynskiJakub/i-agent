@@ -9,7 +9,7 @@ import aiohttp
 from llm.open_ai import completion
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.document import Document
+from models.document import Document, DocumentType
 from utils.document import create_document
 
 # Predefined list of allowed domains with metadata for filtering search results
@@ -105,12 +105,11 @@ async def _search_web(params: Dict, span) -> List[Document]:
             text="\n".join(text_parts),
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
-                "source": "web_search",
-                "name": "search_results",
-                "description": f"Search results for: {query_info['description']}",
-                "urls": urls,
+                "source": "web",
+                "name": "SearchWebResult",
+                "description": f"Search results for: query {query_info['q']} for domain {query_info['url']}",
                 "content_type": "full",
-                "query": query_info['query']
+                type: DocumentType.DOCUMENT,
             }
         ))
     
