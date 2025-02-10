@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Fix">
-      <change afterPath="$PROJECT_DIR$/_samples/duckduckgo.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve names">
+      <change afterPath="$PROJECT_DIR$/_samples/serper-dev.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/web/internal/search.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/internal/search.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,20 +53,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.app.executor": "Run",
-    "Python.duckduckgo.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/jakubpruszynski/PycharmProjects/iAgent",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.duckduckgo.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jakubpruszynski/PycharmProjects/iAgent&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -78,7 +79,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.duckduckgo">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="iAgent" />
       <option name="ENV_FILES" value="$PROJECT_DIR$/.env" />
@@ -195,8 +196,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.duckduckgo" />
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.duckduckgo" />
         <item itemvalue="Python.download_file_from_slack" />
       </list>
     </recent_temporary>
@@ -219,30 +220,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00154" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738524241588</created>
-      <option name="number" value="00154" />
-      <option name="presentableId" value="LOCAL-00154" />
-      <option name="project" value="LOCAL" />
-      <updated>1738524241588</updated>
-    </task>
-    <task id="LOCAL-00155" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738526335579</created>
-      <option name="number" value="00155" />
-      <option name="presentableId" value="LOCAL-00155" />
-      <option name="project" value="LOCAL" />
-      <updated>1738526335579</updated>
-    </task>
-    <task id="LOCAL-00156" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738526645552</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1738526645552</updated>
     </task>
     <task id="LOCAL-00157" summary="Improve">
       <option name="closed" value="true" />
@@ -612,7 +589,31 @@
       <option name="project" value="LOCAL" />
       <updated>1739123729224</updated>
     </task>
-    <option name="localTasksCounter" value="203" />
+    <task id="LOCAL-00203" summary="Create sample">
+      <option name="closed" value="true" />
+      <created>1739126953754</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1739126953754</updated>
+    </task>
+    <task id="LOCAL-00204" summary="Improve names">
+      <option name="closed" value="true" />
+      <created>1739126980234</created>
+      <option name="number" value="00204" />
+      <option name="presentableId" value="LOCAL-00204" />
+      <option name="project" value="LOCAL" />
+      <updated>1739126980234</updated>
+    </task>
+    <task id="LOCAL-00205" summary="Improve names">
+      <option name="closed" value="true" />
+      <created>1739126988421</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1739126988421</updated>
+    </task>
+    <option name="localTasksCounter" value="206" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -627,8 +628,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix imports" />
-    <MESSAGE value="Create resend_sample.py" />
     <MESSAGE value="Add missing type" />
     <MESSAGE value="Add some improvemetns." />
     <MESSAGE value="Change default document type" />
@@ -652,6 +651,8 @@
     <MESSAGE value="Add my name to facts" />
     <MESSAGE value="Improve" />
     <MESSAGE value="Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix" />
+    <MESSAGE value="Create sample" />
+    <MESSAGE value="Improve names" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve names" />
   </component>
 </project>

@@ -7,10 +7,8 @@ from utils.document import create_document
 # Predefined list of allowed domains for filtering search results
 allowed_domains = [
     "wikipedia.org",
-    "stackoverflow.com",
-    "python.org",
-    "github.com",
-    "docs.python.org"
+    "anthropic.com",
+    "openai.com",
 ]
 
 async def _search(params: Dict, span) -> List[Document]:
