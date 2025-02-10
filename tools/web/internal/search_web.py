@@ -1,12 +1,14 @@
-import os
 import json
+import os
+from datetime import datetime
 from typing import Dict, List
+
 import requests
 
-from models.document import Document, DocumentType
-from utils.document import create_document
-from llm.prompts import get_prompt
 from llm.open_ai import completion
+from llm.prompts import get_prompt
+from llm.tracing import create_generation, end_generation
+from models.document import Document
 
 # Predefined list of allowed domains with metadata for filtering search results
 allowed_domains = [
@@ -14,6 +16,7 @@ allowed_domains = [
     {"name": "Anthropic", "url": "anthropic.com"},
     {"name": "OpenAI", "url": "openai.com"}
 ]
+
 
 async def _search_web(params: Dict, span) -> List[Document]:
     """Perform web search using DuckDuckGo
@@ -28,76 +31,54 @@ async def _search_web(params: Dict, span) -> List[Document]:
     query = params.get('query')
     if not query:
         raise ValueError("Search query is required")
-        
-    max_results = params.get('max_results', 10)
 
     async def build_queries() -> List[Dict]:
         """Build enhanced search queries using LLM"""
-        from datetime import datetime
-        from llm.tracing import create_generation, end_generation
+        prompt = get_prompt("tool_websearch_queries")
+        model = prompt.get("model", "gpt-4o")
 
-        prompt = get_prompt("tool_searchweb_queries")
-        formatted_domains = "\n".join([f"- {d['name']}: {d['url']}" for d in allowed_domains])
-        current_date = datetime.now().strftime("%Y-%m-%d")
-        
         system_prompt = prompt.compile(
-            allowed_domains=formatted_domains,
-            current_date=current_date
+            allowed_domains="\n".join([f"- {d['name']}: {d['url']}" for d in allowed_domains]),
+            current_date=datetime.now().strftime("%Y-%m-%d")
         )
-        
+
         generation = create_generation(
             span,
             "build_queries",
-            prompt.config.get("model", "gpt-3.5-turbo"),
+            model,
             system_prompt
         )
 
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": query}
-        ]
-        
-        response = await completion(messages, json_mode=True)
-        end_generation(generation, response)
-        
-        return json.loads(response)
+        result = await completion(
+            [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": query}
+            ],
+            model,
+            json_mode=True
+        )
+        end_generation(generation, result)
+
+        return json.loads(result)
+
+    async def search(q) -> List[Dict]:
+        url = "https://google.serper.dev/search"
+        payload = json.dumps({
+            "q": q,
+            "num": 5
+        })
+        headers = {
+            'X-API-KEY': os.getenv('SERPER_API_KEY'),
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.post(url, headers=headers, data=payload)
+        response.raise_for_status()
+        return response.json()
 
     # Get enhanced queries from LLM
-    query_variations = await build_queries()
-    
-    documents = []
-    for variation in query_variations:
-        # Add domain filtering using predefined allowed domains
-        domain_query = ' OR '.join(f'site:{domain["url"]}' for domain in allowed_domains)
-        search_query = f'({variation["query"]}) ({domain_query})'
-    
-    url = "https://google.serper.dev/search"
-    payload = json.dumps({
-        "q": search_query,
-        "num": max_results
-    })
-    headers = {
-        'X-API-KEY': os.getenv('SERPER_API_KEY'),
-        'Content-Type': 'application/json'
-    }
+    queries = await build_queries()
 
-    response = requests.post(url, headers=headers, data=payload)
-    response.raise_for_status()
-    search_results = response.json()
 
-    documents = []
-    for result in search_results.get('organic', []):
-        # Create document for each search result
-        snippet = result.get('snippet', '')
-        doc_text = f"Title: {result['title']}\nURL: {result['link']}\n\n{snippet}"
-        doc = create_document(
-            text=doc_text,
-            metadata_override={
-                "type": DocumentType.WEB_SEARCH,
-                "url": result['link'],
-                "title": result['title']
-            }
-        )
-        documents.append(doc)
-        
-    return documents
+
+    return []
