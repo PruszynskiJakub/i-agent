@@ -8,9 +8,9 @@ from utils.document import create_document
 
 # Predefined list of allowed domains with metadata for filtering search results
 allowed_domains = [
-    {"name": "Wikipedia", "url": "wikipedia.org", "type": "encyclopedia", "priority": 1},
-    {"name": "Anthropic", "url": "anthropic.com", "type": "ai_company", "priority": 2},
-    {"name": "OpenAI", "url": "openai.com", "type": "ai_company", "priority": 2}
+    {"name": "Wikipedia", "url": "wikipedia.org"},
+    {"name": "Anthropic", "url": "anthropic.com"},
+    {"name": "OpenAI", "url": "openai.com"}
 ]
 
 async def _search(params: Dict, span) -> List[Document]:
