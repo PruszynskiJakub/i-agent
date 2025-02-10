@@ -34,7 +34,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
         raise ValueError("Search query is required")
 
     async def build_queries() -> List[Dict]:
-        """Build enhanced search queries using LLM"""
+        """Build enhanced search queries using LLM return a list of queries in format {'q':'Query', 'url': 'URL'}"""
         prompt = get_prompt("tool_websearch_queries")
         model = prompt.get("model", "gpt-4o")
 
@@ -65,7 +65,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
     async def search(q) -> Dict:
         url = "https://google.serper.dev/search"
         payload = {
-            "q": q,
+            "q": f"site:{q['url']} {q['query']}",
             "num": 5
         }
         headers = {
@@ -82,22 +82,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
     queries = await build_queries()
     
     # Run all search queries in parallel
-    search_tasks = [search(variation["query"]) for variation in queries]
+    search_tasks = [search(q) for q in queries]
     search_results = await asyncio.gather(*search_tasks)
-    
-    # Flatten and process results
-    documents = []
-    for query_info, results in zip(queries, search_results):
-        for result in results.get('organic', []):
-            documents.append(Document(
-                text=f"Query: {query_info['description']}\nTitle: {result.get('title', '')}\n"
-                     f"Snippet: {result.get('snippet', '')}\nLink: {result.get('link', '')}",
-                metadata={
-                    "url": result.get('link'),
-                    "title": result.get('title'),
-                    "query": query_info['query'],
-                    "reason": query_info['description']
-                }
-            ))
     
     return documents

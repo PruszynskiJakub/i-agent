@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Modify allowed domains">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/web/internal/search.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/internal/search.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/web/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/web/internal/search_web.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/internal/search_web.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,22 +219,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00160" summary="Add todo comment">
-      <option name="closed" value="true" />
-      <created>1738528935810</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1738528935810</updated>
-    </task>
-    <task id="LOCAL-00161" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738529494696</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1738529494696</updated>
     </task>
     <task id="LOCAL-00162" summary="Improve">
       <option name="closed" value="true" />
@@ -613,7 +596,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739215505606</updated>
     </task>
-    <option name="localTasksCounter" value="209" />
+    <task id="LOCAL-00209" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739219572213</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1739219572213</updated>
+    </task>
+    <task id="LOCAL-00210" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739220460963</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1739220460963</updated>
+    </task>
+    <option name="localTasksCounter" value="211" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -647,12 +646,12 @@
     <MESSAGE value="Add prefixes tool_ to prompt names" />
     <MESSAGE value="Remove dynamic_context for ynab" />
     <MESSAGE value="Add my name to facts" />
-    <MESSAGE value="Improve" />
     <MESSAGE value="Fix" />
     <MESSAGE value="Create sample" />
     <MESSAGE value="Improve names" />
     <MESSAGE value="Create sample for serper-dev.py" />
     <MESSAGE value="Modify allowed domains" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modify allowed domains" />
+    <MESSAGE value="Improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>
 </project>
