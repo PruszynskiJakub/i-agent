@@ -283,8 +283,34 @@ def get_tools():
             "name": "web",
             "description": "responsible for web scraping and content extraction",
             "actions": {
+                "search": {
+                    "description": """Performs targeted web searches across trusted domains like Wikipedia, OpenAI, and Anthropic. Supports advanced search operators and returns structured results with titles, snippets and URLs.""",
+                    "instructions": """
+                        {
+                            "query": "Search query string representing in comprehensive way the user request",
+                        }
+
+                        Field details:
+                        - query: Required. The search query to execute
+
+                        Examples:
+                        {
+                            "query": "python web scraping tutorial",
+                        }
+
+                        {
+                            "query": "Find news about [TOPIC] from the last 24 hours,
+                        }
+
+                        {
+                            "query": "Find the latest blog posts about [TOPIC]",
+                        }
+
+                        Use this tool to search for information based on which the content can be scraped.
+                        """
+                },
                 "scrape": {
-                    "description": "Scrapes content from a web page with optional CSS selector targeting",
+                    "description": "Scrapes content from a web page. USE ONLY if URL is given or known in any other case use search action to obtain URL",
                     "instructions": """
                     {
                         "url": "URL to scrape"
@@ -297,32 +323,8 @@ def get_tools():
                     {
                         "url": "https://example.com/article"
                     }
-                    """
-                },
-                "search": {
-                    "description": """Performs targeted web searches across trusted domains like Wikipedia, OpenAI, and Anthropic. Supports advanced search operators and returns structured results with titles, snippets and URLs.""",
-                    "instructions": """
-                    {
-                        "query": "Search query string representing in comprehensive way the user request",
-                    }
                     
-                    Field details:
-                    - query: Required. The search query to execute
-                    
-                    Examples:
-                    {
-                        "query": "python web scraping tutorial",
-                    }
-                    
-                    {
-                        "query": "Find news about [TOPIC] from the last 24 hours,
-                    }
-                    
-                    {
-                        "query": "Find the latest blog posts about [TOPIC]",
-                    }
-                    
-                    Use this tool to search for information based on which the content can be scraped.
+                    USE ONLY if URL is given or known
                     """
                 }
             }

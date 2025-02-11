@@ -82,10 +82,11 @@ async def _search_web(params: Dict, span) -> List[Document]:
                 return await response.json()
 
     # Get enhanced queries from LLM
-    queries = await build_queries()['queries']
+    queries = await build_queries()
+
     
     # Run all search queries in parallel
-    search_tasks = [search(q) for q in queries]
+    search_tasks = [search(q) for q in queries['queries']]
     search_results = await asyncio.gather(*search_tasks)
 
     # Process results by query
