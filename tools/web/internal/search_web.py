@@ -90,6 +90,10 @@ async def _search_web(params: Dict, span) -> List[Document]:
     search_tasks = [search(q) for q in queries['queries']]
     search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
+
+    # TODO ADD RELEVANT webpage scraping
+
+
     print(search_results)
     # Process results by query
     documents = []
