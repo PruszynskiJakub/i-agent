@@ -39,7 +39,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
     async def build_queries() -> List[Dict]:
         """Build enhanced search queries using LLM return a list of queries in format {'q':'Query', 'url': 'URL'}"""
         prompt = get_prompt("tool_websearch_queries")
-        model = prompt.get("model", "gpt-4o")
+        model = prompt.config.get("model", "gpt-4o")
 
         system_prompt = prompt.compile(
             allowed_domains="\n".join([f"- {d['name']}: {d['url']}" for d in allowed_domains]),
@@ -53,7 +53,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
             system_prompt
         )
 
-        result = await completion(
+        queries_completion = await completion(
             [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": query}
@@ -61,9 +61,9 @@ async def _search_web(params: Dict, span) -> List[Document]:
             model,
             json_mode=True
         )
-        end_generation(generation, result)
+        end_generation(generation, queries_completion)
 
-        return json.loads(result)
+        return json.loads(queries_completion)
 
     async def search(q) -> Dict:
         url = "https://google.serper.dev/search"
@@ -82,7 +82,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
                 return await response.json()
 
     # Get enhanced queries from LLM
-    queries = await build_queries()
+    queries = await build_queries()['queries']
     
     # Run all search queries in parallel
     search_tasks = [search(q) for q in queries]
