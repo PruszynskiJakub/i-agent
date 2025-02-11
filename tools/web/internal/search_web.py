@@ -93,10 +93,10 @@ async def _search_web(params: Dict, span) -> List[Document]:
     print(search_results)
     # Process results by query
     documents = []
-    for query_info, results in zip(queries, search_results):
+    for query_info, results in zip(queries['queries'], search_results):
         # Collect all URLs from results
         urls = []
-        text_parts = [f"Search Results for: {query_info['description']}\n"]
+        text_parts = [f"Search Results for: {query_info['q']}\n"]
         
         for result in results.get('organic', []):
             urls.append(result.get('link', ''))
