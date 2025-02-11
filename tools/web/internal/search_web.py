@@ -114,7 +114,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
                 "name": "SearchWebResult",
                 "description": f"Search results for: query {query_info['q']} for domain {query_info['url']}",
                 "content_type": "full",
-                type: DocumentType.DOCUMENT,
+                "type": DocumentType.DOCUMENT,
             }
         ))
     
