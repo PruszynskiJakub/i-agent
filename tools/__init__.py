@@ -1,11 +1,11 @@
 from typing import Any, Dict, List
 from uuid import UUID
 
-from tools.todoist.service import execute_todoist
-from tools.ynab.service import execute_ynab
-from tools.resend.service import execute_resend
 from tools.document_processor.service import execute_document_processor
+from tools.resend.service import execute_resend
+from tools.todoist.service import execute_todoist
 from tools.web.service import execute_web
+from tools.ynab.service import execute_ynab
 
 
 def get_tools():
@@ -300,34 +300,43 @@ def get_tools():
                     """
                 },
                 "search": {
-                    "description": "Performs web search using DuckDuckGo",
+                    "description": """Performs targeted web searches across trusted domains like Wikipedia, OpenAI, and Anthropic. Supports advanced search operators and returns structured results with titles, snippets and URLs.""",
                     "instructions": """
                     {
-                        "query": "Search query string",
-                        "max_results": 10
+                        "query": "Search query string representing in comprehensive way the user request",
                     }
                     
                     Field details:
                     - query: Required. The search query to execute
-                    - max_results: Optional. Maximum number of results to return (default 10)
                     
-                    Example:
+                    Examples:
                     {
                         "query": "python web scraping tutorial",
-                        "max_results": 5
                     }
+                    
+                    {
+                        "query": "Find news about [TOPIC] from the last 24 hours,
+                    }
+                    
+                    {
+                        "query": "Find the latest blog posts about [TOPIC]",
+                    }
+                    
+                    Use this tool to search for information based on which the content can be scraped.
                     """
                 }
             }
         }
     ]
 
-def get_tool_by_name(name)->Dict[str, Any]:
+
+def get_tool_by_name(name) -> Dict[str, Any]:
     tools = get_tools()
     for tool in tools:
         if tool['name'] == name:
             return tool
     return {}
+
 
 def get_tools_by_names(names: List[str]) -> List[Dict[str, Any]]:
     """Get multiple tools by their names
@@ -359,14 +368,14 @@ def get_tool_action_instructions(tool_name: str, action_name: str) -> str:
     tool = get_tool_by_name(tool_name)
     if not tool or 'actions' not in tool:
         return ""
-        
+
     action = tool['actions'].get(action_name)
     if not action:
         return ""
-        
+
     if isinstance(action, dict):
         return action.get('instructions', "")
-    
+
     # Handle legacy format where action is just instructions string
     return action
 
