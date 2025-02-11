@@ -284,29 +284,42 @@ def get_tools():
             "description": "responsible for web search, web scraping and content extraction",
             "actions": {
                 "search": {
-                    "description": """Performs targeted web searches across trusted domains like Wikipedia, OpenAI, and Anthropic. Supports advanced search operators and returns structured results with titles, snippets and URLs.""",
+                    "description": """Performs targeted web searches across trusted domains including Wikipedia, OpenAI, and Anthropic. Uses advanced query enhancement to find the most relevant results.""",
                     "instructions": """
                         {
-                            "query": "Search query string representing in comprehensive way the user request",
+                            "query": "Search query string describing what information to find"
                         }
 
                         Field details:
-                        - query: Required. The search query to execute
+                        - query: Required. Natural language description of what to search for. The system will:
+                          * Enhance the query with domain-specific terms
+                          * Add appropriate search operators
+                          * Target trusted domains like:
+                            - wikipedia.org (encyclopedic knowledge)
+                            - openai.com (AI technology and news)
+                            - anthropic.com (AI research and updates)
 
                         Examples:
                         {
-                            "query": "python web scraping tutorial",
+                            "query": "Latest developments in large language models"
                         }
+                        Will search AI company domains for recent LLM advances
 
                         {
-                            "query": "Find news about [TOPIC] from the last 24 hours,
+                            "query": "Explain how neural networks work"
                         }
+                        Will search Wikipedia and educational sources for explanatory content
 
                         {
-                            "query": "Find the latest blog posts about [TOPIC]",
+                            "query": "GPT-4 capabilities and limitations"
                         }
+                        Will search OpenAI's documentation and announcements
 
-                        Use this tool to search for information based on which the content can be scraped.
+                        Returns structured results containing:
+                        - Page titles
+                        - Relevant text snippets
+                        - Source URLs
+                        - Domain information
                         """
                 },
                 # "scrape": {
