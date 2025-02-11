@@ -309,24 +309,24 @@ def get_tools():
                         Use this tool to search for information based on which the content can be scraped.
                         """
                 },
-                "scrape": {
-                    "description": "Scrapes content from a web page. USE ONLY if URL is given or known in any other case use search action to obtain URL",
-                    "instructions": """
-                    {
-                        "url": "URL to scrape"
-                    }
-                    
-                    Field details:
-                    - url: Required. The web page URL to scrape
-                    
-                    Example:
-                    {
-                        "url": "https://example.com/article"
-                    }
-                    
-                    USE ONLY if URL is given or known
-                    """
-                }
+                # "scrape": {
+                #     "description": "Scrapes content from a web page. USE ONLY if URL is given or known in any other case use search action to obtain URL",
+                #     "instructions": """
+                #     {
+                #         "url": "URL to scrape"
+                #     }
+                #
+                #     Field details:
+                #     - url: Required. The web page URL to scrape
+                #
+                #     Example:
+                #     {
+                #         "url": "https://example.com/article"
+                #     }
+                #
+                #     USE ONLY if URL is given or known
+                #     """
+                # }
             }
         }
     ]
