@@ -66,9 +66,10 @@ async def _search_web(params: Dict, span) -> List[Document]:
         return json.loads(queries_completion)
 
     async def search(q) -> Dict:
+        print(q)
         url = "https://google.serper.dev/search"
         payload = {
-            "q": f"site:{q['url']} {q['query']}",
+            "q": f"site:{q['url']} {q['q']}",
             "num": 5
         }
         headers = {
@@ -87,8 +88,9 @@ async def _search_web(params: Dict, span) -> List[Document]:
     
     # Run all search queries in parallel
     search_tasks = [search(q) for q in queries['queries']]
-    search_results = await asyncio.gather(*search_tasks)
+    search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
+    print(search_results)
     # Process results by query
     documents = []
     for query_info, results in zip(queries, search_results):
