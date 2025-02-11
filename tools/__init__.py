@@ -281,7 +281,7 @@ def get_tools():
         {
             "uuid": UUID("e7ff593f-9d9b-4f99-8c3c-7de32c63df96"),
             "name": "web",
-            "description": "responsible for web scraping and content extraction",
+            "description": "responsible for web search, web scraping and content extraction",
             "actions": {
                 "search": {
                     "description": """Performs targeted web searches across trusted domains like Wikipedia, OpenAI, and Anthropic. Supports advanced search operators and returns structured results with titles, snippets and URLs.""",
