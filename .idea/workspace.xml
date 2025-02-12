@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/web/internal/search_web.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/internal/search_web.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,38 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00180" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738679267250</created>
-      <option name="number" value="00180" />
-      <option name="presentableId" value="LOCAL-00180" />
-      <option name="project" value="LOCAL" />
-      <updated>1738679267250</updated>
-    </task>
-    <task id="LOCAL-00181" summary="Avoid loading documents twice">
-      <option name="closed" value="true" />
-      <created>1738785499731</created>
-      <option name="number" value="00181" />
-      <option name="presentableId" value="LOCAL-00181" />
-      <option name="project" value="LOCAL" />
-      <updated>1738785499731</updated>
-    </task>
-    <task id="LOCAL-00182" summary="Use only the latest message in the context">
-      <option name="closed" value="true" />
-      <created>1738785595386</created>
-      <option name="number" value="00182" />
-      <option name="presentableId" value="LOCAL-00182" />
-      <option name="project" value="LOCAL" />
-      <updated>1738785595386</updated>
-    </task>
-    <task id="LOCAL-00183" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738879052033</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1738879052033</updated>
     </task>
     <task id="LOCAL-00184" summary="Improve">
       <option name="closed" value="true" />
@@ -636,7 +605,39 @@
       <option name="project" value="LOCAL" />
       <updated>1739352606276</updated>
     </task>
-    <option name="localTasksCounter" value="229" />
+    <task id="LOCAL-00229" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739352847110</created>
+      <option name="number" value="00229" />
+      <option name="presentableId" value="LOCAL-00229" />
+      <option name="project" value="LOCAL" />
+      <updated>1739352847110</updated>
+    </task>
+    <task id="LOCAL-00230" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739353069026</created>
+      <option name="number" value="00230" />
+      <option name="presentableId" value="LOCAL-00230" />
+      <option name="project" value="LOCAL" />
+      <updated>1739353069026</updated>
+    </task>
+    <task id="LOCAL-00231" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739353991836</created>
+      <option name="number" value="00231" />
+      <option name="presentableId" value="LOCAL-00231" />
+      <option name="project" value="LOCAL" />
+      <updated>1739353991836</updated>
+    </task>
+    <task id="LOCAL-00232" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739354095236</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1739354095236</updated>
+    </task>
+    <option name="localTasksCounter" value="233" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

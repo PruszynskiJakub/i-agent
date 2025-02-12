@@ -186,6 +186,6 @@ async def _scrape(url) -> str:
     }
     payload = json.dumps({"url": url})
     async with aiohttp.ClientSession() as session:
-        async with session.post(scrape_url, headers=headers, json=payload) as response:
+        async with session.post(scrape_url, headers=headers, data=payload) as response:
             response.raise_for_status()
             return await response.text()
