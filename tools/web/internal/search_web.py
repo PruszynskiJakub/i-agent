@@ -8,7 +8,7 @@ import aiohttp
 
 from llm.open_ai import completion
 from llm.prompts import get_prompt
-from llm.tracing import create_generation, end_generation
+from llm.tracing import create_generation, end_generation, create_event
 from models.document import Document
 from utils.document import create_error_document, create_document
 
@@ -48,12 +48,29 @@ async def _search_web(params: Dict, span) -> List[Document]:
     search_tasks = [_search(search_query) for search_query in search_queries['queries']]
     search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
+    create_event(
+        span,
+        "search_results",
+        input={"search_queries": search_queries, "user_query": user_query},
+        output=search_results,
+        level="INFO"
+    )
+
     picked_results = await _pick_relevant(search_results, user_query)
 
     documents = []
     if await should_scrape(user_query):
         scrape_tasks = [_scrape(url) for url in picked_results['urls']]
         scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
+        
+        create_event(
+            span,
+            "scraping",
+            input={"urls": picked_results.get('urls', [])},
+            output=scrape_results,
+            level="INFO"
+        )
+
         for url, result in zip(picked_results['urls'], scrape_results):
             if isinstance(result, Exception):
                 doc = create_error_document(
