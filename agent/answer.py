@@ -19,7 +19,10 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
         str: Final answer for the user
     """
     try:
-
+        messages = [
+            {"role": msg.role, "content": msg.content}
+            for msg in state.messages
+        ]
 
         # Fetch prompt from repository
         prompt = get_prompt(
@@ -47,7 +50,7 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
         final_answer = await open_ai.completion(
             messages=[
                 {"role": "system", "content": system_prompt},
-                state.messages[-1]
+                *messages
             ],
             model=model
         )
