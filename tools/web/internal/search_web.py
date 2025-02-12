@@ -85,14 +85,52 @@ async def _search_web(params: Dict, span) -> List[Document]:
     # Get enhanced queries from LLM
     queries = await build_queries()
 
-    
     # Run all search queries in parallel
     search_tasks = [search(q) for q in queries['queries']]
     search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
+    async def pick_relevant(search_results, user_query) -> Dict:
+        """Filter search results using an LLM to choose the few most correlated results
+    addressing the user query."""
+        prompt = get_prompt("tool_web_pick_relevant")
+        system_prompt = prompt.compile(
+            search_results=json.dumps(search_results, indent=2),
+            user_query=user_query
+        )
+        model = prompt.config.get("model", "gpt-4o")
+        relevant_json = await completion(
+            [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_query}
+            ],
+            model,
+            json_mode=True
+        )
+        return json.loads(relevant_json)
 
-    # TODO ADD RELEVANT webpage scraping
-
+    async def scrape(picked_relevant) -> Dict:
+        """Scrape content from the picked relevant URLs using the scraping service."""
+        scrape_url = "https://scrape.serper.dev"
+        headers = {
+            'X-API-KEY': os.getenv("SERPER_API_KEY"),
+            'Content-Type': 'application/json'
+        }
+        scraped_results = {}
+        async with aiohttp.ClientSession() as session:
+            tasks = []
+            for item in picked_relevant.get("results", []):
+                target_url = item.get("link")
+                if target_url:
+                    payload = json.dumps({"url": target_url})
+                    task = session.post(scrape_url, headers=headers, data=payload)
+                    tasks.append((target_url, task))
+            responses = await asyncio.gather(*[t[1] for t in tasks], return_exceptions=Tru
+            for (url, _), resp in zip(tasks, responses):
+                if isinstance(resp, Exception):
+                    scraped_results[url] = None
+                else:
+                    scraped_results[url] = await resp.text()
+                return scraped_results
 
     print(search_results)
     # Process results by query
@@ -101,7 +139,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
         # Collect all URLs from results
         urls = []
         text_parts = [f"Search Results for: {query_info['q']}\n"]
-        
+
         for result in results.get('organic', []):
             urls.append(result.get('link', ''))
             text_parts.extend([
@@ -109,7 +147,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
                 f"Snippet: {result.get('snippet', '')}",
                 f"Link: {result.get('link', '')}"
             ])
-            
+
         documents.append(create_document(
             text="\n".join(text_parts),
             metadata_override={
@@ -121,5 +159,5 @@ async def _search_web(params: Dict, span) -> List[Document]:
                 "type": DocumentType.DOCUMENT,
             }
         ))
-    
+
     return documents

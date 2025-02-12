@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add todo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/web/internal/search_web.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/internal/search_web.py" afterDir="false" />
     </list>
@@ -244,22 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00172" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738579982469</created>
-      <option name="number" value="00172" />
-      <option name="presentableId" value="LOCAL-00172" />
-      <option name="project" value="LOCAL" />
-      <updated>1738579982469</updated>
-    </task>
-    <task id="LOCAL-00173" summary="Remove get_projects">
-      <option name="closed" value="true" />
-      <created>1738580011581</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1738580011581</updated>
     </task>
     <task id="LOCAL-00174" summary="Improve">
       <option name="closed" value="true" />
@@ -637,7 +621,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739268257984</updated>
     </task>
-    <option name="localTasksCounter" value="221" />
+    <task id="LOCAL-00221" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739269696110</created>
+      <option name="number" value="00221" />
+      <option name="presentableId" value="LOCAL-00221" />
+      <option name="project" value="LOCAL" />
+      <updated>1739269696110</updated>
+    </task>
+    <task id="LOCAL-00222" summary="Add todo">
+      <option name="closed" value="true" />
+      <created>1739270042374</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1739270042374</updated>
+    </task>
+    <option name="localTasksCounter" value="223" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -652,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Remove extracting images and urls during creation of a document" />
     <MESSAGE value="Simplify and rename param" />
     <MESSAGE value="Add comment" />
     <MESSAGE value="Refactor" />
@@ -677,6 +676,7 @@
     <MESSAGE value="Modify allowed domains" />
     <MESSAGE value="Turn off scraping for now" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Add todo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add todo" />
   </component>
 </project>
