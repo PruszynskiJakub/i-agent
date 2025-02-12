@@ -60,10 +60,10 @@ async def _search_web(params: Dict, span) -> List[Document]:
     picked_results = await _pick_relevant(search_results, user_query, span)
 
     documents = []
-    if True: # await should_scrape(user_query
+    if await should_scrape(user_query, span):
         scrape_tasks = [_scrape(url) for url in picked_results['urls']]
         scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
-        
+
         create_event(
             span,
             "scraping",
@@ -84,7 +84,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
                     metadata_override={
                         "conversation_uuid": params.get("conversation_uuid", ""),
                         "source_uuid": url,
-                        "name": "WebScrapedContent", 
+                        "name": "WebScrapedContent",
                         "description": f"Content scraped from {url}",
                         "mime_type": "text/markdown",
                         "type": "document",
@@ -173,7 +173,7 @@ addressing the user query."""
     return json.loads(relevant_json)
 
 
-async def should_scrape(user_query) -> bool:
+async def should_scrape(user_query, span) -> bool:
     return True
 
 

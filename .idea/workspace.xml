@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rename field">
+      <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/decide.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/decide.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/define.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/define.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,38 +249,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00186" summary="Commit">
-      <option name="closed" value="true" />
-      <created>1738960041210</created>
-      <option name="number" value="00186" />
-      <option name="presentableId" value="LOCAL-00186" />
-      <option name="project" value="LOCAL" />
-      <updated>1738960041210</updated>
-    </task>
-    <task id="LOCAL-00187" summary="Add summarize file">
-      <option name="closed" value="true" />
-      <created>1738960108892</created>
-      <option name="number" value="00187" />
-      <option name="presentableId" value="LOCAL-00187" />
-      <option name="project" value="LOCAL" />
-      <updated>1738960108892</updated>
-    </task>
-    <task id="LOCAL-00188" summary="replace plain secret">
-      <option name="closed" value="true" />
-      <created>1738960208241</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1738960208241</updated>
-    </task>
-    <task id="LOCAL-00189" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738961155932</created>
-      <option name="number" value="00189" />
-      <option name="presentableId" value="LOCAL-00189" />
-      <option name="project" value="LOCAL" />
-      <updated>1738961155932</updated>
     </task>
     <task id="LOCAL-00190" summary="Fix">
       <option name="closed" value="true" />
@@ -637,7 +610,39 @@
       <option name="project" value="LOCAL" />
       <updated>1739357746041</updated>
     </task>
-    <option name="localTasksCounter" value="235" />
+    <task id="LOCAL-00235" summary="Remove final answer from state">
+      <option name="closed" value="true" />
+      <created>1739381532952</created>
+      <option name="number" value="00235" />
+      <option name="presentableId" value="LOCAL-00235" />
+      <option name="project" value="LOCAL" />
+      <updated>1739381532952</updated>
+    </task>
+    <task id="LOCAL-00236" summary="Rename ToolCandidate into ToolThougth">
+      <option name="closed" value="true" />
+      <created>1739381617614</created>
+      <option name="number" value="00236" />
+      <option name="presentableId" value="LOCAL-00236" />
+      <option name="project" value="LOCAL" />
+      <updated>1739381617614</updated>
+    </task>
+    <task id="LOCAL-00237" summary="Add user intent to Thoughts">
+      <option name="closed" value="true" />
+      <created>1739381730562</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1739381730562</updated>
+    </task>
+    <task id="LOCAL-00238" summary="Rename field">
+      <option name="closed" value="true" />
+      <created>1739381754802</created>
+      <option name="number" value="00238" />
+      <option name="presentableId" value="LOCAL-00238" />
+      <option name="project" value="LOCAL" />
+      <updated>1739381754802</updated>
+    </task>
+    <option name="localTasksCounter" value="239" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -652,10 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add comment" />
-    <MESSAGE value="Refactor" />
-    <MESSAGE value="Add todo comment" />
-    <MESSAGE value="Do not pass status in action" />
     <MESSAGE value="Remove get_projects" />
     <MESSAGE value="Avoid loading documents twice" />
     <MESSAGE value="Use only the latest message in the context" />
@@ -677,6 +678,10 @@
     <MESSAGE value="Add todo" />
     <MESSAGE value="Save" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Remove final answer from state" />
+    <MESSAGE value="Rename ToolCandidate into ToolThougth" />
+    <MESSAGE value="Add user intent to Thoughts" />
+    <MESSAGE value="Rename field" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename field" />
   </component>
 </project>
