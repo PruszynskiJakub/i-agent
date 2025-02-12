@@ -54,8 +54,29 @@ async def _search_web(params: Dict, span) -> List[Document]:
     if await should_scrape(user_query):
         scrape_tasks = [_scrape(url) for url in picked_results['urls']]
         scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
-
+        for url, result in zip(picked_results['urls'], scrape_results):
+            if isinstance(result, Exception):
+                doc = create_error_document(
+                    result,
+                    f"Failed to scrape content from URL: {url}",
+                    conversation_uuid=params.get("conversation_uuid", "")
+                )
+            else:
+                doc = create_document(
+                    text=result,
+                    metadata_override={
+                        "conversation_uuid": params.get("conversation_uuid", ""),
+                        "source_uuid": url,
+                        "name": "WebScrapedContent", 
+                        "description": f"Content scraped from {url}",
+                        "mime_type": "text/html",
+                        "type": "document",
+                        "content_type": "full",
+                    }
+                )
+            documents.append(doc)
     else:
+        # Optionally add alternative processing if scraping is not desired
         pass
 
     return documents
