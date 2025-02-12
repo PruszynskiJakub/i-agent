@@ -10,7 +10,7 @@ from llm.open_ai import completion
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.document import Document
-from utils.document import create_error_document
+from utils.document import create_error_document, create_document
 
 # Predefined list of allowed domains with metadata for filtering search results
 allowed_domains = [
@@ -51,7 +51,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
     picked_results = await _pick_relevant(search_results, user_query)
 
     documents = []
-    if should_scrape(user_query):
+    if await should_scrape(user_query):
         scrape_tasks = [_scrape(url) for url in picked_results['urls']]
         scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
 
