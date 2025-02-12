@@ -122,7 +122,7 @@ async def _search(search_query) -> Dict:
             return await response.json()
 
 
-async def _pick_relevant(search_results, user_query) -> Dict:
+async def _pick_relevant(search_results, user_query, span) -> Dict:
     """Filter search results using an LLM to choose the few most correlated results
 addressing the user query."""
     prompt = get_prompt("tool_websearch_pick")
@@ -131,6 +131,12 @@ addressing the user query."""
         user_query=user_query
     )
     model = prompt.config.get("model", "gpt-4o")
+    generation = create_generation(
+        span,
+        "pick_relevant",
+        model,
+        system_prompt
+    )
     relevant_json = await completion(
         [
             {"role": "system", "content": system_prompt},
@@ -139,6 +145,7 @@ addressing the user query."""
         model,
         json_mode=True
     )
+    end_generation(generation, relevant_json)
     return json.loads(relevant_json)
 
 
