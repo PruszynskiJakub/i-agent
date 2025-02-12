@@ -28,7 +28,7 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
         )
         system_prompt = prompt.compile(
             actions=format_actions_history(state.action_history),
-            documents=format_documents(state.documents),
+            documents=format_documents(state.conversation_documents),
             tools=format_tools(get_tools()),
             query=state.interaction.query if state.interaction else ""
         )

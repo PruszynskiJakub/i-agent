@@ -36,7 +36,7 @@ def handle_message(message, say):
 
         # Log initial state counts
         log_info(
-            f"Initial state - Actions: {len(state.action_history)}, Documents: {len(state.documents)}, Messages: {len(state.messages)}")
+            f"Initial state - Actions: {len(state.action_history)}, Documents: {len(state.conversation_documents)}, Messages: {len(state.messages)}")
 
         state = add_message(state, content=message["text"], role="user")
 

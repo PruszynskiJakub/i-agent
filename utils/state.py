@@ -14,7 +14,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         conversation_uuid=conversation_uuid,
         messages=find_messages_by_conversation(conversation_uuid),
         action_history=find_action_records_by_conversation(conversation_uuid),
-        documents=load_conversation_documents(conversation_uuid),
+        conversation_documents=load_conversation_documents(conversation_uuid),
         current_step=0,
         max_steps=4,
         phase=AgentPhase.PLAN,
@@ -76,7 +76,7 @@ def record_action(state: AgentState, action_dict: Dict[str, Any]) -> AgentState:
 
 
 def add_documents(state: AgentState, documents: List[Document]) -> AgentState:
-    return state.copy(documents=[*state.documents, *documents])
+    return state.copy(documents=[*state.conversation_documents, *documents])
 
 def update_phase(state: AgentState, new_phase: AgentPhase) -> AgentState:
     """

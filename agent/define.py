@@ -35,7 +35,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
 
         # Format the system prompt with current state
         system_prompt = prompt.compile(
-            documents=format_documents(state.documents),
+            documents=format_documents(state.conversation_documents),
             tool=format_interaction(state.interaction),
             instructions=get_tool_action_instructions(state.interaction.tool, state.interaction.tool_action),
             dynamic_context=dynamic_context,
