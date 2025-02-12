@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add todo">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Save">
       <change beforePath="$PROJECT_DIR$/tools/web/internal/search_web.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/internal/search_web.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -244,14 +243,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00174" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738580453956</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1738580453956</updated>
     </task>
     <task id="LOCAL-00175" summary="Improve">
       <option name="closed" value="true" />
@@ -637,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739270042374</updated>
     </task>
-    <option name="localTasksCounter" value="223" />
+    <task id="LOCAL-00223" summary="Save">
+      <option name="closed" value="true" />
+      <created>1739348308699</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1739348308699</updated>
+    </task>
+    <option name="localTasksCounter" value="224" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -652,7 +651,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Simplify and rename param" />
     <MESSAGE value="Add comment" />
     <MESSAGE value="Refactor" />
     <MESSAGE value="Add todo comment" />
@@ -677,6 +675,7 @@
     <MESSAGE value="Turn off scraping for now" />
     <MESSAGE value="Improve" />
     <MESSAGE value="Add todo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add todo" />
+    <MESSAGE value="Save" />
+    <option name="LAST_COMMIT_MESSAGE" value="Save" />
   </component>
 </project>

@@ -106,7 +106,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
             model,
             json_mode=True
         )
-        return json.loads(relevant_json)3
+        return json.loads(relevant_json)
 
     async def scrape(picked_relevant) -> Dict:
         """Scrape content from the picked relevant URLs using the scraping service."""
