@@ -10,7 +10,7 @@ from llm.open_ai import completion
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.document import Document, DocumentType
-from utils.document import create_document
+from utils.document import create_document, create_error_document
 
 # Predefined list of allowed domains with metadata for filtering search results
 allowed_domains = [
@@ -34,7 +34,8 @@ async def _search_web(params: Dict, span) -> List[Document]:
     """
     user_query = params.get('query')
     if not user_query:
-        raise ValueError("Search query is required")
+        err = ValueError("Search query is required")
+        return [create_error_document(err, "User query parameter is missing", conversation_uuid="unknown")]
 
     search_queries = await _build_queries(user_query, span)
 
