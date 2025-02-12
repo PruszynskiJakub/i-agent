@@ -69,7 +69,7 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
             
             thoughts = Thoughts(
                 chain_of_thought=response_data.get("overview", ""),
-                tool_candidates=tool_candidates
+                tool_thoughts=tool_candidates
             )
             
             updated_state = state.copy(thoughts=thoughts)

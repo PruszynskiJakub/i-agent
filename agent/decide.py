@@ -42,10 +42,10 @@ async def agent_decide(state: AgentState, trace) -> AgentState:
 
         # Format system prompt with current state
         system_prompt = prompt.compile(
-            tools=format_tools_with_descriptions(get_tools_by_names([c.tool_name for c in state.thoughts.tool_candidates])) if state.thoughts else [],
+            tools=format_tools_with_descriptions(get_tools_by_names([c.tool_name for c in state.thoughts.tool_thoughts])) if state.thoughts else [],
             actions=format_actions_history(state.action_history),
             documents=format_documents(state.documents),
-            tool_candidates=format_tool_candidates(state.thoughts.tool_candidates) if state.thoughts else "",
+            tool_candidates=format_tool_candidates(state.thoughts.tool_thoughts) if state.thoughts else "",
             overview=state.thoughts.chain_of_thought if state.thoughts else "",
             facts=format_facts()
         )
