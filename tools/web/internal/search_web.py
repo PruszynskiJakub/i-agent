@@ -92,7 +92,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
     async def pick_relevant(search_results, user_query) -> Dict:
         """Filter search results using an LLM to choose the few most correlated results
     addressing the user query."""
-        prompt = get_prompt("tool_web_pick_relevant")
+        prompt = get_prompt("tool_websearch_pick")
         system_prompt = prompt.compile(
             search_results=json.dumps(search_results, indent=2),
             user_query=user_query
@@ -106,7 +106,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
             model,
             json_mode=True
         )
-        return json.loads(relevant_json)
+        return json.loads(relevant_json)3
 
     async def scrape(picked_relevant) -> Dict:
         """Scrape content from the picked relevant URLs using the scraping service."""
