@@ -32,110 +32,22 @@ async def _search_web(params: Dict, span) -> List[Document]:
     Returns:
         List of documents containing search results
     """
-    query = params.get('query')
-    if not query:
+    user_query = params.get('query')
+    if not user_query:
         raise ValueError("Search query is required")
 
-    async def build_queries() -> List[Dict]:
-        """Build enhanced search queries using LLM return a list of queries in format {'q':'Query', 'url': 'URL'}"""
-        prompt = get_prompt("tool_websearch_queries")
-        model = prompt.config.get("model", "gpt-4o")
+    search_queries = await _build_queries(user_query, span)
 
-        system_prompt = prompt.compile(
-            allowed_domains="\n".join([f"- {d['name']}: {d['url']}" for d in allowed_domains]),
-            current_date=datetime.now().strftime("%Y-%m-%d")
-        )
-
-        generation = create_generation(
-            span,
-            "build_queries",
-            model,
-            system_prompt
-        )
-
-        queries_completion = await completion(
-            [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": query}
-            ],
-            model,
-            json_mode=True
-        )
-        end_generation(generation, queries_completion)
-
-        return json.loads(queries_completion)
-
-    async def search(q) -> Dict:
-        print(q)
-        url = "https://google.serper.dev/search"
-        payload = {
-            "q": f"site:{q['url']} {q['q']}",
-            "num": 5
-        }
-        headers = {
-            'X-API-KEY': os.getenv('SERPER_API_KEY'),
-            'Content-Type': 'application/json'
-        }
-
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, headers=headers, json=payload) as response:
-                response.raise_for_status()
-                return await response.json()
-
-    # Get enhanced queries from LLM
-    queries = await build_queries()
-
-    # Run all search queries in parallel
-    search_tasks = [search(q) for q in queries['queries']]
+    search_tasks = [_search(search_query) for search_query in search_queries['queries']]
     search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
-    async def pick_relevant(search_results, user_query) -> Dict:
-        """Filter search results using an LLM to choose the few most correlated results
-    addressing the user query."""
-        prompt = get_prompt("tool_websearch_pick")
-        system_prompt = prompt.compile(
-            search_results=json.dumps(search_results, indent=2),
-            user_query=user_query
-        )
-        model = prompt.config.get("model", "gpt-4o")
-        relevant_json = await completion(
-            [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_query}
-            ],
-            model,
-            json_mode=True
-        )
-        return json.loads(relevant_json)
+    picked_results = await _pick_relevant(search_results, user_query)
 
-    async def scrape(picked_relevant) -> Dict:
-        """Scrape content from the picked relevant URLs using the scraping service."""
-        scrape_url = "https://scrape.serper.dev"
-        headers = {
-            'X-API-KEY': os.getenv("SERPER_API_KEY"),
-            'Content-Type': 'application/json'
-        }
-        scraped_results = {}
-        async with aiohttp.ClientSession() as session:
-            tasks = []
-            for item in picked_relevant.get("results", []):
-                target_url = item.get("link")
-                if target_url:
-                    payload = json.dumps({"url": target_url})
-                    task = session.post(scrape_url, headers=headers, data=payload)
-                    tasks.append((target_url, task))
-            responses = await asyncio.gather(*[t[1] for t in tasks], return_exceptions=True)
-            for (url, _), resp in zip(tasks, responses):
-                if isinstance(resp, Exception):
-                    scraped_results[url] = None
-                else:
-                    scraped_results[url] = await resp.text()
-            return scraped_results
+    scrape_tasks = [_scrape(url) for url in picked_results['urls']]
+    scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
 
-    print(search_results)
-    # Process results by query
     documents = []
-    for query_info, results in zip(queries['queries'], search_results):
+    for query_info, results in zip(search_queries['queries'], search_results):
         # Collect all URLs from results
         urls = []
         text_parts = [f"Search Results for: {query_info['q']}\n"]
@@ -161,3 +73,84 @@ async def _search_web(params: Dict, span) -> List[Document]:
         ))
 
     return documents
+
+
+async def _build_queries(user_query: str, span) -> List[Query]:
+    """Build enhanced search queries using LLM return a list of queries in format {'q':'Query', 'url': 'URL'}"""
+    prompt = get_prompt("tool_websearch_queries")
+    model = prompt.config.get("model", "gpt-4o")
+
+    system_prompt = prompt.compile(
+        allowed_domains="\n".join([f"- {d['name']}: {d['url']}" for d in allowed_domains]),
+        current_date=datetime.now().strftime("%Y-%m-%d")
+    )
+
+    generation = create_generation(
+        span,
+        "build_queries",
+        model,
+        system_prompt
+    )
+
+    result = await completion(
+        [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_query}
+        ],
+        model,
+        json_mode=True
+    )
+    end_generation(generation, result)
+
+    return json.loads(result)
+
+
+async def _search(search_query) -> Dict:
+    url = "https://google.serper.dev/search"
+    payload = {
+        "q": f"site:{search_query['url']} {search_query['q']}",
+        "num": 5
+    }
+    headers = {
+        'X-API-KEY': os.getenv('SERPER_API_KEY'),
+        'Content-Type': 'application/json'
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, headers=headers, json=payload) as response:
+            response.raise_for_status()
+            return await response.json()
+
+
+async def _pick_relevant(search_results, user_query) -> Dict:
+    """Filter search results using an LLM to choose the few most correlated results
+addressing the user query."""
+    prompt = get_prompt("tool_websearch_pick")
+    system_prompt = prompt.compile(
+        search_results=json.dumps(search_results, indent=2),
+        user_query=user_query
+    )
+    model = prompt.config.get("model", "gpt-4o")
+    relevant_json = await completion(
+        [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_query}
+        ],
+        model,
+        json_mode=True
+    )
+    return json.loads(relevant_json)
+
+
+async def _scrape(url) -> str:
+    """Scrape content from the picked relevant URLs using the scraping service."""
+    scrape_url = "https://scrape.serper.dev"
+    headers = {
+        'X-API-KEY': os.getenv("SERPER_API_KEY"),
+        'Content-Type': 'application/json'
+    }
+    payload = json.dumps({"url": url})
+    async with aiohttp.ClientSession() as session:
+        async with session.post(scrape_url, headers=headers, json=payload) as response:
+            response.raise_for_status()
+            return await response.text()
