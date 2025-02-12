@@ -21,7 +21,6 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         interaction=None,
         thoughts=None,
         dynamic_context="",
-        final_answer=None
     )
 
 
