@@ -9,8 +9,8 @@ import aiohttp
 from llm.open_ai import completion
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.document import Document, DocumentType
-from utils.document import create_document, create_error_document
+from models.document import Document
+from utils.document import create_error_document
 
 # Predefined list of allowed domains with metadata for filtering search results
 allowed_domains = [
@@ -35,7 +35,13 @@ async def _search_web(params: Dict, span) -> List[Document]:
     user_query = params.get('query')
     if not user_query:
         err = ValueError("Search query is required")
-        return [create_error_document(err, "User query parameter is missing", conversation_uuid="unknown")]
+        return [
+            create_error_document(
+                err,
+                "User query parameter is missing",
+                conversation_uuid=params.get("conversation_uuid", "")
+            )
+        ]
 
     search_queries = await _build_queries(user_query, span)
 
@@ -53,6 +59,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
         pass
 
     return documents
+
 
 async def _build_queries(user_query: str, span) -> Dict:
     """Build enhanced search queries using LLM return a list of queries in format {'q':'Query', 'url': 'URL'}"""
@@ -130,6 +137,7 @@ addressing the user query."""
 
 async def should_scrape(user_query) -> bool:
     return True
+
 
 async def _scrape(url) -> str:
     """Scrape content from the picked relevant URLs using the scraping service."""
