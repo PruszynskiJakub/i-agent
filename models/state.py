@@ -53,7 +53,6 @@ class AgentState:
     thoughts: Optional[Thoughts] = None
     documents: List[Document] = field(default_factory=list)
     dynamic_context: str = ""
-    final_answer: Optional[str] = None
 
     @property
     def user_query(self) -> str:
@@ -83,7 +82,6 @@ class AgentState:
             'interaction': self.interaction,
             'thoughts': self.thoughts,
             'dynamic_context': self.dynamic_context,
-            'final_answer': self.final_answer
         }
         current_values.update(kwargs)
         return AgentState(**current_values)
