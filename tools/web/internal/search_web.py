@@ -43,38 +43,15 @@ async def _search_web(params: Dict, span) -> List[Document]:
 
     picked_results = await _pick_relevant(search_results, user_query)
 
-    # TODO deciding if scraping is necessary
-    scrape_tasks = [_scrape(url) for url in picked_results['urls']]
-    scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
-
     documents = []
-    for query_info, results in zip(search_queries['queries'], search_results):
-        # Collect all URLs from results
-        urls = []
-        text_parts = [f"Search Results for: {query_info['q']}\n"]
+    if should_scrape(user_query):
+        scrape_tasks = [_scrape(url) for url in picked_results['urls']]
+        scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
 
-        for result in results.get('organic', []):
-            urls.append(result.get('link', ''))
-            text_parts.extend([
-                f"\nTitle: {result.get('title', '')}",
-                f"Snippet: {result.get('snippet', '')}",
-                f"Link: {result.get('link', '')}"
-            ])
-
-        documents.append(create_document(
-            text="\n".join(text_parts),
-            metadata_override={
-                "conversation_uuid": params.get("conversation_uuid", ""),
-                "source": "web",
-                "name": "SearchWebResult",
-                "description": f"Search results for: query {query_info['q']} for domain {query_info['url']}",
-                "content_type": "full",
-                "type": DocumentType.DOCUMENT,
-            }
-        ))
+    else:
+        pass
 
     return documents
-
 
 async def _build_queries(user_query: str, span) -> Dict:
     """Build enhanced search queries using LLM return a list of queries in format {'q':'Query', 'url': 'URL'}"""
@@ -149,6 +126,9 @@ addressing the user query."""
     end_generation(generation, relevant_json)
     return json.loads(relevant_json)
 
+
+async def should_scrape(user_query) -> bool:
+    return True
 
 async def _scrape(url) -> str:
     """Scrape content from the picked relevant URLs using the scraping service."""
