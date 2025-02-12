@@ -5,7 +5,7 @@ from datetime import datetime
 from models.action import ActionRecord
 from models.document import Document
 from models.message import Message
-from models.state import ToolCandidate
+from models.state import ToolThought
 
 
 def format_actions_history(actions: List[ActionRecord]) -> str:
@@ -128,7 +128,7 @@ def format_tool_instructions(tool) -> str:
     return desc
 
 
-def format_tool_candidates(tool_candidates: List[ToolCandidate]) -> str:
+def format_tool_candidates(tool_candidates: List[ToolThought]) -> str:
     """
     Formats tool candidates into an XML-like string representation.
 

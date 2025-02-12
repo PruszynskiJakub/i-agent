@@ -4,7 +4,7 @@ from models.state import (
     AgentState,
     AgentPhase,
     Thoughts,
-    ToolCandidate
+    ToolThought
 )
 from llm import open_ai
 from llm.format import format_actions_history, format_messages, format_tools, format_documents
@@ -60,7 +60,7 @@ async def agent_plan(state: AgentState, trace) -> AgentState:
             
             # Create thoughts from response
             tool_candidates = [
-                ToolCandidate(
+                ToolThought(
                     tool_name=t["tool"],
                     reason=t["reason"],
                     query=t["query"]

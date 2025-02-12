@@ -16,17 +16,17 @@ class AgentPhase(enum.Enum):
     ANSWER = "answer"
 
 @dataclass(frozen=True)
-class ToolCandidate:
+class ToolThought:
     """A single potential tool usage or action idea."""
-    tool_name: str
     reason: str
     query: str
+    tool_name: str
 
 @dataclass(frozen=True)
 class Thoughts:
     """Internal reasoning plus recommended tool candidates."""
     chain_of_thought: Optional[str]  # Hidden or partial reasoning text
-    tool_candidates: List[ToolCandidate] = field(default_factory=list)
+    tool_candidates: List[ToolThought] = field(default_factory=list)
 
 @dataclass(frozen=True)
 class Interaction:
