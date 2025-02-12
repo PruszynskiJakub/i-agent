@@ -75,7 +75,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
     return documents
 
 
-async def _build_queries(user_query: str, span) -> List[Query]:
+async def _build_queries(user_query: str, span) -> Dict:
     """Build enhanced search queries using LLM return a list of queries in format {'q':'Query', 'url': 'URL'}"""
     prompt = get_prompt("tool_websearch_queries")
     model = prompt.config.get("model", "gpt-4o")
