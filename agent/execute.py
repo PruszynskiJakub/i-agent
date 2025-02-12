@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from models.state import AgentState
 from utils.document import create_error_document
@@ -28,7 +29,8 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         tool_action = state.interaction.tool_action
         params = {
             **state.interaction.payload,
-            "conversation_uuid": state.conversation_uuid
+            "conversation_uuid": state.conversation_uuid,
+            "now": datetime.now().isoformat(),
         }
         log_info(f"🔧 Executing tool '{tool}' with action '{tool_action}'\nParameters: {json.dumps(params, indent=2)}")
 
