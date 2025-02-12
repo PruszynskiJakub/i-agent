@@ -124,13 +124,13 @@ async def _search_web(params: Dict, span) -> List[Document]:
                     payload = json.dumps({"url": target_url})
                     task = session.post(scrape_url, headers=headers, data=payload)
                     tasks.append((target_url, task))
-            responses = await asyncio.gather(*[t[1] for t in tasks], return_exceptions=Tru
+            responses = await asyncio.gather(*[t[1] for t in tasks], return_exceptions=True)
             for (url, _), resp in zip(tasks, responses):
                 if isinstance(resp, Exception):
                     scraped_results[url] = None
                 else:
                     scraped_results[url] = await resp.text()
-                return scraped_results
+            return scraped_results
 
     print(search_results)
     # Process results by query
