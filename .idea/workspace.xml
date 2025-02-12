@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Save">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/web/internal/search_web.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/web/internal/search_web.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,30 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00175" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738581143858</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1738581143858</updated>
-    </task>
-    <task id="LOCAL-00176" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738581395537</created>
-      <option name="number" value="00176" />
-      <option name="presentableId" value="LOCAL-00176" />
-      <option name="project" value="LOCAL" />
-      <updated>1738581395537</updated>
-    </task>
-    <task id="LOCAL-00177" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1738582447102</created>
-      <option name="number" value="00177" />
-      <option name="presentableId" value="LOCAL-00177" />
-      <option name="project" value="LOCAL" />
-      <updated>1738582447102</updated>
     </task>
     <task id="LOCAL-00178" summary="Improve">
       <option name="closed" value="true" />
@@ -636,7 +613,31 @@
       <option name="project" value="LOCAL" />
       <updated>1739348308699</updated>
     </task>
-    <option name="localTasksCounter" value="224" />
+    <task id="LOCAL-00224" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739350023379</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1739350023379</updated>
+    </task>
+    <task id="LOCAL-00225" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739350041101</created>
+      <option name="number" value="00225" />
+      <option name="presentableId" value="LOCAL-00225" />
+      <option name="project" value="LOCAL" />
+      <updated>1739350041101</updated>
+    </task>
+    <task id="LOCAL-00226" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739351029541</created>
+      <option name="number" value="00226" />
+      <option name="presentableId" value="LOCAL-00226" />
+      <option name="project" value="LOCAL" />
+      <updated>1739351029541</updated>
+    </task>
+    <option name="localTasksCounter" value="227" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -673,9 +674,9 @@
     <MESSAGE value="Create sample for serper-dev.py" />
     <MESSAGE value="Modify allowed domains" />
     <MESSAGE value="Turn off scraping for now" />
-    <MESSAGE value="Improve" />
     <MESSAGE value="Add todo" />
     <MESSAGE value="Save" />
-    <option name="LAST_COMMIT_MESSAGE" value="Save" />
+    <MESSAGE value="Improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>
 </project>

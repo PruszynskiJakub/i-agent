@@ -43,6 +43,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
 
     picked_results = await _pick_relevant(search_results, user_query)
 
+    # TODO deciding if scraping is necessary
     scrape_tasks = [_scrape(url) for url in picked_results['urls']]
     scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
 
