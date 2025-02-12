@@ -48,18 +48,19 @@ async def _search_web(params: Dict, span) -> List[Document]:
     search_tasks = [_search(search_query) for search_query in search_queries['queries']]
     search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
+    print(search_results)
+
     create_event(
         span,
         "search_results",
         input={"search_queries": search_queries, "user_query": user_query},
         output=search_results,
-        level="INFO"
     )
 
     picked_results = await _pick_relevant(search_results, user_query)
 
     documents = []
-    if await should_scrape(user_query):
+    if True: # await should_scrape(user_query
         scrape_tasks = [_scrape(url) for url in picked_results['urls']]
         scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
         
@@ -68,7 +69,6 @@ async def _search_web(params: Dict, span) -> List[Document]:
             "scraping",
             input={"urls": picked_results.get('urls', [])},
             output=scrape_results,
-            level="INFO"
         )
 
         for url, result in zip(picked_results['urls'], scrape_results):
@@ -130,6 +130,7 @@ async def _build_queries(user_query: str, span) -> Dict:
 
 
 async def _search(search_query) -> Dict:
+    print(search_query)
     url = "https://google.serper.dev/search"
     payload = {
         "q": f"site:{search_query['url']} {search_query['q']}",
@@ -151,8 +152,7 @@ async def _pick_relevant(search_results, user_query, span) -> Dict:
 addressing the user query."""
     prompt = get_prompt("tool_websearch_pick")
     system_prompt = prompt.compile(
-        search_results=json.dumps(search_results, indent=2),
-        user_query=user_query
+        resources=json.dumps(search_results, indent=2),
     )
     model = prompt.config.get("model", "gpt-4o")
     generation = create_generation(
