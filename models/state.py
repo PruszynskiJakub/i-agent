@@ -27,6 +27,7 @@ class Thoughts:
     """Internal reasoning plus recommended tool candidates."""
     chain_of_thought: Optional[str]  # Hidden or partial reasoning text
     tool_candidates: List[ToolThought] = field(default_factory=list)
+    user_intent: str = ""
 
 @dataclass(frozen=True)
 class Interaction:
