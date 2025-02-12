@@ -69,7 +69,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
                         "source_uuid": url,
                         "name": "WebScrapedContent", 
                         "description": f"Content scraped from {url}",
-                        "mime_type": "text/html",
+                        "mime_type": "text/markdown",
                         "type": "document",
                         "content_type": "full",
                     }
