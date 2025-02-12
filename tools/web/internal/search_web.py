@@ -57,7 +57,7 @@ async def _search_web(params: Dict, span) -> List[Document]:
         output=search_results,
     )
 
-    picked_results = await _pick_relevant(search_results, user_query)
+    picked_results = await _pick_relevant(search_results, user_query, span)
 
     documents = []
     if True: # await should_scrape(user_query
