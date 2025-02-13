@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add now to all tool params">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Pass all messages for giving the answer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/brainstorm.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/brainstorm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -246,22 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00194" summary="Add prefixes tool_ to prompt names">
-      <option name="closed" value="true" />
-      <created>1739035802067</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1739035802067</updated>
-    </task>
-    <task id="LOCAL-00195" summary="Remove dynamic_context for ynab">
-      <option name="closed" value="true" />
-      <created>1739035832012</created>
-      <option name="number" value="00195" />
-      <option name="presentableId" value="LOCAL-00195" />
-      <option name="project" value="LOCAL" />
-      <updated>1739035832012</updated>
     </task>
     <task id="LOCAL-00196" summary="Improve">
       <option name="closed" value="true" />
@@ -639,7 +621,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739382363109</updated>
     </task>
-    <option name="localTasksCounter" value="243" />
+    <task id="LOCAL-00243" summary="Rename brainstorm.py into intent">
+      <option name="closed" value="true" />
+      <created>1739392459280</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1739392459280</updated>
+    </task>
+    <task id="LOCAL-00244" summary="Pass all messages for giving the answer">
+      <option name="closed" value="true" />
+      <created>1739393287605</created>
+      <option name="number" value="00244" />
+      <option name="presentableId" value="LOCAL-00244" />
+      <option name="project" value="LOCAL" />
+      <updated>1739393287605</updated>
+    </task>
+    <option name="localTasksCounter" value="245" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -654,8 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Commit" />
-    <MESSAGE value="Add summarize file" />
     <MESSAGE value="replace plain secret" />
     <MESSAGE value="Rename directory" />
     <MESSAGE value="Reorder methods" />
@@ -679,6 +675,8 @@
     <MESSAGE value="use should_scrape method" />
     <MESSAGE value="Remove old field" />
     <MESSAGE value="Add now to all tool params" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add now to all tool params" />
+    <MESSAGE value="Rename brainstorm.py into intent" />
+    <MESSAGE value="Pass all messages for giving the answer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pass all messages for giving the answer" />
   </component>
 </project>

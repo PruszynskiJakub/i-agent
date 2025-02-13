@@ -76,7 +76,7 @@ class AgentState:
             'conversation_uuid': self.conversation_uuid,
             'messages': self.messages.copy(),
             'action_history': self.action_history.copy(),
-            'documents': self.conversation_documents.copy(),
+            'conversation_documents': self.conversation_documents.copy(),
             'current_step': self.current_step,
             'max_steps': self.max_steps,
             'phase': self.phase,
