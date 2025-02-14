@@ -6,7 +6,7 @@ from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.state import AgentState, ToolThought, Thoughts
 from tools import get_tools
-from utils.state import update_phase, AgentPhase
+from utils.state import update_phase, AgentPhase, update_thoughts
 
 
 async def agent_intent(state: AgentState, trace) -> AgentState:
@@ -51,21 +51,18 @@ async def agent_intent(state: AgentState, trace) -> AgentState:
 
         try:
             response_data = json.loads(completion)
-
-            # Create thoughts from response
-            tool_candidates = [
-                ToolThought(
-                    tool_name=t["tool"],
-                    query=t["query"]
-                ) for t in response_data.get("tool_candidates", [])
-            ]
-
-            thoughts = Thoughts(
-                tool_thoughts=tool_candidates,
-                user_intent=response_data.get("intent", "")
+            updated_state = update_thoughts(
+                state,
+                Thoughts(
+                    tool_thoughts=[
+                        ToolThought(
+                            query=tool_query["query"],
+                            tool_name=tool_query["tool"]
+                        ) for tool_query in response_data.get("queries", [])
+                    ],
+                    user_intent=response_data.get("intent", "I could not understand the user's intents.")
+                )
             )
-
-            updated_state = state.copy(thoughts=thoughts)
         except json.JSONDecodeError as e:
             generation.end(
                 output=None,

@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove redundant methods">
-      <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/state.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rename method">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/intent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/intent.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,22 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00201" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739121558485</created>
-      <option name="number" value="00201" />
-      <option name="presentableId" value="LOCAL-00201" />
-      <option name="project" value="LOCAL" />
-      <updated>1739121558485</updated>
-    </task>
-    <task id="LOCAL-00202" summary="Fix">
-      <option name="closed" value="true" />
-      <created>1739123729224</created>
-      <option name="number" value="00202" />
-      <option name="presentableId" value="LOCAL-00202" />
-      <option name="project" value="LOCAL" />
-      <updated>1739123729224</updated>
     </task>
     <task id="LOCAL-00203" summary="Create sample">
       <option name="closed" value="true" />
@@ -637,7 +621,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739526698585</updated>
     </task>
-    <option name="localTasksCounter" value="250" />
+    <task id="LOCAL-00250" summary="Change property name">
+      <option name="closed" value="true" />
+      <created>1739526802882</created>
+      <option name="number" value="00250" />
+      <option name="presentableId" value="LOCAL-00250" />
+      <option name="project" value="LOCAL" />
+      <updated>1739526802882</updated>
+    </task>
+    <task id="LOCAL-00251" summary="Rename method">
+      <option name="closed" value="true" />
+      <created>1739526876795</created>
+      <option name="number" value="00251" />
+      <option name="presentableId" value="LOCAL-00251" />
+      <option name="project" value="LOCAL" />
+      <updated>1739526876795</updated>
+    </task>
+    <option name="localTasksCounter" value="252" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -652,8 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add prefixes tool_ to prompt names" />
-    <MESSAGE value="Remove dynamic_context for ynab" />
     <MESSAGE value="Add my name to facts" />
     <MESSAGE value="Create sample" />
     <MESSAGE value="Improve names" />
@@ -677,6 +675,8 @@
     <MESSAGE value="Rebuild AgentState class" />
     <MESSAGE value="Improve" />
     <MESSAGE value="Remove redundant methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove redundant methods" />
+    <MESSAGE value="Change property name" />
+    <MESSAGE value="Rename method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename method" />
   </component>
 </project>
