@@ -2,9 +2,7 @@ from typing import List, Dict, Any
 
 from db.message import find_messages_by_conversation, save_message
 from db.conversation import load_conversation_documents
-from db.action import find_action_records_by_conversation
-from models.state import AgentState, AgentPhase, Interaction
-
+from models.state import AgentState, AgentPhase, Thoughts
 from models.document import Document
 from utils.message import create_message
 
@@ -13,14 +11,15 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
     return AgentState(
         conversation_uuid=conversation_uuid,
         messages=find_messages_by_conversation(conversation_uuid),
-        action_history=find_action_records_by_conversation(conversation_uuid),
-        conversation_documents=load_conversation_documents(conversation_uuid),
+        tasks=[],
+        message_documents=load_conversation_documents(conversation_uuid),
         current_step=0,
         max_steps=4,
-        phase=AgentPhase.PLAN,
-        interaction=None,
-        thoughts=None,
-        dynamic_context="",
+        phase=AgentPhase.INTENT,
+        current_task=None,
+        current_action=None,
+        thoughts=Thoughts(),
+        dynamic_context=""
     )
 
 
