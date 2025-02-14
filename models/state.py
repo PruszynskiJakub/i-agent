@@ -83,12 +83,13 @@ class AgentState:
         current_values = {
             'conversation_uuid': self.conversation_uuid,
             'messages': self.messages.copy(),
-            'action_history': self.action_history.copy(),
-            'conversation_documents': self.conversation_documents.copy(),
+            'tasks': self.tasks.copy(),
+            'message_documents': self.message_documents.copy(),
             'current_step': self.current_step,
             'max_steps': self.max_steps,
             'phase': self.phase,
-            'interaction': self.interaction,
+            'current_task': self.current_task,
+            'current_action': self.current_action,
             'thoughts': self.thoughts,
             'dynamic_context': self.dynamic_context,
         }
