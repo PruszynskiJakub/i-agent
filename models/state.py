@@ -1,13 +1,13 @@
-import enum
-from dataclasses import dataclass, field
+from enum import Enum
 from typing import List, Dict, Any, Optional
 from uuid import UUID
+from pydantic import BaseModel, Field, ConfigDict
 
 from models.document import Document
 from models.message import Message
 
 
-class AgentPhase(enum.Enum):
+class AgentPhase(str, Enum):
     INTENT = "intent"
     PLAN = "plan"
     DEFINE = "define"
@@ -16,40 +16,44 @@ class AgentPhase(enum.Enum):
     ANSWER = "answer"
 
 
-@dataclass(frozen=True)
-class ToolThought:
+class ToolThought(BaseModel):
     """A single potential tool usage or action idea."""
     query: str
     tool_name: str
+    
+    model_config = ConfigDict(frozen=True)
 
 
-@dataclass(frozen=True)
-class Thoughts:
+class Thoughts(BaseModel):
     """Internal reasoning plus recommended tool candidates."""
-    tool_thoughts: List[ToolThought] = field(default_factory=list)
+    tool_thoughts: List[ToolThought] = Field(default_factory=list)
     user_intent: str = ""
+    
+    model_config = ConfigDict(frozen=True)
 
 
-@dataclass(frozen=True)
-class Action:
+class Action(BaseModel):
     uuid: str
     name: str
     tool_name: str
     tool_uuid: Optional[UUID]
     input_payload: Dict[str, Any]
     output_documents: List[Document]
+    
+    model_config = ConfigDict(frozen=True)
 
-@dataclass(frozen=True)
-class Task:
+
+class Task(BaseModel):
     uuid: str
     name: str
     description: str
     actions: List[Action]
     status: str  # pending or done
+    
+    model_config = ConfigDict(frozen=True)
 
 
-@dataclass(frozen=True)
-class AgentState:
+class AgentState(BaseModel):
     conversation_uuid: str
     messages: List[Message]
     tasks: List[Task]
@@ -79,19 +83,7 @@ class AgentState:
                 return message.content
         return ""
 
+    model_config = ConfigDict(frozen=True)
+    
     def copy(self, **kwargs) -> 'AgentState':
-        current_values = {
-            'conversation_uuid': self.conversation_uuid,
-            'messages': self.messages.copy(),
-            'tasks': self.tasks.copy(),
-            'message_documents': self.message_documents.copy(),
-            'current_step': self.current_step,
-            'max_steps': self.max_steps,
-            'phase': self.phase,
-            'current_task': self.current_task,
-            'current_action': self.current_action,
-            'thoughts': self.thoughts,
-            'dynamic_context': self.dynamic_context,
-        }
-        current_values.update(kwargs)
-        return AgentState(**current_values)
+        return self.model_copy(update=kwargs)
