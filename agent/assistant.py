@@ -9,7 +9,7 @@ from agent.plan import agent_plan
 from agent.decide import agent_decide
 from llm.tracing import create_trace, end_trace
 from models.state import AgentState
-from utils.state import should_interact, new_interaction, complete_interaction
+from utils.state import should_continue, new_interaction, complete_interaction
 
 
 async def agent_run(in_state: AgentState) -> str:
@@ -31,7 +31,7 @@ async def agent_run(in_state: AgentState) -> str:
         log_info("🧠 Starting brainstorming phase...")
         state = await agent_intent(state, trace)
         
-        while should_interact(state):
+        while should_continue(state):
             log_info(f"📍 Step {state.current_step + 1}/{state.max_steps}")
             
             state = new_interaction(state)

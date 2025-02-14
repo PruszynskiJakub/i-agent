@@ -48,5 +48,5 @@ def set_dynamic_context(state: AgentState, context: str) -> AgentState:
     return state.copy(dynamic_context=context)
 
 
-def should_interact(state: AgentState) -> bool:
+def should_continue(state: AgentState) -> bool:
     return state.current_step < state.max_steps
