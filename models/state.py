@@ -21,7 +21,7 @@ class ToolThought(BaseModel):
     """A single potential tool usage or action idea."""
     query: str
     tool_name: str
-    
+
     model_config = ConfigDict(frozen=True)
 
 
@@ -29,7 +29,7 @@ class Thoughts(BaseModel):
     """Internal reasoning plus recommended tool candidates."""
     tool_thoughts: List[ToolThought] = field(default_factory=list)
     user_intent: str = ""
-    
+
     model_config = ConfigDict(frozen=True)
 
 
@@ -40,7 +40,7 @@ class Action(BaseModel):
     tool_uuid: Optional[UUID]
     input_payload: Dict[str, Any]
     output_documents: List[Document]
-    
+
     model_config = ConfigDict(frozen=True)
 
 
@@ -50,7 +50,7 @@ class Task(BaseModel):
     description: str
     actions: List[Action]
     status: str  # pending or done
-    
+
     model_config = ConfigDict(frozen=True)
 
 
@@ -65,6 +65,7 @@ class AgentState(BaseModel):
     max_steps: int
     current_task: Optional[Task]
     current_action: Optional[Action]
+    current_tool: Optional[str]
     thoughts: Thoughts
     dynamic_context: str
 
@@ -85,6 +86,6 @@ class AgentState(BaseModel):
         return ""
 
     model_config = ConfigDict(frozen=True)
-    
+
     def copy(self, **kwargs) -> 'AgentState':
         return self.model_copy(update=kwargs)

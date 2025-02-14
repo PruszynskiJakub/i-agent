@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add todo">
-      <change afterPath="$PROJECT_DIR$/agent/select.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Create select">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,22 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00206" summary="Create sample for serper-dev.py">
-      <option name="closed" value="true" />
-      <created>1739214192975</created>
-      <option name="number" value="00206" />
-      <option name="presentableId" value="LOCAL-00206" />
-      <option name="project" value="LOCAL" />
-      <updated>1739214192975</updated>
-    </task>
-    <task id="LOCAL-00207" summary="Modify allowed domains">
-      <option name="closed" value="true" />
-      <created>1739214218727</created>
-      <option name="number" value="00207" />
-      <option name="presentableId" value="LOCAL-00207" />
-      <option name="project" value="LOCAL" />
-      <updated>1739214218728</updated>
     </task>
     <task id="LOCAL-00208" summary="Modify allowed domains">
       <option name="closed" value="true" />
@@ -638,7 +622,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739531523327</updated>
     </task>
-    <option name="localTasksCounter" value="255" />
+    <task id="LOCAL-00255" summary="Imrove find_task">
+      <option name="closed" value="true" />
+      <created>1739532681761</created>
+      <option name="number" value="00255" />
+      <option name="presentableId" value="LOCAL-00255" />
+      <option name="project" value="LOCAL" />
+      <updated>1739532681761</updated>
+    </task>
+    <task id="LOCAL-00256" summary="Create select">
+      <option name="closed" value="true" />
+      <created>1739532754402</created>
+      <option name="number" value="00256" />
+      <option name="presentableId" value="LOCAL-00256" />
+      <option name="project" value="LOCAL" />
+      <updated>1739532754402</updated>
+    </task>
+    <option name="localTasksCounter" value="257" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -653,8 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Improve names" />
-    <MESSAGE value="Create sample for serper-dev.py" />
     <MESSAGE value="Modify allowed domains" />
     <MESSAGE value="Turn off scraping for now" />
     <MESSAGE value="Save" />
@@ -678,6 +676,8 @@
     <MESSAGE value="Update intent.py" />
     <MESSAGE value="Implement agent_blueprint" />
     <MESSAGE value="Add todo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add todo" />
+    <MESSAGE value="Imrove find_task" />
+    <MESSAGE value="Create select" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create select" />
   </component>
 </project>
