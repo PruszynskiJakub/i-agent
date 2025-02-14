@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Optional
 
 from db.conversation import load_conversation_documents
 from db.message import find_messages_by_conversation, save_message
@@ -64,24 +64,14 @@ def update_thoughts(state: AgentState, thoughts) -> AgentState:
     return state.copy(thoughts=thoughts)
 
 
-def find_task(state: AgentState, task_id: str) -> Optional[Task]:
-    """
-    Find a task in state.tasks by UUID first, then by name if UUID search fails.
-    
-    Args:
-        state: Current agent state
-        task_id: UUID or name of the task to find
-        
-    Returns:
-        Task if found, None otherwise
-    """
+def find_task(state: AgentState, task_uuid: str, task_name: str) -> Optional[Task]:
     # First try to find by UUID
-    task = next((task for task in state.tasks if task.uuid == task_id), None)
-    
+    task = next((task for task in state.tasks if task.uuid == task_uuid), None)
+
     # If not found by UUID, try to find by name
     if task is None:
-        task = next((task for task in state.tasks if task.name == task_id), None)
-        
+        task = next((task for task in state.tasks if task.name == task_name), None)
+
     return task
 
 
