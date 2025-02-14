@@ -18,7 +18,6 @@ class AgentPhase(enum.Enum):
 @dataclass(frozen=True)
 class ToolThought:
     """A single potential tool usage or action idea."""
-    reason: str
     query: str
     tool_name: str
 
