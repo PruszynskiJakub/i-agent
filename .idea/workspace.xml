@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Implement agent_intent">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rebuild AgentState class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,14 +243,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00198" summary="Add my name to facts">
-      <option name="closed" value="true" />
-      <created>1739096836515</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1739096836515</updated>
     </task>
     <task id="LOCAL-00199" summary="Improve">
       <option name="closed" value="true" />
@@ -637,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739461951627</updated>
     </task>
-    <option name="localTasksCounter" value="247" />
+    <task id="LOCAL-00247" summary="Rebuild AgentState class">
+      <option name="closed" value="true" />
+      <created>1739523313511</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1739523313511</updated>
+    </task>
+    <option name="localTasksCounter" value="248" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -652,7 +651,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Rename directory" />
     <MESSAGE value="Reorder methods" />
     <MESSAGE value="Add prefixes tool_ to prompt names" />
     <MESSAGE value="Remove dynamic_context for ynab" />
@@ -677,6 +675,7 @@
     <MESSAGE value="Pass all messages for giving the answer" />
     <MESSAGE value="Fix" />
     <MESSAGE value="Implement agent_intent" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement agent_intent" />
+    <MESSAGE value="Rebuild AgentState class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rebuild AgentState class" />
   </component>
 </project>

@@ -1,3 +1,4 @@
+from dataclasses import field
 from enum import Enum
 from typing import List, Dict, Any, Optional
 from uuid import UUID
@@ -26,7 +27,7 @@ class ToolThought(BaseModel):
 
 class Thoughts(BaseModel):
     """Internal reasoning plus recommended tool candidates."""
-    tool_thoughts: List[ToolThought] = Field(default_factory=list)
+    tool_thoughts: List[ToolThought] = field(default_factory=list)
     user_intent: str = ""
     
     model_config = ConfigDict(frozen=True)
