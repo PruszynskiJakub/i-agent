@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 from db.conversation import load_conversation_documents
 from db.message import find_messages_by_conversation, save_message
@@ -62,6 +62,27 @@ def update_current_action(state: AgentState, action) -> AgentState:
 
 def update_thoughts(state: AgentState, thoughts) -> AgentState:
     return state.copy(thoughts=thoughts)
+
+
+def find_task(state: AgentState, task_id: str) -> Optional[Task]:
+    """
+    Find a task in state.tasks by UUID first, then by name if UUID search fails.
+    
+    Args:
+        state: Current agent state
+        task_id: UUID or name of the task to find
+        
+    Returns:
+        Task if found, None otherwise
+    """
+    # First try to find by UUID
+    task = next((task for task in state.tasks if task.uuid == task_id), None)
+    
+    # If not found by UUID, try to find by name
+    if task is None:
+        task = next((task for task in state.tasks if task.name == task_id), None)
+        
+    return task
 
 
 def should_continue(state: AgentState) -> bool:
