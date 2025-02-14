@@ -3,7 +3,7 @@ from typing import List, Dict, Any, Optional
 from db.conversation import load_conversation_documents
 from db.message import find_messages_by_conversation, save_message
 from models.document import Document
-from models.state import AgentState, AgentPhase, Thoughts
+from models.state import AgentState, AgentPhase, Thoughts, Task
 from utils.message import create_message
 
 
