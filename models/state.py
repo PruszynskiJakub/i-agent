@@ -1,11 +1,11 @@
+import enum
 from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional
 from uuid import UUID
-import enum
 
-from models.action import ActionRecord
-from models.message import Message
 from models.document import Document
+from models.message import Message
+
 
 class AgentPhase(enum.Enum):
     INTENT = "intent"
@@ -15,11 +15,13 @@ class AgentPhase(enum.Enum):
     EXECUTE = "execute"
     ANSWER = "answer"
 
+
 @dataclass(frozen=True)
 class ToolThought:
     """A single potential tool usage or action idea."""
     query: str
     tool_name: str
+
 
 @dataclass(frozen=True)
 class Thoughts:
@@ -27,31 +29,39 @@ class Thoughts:
     tool_thoughts: List[ToolThought] = field(default_factory=list)
     user_intent: str = ""
 
+
 @dataclass(frozen=True)
-class Interaction:
-    """
-    Represents the current (or latest) interaction step
-    """
-    overview: str
-    tool: str
+class Action:
+    uuid: str
+    name: str
+    tool_name: str
     tool_uuid: Optional[UUID]
-    tool_action: str
-    query: str
-    payload: Dict[str, Any]
-    status: str = "PENDING"
+    input_payload: Dict[str, Any]
+    output_documents: List[Document]
+
+@dataclass(frozen=True)
+class Task:
+    uuid: str
+    name: str
+    description: str
+    actions: List[Action]
+    status: str  # pending or done
+
 
 @dataclass(frozen=True)
 class AgentState:
     conversation_uuid: str
+    messages: List[Message]
+    tasks: List[Task]
+    message_documents: List[Document]
+
+    phase: AgentPhase
     current_step: int
     max_steps: int
-    phase: AgentPhase
-    messages: List[Message]
-    action_history: List[ActionRecord]
-    interaction: Optional[Interaction]
-    thoughts: Optional[Thoughts] = None
-    conversation_documents: List[Document] = field(default_factory=list)
-    dynamic_context: str = ""
+    current_task: Optional[Task]
+    current_action: Optional[Action]
+    thoughts: Thoughts
+    dynamic_context: str
 
     @property
     def user_query(self) -> str:
