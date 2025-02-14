@@ -12,7 +12,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         conversation_uuid=conversation_uuid,
         messages=find_messages_by_conversation(conversation_uuid),
         tasks=[],
-        message_documents=load_conversation_documents(conversation_uuid),
+        conversation_documents=load_conversation_documents(conversation_uuid),
         current_step=0,
         max_steps=4,
         phase=AgentPhase.INTENT,

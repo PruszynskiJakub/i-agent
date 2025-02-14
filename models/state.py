@@ -58,7 +58,7 @@ class AgentState(BaseModel):
     conversation_uuid: str
     messages: List[Message]
     tasks: List[Task]
-    message_documents: List[Document]
+    conversation_documents: List[Document]
 
     phase: AgentPhase
     current_step: int
