@@ -48,5 +48,21 @@ def set_dynamic_context(state: AgentState, context: str) -> AgentState:
     return state.copy(dynamic_context=context)
 
 
+def update_current_task(state: AgentState, task) -> AgentState:
+    return state.copy(current_task=task)
+
+
+def update_tasks(state: AgentState, tasks) -> AgentState:
+    return state.copy(tasks=tasks)
+
+
+def update_current_action(state: AgentState, action) -> AgentState:
+    return state.copy(current_action=action)
+
+
+def update_thoughts(state: AgentState, thoughts) -> AgentState:
+    return state.copy(thoughts=thoughts)
+
+
 def should_continue(state: AgentState) -> bool:
     return state.current_step < state.max_steps
