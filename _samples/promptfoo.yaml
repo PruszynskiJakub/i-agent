@@ -1,0 +1,7 @@
+prompts:
+  - "langfuse://foo-bar-prompt:3"
+providers:
+  - openai:gpt-4o-mini
+tests:
+  - vars:
+      # ...

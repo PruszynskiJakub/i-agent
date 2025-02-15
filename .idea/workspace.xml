@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/state.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove redundant methods">
+      <change afterPath="$PROJECT_DIR$/_samples/promptfoo.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,22 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00213" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739221197480</created>
-      <option name="number" value="00213" />
-      <option name="presentableId" value="LOCAL-00213" />
-      <option name="project" value="LOCAL" />
-      <updated>1739221197480</updated>
-    </task>
-    <task id="LOCAL-00214" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739221296860</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1739221296860</updated>
     </task>
     <task id="LOCAL-00215" summary="Improve">
       <option name="closed" value="true" />
@@ -638,7 +622,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739611028640</updated>
     </task>
-    <option name="localTasksCounter" value="262" />
+    <task id="LOCAL-00262" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739611104552</created>
+      <option name="number" value="00262" />
+      <option name="presentableId" value="LOCAL-00262" />
+      <option name="project" value="LOCAL" />
+      <updated>1739611104552</updated>
+    </task>
+    <task id="LOCAL-00263" summary="Remove redundant methods">
+      <option name="closed" value="true" />
+      <created>1739611158897</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1739611158897</updated>
+    </task>
+    <option name="localTasksCounter" value="264" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -668,7 +668,6 @@
     <MESSAGE value="Fix" />
     <MESSAGE value="Implement agent_intent" />
     <MESSAGE value="Rebuild AgentState class" />
-    <MESSAGE value="Remove redundant methods" />
     <MESSAGE value="Change property name" />
     <MESSAGE value="Rename method" />
     <MESSAGE value="Update intent.py" />
@@ -678,6 +677,7 @@
     <MESSAGE value="Create select" />
     <MESSAGE value="Add current_tool to the state" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Remove redundant methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove redundant methods" />
   </component>
 </project>
