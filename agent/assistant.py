@@ -9,7 +9,7 @@ from agent.intent import agent_intent
 from llm.tracing import create_trace, end_trace
 from logger.logger import log_info, log_error
 from models.state import AgentState
-from utils.state import should_continue, new_interaction, complete_interaction
+from utils.state import should_continue, new_interaction, complete_thinking_session
 
 
 async def agent_run(in_state: AgentState) -> str:
@@ -48,7 +48,7 @@ async def agent_run(in_state: AgentState) -> str:
 
             state = await agent_define(state, trace)
             state = await agent_execute(state, trace)
-            state = complete_interaction(state)
+            state = complete_thinking_session(state)
 
         state = await agent_answer(state, trace)
         final_answer = state.assistant_response
