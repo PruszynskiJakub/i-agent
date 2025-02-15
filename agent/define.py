@@ -3,8 +3,9 @@ import json
 from llm import open_ai
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
+from models.state import Action
 from tools.todoist import get_dynamic_context
-from utils.state import AgentState, update_interaction, update_phase, AgentPhase
+from utils.state import AgentState, update_phase, AgentPhase, update_current_action
 
 
 async def agent_define(state: AgentState, trace) -> AgentState:
@@ -32,9 +33,9 @@ async def agent_define(state: AgentState, trace) -> AgentState:
 
         # Format the system prompt with current state
         system_prompt = prompt.compile(
-            task_name="",
-            action_name="",
-            selected_tool="",
+            task_name=state.current_task.name,
+            action_name=state.current_action.name,
+            selected_tool=state.current_tool,
             facts="",
             tool_context="",
             tasks="",
@@ -63,9 +64,12 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         # Parse response into Definition object
         try:
             response_data = json.loads(completion)
-            updated_state = update_interaction(state, {
-                'payload': response_data.get("payload", {})
-            })
+            updated_state = update_current_action(
+                state,
+                {
+
+                }
+            )
 
         except (json.JSONDecodeError, ValueError) as e:
             generation.end(
