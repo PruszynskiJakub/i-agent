@@ -245,4 +245,5 @@ def format_facts() -> str:
     return f"""
     - Current date - {today.strftime('%Y-%m-%d')}
     - Username is Kuba
+    - Your name is iAgent
     """
