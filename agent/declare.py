@@ -10,7 +10,7 @@ from utils.state import (
 )
 
 
-async def agent_select(state: AgentState, trace) -> AgentState:
+async def agent_declare(state: AgentState, trace) -> AgentState:
     """
     Process the agent's decision after planning phase
     
