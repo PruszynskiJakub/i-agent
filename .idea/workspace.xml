@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Create select">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add current_tool to the state">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/select.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/select.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,14 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00208" summary="Modify allowed domains">
-      <option name="closed" value="true" />
-      <created>1739215505606</created>
-      <option name="number" value="00208" />
-      <option name="presentableId" value="LOCAL-00208" />
-      <option name="project" value="LOCAL" />
-      <updated>1739215505606</updated>
     </task>
     <task id="LOCAL-00209" summary="Improve">
       <option name="closed" value="true" />
@@ -638,7 +630,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739532754402</updated>
     </task>
-    <option name="localTasksCounter" value="257" />
+    <task id="LOCAL-00257" summary="Add current_tool to the state">
+      <option name="closed" value="true" />
+      <created>1739568664542</created>
+      <option name="number" value="00257" />
+      <option name="presentableId" value="LOCAL-00257" />
+      <option name="project" value="LOCAL" />
+      <updated>1739568664542</updated>
+    </task>
+    <option name="localTasksCounter" value="258" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modify allowed domains" />
     <MESSAGE value="Turn off scraping for now" />
     <MESSAGE value="Save" />
     <MESSAGE value="Remove final answer from state" />
@@ -678,6 +677,7 @@
     <MESSAGE value="Add todo" />
     <MESSAGE value="Imrove find_task" />
     <MESSAGE value="Create select" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create select" />
+    <MESSAGE value="Add current_tool to the state" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add current_tool to the state" />
   </component>
 </project>

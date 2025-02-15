@@ -56,10 +56,10 @@ async def agent_select(state: AgentState, trace) -> AgentState:
         )
 
         try:
-            response_data = json.loads(completion)
+            result = json.loads(completion)['result']
             new_state = update_current_task(
                 state,
-                find_task(state, response_data["task_uuid"], response_data["task_name"])
+                find_task(state, result["task_uuid"], result["task_name"])
             )
 
         except json.JSONDecodeError as e:
@@ -71,7 +71,7 @@ async def agent_select(state: AgentState, trace) -> AgentState:
             raise Exception(f"Failed to parse JSON response: {str(e)}")
 
         # End the generation trace
-        end_generation(generation, output=response_data)
+        end_generation(generation, output=result)
 
         return new_state
 
