@@ -2,7 +2,8 @@ from dataclasses import field
 from enum import Enum
 from typing import List, Dict, Any, Optional
 from uuid import UUID
-from pydantic import BaseModel, Field, ConfigDict
+
+from pydantic import BaseModel, ConfigDict
 
 from models.document import Document
 from models.message import Message
@@ -36,10 +37,12 @@ class Thoughts(BaseModel):
 class Action(BaseModel):
     uuid: str
     name: str
-    tool_name: str
-    tool_uuid: Optional[UUID]
-    input_payload: Dict[str, Any]
-    output_documents: List[Document]
+    tool_uuid: str
+    task_uuid: str
+    input_payload: Dict[str, Any] = field(default_factory=dict)
+    output_documents: List[Document] = field(default_factory=list)
+    step: int
+    status: str # pending, done, failed
 
     model_config = ConfigDict(frozen=True)
 
