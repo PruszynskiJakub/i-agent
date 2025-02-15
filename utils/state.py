@@ -19,14 +19,14 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         current_task=None,
         current_action=None,
         thoughts=Thoughts(),
-        dynamic_context=""
+        tool_dynamic_context=""
     )
 
 
 def complete_thinking_session(state: AgentState) -> AgentState:
     return state.copy(
         current_step=state.current_step + 1,
-        dynamic_context="",
+        tool_dynamic_context="",
         current_task=None,
         current_action=None,
         current_tool=None,
@@ -47,8 +47,8 @@ def update_phase(state: AgentState, new_phase: AgentPhase) -> AgentState:
     return state.copy(phase=new_phase)
 
 
-def set_dynamic_context(state: AgentState, context: str) -> AgentState:
-    return state.copy(dynamic_context=context)
+def set__tool_dynamic_context(state: AgentState, context: str) -> AgentState:
+    return state.copy(tool_dynamic_context=context)
 
 
 def update_current_task(state: AgentState, task) -> AgentState:

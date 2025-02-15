@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove redundant methods">
-      <change afterPath="$PROJECT_DIR$/_samples/promptfoo.yaml" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improive">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,22 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00215" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739261940910</created>
-      <option name="number" value="00215" />
-      <option name="presentableId" value="LOCAL-00215" />
-      <option name="project" value="LOCAL" />
-      <updated>1739261940910</updated>
-    </task>
-    <task id="LOCAL-00216" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739262119527</created>
-      <option name="number" value="00216" />
-      <option name="presentableId" value="LOCAL-00216" />
-      <option name="project" value="LOCAL" />
-      <updated>1739262119527</updated>
     </task>
     <task id="LOCAL-00217" summary="Improve">
       <option name="closed" value="true" />
@@ -638,7 +622,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739611158897</updated>
     </task>
-    <option name="localTasksCounter" value="264" />
+    <task id="LOCAL-00264" summary="Add promptfoo sample">
+      <option name="closed" value="true" />
+      <created>1739611759739</created>
+      <option name="number" value="00264" />
+      <option name="presentableId" value="LOCAL-00264" />
+      <option name="project" value="LOCAL" />
+      <updated>1739611759739</updated>
+    </task>
+    <task id="LOCAL-00265" summary="Improive">
+      <option name="closed" value="true" />
+      <created>1739612921864</created>
+      <option name="number" value="00265" />
+      <option name="presentableId" value="LOCAL-00265" />
+      <option name="project" value="LOCAL" />
+      <updated>1739612921864</updated>
+    </task>
+    <option name="localTasksCounter" value="266" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -653,8 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Turn off scraping for now" />
-    <MESSAGE value="Save" />
     <MESSAGE value="Remove final answer from state" />
     <MESSAGE value="Rename ToolCandidate into ToolThougth" />
     <MESSAGE value="Add user intent to Thoughts" />
@@ -678,6 +676,8 @@
     <MESSAGE value="Add current_tool to the state" />
     <MESSAGE value="Improve" />
     <MESSAGE value="Remove redundant methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove redundant methods" />
+    <MESSAGE value="Add promptfoo sample" />
+    <MESSAGE value="Improive" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improive" />
   </component>
 </project>

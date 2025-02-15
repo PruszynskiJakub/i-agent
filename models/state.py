@@ -63,11 +63,11 @@ class AgentState(BaseModel):
     phase: AgentPhase
     current_step: int
     max_steps: int
+    thoughts: Thoughts
     current_task: Optional[Task]
     current_action: Optional[Action]
     current_tool: Optional[str]
-    thoughts: Thoughts
-    dynamic_context: str
+    tool_dynamic_context: str
 
     @property
     def user_query(self) -> str:
