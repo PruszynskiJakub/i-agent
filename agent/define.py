@@ -37,7 +37,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             action_name=state.current_action.name,
             selected_tool=state.current_tool,
             facts=format_facts(),
-            tool_context="",
+            tool_context=dynamic_context,
             tasks="",
             action=""
         )
