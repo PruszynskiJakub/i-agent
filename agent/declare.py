@@ -6,7 +6,7 @@ from llm.tracing import create_generation, end_generation
 from models.state import AgentState, AgentPhase
 from utils.state import (
     update_phase,
-    update_current_task, find_task
+    update_current_task, find_task, update_current_tool
 )
 
 
@@ -61,6 +61,7 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
                 state,
                 find_task(state, result["task_uuid"], result["task_name"])
             )
+            new_state = update_current_tool(new_state, result["tool_name"])
 
         except json.JSONDecodeError as e:
             generation.end(

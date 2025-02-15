@@ -62,6 +62,9 @@ def update_tasks(state: AgentState, tasks) -> AgentState:
 def update_current_action(state: AgentState, action) -> AgentState:
     return state.copy(current_action=action)
 
+def update_current_tool(state: AgentState, tool) -> AgentState:
+    return state.copy(current_tool=tool)
+
 
 def update_thoughts(state: AgentState, thoughts) -> AgentState:
     return state.copy(thoughts=thoughts)
