@@ -1,13 +1,10 @@
 import json
 
-from utils.state import AgentState, update_interaction, update_phase, AgentPhase
-from tools.__init__ import get_tool_action_instructions
 from llm import open_ai
-from llm.format import format_messages, format_actions_history, format_documents, \
-    format_interaction, format_facts
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
 from tools.todoist import get_dynamic_context
+from utils.state import AgentState, update_interaction, update_phase, AgentPhase
 
 
 async def agent_define(state: AgentState, trace) -> AgentState:
@@ -35,12 +32,13 @@ async def agent_define(state: AgentState, trace) -> AgentState:
 
         # Format the system prompt with current state
         system_prompt = prompt.compile(
-            documents=format_documents(state.conversation_documents),
-            tool=format_interaction(state.interaction),
-            instructions=get_tool_action_instructions(state.interaction.tool, state.interaction.tool_action),
-            dynamic_context=dynamic_context,
-            actions=format_actions_history(state.action_history),
-            facts=format_facts()
+            task_name="",
+            action_name="",
+            selected_tool="",
+            facts="",
+            tool_context="",
+            tasks="",
+            action=""
         )
 
         # Create generation trace

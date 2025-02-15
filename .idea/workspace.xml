@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improive">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Rename field in AgentState">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,14 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00217" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739262977514</created>
-      <option name="number" value="00217" />
-      <option name="presentableId" value="LOCAL-00217" />
-      <option name="project" value="LOCAL" />
-      <updated>1739262977514</updated>
     </task>
     <task id="LOCAL-00218" summary="Turn off scraping for now">
       <option name="closed" value="true" />
@@ -638,7 +629,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739612921864</updated>
     </task>
-    <option name="localTasksCounter" value="266" />
+    <task id="LOCAL-00266" summary="Rename field in AgentState">
+      <option name="closed" value="true" />
+      <created>1739614168927</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1739614168927</updated>
+    </task>
+    <option name="localTasksCounter" value="267" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -653,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Remove final answer from state" />
     <MESSAGE value="Rename ToolCandidate into ToolThougth" />
     <MESSAGE value="Add user intent to Thoughts" />
     <MESSAGE value="Rename field" />
@@ -678,6 +676,7 @@
     <MESSAGE value="Remove redundant methods" />
     <MESSAGE value="Add promptfoo sample" />
     <MESSAGE value="Improive" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improive" />
+    <MESSAGE value="Rename field in AgentState" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename field in AgentState" />
   </component>
 </project>

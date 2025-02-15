@@ -33,7 +33,9 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
 
         # Format system prompt with current state
         system_prompt = prompt.compile(
-            # TODO
+            tools="",
+            facts="",
+            tasks=""
         )
 
         # Create generation trace
