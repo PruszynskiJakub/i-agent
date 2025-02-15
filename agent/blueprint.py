@@ -66,7 +66,7 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
                         status=task["status"],
                         actions=[]
                     )
-                    for task in response_data["blueprint"]
+                    for task in response_data["result"]
                 ]
             )
 
