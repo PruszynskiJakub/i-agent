@@ -1,6 +1,7 @@
 import json
 
 from llm import open_ai
+from llm.format import format_facts
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
 from models.state import Action
@@ -36,7 +37,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             task_name=state.current_task.name,
             action_name=state.current_action.name,
             selected_tool=state.current_tool,
-            facts="",
+            facts=format_facts(),
             tool_context="",
             tasks="",
             action=""

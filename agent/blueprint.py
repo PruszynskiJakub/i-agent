@@ -2,6 +2,7 @@ import json
 import uuid
 
 from llm import open_ai
+from llm.format import format_facts
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.state import (
@@ -29,7 +30,7 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
 
         # TODO
         system_prompt = prompt.compile(
-            facts="",
+            facts=format_facts(),
             thoughts="",
             tools="",
             tasks=""

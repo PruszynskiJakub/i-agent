@@ -1,6 +1,7 @@
 import json
 
 from llm import open_ai
+from llm.format import format_facts
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.state import AgentState, AgentPhase
@@ -34,7 +35,7 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
         # Format system prompt with current state
         system_prompt = prompt.compile(
             tools="",
-            facts="",
+            facts=format_facts(),
             tasks=""
         )
 
