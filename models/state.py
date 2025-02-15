@@ -34,7 +34,7 @@ class Thoughts(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
-class Action(BaseModel):
+class TaskAction(BaseModel):
     uuid: str
     name: str
     tool_uuid: str
@@ -51,7 +51,7 @@ class Task(BaseModel):
     uuid: str
     name: str
     description: str
-    actions: List[Action]
+    actions: List[TaskAction]
     status: str  # pending or done
 
     model_config = ConfigDict(frozen=True)
@@ -68,7 +68,7 @@ class AgentState(BaseModel):
     max_steps: int
     thoughts: Thoughts
     current_task: Optional[Task]
-    current_action: Optional[Action]
+    current_action: Optional[TaskAction]
     current_tool: Optional[str]
     tool_dynamic_context: str
 

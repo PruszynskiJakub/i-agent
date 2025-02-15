@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove unused methods">
+      <change beforePath="$PROJECT_DIR$/agent/define.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/define.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,22 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00222" summary="Add todo">
-      <option name="closed" value="true" />
-      <created>1739270042374</created>
-      <option name="number" value="00222" />
-      <option name="presentableId" value="LOCAL-00222" />
-      <option name="project" value="LOCAL" />
-      <updated>1739270042374</updated>
-    </task>
-    <task id="LOCAL-00223" summary="Save">
-      <option name="closed" value="true" />
-      <created>1739348308699</created>
-      <option name="number" value="00223" />
-      <option name="presentableId" value="LOCAL-00223" />
-      <option name="project" value="LOCAL" />
-      <updated>1739348308699</updated>
     </task>
     <task id="LOCAL-00224" summary="Improve">
       <option name="closed" value="true" />
@@ -637,7 +622,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739628204869</updated>
     </task>
-    <option name="localTasksCounter" value="271" />
+    <task id="LOCAL-00271" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739628427191</created>
+      <option name="number" value="00271" />
+      <option name="presentableId" value="LOCAL-00271" />
+      <option name="project" value="LOCAL" />
+      <updated>1739628427191</updated>
+    </task>
+    <task id="LOCAL-00272" summary="Remove unused methods">
+      <option name="closed" value="true" />
+      <created>1739628654918</created>
+      <option name="number" value="00272" />
+      <option name="presentableId" value="LOCAL-00272" />
+      <option name="project" value="LOCAL" />
+      <updated>1739628654918</updated>
+    </task>
+    <option name="localTasksCounter" value="273" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -652,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add user intent to Thoughts" />
     <MESSAGE value="Rename field" />
     <MESSAGE value="rename field" />
     <MESSAGE value="use should_scrape method" />
@@ -677,6 +677,7 @@
     <MESSAGE value="Rename field in AgentState" />
     <MESSAGE value="Add empty params to prompts" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Remove unused methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unused methods" />
   </component>
 </project>
