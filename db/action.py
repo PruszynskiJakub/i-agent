@@ -3,7 +3,7 @@ from typing import List, Dict, Any, Optional
 from uuid import UUID, uuid4
 
 from db.document import find_document_by_uuid
-from db.models import ActionRecordModel, ActionDocumentModel
+from db.models import TaskActionRecordModel, ActionDocumentModel
 from models.action import ActionRecord
 from models.document import Document
 
@@ -18,9 +18,9 @@ def find_action_records_by_conversation(conversation_uuid: str) -> List[ActionRe
     Returns:
         List of Action objects
     """
-    query = ActionRecordModel.select().where(
-        ActionRecordModel.conversation_uuid == conversation_uuid
-    ).order_by(ActionRecordModel.created_at)
+    query = TaskActionRecordModel.select().where(
+        TaskActionRecordModel.conversation_uuid == conversation_uuid
+    ).order_by(TaskActionRecordModel.created_at)
     
     records = []
     for record_model in query:
@@ -72,7 +72,7 @@ def save_action_record(
     record_uuid = uuid4()
     
     # Create action record in DB
-    record_model = ActionRecordModel.create(
+    record_model = TaskActionRecordModel.create(
         uuid=str(record_uuid),
         name=name,
         tool=tool,

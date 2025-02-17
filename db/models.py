@@ -46,7 +46,7 @@ class DocumentModel(BaseModel):
     class Meta:
         table_name = 'documents'
 
-class ActionRecordModel(BaseModel):
+class TaskActionRecordModel(BaseModel):
     uuid = CharField(primary_key=True)
     name = CharField()
     tool = CharField()
@@ -58,10 +58,10 @@ class ActionRecordModel(BaseModel):
     created_at = DateTimeField(default=datetime.utcnow)
 
     class Meta:
-        table_name = 'actions'
+        table_name = 'task_actions'
 
 class ActionDocumentModel(BaseModel):
-    action = ForeignKeyField(ActionRecordModel, backref='action_documents')
+    action = ForeignKeyField(TaskActionRecordModel, backref='task_action_documents')
     document = ForeignKeyField(DocumentModel, backref='document_actions')
     created_at = DateTimeField(default=datetime.utcnow)
 
