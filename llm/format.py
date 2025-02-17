@@ -4,7 +4,7 @@ from typing import List
 
 from models.action import ActionRecord
 from models.document import Document
-from models.state import Task
+from models.state import Task, Thoughts
 
 
 def format_actions_history(actions: List[ActionRecord]) -> str:
