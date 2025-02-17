@@ -39,6 +39,7 @@ class TaskAction(BaseModel):
     name: str
     tool_uuid: str
     task_uuid: str
+    tool_action: str
     input_payload: Dict[str, Any] = field(default_factory=dict)
     output_documents: List[Document] = field(default_factory=list)
     step: int
