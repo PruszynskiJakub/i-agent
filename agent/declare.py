@@ -62,7 +62,7 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
             result = json.loads(completion)['result']
             new_state = update_current_task(
                 state,
-                find_task(state, result["task_uuid"], result["task_name"])
+                find_task(state, result["task_uuid"])
             )
             new_state = update_current_tool(new_state, result["tool_name"])
 
