@@ -37,7 +37,7 @@ async def agent_run(in_state: AgentState) -> str:
             state = await agent_blueprint(state, trace)
             state = await agent_declare(state, trace)
 
-            if state.interaction and state.interaction.tool == 'final_answer':
+            if state.current_tool and state.current_tool == 'final_answer':
                 log_info("🎯 Reached final answer step")
                 break
 
