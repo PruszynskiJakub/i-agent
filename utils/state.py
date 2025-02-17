@@ -59,8 +59,15 @@ def update_tasks(state: AgentState, tasks) -> AgentState:
     return state.copy(tasks=tasks)
 
 
-def update_current_action(state: AgentState, action) -> AgentState:
-    return state.copy(current_action=action)
+def update_current_action(state: AgentState, action_updates: dict) -> AgentState:
+    """Update current action with partial updates while preserving other fields"""
+    if state.current_action is None:
+        return state.copy(current_action=action_updates)
+        
+    updated_action = state.current_action.model_copy()
+    for key, value in action_updates.items():
+        setattr(updated_action, key, value)
+    return state.copy(current_action=updated_action)
 
 def update_current_tool(state: AgentState, tool) -> AgentState:
     return state.copy(current_tool=tool)

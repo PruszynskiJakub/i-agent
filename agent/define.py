@@ -64,12 +64,14 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         # Parse response into Definition object
         try:
             response_data = json.loads(completion)
-            updated_state = update_current_action(
-                state,
-                {
-
-                }
-            )
+            result = response_data.get("result", {})
+            
+            action_updates = {
+                "tool_uuid": result.get("action"),
+                "input_payload": result.get("payload", {})
+            }
+            
+            updated_state = update_current_action(state, action_updates)
 
         except (json.JSONDecodeError, ValueError) as e:
             generation.end(
