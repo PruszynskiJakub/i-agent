@@ -1,13 +1,15 @@
 import json
+import uuid
+from argparse import Action
 
 from llm import open_ai
 from llm.format import format_facts
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.state import AgentState, AgentPhase
+from models.state import AgentState, AgentPhase, TaskAction
 from utils.state import (
     update_phase,
-    update_current_task, find_task, update_current_tool
+    update_current_task, find_task, update_current_tool, update_current_action
 )
 
 
@@ -60,11 +62,24 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
 
         try:
             result = json.loads(completion)['result']
+            selected_task = find_task(state, result["task_uuid"])
+
+            action = TaskAction(
+                uuid=str(uuid.uuid4()),
+                name=result["name"],
+                task_uuid=selected_task.uuid,
+                tool_uuid=result["tool_name"],
+                status="pending",
+                input_payload={},
+                step=state.current_step,
+                tool_action=""
+            )
             new_state = update_current_task(
                 state,
-                find_task(state, result["task_uuid"])
+                selected_task
             )
             new_state = update_current_tool(new_state, result["tool_name"])
+            new_state = update_current_action(new_state, action.model_dump())
 
         except json.JSONDecodeError as e:
             generation.end(
