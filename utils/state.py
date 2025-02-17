@@ -23,7 +23,7 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
     )
 
 
-def complete_thinking_session(state: AgentState) -> AgentState:
+def complete_thinking_step(state: AgentState) -> AgentState:
     return state.copy(
         current_step=state.current_step + 1,
         tool_dynamic_context="",
