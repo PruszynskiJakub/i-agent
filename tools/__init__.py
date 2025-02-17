@@ -11,6 +11,21 @@ from tools.ynab.service import execute_ynab
 def get_tools():
     return [
         {
+            "uuid": UUID("0852748f-6211-41bb-bcfa-d81716fe84e7"),
+            "name": "final_answer",
+            "description": "responsible for providing the final answer to the user's query",
+            "actions": {
+                "respond": {
+                    "description": "Responds to the user with the final answer to their query",
+                    "instructions": """
+                        {
+                            "answer": "Final answer to the user query"
+                        }
+                        """
+                }
+            }
+        },
+        {
             "uuid": UUID("d6ee492f-8d9a-4e88-9beb-6de21c52ef85"),
             "name": "document_processor",
             "description": "responsible for processing documents in various ways such as summarization, extraction, etc.",
