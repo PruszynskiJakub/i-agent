@@ -2,7 +2,7 @@ import json
 import uuid
 
 from llm import open_ai
-from llm.format import format_facts
+from llm.format import format_facts, format_tools, format_tasks, format_thoughts
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.state import (
@@ -10,6 +10,7 @@ from models.state import (
     AgentPhase,
     Task
 )
+from tools import get_tools
 from utils.state import update_phase, update_tasks
 
 
@@ -31,9 +32,9 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
         # TODO
         system_prompt = prompt.compile(
             facts=format_facts(),
-            thoughts="",
-            tools="",
-            tasks=""
+            thoughts=format_thoughts(state.thoughts),
+            tools=format_tools(get_tools()),
+            tasks=format_tasks(state.tasks)
         )
 
         # Create generation trace

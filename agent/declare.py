@@ -3,10 +3,11 @@ import uuid
 from argparse import Action
 
 from llm import open_ai
-from llm.format import format_facts
+from llm.format import format_facts, format_tools, format_tasks
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.state import AgentState, AgentPhase, TaskAction
+from tools import get_tools
 from utils.state import (
     update_phase,
     update_current_task, find_task, update_current_tool, update_current_action
@@ -36,9 +37,9 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
 
         # Format system prompt with current state
         system_prompt = prompt.compile(
-            tools="",
+            tools=format_tools(get_tools()),
             facts=format_facts(),
-            tasks=""
+            tasks=format_tasks(state.tasks)
         )
 
         # Create generation trace
