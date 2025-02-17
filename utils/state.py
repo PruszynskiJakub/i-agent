@@ -77,14 +77,9 @@ def update_thoughts(state: AgentState, thoughts) -> AgentState:
     return state.copy(thoughts=thoughts)
 
 
-def find_task(state: AgentState, task_uuid: str, task_name: str) -> Optional[Task]:
+def find_task(state: AgentState, task_uuid: str) -> Optional[Task]:
     # First try to find by UUID
     task = next((task for task in state.tasks if task.uuid == task_uuid), None)
-
-    # If not found by UUID, try to find by name
-    if task is None:
-        task = next((task for task in state.tasks if task.name == task_name), None)
-
     return task
 
 
