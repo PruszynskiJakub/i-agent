@@ -34,7 +34,6 @@ async def agent_run(in_state: AgentState) -> str:
         while should_continue(state):
             log_info(f"📍 Step {state.current_step + 1}/{state.max_steps}")
 
-            state = new_interaction(state)
             state = await agent_blueprint(state, trace)
             state = await agent_declare(state, trace)
 
