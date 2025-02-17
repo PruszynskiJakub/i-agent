@@ -67,10 +67,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             result = response_data.get("result", {})
             
             action_updates = {
-                "uuid": state.current_action.uuid,  # preserve existing uuid
-                "task_uuid": state.current_task.uuid,  # from current task
-                "tool_uuid": result.get("action"),
-                "name": state.current_action.name,  # preserve existing name
+                "tool_action": result['action'],
                 "input_payload": result.get("payload", {})
             }
             
