@@ -90,6 +90,32 @@ def format_documents(documents: List[Document]) -> str:
     return "\n".join(doc_descriptions)
 
 
+def format_thoughts(thoughts: Thoughts) -> str:
+    """
+    Formats Thoughts into an XML-like string representation.
+
+    Args:
+        thoughts: Thoughts object containing user intent and tool thoughts
+
+    Returns:
+        str: Formatted string describing thoughts and tool candidates
+    """
+    result = "<thoughts>\n"
+    result += f"  <user_intent>{thoughts.user_intent}</user_intent>\n"
+    
+    if thoughts.tool_thoughts:
+        result += "  <tool_thoughts>\n"
+        for thought in thoughts.tool_thoughts:
+            result += "    <tool_thought>\n"
+            result += f"      <query>{thought.query}</query>\n"
+            result += f"      <tool>{thought.tool_name}</tool>\n"
+            result += "    </tool_thought>\n"
+        result += "  </tool_thoughts>\n"
+    
+    result += "</thoughts>"
+    return result
+
+
 def format_tasks(tasks: List[Task]) -> str:
     """
     Formats a list of tasks into an XML-like string representation.
