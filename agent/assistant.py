@@ -9,7 +9,7 @@ from agent.intent import agent_intent
 from llm.tracing import create_trace, end_trace
 from logger.logger import log_info, log_error
 from models.state import AgentState
-from utils.state import should_continue, new_interaction, complete_thinking_session
+from utils.state import should_continue, complete_thinking_session
 
 
 async def agent_run(in_state: AgentState) -> str:
