@@ -19,7 +19,8 @@ def create_or_restore_state(conversation_uuid: str) -> AgentState:
         current_task=None,
         current_action=None,
         thoughts=Thoughts(),
-        tool_dynamic_context=""
+        tool_dynamic_context=None,
+        current_tool=None,
     )
 
 

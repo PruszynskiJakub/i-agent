@@ -71,7 +71,7 @@ class AgentState(BaseModel):
     current_task: Optional[Task]
     current_action: Optional[TaskAction]
     current_tool: Optional[str]
-    tool_dynamic_context: str
+    tool_dynamic_context: Optional[str]
 
     @property
     def user_query(self) -> str:
