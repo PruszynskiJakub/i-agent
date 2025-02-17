@@ -1,12 +1,11 @@
 import json
 from datetime import datetime
 
-from models.state import AgentState
-from utils.document import create_error_document
 from llm.tracing import create_span, end_span
 from logger.logger import log_info, log_error, log_tool_call
+from models.state import AgentState
 from tools.__init__ import tool_handlers
-from utils.state import record_action
+from utils.document import create_error_document
 
 
 async def agent_execute(state: AgentState, trace) -> AgentState:
