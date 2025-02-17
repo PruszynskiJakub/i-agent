@@ -4,6 +4,7 @@ from typing import List
 
 from models.action import ActionRecord
 from models.document import Document
+from models.state import Task
 
 
 def format_actions_history(actions: List[ActionRecord]) -> str:
@@ -87,6 +88,40 @@ def format_documents(documents: List[Document]) -> str:
         doc_descriptions.append(desc)
 
     return "\n".join(doc_descriptions)
+
+
+def format_tasks(tasks: List[Task]) -> str:
+    """
+    Formats a list of tasks into an XML-like string representation.
+
+    Args:
+        tasks: List of Task objects
+
+    Returns:
+        str: Formatted string describing all tasks and their actions
+    """
+    task_descriptions = []
+    for task in tasks:
+        desc = f"<task uuid='{task.uuid}'>\n"
+        desc += f"  <name>{task.name}</name>\n"
+        desc += f"  <description>{task.description}</description>\n"
+        desc += f"  <status>{task.status}</status>\n"
+        
+        if task.actions:
+            desc += "  <actions>\n"
+            for action in task.actions:
+                desc += f"    <action uuid='{action.uuid}'>\n"
+                desc += f"      <name>{action.name}</name>\n"
+                desc += f"      <tool>{action.tool_uuid}</tool>\n"
+                desc += f"      <step>{action.step}</step>\n"
+                desc += f"      <status>{action.status}</status>\n"
+                desc += "    </action>\n"
+            desc += "  </actions>\n"
+            
+        desc += "</task>"
+        task_descriptions.append(desc)
+    
+    return "\n".join(task_descriptions)
 
 
 def format_facts() -> str:
