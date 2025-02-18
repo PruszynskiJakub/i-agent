@@ -1,9 +1,9 @@
-from models.state import AgentState
-from tools.__init__ import get_tools
 from llm import open_ai
-from llm.format import format_actions_history, format_documents, format_tools
+from llm.format import format_documents, format_tools
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
+from models.state import AgentState
+from tools.__init__ import get_tools
 from utils.state import add_message
 
 
@@ -30,10 +30,9 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
             label="latest"
         )
         system_prompt = prompt.compile(
-            actions=format_actions_history(state.action_history),
             documents=format_documents(state.conversation_documents),
             tools=format_tools(get_tools()),
-            query=state.interaction.query if state.interaction else ""
+            query=""
         )
         model = prompt.config.get("model", "gpt-4o")
 
@@ -56,7 +55,7 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
         )
 
         end_generation(generation, output=final_answer)
-        
+
         return add_message(state, content=final_answer, role="assistant")
 
     except Exception as e:
