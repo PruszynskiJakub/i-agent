@@ -16,7 +16,7 @@ def init_database():
     # Connect to database
     db.connect()
     
-    # Create tables
+    # Create tables if they don't exist
     db.create_tables([
         ConversationModel,
         MessageModel,
@@ -25,10 +25,14 @@ def init_database():
         TaskModel,
         TaskActionModel,
         TaskActionDocumentModel
-    ])
+    ], safe=True)
     
     # Close connection
     db.close()
+
+def initialize_peewee_db():
+    """Initialize the database and create all required tables"""
+    init_database()
 
 if __name__ == "__main__":
     init_database()
