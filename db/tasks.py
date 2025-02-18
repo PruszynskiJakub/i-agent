@@ -1,6 +1,7 @@
 from typing import List
 from peewee import prefetch
-from db.models import TaskModel, TaskActionModel, ActionDocumentModel, DocumentModel
+from db.models import TaskModel, TaskActionModel, DocumentModel, TaskActionDocumentModel
+
 
 def load_tasks(conversation_id: str) -> List[TaskModel]:
     # Query all tasks for the given conversation.
@@ -8,7 +9,7 @@ def load_tasks(conversation_id: str) -> List[TaskModel]:
     
     # Prepare queries for the related models.
     actions_query = TaskActionModel.select()
-    action_documents_query = ActionDocumentModel.select()
+    action_documents_query = TaskActionDocumentModel.select()
     documents_query = DocumentModel.select()
     
     # Use peewee prefetch to load related TaskActionModel and their documents.
