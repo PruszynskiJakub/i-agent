@@ -53,7 +53,7 @@ async def agent_run(in_state: AgentState) -> str:
         final_answer = state.assistant_response
 
         log_info("✅ Agent run completed")
-        log_info(f"📊 Stats: {state.current_step} steps, {len(state.action_history)} actions")
+        log_info(f"📊 Stats: {state.current_step} steps, {len(state.tasks)} tasks")
         log_info(f"💡 Final answer: {final_answer[:200]}...")
 
         end_trace(trace, output=final_answer)
