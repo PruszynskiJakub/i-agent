@@ -22,7 +22,7 @@ def format_tools(tools: List[Dict]) -> str:
         desc += f"  <name>{tool['name']}</name>\n"
         desc += f"  <description>{tool['description']}</description>\n"
         if tool.get("instructions", "").strip():
-            desc += f"  <instructions>{tool.get('instructions').strip()}</instructions>\n"
+            desc += f"  <instructions>\n{tool.get('instructions').strip()}\n</instructions>\n"
         desc += "</tool>"
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)

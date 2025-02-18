@@ -366,7 +366,7 @@ def get_tools():
             for action_name, action_data in actions.items():
                 # Remove extra whitespace from the instructions string
                 instr = action_data.get("instructions", "").strip()
-                bullet_points.append(f"- {action_name}: {instr}")
+                bullet_points.append(f"- Tool action:  {action_name}: {instr}")
             tool["instructions"] = "\n".join(bullet_points)
             
     return tools
