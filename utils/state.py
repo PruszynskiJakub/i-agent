@@ -100,6 +100,10 @@ def update_current_action(state: AgentState, action_updates: dict) -> AgentState
                 updated_tasks.append(task.model_copy())
         new_state = new_state.copy(tasks=updated_tasks)
 
+        # Persist changes to database
+        from db.tasks import save_task
+        save_task(updated_task)
+
     return new_state
 
 
