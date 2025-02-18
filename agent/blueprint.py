@@ -73,6 +73,7 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
                         name=task_data["name"],
                         description=task_data["description"],
                         status=task_data["status"],
+                        conversation_uuid=state.conversation_uuid,
                         actions=existing_task.actions
                     ))
                 else:
@@ -82,6 +83,7 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
                         name=task_data["name"],
                         description=task_data["description"],
                         status=task_data["status"],
+                        conversation_uuid=state.conversation_uuid,
                         actions=[]
                     ))
             
