@@ -66,7 +66,7 @@ class TaskActionModel(BaseModel):
     status = CharField()
     conversation_uuid = CharField()
     step_description = CharField(default='')
-    task = ForeignKeyField(TaskModel, backref='actions', null=True)
+    task = ForeignKeyField(TaskModel, backref='tasks', null=True)
     created_at = DateTimeField(default=datetime.utcnow)
 
     class Meta:
