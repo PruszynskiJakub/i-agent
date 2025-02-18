@@ -7,6 +7,7 @@
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/todoist/internal/search_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/todoist/internal/search_tasks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +82,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.todoist_complete_task">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="iAgent" />
       <option name="ENV_FILES" value="$PROJECT_DIR$/.env" />
@@ -244,8 +245,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.todoist_complete_task" />
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.todoist_complete_task" />
         <item itemvalue="Python.serper-dev" />
         <item itemvalue="Python.duckduckgo" />
         <item itemvalue="Python.download_file_from_slack" />
@@ -270,30 +271,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00259" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739610813735</created>
-      <option name="number" value="00259" />
-      <option name="presentableId" value="LOCAL-00259" />
-      <option name="project" value="LOCAL" />
-      <updated>1739610813735</updated>
-    </task>
-    <task id="LOCAL-00260" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739610864054</created>
-      <option name="number" value="00260" />
-      <option name="presentableId" value="LOCAL-00260" />
-      <option name="project" value="LOCAL" />
-      <updated>1739610864054</updated>
-    </task>
-    <task id="LOCAL-00261" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739611028640</created>
-      <option name="number" value="00261" />
-      <option name="presentableId" value="LOCAL-00261" />
-      <option name="project" value="LOCAL" />
-      <updated>1739611028640</updated>
     </task>
     <task id="LOCAL-00262" summary="Improve">
       <option name="closed" value="true" />
@@ -663,7 +640,31 @@
       <option name="project" value="LOCAL" />
       <updated>1739884635152</updated>
     </task>
-    <option name="localTasksCounter" value="308" />
+    <task id="LOCAL-00308" summary="Remove instructions">
+      <option name="closed" value="true" />
+      <created>1739886268272</created>
+      <option name="number" value="00308" />
+      <option name="presentableId" value="LOCAL-00308" />
+      <option name="project" value="LOCAL" />
+      <updated>1739886268272</updated>
+    </task>
+    <task id="LOCAL-00309" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739886387094</created>
+      <option name="number" value="00309" />
+      <option name="presentableId" value="LOCAL-00309" />
+      <option name="project" value="LOCAL" />
+      <updated>1739886387094</updated>
+    </task>
+    <task id="LOCAL-00310" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739888233917</created>
+      <option name="number" value="00310" />
+      <option name="presentableId" value="LOCAL-00310" />
+      <option name="project" value="LOCAL" />
+      <updated>1739888233917</updated>
+    </task>
+    <option name="localTasksCounter" value="311" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -678,7 +679,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Rename brainstorm.py into intent" />
     <MESSAGE value="Pass all messages for giving the answer" />
     <MESSAGE value="Fix" />
     <MESSAGE value="Implement agent_intent" />
@@ -702,6 +702,7 @@
     <MESSAGE value="Remove redundant method" />
     <MESSAGE value="Remove redundant class" />
     <MESSAGE value="Imptove" />
+    <MESSAGE value="Remove instructions" />
     <MESSAGE value="Improve" />
     <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>

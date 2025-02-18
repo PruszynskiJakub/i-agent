@@ -30,16 +30,16 @@ async def _search_tasks(params: dict, span) -> Document:
 
         # Format the results
         task_count = len(tasks)
-        
+
         result = (
-            f"Search Tasks Result\n"
+            f"Search Todos Result\n"
             f"-----------------\n"
-            f"Total tasks found: {task_count}\n\n"
-            f"Tasks\n"
+            f"Total todos found: {task_count}\n\n"
+            f"Todo items\n"
             f"-----\n"
             + (
                 "\n".join(
-                    f"Task: {task.content}\n"
+                    f"Item: {task.content}\n"
                     f"ID: {task.id}\n"
                     + (f"Labels: {', '.join(task.labels)}\n" if task.labels else "")
                     + (f"Description: {task.description}\n" if task.description else "")
@@ -48,8 +48,8 @@ async def _search_tasks(params: dict, span) -> Document:
                 ) if tasks else "No tasks found"
             )
         )
-        
-        description = "List of Todoist tasks"
+
+        description = "List of Todoist todos"
         if filter_query:
             description += f" matching filter '{filter_query}'"
         if project_id:
@@ -60,7 +60,7 @@ async def _search_tasks(params: dict, span) -> Document:
             description += f" in section {section_id}"
         if task_ids:
             description += f" matching IDs: {', '.join(task_ids)}"
-        
+
         return create_document(
             text=result,
             metadata_override={

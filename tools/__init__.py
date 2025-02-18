@@ -143,7 +143,7 @@ def get_tools():
             "description": "responsible for managing tasks and projects in Todoist",
             "actions": {
                 "add_tasks": {
-                    "description": "Creates one or more tasks in Todoist. Supports natural language for dates and rich task metadata.",
+                    "description": "Creates one or more todo items in Todoist. Supports natural language for dates and rich task metadata.",
                     "instructions": """
                     {
                         "tasks": [{
@@ -181,7 +181,7 @@ def get_tools():
                     """
                 },
                 "search_tasks": {
-                    "description": "Searches and retrieves tasks using basic filters for dates, projects, and labels",
+                    "description": "Searches and retrieves todo items using basic filters for dates, projects, and labels",
                     "instructions": """
                     {
                       "project_id": "Optional project ID to narrow down tasks",
@@ -203,16 +203,16 @@ def get_tools():
                     }
                     
                     Returns:
-                    A list of matching tasks with their IDs, titles, due dates,
+                    A list of matching todo items with their IDs, titles, due dates,
                     projects and labels.
                 """
                 },
                 "update_tasks": {
-                    "description": "Updates existing tasks with new content, metadata, or settings while preserving task history and relationships",
+                    "description": "Updates existing todo items with new content, metadata, or settings while preserving item history and relationships",
                     "instructions": """
                     {
-                        "tasks": [{
-                            "id": "task_id",
+                        "items": [{
+                            "id": "todo_item_id",
                             "content": "Updated task title",
                             "description": "Updated description",
                             "priority": 1-4,
@@ -227,21 +227,21 @@ def get_tools():
                     
                     Usage:
                     - Updates existing tasks' content and metadata
-                    - Task ID is required, other fields are optional
+                    - Todo item ID is required, other fields are optional
                     - Do not use for completing tasks (use complete_tasks instead)
                     - Do not use for moving tasks (use move_tasks instead)
                     """
                 },
                 "complete_tasks": {
-                    "description": "Marks one or more tasks as complete, updating their status and completion timestamp",
+                    "description": "Marks one or more todo items as completed, updating their status and completion timestamp",
                     "instructions": """
                     {
-                        "task_ids": ["task_id1", "task_id2"]
+                        "ids": ["id1", "id2"]
                     }
                     
                     Usage:
-                    - Marks one or more tasks as complete
-                    - Requires task IDs
+                    - Marks one or more todo items as complete
+                    - Requires items IDs
                     """
                 },
                 "move_tasks": {
