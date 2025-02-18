@@ -139,3 +139,36 @@ def format_facts() -> str:
     - Username is Kuba
     - Your name is iAgent
     """
+
+
+def format_tool(tool: str) -> str:
+    """
+    Formats a single tool into an XML-like string representation including its name,
+    tool actions, and their descriptions.
+
+    Args:
+        tool (str): The name of the tool to format.
+
+    Returns:
+        str: Formatted string with the tool name and its actions.
+    """
+    from tools import get_tool_by_name  # Import to lookup tool details
+
+    tool_data = get_tool_by_name(tool)
+
+    result = f"<tool uuid='{tool_data.get('uuid', 'unknown')}'>\n"
+    result += f"  <name>{tool_data.get('name', tool)}</name>\n"
+    result += f"  <description>{tool_data.get('description', '')}</description>\n"
+
+    actions = tool_data.get('actions', [])
+    if actions:
+        result += "  <actions>\n"
+        for action in actions:
+            result += "    <action>\n"
+            result += f"      <name>{action.get('name', '')}</name>\n"
+            result += f"      <description>{action.get('description', '')}</description>\n"
+            result += "    </action>\n"
+        result += "  </actions>\n"
+
+    result += "</tool>"
+    return result
