@@ -160,15 +160,15 @@ def format_tool(tool: str) -> str:
     result += f"  <name>{tool_data.get('name', tool)}</name>\n"
     result += f"  <description>{tool_data.get('description', '')}</description>\n"
 
-    actions = tool_data.get('actions', [])
+    actions = tool_data.get('actions', {})
     if actions:
         result += "  <actions>\n"
-        for action in actions:
+        for action_name, action_data in actions.items():
             result += "    <action>\n"
-            result += f"      <name>{action.get('name', '')}</name>\n"
-            result += f"      <description>{action.get('description', '')}</description>\n"
-            if action.get('instructions'):
-                result += f"      <instructions>{action.get('instructions')}</instructions>\n"
+            result += f"      <name>{action_name}</name>\n"
+            result += f"      <description>{action_data.get('description', '')}</description>\n"
+            if action_data.get('instructions'):
+                result += f"      <instructions>{action_data.get('instructions')}</instructions>\n"
             result += "    </action>\n"
         result += "  </actions>\n"
 
