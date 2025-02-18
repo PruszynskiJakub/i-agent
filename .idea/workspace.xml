@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/state.py" afterDir="false" />
-    </list>
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -270,22 +267,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00265" summary="Improive">
-      <option name="closed" value="true" />
-      <created>1739612921864</created>
-      <option name="number" value="00265" />
-      <option name="presentableId" value="LOCAL-00265" />
-      <option name="project" value="LOCAL" />
-      <updated>1739612921864</updated>
-    </task>
-    <task id="LOCAL-00266" summary="Rename field in AgentState">
-      <option name="closed" value="true" />
-      <created>1739614168927</created>
-      <option name="number" value="00266" />
-      <option name="presentableId" value="LOCAL-00266" />
-      <option name="project" value="LOCAL" />
-      <updated>1739614168927</updated>
     </task>
     <task id="LOCAL-00267" summary="Add empty params to prompts">
       <option name="closed" value="true" />
@@ -663,7 +644,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739895604665</updated>
     </task>
-    <option name="localTasksCounter" value="314" />
+    <task id="LOCAL-00314" summary="Uncomment">
+      <option name="closed" value="true" />
+      <created>1739897563330</created>
+      <option name="number" value="00314" />
+      <option name="presentableId" value="LOCAL-00314" />
+      <option name="project" value="LOCAL" />
+      <updated>1739897563330</updated>
+    </task>
+    <task id="LOCAL-00315" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739897837059</created>
+      <option name="number" value="00315" />
+      <option name="presentableId" value="LOCAL-00315" />
+      <option name="project" value="LOCAL" />
+      <updated>1739897837059</updated>
+    </task>
+    <option name="localTasksCounter" value="316" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -678,7 +675,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Pass all messages for giving the answer" />
     <MESSAGE value="Fix" />
     <MESSAGE value="Implement agent_intent" />
     <MESSAGE value="Rebuild AgentState class" />
@@ -702,6 +698,7 @@
     <MESSAGE value="Remove redundant class" />
     <MESSAGE value="Imptove" />
     <MESSAGE value="Remove instructions" />
+    <MESSAGE value="Uncomment" />
     <MESSAGE value="Improve" />
     <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>

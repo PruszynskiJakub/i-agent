@@ -46,41 +46,6 @@ class DocumentModel(BaseModel):
     class Meta:
         table_name = 'documents'
 
-class TaskModel(BaseModel):
-    uuid = CharField(primary_key=True)
-    conversation = ForeignKeyField(ConversationModel, backref='tasks')
-    name = CharField()
-    description = TextField()
-    status = CharField()  # e.g. "pending" or "done"
-    created_at = DateTimeField(default=datetime.utcnow)
-
-    class Meta:
-        table_name = 'tasks'
-
-class TaskActionModel(BaseModel):
-    uuid = CharField(primary_key=True)
-    name = CharField()
-    tool = CharField()
-    tool_uuid = CharField(null=True)
-    payload = JSONField()
-    status = CharField()
-    conversation_uuid = CharField()
-    step_description = CharField(default='')
-    task = ForeignKeyField(TaskModel, backref='tasks', null=True)
-    created_at = DateTimeField(default=datetime.utcnow)
-
-    class Meta:
-        table_name = 'task_actions'
-
-class TaskActionDocumentModel(BaseModel):
-    action = ForeignKeyField(TaskActionModel, backref='task_action_documents')
-    document = ForeignKeyField(DocumentModel, backref='document_actions')
-    created_at = DateTimeField(default=datetime.utcnow)
-
-    class Meta:
-        table_name = 'task_action_documents'
-        primary_key = CompositeKey('action', 'document')
-
 class ConversationDocumentModel(BaseModel):
     conversation_uuid = CharField()
     document = ForeignKeyField(DocumentModel, backref='document_conversations')
