@@ -58,19 +58,34 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
 
         try:
             response_data = json.loads(completion)
-            new_state = update_tasks(
-                state,
-                [
-                    Task(
+            tasks = []
+            for task_data in response_data["result"]:
+                # Check if task already exists by UUID
+                existing_task = next(
+                    (t for t in state.tasks if t.uuid == task_data.get("uuid")), 
+                    None
+                )
+                
+                if existing_task:
+                    # Merge new data with existing task, preserving actions
+                    tasks.append(Task(
+                        uuid=existing_task.uuid,
+                        name=task_data["name"],
+                        description=task_data["description"],
+                        status=task_data["status"],
+                        actions=existing_task.actions
+                    ))
+                else:
+                    # Create new task with empty actions
+                    tasks.append(Task(
                         uuid=str(uuid.uuid4()),
-                        name=task["name"],
-                        description=task["description"],
-                        status=task["status"],
+                        name=task_data["name"],
+                        description=task_data["description"],
+                        status=task_data["status"],
                         actions=[]
-                    )
-                    for task in response_data["result"]
-                ]
-            )
+                    ))
+            
+            new_state = update_tasks(state, tasks)
 
         except json.JSONDecodeError as e:
             generation.end(
