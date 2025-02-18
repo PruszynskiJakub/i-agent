@@ -46,6 +46,17 @@ class DocumentModel(BaseModel):
     class Meta:
         table_name = 'documents'
 
+class TaskModel(BaseModel):
+    uuid = CharField(primary_key=True)
+    conversation = ForeignKeyField(ConversationModel, backref='tasks')
+    name = CharField()
+    description = TextField()
+    status = CharField()  # e.g. "pending" or "done"
+    created_at = DateTimeField(default=datetime.utcnow)
+
+    class Meta:
+        table_name = 'tasks'
+
 class TaskActionRecordModel(BaseModel):
     uuid = CharField(primary_key=True)
     name = CharField()
@@ -55,6 +66,7 @@ class TaskActionRecordModel(BaseModel):
     status = CharField()
     conversation_uuid = CharField()
     step_description = CharField(default='')
+    task = ForeignKeyField(TaskModel, backref='actions', null=True)
     created_at = DateTimeField(default=datetime.utcnow)
 
     class Meta:
