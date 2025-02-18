@@ -56,18 +56,42 @@ def save_task(task: Task) -> None:
                     status=action.status
                 )
             
-            # Handle action documents
+            # Handle output documents
             if action.output_documents:
-                existing_docs = {doc.document.uuid: doc for doc in 
-                               TaskActionDocumentModel.select().where(TaskActionDocumentModel.task_action == action_model)}
+                # Get existing document associations
+                existing_docs = {
+                    doc.document.uuid: doc for doc in 
+                    TaskActionDocumentModel.select().where(TaskActionDocumentModel.task_action == action_model)
+                }
+                
+                # Track which documents we've processed
+                processed_docs = set()
                 
                 for document in action.output_documents:
-                    if document.uuid not in existing_docs:
-                        doc_model = DocumentModel.get(uuid=document.uuid)
+                    doc_uuid = str(document.uuid)
+                    processed_docs.add(doc_uuid)
+                    
+                    if doc_uuid not in existing_docs:
+                        # Create new document if it doesn't exist
+                        doc_model, _ = DocumentModel.get_or_create(
+                            uuid=doc_uuid,
+                            defaults={
+                                'conversation_uuid': task.conversation_uuid,
+                                'text': document.text,
+                                'metadata': document.metadata
+                            }
+                        )
+                        
+                        # Create the association
                         TaskActionDocumentModel.create(
                             task_action=action_model,
                             document=doc_model
                         )
+                
+                # Remove document associations that are no longer present
+                for old_doc_uuid in existing_docs:
+                    if old_doc_uuid not in processed_docs:
+                        existing_docs[old_doc_uuid].delete_instance()
 
         # Delete actions that no longer exist
         for old_action in existing_actions.values():
