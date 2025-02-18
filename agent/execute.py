@@ -45,7 +45,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
         action_dict = {
             'status': 'completed',
-            'documents': documents,
+            'output_documents': documents,
         }
 
         updated_state = update_current_action(state, action_dict)
