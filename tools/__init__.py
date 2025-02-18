@@ -9,7 +9,7 @@ from tools.ynab.service import execute_ynab
 
 
 def get_tools():
-    return [
+    tools = [
         {
             "uuid": UUID("0852748f-6211-41bb-bcfa-d81716fe84e7"),
             "name": "final_answer",
@@ -358,6 +358,18 @@ def get_tools():
             }
         }
     ]
+    
+    for tool in tools:
+        if "actions" in tool:
+            actions = tool.pop("actions")
+            bullet_points = []
+            for action_name, action_data in actions.items():
+                # Remove extra whitespace from the instructions string
+                instr = action_data.get("instructions", "").strip()
+                bullet_points.append(f"- {action_name}: {instr}")
+            tool["instructions"] = "\n".join(bullet_points)
+            
+    return tools
 
 
 def get_tool_by_name(name) -> Dict[str, Any]:
