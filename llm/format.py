@@ -21,6 +21,8 @@ def format_tools(tools: List[Dict]) -> str:
         desc = f"<tool uuid='{tool['uuid']}'>\n"
         desc += f"  <name>{tool['name']}</name>\n"
         desc += f"  <description>{tool['description']}</description>\n"
+        if tool.get("instructions", "").strip():
+            desc += f"  <instructions>{tool.get('instructions').strip()}</instructions>\n"
         desc += "</tool>"
         tool_descriptions.append(desc)
     return "\n".join(tool_descriptions)
@@ -160,17 +162,9 @@ def format_tool(tool: str) -> str:
     result += f"  <name>{tool_data.get('name', tool)}</name>\n"
     result += f"  <description>{tool_data.get('description', '')}</description>\n"
 
-    actions = tool_data.get('actions', {})
-    if actions:
-        result += "  <actions>\n"
-        for action_name, action_data in actions.items():
-            result += "    <action>\n"
-            result += f"      <name>{action_name}</name>\n"
-            result += f"      <description>{action_data.get('description', '')}</description>\n"
-            if action_data.get('instructions'):
-                result += f"      <instructions>{action_data.get('instructions')}</instructions>\n"
-            result += "    </action>\n"
-        result += "  </actions>\n"
+    instructions = tool_data.get("instructions", "").strip()
+    if instructions:
+        result += f"  <instructions>{instructions}</instructions>\n"
 
     result += "</tool>"
     return result
