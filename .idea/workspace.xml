@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/blueprint.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/blueprint.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,14 +270,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00269" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739628122684</created>
-      <option name="number" value="00269" />
-      <option name="presentableId" value="LOCAL-00269" />
-      <option name="project" value="LOCAL" />
-      <updated>1739628122684</updated>
     </task>
     <task id="LOCAL-00270" summary="Improve">
       <option name="closed" value="true" />
@@ -664,7 +655,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739899163457</updated>
     </task>
-    <option name="localTasksCounter" value="318" />
+    <task id="LOCAL-00318" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739899805942</created>
+      <option name="number" value="00318" />
+      <option name="presentableId" value="LOCAL-00318" />
+      <option name="project" value="LOCAL" />
+      <updated>1739899805942</updated>
+    </task>
+    <option name="localTasksCounter" value="319" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -702,8 +701,8 @@
     <MESSAGE value="Imptove" />
     <MESSAGE value="Remove instructions" />
     <MESSAGE value="Uncomment" />
-    <MESSAGE value="Improve" />
     <MESSAGE value="Remove" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove" />
+    <MESSAGE value="Improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>
 </project>

@@ -50,7 +50,7 @@ class TaskModel(BaseModel):
     conversation_uuid = CharField()
     name = CharField()
     description = TextField()
-    status = CharField()  # pending, in_progress, done, failed
+    status = CharField()  # pending, done, failed
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(default=datetime.utcnow)
 
