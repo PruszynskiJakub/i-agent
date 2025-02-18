@@ -6,6 +6,7 @@ from logger.logger import log_info, log_error, log_tool_call
 from models.state import AgentState
 from tools.__init__ import tool_handlers
 from utils.document import create_error_document
+from utils.state import update_current_action
 
 
 async def agent_execute(state: AgentState, trace) -> AgentState:
@@ -43,16 +44,11 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         )
 
         action_dict = {
-            'name': state.interaction.tool_action,
-            'tool': tool,
-            'tool_uuid': state.interaction.tool_uuid,
-            'payload': state.interaction.payload,
-            # 'status': 'SUCCESS',
+            'status': 'completed',
             'documents': documents,
-            'step_description': state.interaction.overview
         }
 
-        updated_state = record_action(state, action_dict)
+        updated_state = update_current_action(state, action_dict)
 
         log_info(
             f"✅ Tool execution successful: {tool} - {state.interaction.tool_action}\nResult documents: {len(documents)} document(s)")
