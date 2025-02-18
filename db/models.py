@@ -1,8 +1,18 @@
 from datetime import datetime
 import json
 from peewee import *
-from playhouse.sqlite_ext import JSONField
 from . import db
+
+class JSONField(TextField):
+    def python_value(self, value):
+        if value is not None:
+            return json.loads(value)
+        return {}
+
+    def db_value(self, value):
+        if value is not None:
+            return json.dumps(value)
+        return '{}'
 
 
 class BaseModel(Model):
