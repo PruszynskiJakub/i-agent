@@ -75,16 +75,11 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         )
 
         action_dict = {
-            'name': state.interaction.tool_action,
-            'tool': state.interaction.tool,
-            'tool_uuid': state.interaction.tool_uuid,
-            'payload': state.interaction.payload,
-            # 'status': 'ERROR',
+            'status': 'completed',
             'documents': [error_doc],
-            'step_description': state.interaction.overview
         }
 
-        updated_state = record_action(state, action_dict)
+        updated_state = update_current_action(state, action_dict)
 
         end_span(
             execution_span,

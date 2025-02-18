@@ -1,8 +1,6 @@
 from typing import List, Optional
 
-from db.conversation import load_conversation_documents
-from db.message import find_messages_by_conversation, save_message
-from db.tasks import load_tasks
+from db.message import save_message
 from models.document import Document
 from models.state import AgentState, AgentPhase, Thoughts, Task, TaskAction
 from utils.message import create_message
@@ -11,9 +9,9 @@ from utils.message import create_message
 def create_or_restore_state(conversation_uuid: str) -> AgentState:
     return AgentState(
         conversation_uuid=conversation_uuid,
-        messages=[], #find_messages_by_conversation(conversation_uuid),
-        tasks=[] , #load_tasks(conversation_uuid),
-        conversation_documents=[], #load_conversation_documents(conversation_uuid),
+        messages=[],  # find_messages_by_conversation(conversation_uuid),
+        tasks=[],  # load_tasks(conversation_uuid),
+        conversation_documents=[],  # load_conversation_documents(conversation_uuid),
         current_step=0,
         max_steps=4,
         phase=AgentPhase.INTENT,
@@ -69,8 +67,7 @@ def update_current_action(state: AgentState, action_updates: dict) -> AgentState
     # If there is a current task, update its actions list.
     if state.current_task is not None:
         # Copy the current task and append the new action.
-        updated_task = state.current_task.model_copy()
-        updated_task.actions = state.current_task.actions + [new_action]
+        updated_task = state.current_task.model_copy(update=dict(actions=state.current_task.actions + [new_action]))
 
         # Update the state's current_task.
         new_state = new_state.copy(current_task=updated_task)
