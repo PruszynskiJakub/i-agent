@@ -46,6 +46,11 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         }
 
         updated_state = update_current_action(state, action_dict)
+        
+        # If all actions are completed, mark task as done
+        if updated_state.current_task and all(a.status == 'completed' for a in updated_state.current_task.actions):
+            from utils.state import complete_task
+            updated_state = complete_task(updated_state, updated_state.current_task.uuid)
 
         log_info(
             f"✅ Tool execution successful: {tool} - {state.current_action}\nResult documents: {len(documents)} document(s)")

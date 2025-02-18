@@ -64,6 +64,11 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
         try:
             result = json.loads(completion)['result']
             selected_task = find_task(state, result["task_uuid"])
+            
+            # Update task status to "in_progress" and persist
+            selected_task = selected_task.model_copy(update={"status": "in_progress"})
+            from db.tasks import save_task
+            save_task(selected_task)
 
             action = TaskAction(
                 uuid=str(uuid.uuid4()),
