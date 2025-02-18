@@ -28,7 +28,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         tool = state.current_tool
         tool_action = state.current_action.tool_action
         params = {
-            **state.current_action.payload,
+            **state.current_action.input_payload,
             "conversation_uuid": state.conversation_uuid,
             "now": datetime.now().isoformat(),
         }

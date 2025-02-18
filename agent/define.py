@@ -1,7 +1,9 @@
 import json
 
+from openai._extras._common import format_instructions
+
 from llm import open_ai
-from llm.format import format_facts, format_tasks
+from llm.format import format_facts, format_tasks, format_tool
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
 from tools.todoist import get_dynamic_context
@@ -35,7 +37,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         system_prompt = prompt.compile(
             task_name=state.current_task.name,
             action_name=state.current_action.name,
-            selected_tool=state.current_tool,
+            selected_tool=f"{state.current_tool}\n{format_tool(state.current_tool)}",
             facts=format_facts(),
             tool_context=dynamic_context,
             tasks=format_tasks(state.tasks),
