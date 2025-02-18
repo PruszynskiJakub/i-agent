@@ -72,13 +72,18 @@ def save_task(task: Task) -> None:
                     processed_docs.add(doc_uuid)
                     
                     if doc_uuid not in existing_docs:
+                        # Prepare metadata by converting enums to strings
+                        metadata = document.metadata.copy()
+                        if metadata.get('type'):
+                            metadata['type'] = metadata['type'].value if hasattr(metadata['type'], 'value') else str(metadata['type'])
+                        
                         # Create new document if it doesn't exist
                         doc_model, _ = DocumentModel.get_or_create(
                             uuid=doc_uuid,
                             defaults={
                                 'conversation_uuid': task.conversation_uuid,
                                 'text': document.text,
-                                'metadata': document.metadata
+                                'metadata': metadata  # Use the processed metadata
                             }
                         )
                         
