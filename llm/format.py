@@ -167,6 +167,8 @@ def format_tool(tool: str) -> str:
             result += "    <action>\n"
             result += f"      <name>{action.get('name', '')}</name>\n"
             result += f"      <description>{action.get('description', '')}</description>\n"
+            if action.get('instructions'):
+                result += f"      <instructions>{action.get('instructions')}</instructions>\n"
             result += "    </action>\n"
         result += "  </actions>\n"
 
