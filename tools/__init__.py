@@ -181,8 +181,33 @@ def get_tools():
                     """
                 },
                 "search_tasks": {
-                    "description": "Searches and retrieves tasks using advanced filters, supporting complex queries with logical operators and field-based filtering",
+                    "description": "Searches and retrieves tasks using basic filters for dates, projects, and labels",
                     "instructions": """
+                    {
+                      "project_id": "Optional project ID to narrow down tasks",
+                      "label": "Optional label name to narrow down tasks",
+                      "due_before": "Optional date in YYYY-MM-DD format",
+                      "due_after": "Optional date in YYYY-MM-DD format"
+                    }
+                    
+                    Field details:
+                    - project_id: Exact project ID to filter tasks
+                    - label: Exact label name to filter tasks
+                    - due_before: Include tasks due before this date
+                    - due_after: Include tasks due after this date
+                    
+                    Example:
+                    {
+                      "project_id": "2334150459",
+                      "label": "urgent",
+                      "due_before": "2024-12-31",
+                      "due_after": "2024-01-01"
+                    }
+                    
+                    Returns:
+                    A list of matching tasks with their IDs, titles, due dates,
+                    projects and labels.
+                    """
                 """
                 },
                 "update_tasks": {
