@@ -52,8 +52,8 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
 
         log_info(
             f"✅ Tool execution successful: {tool} - {state.current_action}\nResult documents: {len(documents)} document(s)")
-        for idx, doc in enumerate(documents, 1):
-            log_info(f"Document {idx}: {doc.type.value} - {len(doc.content)} chars")
+        # for idx, doc in enumerate(documents, 1):
+        #     log_info(f"Document {idx}: {doc.type.value} - {len(doc.content)} chars")
 
         end_span(
             execution_span,
