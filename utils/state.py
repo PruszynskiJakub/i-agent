@@ -61,14 +61,29 @@ def update_tasks(state: AgentState, tasks) -> AgentState:
 
 
 def update_current_action(state: AgentState, action_updates: dict) -> AgentState:
-    """Update current action with partial updates while preserving other fields"""
-    if state.current_action is None:
-        return state.copy(current_action=action_updates)
-        
-    updated_action = state.current_action.model_copy()
-    for key, value in action_updates.items():
-        setattr(updated_action, key, value)
-    return state.copy(current_action=updated_action)
+    # Create a new TaskAction from the provided updates.
+    new_action = TaskAction(**action_updates)
+    new_state = state.copy(current_action=new_action)
+
+    # If there is a current task, update its actions list.
+    if state.current_task is not None:
+        # Copy the current task and append the new action.
+        updated_task = state.current_task.model_copy()
+        updated_task.actions = state.current_task.actions + [new_action]
+
+        # Update the state's current_task.
+        new_state = new_state.copy(current_task=updated_task)
+
+        # Also update the corresponding task in the tasks list.
+        updated_tasks = []
+        for task in state.tasks:
+            if task.uuid == updated_task.uuid:
+                updated_tasks.append(updated_task)
+            else:
+                updated_tasks.append(task)
+        new_state = new_state.copy(tasks=updated_tasks)
+
+    return new_state
 
 def update_current_tool(state: AgentState, tool) -> AgentState:
     return state.copy(current_tool=tool)
