@@ -8,14 +8,15 @@ db = SqliteDatabase('chat_history.db')
 def initialize_peewee_db():
     """Initialize Peewee database and create all required tables"""
     from .models import (
-        MessageModel, DocumentModel, TaskActionModel, TaskActionDocumentModel,
+        MessageModel, DocumentModel, TaskModel, TaskActionModel, TaskActionDocumentModel,
         ConversationModel, ConversationDocumentModel
     )
     
     db.connect()
     db.create_tables([
         MessageModel,
-        DocumentModel, 
+        DocumentModel,
+        TaskModel,
         TaskActionModel,
         TaskActionDocumentModel,
         ConversationModel,
