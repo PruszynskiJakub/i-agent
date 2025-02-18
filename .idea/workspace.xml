@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove redundant method">
-      <change beforePath="$PROJECT_DIR$/db/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/tasks.py" afterDir="false" />
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/action.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/action.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,22 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00242" summary="Add now to all tool params">
-      <option name="closed" value="true" />
-      <created>1739382363109</created>
-      <option name="number" value="00242" />
-      <option name="presentableId" value="LOCAL-00242" />
-      <option name="project" value="LOCAL" />
-      <updated>1739382363109</updated>
-    </task>
-    <task id="LOCAL-00243" summary="Rename brainstorm.py into intent">
-      <option name="closed" value="true" />
-      <created>1739392459280</created>
-      <option name="number" value="00243" />
-      <option name="presentableId" value="LOCAL-00243" />
-      <option name="project" value="LOCAL" />
-      <updated>1739392459280</updated>
     </task>
     <task id="LOCAL-00244" summary="Pass all messages for giving the answer">
       <option name="closed" value="true" />
@@ -637,7 +622,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739865210155</updated>
     </task>
-    <option name="localTasksCounter" value="291" />
+    <task id="LOCAL-00291" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739865532430</created>
+      <option name="number" value="00291" />
+      <option name="presentableId" value="LOCAL-00291" />
+      <option name="project" value="LOCAL" />
+      <updated>1739865532430</updated>
+    </task>
+    <task id="LOCAL-00292" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739865548536</created>
+      <option name="number" value="00292" />
+      <option name="presentableId" value="LOCAL-00292" />
+      <option name="project" value="LOCAL" />
+      <updated>1739865548536</updated>
+    </task>
+    <option name="localTasksCounter" value="293" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -675,8 +676,8 @@
     <MESSAGE value="Remove unused methods" />
     <MESSAGE value="Rename model" />
     <MESSAGE value="Add final_asnwer tool" />
-    <MESSAGE value="Improve" />
     <MESSAGE value="Remove redundant method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove redundant method" />
+    <MESSAGE value="Improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>
 </project>
