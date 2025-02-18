@@ -213,47 +213,57 @@ def get_tools():
                 "update_tasks": {
                     "description": "Updates existing tasks with new content, metadata, or settings while preserving task history and relationships",
                     "instructions": """
-                {
-                    "tasks": [{
-                        "id": "task_id",
-                        "content": "Updated task title",
-                        "description": "Updated description",
-                        "priority": 1-4,
-                        "labels": ["label1", "label2"],
-                        "dueString": "tomorrow at 3pm",
-                        "dueLang": "en",
-                        "dueDate": "YYYY-MM-DD",
-                        "duration": 30,
-                        "durationUnit": "minute"
-                    }]
-                }
-                Use: Updates existing tasks' content and metadata. Task ID is required, other fields are optional and will only be updated if provided.
-                Don't use it to complete tasks (use complete_tasks) or move tasks between projects/sections (use move_tasks).
-                """
+                    {
+                        "tasks": [{
+                            "id": "task_id",
+                            "content": "Updated task title",
+                            "description": "Updated description",
+                            "priority": 1-4,
+                            "labels": ["label1", "label2"],
+                            "dueString": "tomorrow at 3pm",
+                            "dueLang": "en",
+                            "dueDate": "YYYY-MM-DD",
+                            "duration": 30,
+                            "durationUnit": "minute"
+                        }]
+                    }
+                    
+                    Usage:
+                    - Updates existing tasks' content and metadata
+                    - Task ID is required, other fields are optional
+                    - Do not use for completing tasks (use complete_tasks instead)
+                    - Do not use for moving tasks (use move_tasks instead)
+                    """
                 },
                 "complete_tasks": {
                     "description": "Marks one or more tasks as complete, updating their status and completion timestamp",
                     "instructions": """
-                {
-                    "task_ids": ["task_id1", "task_id2"]
-                }
-                Use: Marks one or more tasks as complete. Requires task IDs.
-                """
+                    {
+                        "task_ids": ["task_id1", "task_id2"]
+                    }
+                    
+                    Usage:
+                    - Marks one or more tasks as complete
+                    - Requires task IDs
+                    """
                 },
                 "move_tasks": {
                     "description": "Reorganizes tasks by moving them between projects, sections, or parent tasks while maintaining their metadata",
                     "instructions": """
-                {
-                    "tasks": [{
-                        "id": "task_id",
-                        "project_id": "optional target project id",
-                        "section_id": "optional target section id", 
-                        "parent_id": "optional parent task id"
-                    }]
-                }
-                Use: Moves tasks between projects, sections, or changes their parent task. Task ID is required, provide at least one destination (project_id, section_id, or parent_id).
-                Only one destination type should be specified per task move operation.
-                """
+                    {
+                        "tasks": [{
+                            "id": "task_id",
+                            "project_id": "optional target project id",
+                            "section_id": "optional target section id", 
+                            "parent_id": "optional parent task id"
+                        }]
+                    }
+                    
+                    Usage:
+                    - Moves tasks between projects, sections, or parent tasks
+                    - Task ID is required
+                    - Provide exactly one destination: project_id, section_id, or parent_id
+                    """
                 }
             }
         },
