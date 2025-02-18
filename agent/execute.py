@@ -17,10 +17,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
     execution_span = create_span(
         trace=trace,
         name=f"execute_{state.current_tool}",
-        input={
-            "tool": state.current_tool,
-            "action": state.current_action.tool_action
-        },
+        input=state,
         metadata={"conversation_uuid": state.conversation_uuid}
     )
 
