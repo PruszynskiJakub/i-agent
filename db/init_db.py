@@ -1,4 +1,3 @@
-from peewee import SqliteDatabase
 from playhouse.sqlite_ext import SqliteExtDatabase
 from .models import (
     ConversationModel,
@@ -17,7 +16,8 @@ def init_database():
         'cache_size': -1024 * 64,  # 64MB cache
         'foreign_keys': 1,  # Enforce foreign key constraints
         'ignore_check_constraints': 0,  # Enforce check constraints
-        'synchronous': 0  # Let the OS handle fsync
+        'synchronous': 0,  # Let the OS handle fsync
+        'temp_store': 'MEMORY'  # Store temp tables in memory
     })
     
     try:
