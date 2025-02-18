@@ -141,6 +141,13 @@ def format_tasks(tasks: List[Task]) -> str:
                 desc += f"      <tool>{action.tool_uuid}</tool>\n"
                 desc += f"      <step>{action.step}</step>\n"
                 desc += f"      <status>{action.status}</status>\n"
+                if action.output_documents:
+                    desc += "      <documents>\n"
+                    for doc in action.output_documents:
+                        desc += f"        <document uuid='{doc.uuid}' type='{doc.metadata.get('type', 'unknown')}'>\n"
+                        desc += f"          <text>{doc.text}</text>\n"
+                        desc += "        </document>\n"
+                    desc += "      </documents>\n"
                 desc += "    </action>\n"
             desc += "  </actions>\n"
             
