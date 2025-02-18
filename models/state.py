@@ -54,6 +54,7 @@ class Task(BaseModel):
     description: str
     actions: List[TaskAction]
     status: str  # pending or done
+    conversation_uuid: Optional[str] = None
 
     model_config = ConfigDict(frozen=True)
 

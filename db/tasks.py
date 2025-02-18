@@ -12,7 +12,7 @@ def save_task(task: Task) -> None:
         task_model, created = TaskModel.get_or_create(
             uuid=task.uuid,
             defaults={
-                'conversation_uuid': task.conversation_uuid,
+                'conversation_uuid': task.current_task.conversation_uuid if task.current_task else task.conversation_uuid,
                 'name': task.name,
                 'description': task.description,
                 'status': task.status

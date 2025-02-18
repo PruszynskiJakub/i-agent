@@ -66,6 +66,9 @@ class TaskModel(BaseModel):
 
     class Meta:
         table_name = 'tasks'
+        indexes = (
+            (('conversation_uuid',), False),  # Add index on conversation_uuid
+        )
 
 class TaskActionModel(BaseModel):
     uuid = CharField(primary_key=True)
