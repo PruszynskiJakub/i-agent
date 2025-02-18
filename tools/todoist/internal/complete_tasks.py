@@ -12,7 +12,7 @@ async def _complete_tasks(params: Dict[str, Any], span) -> Document:
     """Complete one or more Todoist tasks"""
     try:
         todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
-        task_ids = params.get("task_ids", [])
+        task_ids = params.get("ids", [])
 
         if not task_ids:
             create_event(span, "complete_todoist_tasks", input=params, output="No tasks provided")
@@ -68,22 +68,22 @@ async def _complete_tasks(params: Dict[str, Any], span) -> Document:
         result = (
             f"Complete Tasks Summary\n"
             f"---------------------\n"
-            f"Total tasks processed: {total}\n"
+            f"Total todo items processed: {total}\n"
             f"Successfully completed: {successful}\n"
             f"Failed completions: {failed}\n\n"
-            f"Successfully Completed Tasks\n"
+            f"Successfully Completed Todos\n"
             f"-------------------------\n"
             + (
                 "\n".join(
-                    f"Task: {task['content']}\n"
+                    f"Todo: {task['content']}\n"
                     f"ID: {task['id']}\n"
                     for task in successful_tasks
                 ) if successful_tasks else "No tasks were successfully completed"
             )
-            + "\n\nFailed Tasks\n------------\n"
+            + "\n\nFailed Todos\n------------\n"
             + (
                 "\n".join(
-                    f"Task ID: {task['id']}\n"
+                    f"Todo ID: {task['id']}\n"
                     f"Error: {task['error']}\n"
                     for task in failed_tasks
                 ) if failed_tasks else "No failed tasks"
@@ -101,7 +101,7 @@ async def _complete_tasks(params: Dict[str, Any], span) -> Document:
             metadata_override={
                 "conversation_uuid": params.get("conversation_uuid", ""),
                 "source": "todoist",
-                "description": f"Completed {successful} tasks successfully, {failed} failed",
+                "description": f"Completed {successful} todos successfully, {failed} failed",
                 "name": "CompleteTodoistTasksResult",
                 "type": DocumentType.DOCUMENT,
                 "content_type": "full"
