@@ -60,8 +60,11 @@ def update_tasks(state: AgentState, tasks) -> AgentState:
 
 
 def update_current_action(state: AgentState, action_updates: dict) -> AgentState:
-    # Create a new TaskAction from the provided updates.
-    new_action = TaskAction(**action_updates)
+    # Create a new TaskAction from the provided updates or update existing one
+    if state.current_action is not None:
+        new_action = state.current_action.model_copy(update=action_updates)
+    else:
+        new_action = TaskAction(**action_updates)
     new_state = state.copy(current_action=new_action)
 
     # If there is a current task, update its actions list.
