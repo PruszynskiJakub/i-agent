@@ -2,39 +2,8 @@ from ast import Dict
 from datetime import datetime
 from typing import List
 
-from models.action import ActionRecord
 from models.document import Document
 from models.state import Task, Thoughts
-
-
-def format_actions_history(actions: List[ActionRecord]) -> str:
-    """Formats the executed actions into a string for the prompt
-
-    Args:
-        actions: List of ActionRecord objects
-
-    Returns:
-        str: Formatted string describing all executed actions
-    """
-    action_descriptions = []
-    for action in actions:
-        desc = f"<action name='{action.name}' tool='{action.tool}'>\n"
-        desc += "  <parameters>\n"
-        for param_name, param_value in action.input_payload.items():
-            desc += f"    <param name='{param_name}'>{param_value}</param>\n"
-        desc += "  </parameters>\n"
-        desc += f"  <status>{action.status}</status>\n"
-        desc += f"  <description>{action.step_description}</description>\n"
-        if action.output_documents:
-            desc += "  <documents>\n"
-            for doc in action.output_documents:
-                desc += f"    <document uuid='{doc.uuid}' type='{doc.metadata['type']}'>\n"
-                desc += f"      <text>{doc.text}</text>\n"
-                desc += "    </document>\n"
-            desc += "  </documents>\n"
-        desc += "</action>"
-        action_descriptions.append(desc)
-    return "\n".join(action_descriptions)
 
 
 def format_tools(tools: List[Dict]) -> str:
@@ -102,7 +71,7 @@ def format_thoughts(thoughts: Thoughts) -> str:
     """
     result = "<thoughts>\n"
     result += f"  <user_intent>{thoughts.user_intent}</user_intent>\n"
-    
+
     if thoughts.tool_thoughts:
         result += "  <tool_thoughts>\n"
         for thought in thoughts.tool_thoughts:
@@ -111,7 +80,7 @@ def format_thoughts(thoughts: Thoughts) -> str:
             result += f"      <tool>{thought.tool_name}</tool>\n"
             result += "    </tool_thought>\n"
         result += "  </tool_thoughts>\n"
-    
+
     result += "</thoughts>"
     return result
 
@@ -132,7 +101,7 @@ def format_tasks(tasks: List[Task]) -> str:
         desc += f"  <name>{task.name}</name>\n"
         desc += f"  <description>{task.description}</description>\n"
         desc += f"  <status>{task.status}</status>\n"
-        
+
         if task.actions:
             desc += "  <actions>\n"
             for action in task.actions:
@@ -150,10 +119,10 @@ def format_tasks(tasks: List[Task]) -> str:
                     desc += "      </documents>\n"
                 desc += "    </action>\n"
             desc += "  </actions>\n"
-            
+
         desc += "</task>"
         task_descriptions.append(desc)
-    
+
     return "\n".join(task_descriptions)
 
 

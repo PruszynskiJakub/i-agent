@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Add final_asnwer tool">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,22 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00238" summary="Rename field">
-      <option name="closed" value="true" />
-      <created>1739381754802</created>
-      <option name="number" value="00238" />
-      <option name="presentableId" value="LOCAL-00238" />
-      <option name="project" value="LOCAL" />
-      <updated>1739381754802</updated>
-    </task>
-    <task id="LOCAL-00239" summary="rename field">
-      <option name="closed" value="true" />
-      <created>1739381893491</created>
-      <option name="number" value="00239" />
-      <option name="presentableId" value="LOCAL-00239" />
-      <option name="project" value="LOCAL" />
-      <updated>1739381893491</updated>
     </task>
     <task id="LOCAL-00240" summary="use should_scrape method">
       <option name="closed" value="true" />
@@ -638,7 +621,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739826324494</updated>
     </task>
-    <option name="localTasksCounter" value="287" />
+    <task id="LOCAL-00287" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739827330746</created>
+      <option name="number" value="00287" />
+      <option name="presentableId" value="LOCAL-00287" />
+      <option name="project" value="LOCAL" />
+      <updated>1739827330746</updated>
+    </task>
+    <task id="LOCAL-00288" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739827751422</created>
+      <option name="number" value="00288" />
+      <option name="presentableId" value="LOCAL-00288" />
+      <option name="project" value="LOCAL" />
+      <updated>1739827751422</updated>
+    </task>
+    <option name="localTasksCounter" value="289" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -676,8 +675,8 @@
     <MESSAGE value="Add empty params to prompts" />
     <MESSAGE value="Remove unused methods" />
     <MESSAGE value="Rename model" />
-    <MESSAGE value="Improve" />
     <MESSAGE value="Add final_asnwer tool" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add final_asnwer tool" />
+    <MESSAGE value="Improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
   </component>
 </project>
