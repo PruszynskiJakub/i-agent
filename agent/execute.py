@@ -25,17 +25,17 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
     )
 
     try:
-        tool = state.interaction.tool
-        tool_action = state.interaction.tool_action
+        tool = state.current_tool.name
+        tool_action = state.current_action.tool_action
         params = {
-            **state.interaction.payload,
+            **state.current_action.payload,
             "conversation_uuid": state.conversation_uuid,
             "now": datetime.now().isoformat(),
         }
         log_info(f"🔧 Executing tool '{tool}' with action '{tool_action}'\nParameters: {json.dumps(params, indent=2)}")
 
         tool_handler = tool_handlers.get(tool)
-        documents = await tool_handler(state.interaction.tool_action, params, execution_span)
+        documents = await tool_handler(state.current_action.tool_action, params, execution_span)
 
         log_tool_call(
             f"{tool}.{tool_action}",
@@ -51,7 +51,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         updated_state = update_current_action(state, action_dict)
 
         log_info(
-            f"✅ Tool execution successful: {tool} - {state.interaction.tool_action}\nResult documents: {len(documents)} document(s)")
+            f"✅ Tool execution successful: {tool} - {state.current_action}\nResult documents: {len(documents)} document(s)")
         for idx, doc in enumerate(documents, 1):
             log_info(f"Document {idx}: {doc.type.value} - {len(doc.content)} chars")
 
@@ -65,12 +65,12 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
         return updated_state
 
     except Exception as e:
-        error_msg = f"Error executing tool '{state.interaction.tool}': {str(e)}"
+        error_msg = f"Error executing tool '{state.current_tool}': {str(e)}"
         log_error(error_msg)
 
         error_doc = create_error_document(
             error=e,
-            error_context=f"Executing tool '{state.interaction.tool}' with action '{state.interaction.tool_action}'",
+            error_context=f"Executing tool '{state.current_tool}' with action '{state.current_action}'",
             conversation_uuid=state.conversation_uuid
         )
 
