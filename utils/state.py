@@ -67,12 +67,26 @@ def update_current_action(state: AgentState, action_updates: dict) -> AgentState
         new_action = TaskAction(**action_updates)
     new_state = state.copy(current_action=new_action)
 
-    # If there is a current task, update its actions list.
     if state.current_task is not None:
-        # Copy the current task and append the new action.
-        updated_task = state.current_task.model_copy(update=dict(actions=state.current_task.actions + [new_action]))
+        # Determine the action uuid to update: prefer the one from action_updates, or use current_action's uuid if available.
+        action_uuid = action_updates.get("uuid")
+        if action_uuid is None and state.current_action is not None:
+            action_uuid = state.current_action.uuid
 
-        # Update the state's current_task.
+        # Update the actions list: if an action with the same uuid exists, replace it; otherwise, append the new action.
+        found = False
+        new_actions = []
+        for act in state.current_task.actions:
+            if getattr(act, "uuid", None) == action_uuid:
+                new_actions.append(new_action)
+                found = True
+            else:
+                new_actions.append(act)
+        if not found:
+            new_actions.append(new_action)
+
+        # Update current_task with the new actions list.
+        updated_task = state.current_task.model_copy(update={"actions": new_actions})
         new_state = new_state.copy(current_task=updated_task)
 
         # Also update the corresponding task in the tasks list.
