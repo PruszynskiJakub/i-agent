@@ -36,7 +36,7 @@ def init_database():
         ], safe=True)
         
         # Create tables in correct order (dependencies first)
-        db.create_tables([
+        tables = [
             ConversationModel,  # No dependencies
             MessageModel,       # Depends on Conversation
             DocumentModel,      # Depends on Conversation
@@ -44,7 +44,15 @@ def init_database():
             TaskModel,         # Depends on Conversation
             TaskActionModel,   # Depends on Task
             TaskActionDocumentModel  # Depends on TaskAction and Document
-        ])
+        ]
+        
+        for table in tables:
+            try:
+                db.create_tables([table])
+                print(f"Created table: {table._meta.table_name}")
+            except Exception as e:
+                print(f"Error creating table {table._meta.table_name}: {str(e)}")
+                raise
         
         print("Database initialized successfully!")
         print("Created tables:")
