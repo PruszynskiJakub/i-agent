@@ -1,6 +1,7 @@
 from typing import List, Optional
 
-from db.message import save_message
+from db.message import save_message, find_messages_by_conversation
+from db.tasks import load_tasks
 from models.document import Document
 from models.state import AgentState, AgentPhase, Thoughts, Task, TaskAction
 from utils.message import create_message
@@ -9,8 +10,8 @@ from utils.message import create_message
 def create_or_restore_state(conversation_uuid: str) -> AgentState:
     return AgentState(
         conversation_uuid=conversation_uuid,
-        messages=[],  # find_messages_by_conversation(conversation_uuid),
-        tasks=[],  # load_tasks(conversation_uuid),
+        messages= find_messages_by_conversation(conversation_uuid),
+        tasks= load_tasks(conversation_uuid),
         conversation_documents=[],  # load_conversation_documents(conversation_uuid),
         current_step=0,
         max_steps=4,
