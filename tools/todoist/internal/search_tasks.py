@@ -12,16 +12,30 @@ async def _search_tasks(params: dict, span) -> Document:
     """
     try:
         todoist_client = TodoistAPI(os.getenv("TODOIST_API_TOKEN"))
-        filter_query = params.get("filter")
+        filter_query = params.get("filter", "")
         project_id = params.get("project_id")
         label = params.get("label")
         section_id = params.get("section_id")
         task_ids = params.get("ids", [])
+        due_before = params.get("due_before")
+        due_after = params.get("due_after")
 
+        # Build filter query
+        date_filters = []
+        if due_after:
+            date_filters.append(f"due after: {due_after}")
+        if due_before:
+            date_filters.append(f"due before: {due_before}")
+        
+        if date_filters:
+            if filter_query:
+                filter_query = f"({filter_query}) & {' & '.join(date_filters)}"
+            else:
+                filter_query = ' & '.join(date_filters)
 
         # Get tasks with filters
         tasks = todoist_client.get_tasks(
-            filter=filter_query,
+            filter=filter_query or None,
             project_id=project_id,
             label=label,
             section_id=section_id,

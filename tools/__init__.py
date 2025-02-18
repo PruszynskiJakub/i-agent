@@ -184,22 +184,30 @@ def get_tools():
                     "description": "Searches and retrieves todo items using basic filters for dates, projects, and labels",
                     "instructions": """
                     {
+                      "filter": "Optional Todoist filter query string",
                       "project_id": "Optional project ID to narrow down tasks",
+                      "label": "Optional label to filter tasks",
+                      "section_id": "Optional section ID to filter tasks",
+                      "ids": ["Optional list of specific task IDs"],
                       "due_before": "Optional date in YYYY-MM-DD format",
                       "due_after": "Optional date in YYYY-MM-DD format"
                     }
                     
                     Field details:
+                    - filter: Todoist filter query (e.g. "today", "overdue", "priority 1")
                     - project_id: Exact project ID to filter tasks
                     - label: Exact label name to filter tasks
-                    - due_before: Include tasks due before this date
-                    - due_after: Include tasks due after this date
+                    - section_id: Exact section ID to filter tasks
+                    - ids: List of specific task IDs to retrieve
+                    - due_before: Include tasks due before this date (inclusive)
+                    - due_after: Include tasks due after this date (inclusive)
                     
                     Example:
                     {
                       "project_id": "2334150459",
                       "due_before": "2024-12-31",
-                      "due_after": "2024-01-01"
+                      "due_after": "2024-01-01",
+                      "label": "important"
                     }
                     
                     Returns:
