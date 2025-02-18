@@ -207,7 +207,6 @@ def get_tools():
                     Returns:
                     A list of matching tasks with their IDs, titles, due dates,
                     projects and labels.
-                    """
                 """
                 },
                 "update_tasks": {
