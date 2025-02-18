@@ -16,16 +16,16 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
     """
     execution_span = create_span(
         trace=trace,
-        name=f"execute_{state.interaction.tool}",
+        name=f"execute_{state.current_tool}",
         input={
-            "tool": state.interaction.tool,
-            "action": state.interaction.tool_action
+            "tool": state.current_tool,
+            "action": state.current_action.tool_action
         },
         metadata={"conversation_uuid": state.conversation_uuid}
     )
 
     try:
-        tool = state.current_tool.name
+        tool = state.current_tool
         tool_action = state.current_action.tool_action
         params = {
             **state.current_action.payload,
