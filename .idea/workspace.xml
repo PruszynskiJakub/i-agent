@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
+    <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Remove redundant method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/action.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,14 +247,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00240" summary="use should_scrape method">
-      <option name="closed" value="true" />
-      <created>1739382142035</created>
-      <option name="number" value="00240" />
-      <option name="presentableId" value="LOCAL-00240" />
-      <option name="project" value="LOCAL" />
-      <updated>1739382142035</updated>
     </task>
     <task id="LOCAL-00241" summary="Remove old field">
       <option name="closed" value="true" />
@@ -637,7 +632,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739827751422</updated>
     </task>
-    <option name="localTasksCounter" value="289" />
+    <task id="LOCAL-00289" summary="Remove redundant method">
+      <option name="closed" value="true" />
+      <created>1739863730348</created>
+      <option name="number" value="00289" />
+      <option name="presentableId" value="LOCAL-00289" />
+      <option name="project" value="LOCAL" />
+      <updated>1739863730349</updated>
+    </task>
+    <option name="localTasksCounter" value="290" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -652,7 +655,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="use should_scrape method" />
     <MESSAGE value="Remove old field" />
     <MESSAGE value="Add now to all tool params" />
     <MESSAGE value="Rename brainstorm.py into intent" />
@@ -677,6 +679,7 @@
     <MESSAGE value="Rename model" />
     <MESSAGE value="Add final_asnwer tool" />
     <MESSAGE value="Improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve" />
+    <MESSAGE value="Remove redundant method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove redundant method" />
   </component>
 </project>
