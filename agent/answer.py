@@ -1,5 +1,5 @@
 from llm import open_ai
-from llm.format import format_documents, format_tools
+from llm.format import format_documents, format_tools, format_tasks
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from models.state import AgentState
@@ -32,7 +32,8 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
         system_prompt = prompt.compile(
             documents=format_documents(state.conversation_documents),
             tools=format_tools(get_tools()),
-            query=""
+            query="",
+            actions=format_tasks(state.tasks)
         )
         model = prompt.config.get("model", "gpt-4o")
 

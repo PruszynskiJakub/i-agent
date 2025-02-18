@@ -1,7 +1,7 @@
 import json
 
 from llm import open_ai
-from llm.format import format_facts
+from llm.format import format_facts, format_tasks
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
 from tools.todoist import get_dynamic_context
@@ -14,14 +14,14 @@ async def agent_define(state: AgentState, trace) -> AgentState:
     Updates and returns AgentState with complete step_info including parameters.
     """
     # Create span for the define phase
-    span = create_span(trace, "agent_define", input=state.interaction)
+    span = create_span(trace, "agent_define", input=state)
 
     try:
         # Update phase to DEFINE
         state = update_phase(state, AgentPhase.DEFINE)
         # Set dynamic context based on tool
         dynamic_context = ""
-        if state.interaction.tool == "todoist":
+        if state.current_tool == "todoist":
             dynamic_context = get_dynamic_context()
             create_event(span, "dynamic_context_todoist", output=dynamic_context)
 
@@ -38,8 +38,8 @@ async def agent_define(state: AgentState, trace) -> AgentState:
             selected_tool=state.current_tool,
             facts=format_facts(),
             tool_context=dynamic_context,
-            tasks="",
-            action=""
+            tasks=format_tasks(state.tasks),
+            action=state.current_action
         )
 
         # Create generation trace

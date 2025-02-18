@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
-      <change beforePath="$PROJECT_DIR$/agent/execute.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/execute.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,30 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00249" summary="Remove redundant methods">
-      <option name="closed" value="true" />
-      <created>1739526698585</created>
-      <option name="number" value="00249" />
-      <option name="presentableId" value="LOCAL-00249" />
-      <option name="project" value="LOCAL" />
-      <updated>1739526698585</updated>
-    </task>
-    <task id="LOCAL-00250" summary="Change property name">
-      <option name="closed" value="true" />
-      <created>1739526802882</created>
-      <option name="number" value="00250" />
-      <option name="presentableId" value="LOCAL-00250" />
-      <option name="project" value="LOCAL" />
-      <updated>1739526802882</updated>
-    </task>
-    <task id="LOCAL-00251" summary="Rename method">
-      <option name="closed" value="true" />
-      <created>1739526876795</created>
-      <option name="number" value="00251" />
-      <option name="presentableId" value="LOCAL-00251" />
-      <option name="project" value="LOCAL" />
-      <updated>1739526876795</updated>
     </task>
     <task id="LOCAL-00252" summary="Update intent.py">
       <option name="closed" value="true" />
@@ -638,7 +614,31 @@
       <option name="project" value="LOCAL" />
       <updated>1739867087521</updated>
     </task>
-    <option name="localTasksCounter" value="298" />
+    <task id="LOCAL-00298" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739867296813</created>
+      <option name="number" value="00298" />
+      <option name="presentableId" value="LOCAL-00298" />
+      <option name="project" value="LOCAL" />
+      <updated>1739867296813</updated>
+    </task>
+    <task id="LOCAL-00299" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739867379075</created>
+      <option name="number" value="00299" />
+      <option name="presentableId" value="LOCAL-00299" />
+      <option name="project" value="LOCAL" />
+      <updated>1739867379075</updated>
+    </task>
+    <task id="LOCAL-00300" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739867675427</created>
+      <option name="number" value="00300" />
+      <option name="presentableId" value="LOCAL-00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1739867675427</updated>
+    </task>
+    <option name="localTasksCounter" value="301" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
