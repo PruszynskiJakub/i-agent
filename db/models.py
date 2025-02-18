@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 from peewee import *
 from uuid import UUID
+from enum import Enum
 from . import db
 
 class JSONField(TextField):
@@ -54,4 +55,38 @@ class ConversationDocumentModel(BaseModel):
     class Meta:
         table_name = 'conversation_documents'
         primary_key = CompositeKey('conversation_uuid', 'document')
+
+class TaskModel(BaseModel):
+    uuid = CharField(primary_key=True)
+    conversation_uuid = CharField()
+    name = CharField()
+    description = TextField()
+    status = CharField()  # pending or done
+    created_at = DateTimeField(default=datetime.utcnow)
+
+    class Meta:
+        table_name = 'tasks'
+
+class TaskActionModel(BaseModel):
+    uuid = CharField(primary_key=True)
+    name = CharField()
+    task = ForeignKeyField(TaskModel, backref='actions')
+    tool_uuid = CharField()
+    tool_action = CharField()
+    input_payload = JSONField()
+    step = IntegerField()
+    status = CharField()  # pending, done, failed
+    created_at = DateTimeField(default=datetime.utcnow)
+
+    class Meta:
+        table_name = 'task_actions'
+
+class TaskActionDocumentModel(BaseModel):
+    task_action = ForeignKeyField(TaskActionModel, backref='output_documents')
+    document = ForeignKeyField(DocumentModel, backref='task_actions')
+    created_at = DateTimeField(default=datetime.utcnow)
+
+    class Meta:
+        table_name = 'task_action_documents'
+        primary_key = CompositeKey('task_action', 'document')
 
