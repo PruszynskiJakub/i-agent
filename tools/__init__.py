@@ -183,67 +183,6 @@ def get_tools():
                 "search_tasks": {
                     "description": "Searches and retrieves tasks using advanced filters, supporting complex queries with logical operators and field-based filtering",
                     "instructions": """
-                {
-                  "filter": "Optional advanced query string with logical operators, field filters, and synonym expansions",
-                  "project_id": "Optional project ID to narrow down tasks",
-                  "label": "Optional label name to narrow down tasks",
-                  "section_id": "Optional section ID to narrow down tasks",
-                  "ids": ["Optional list of exact task IDs"]
-                }
-                
-                
-                Usage:
-                Fetch based on an advanced search.  
-                The "filter" field can include:
-                
-                1) Logical Operators:
-                   - & (AND), | (OR), ! (NOT)
-                   - Parentheses for grouping (e.g., "(p1 | p2) & overdue")
-                
-                2) Field-based Filters:
-                   - Examples: "title:", "assigned to:", "created:", "status:", "due:", etc.
-                   - "search:" for free-text searches over task content/title.
-                
-                3) Synonym and Morphological Expansion:
-                   - When the user query suggests synonyms or variant forms 
-                     (e.g. "invoice" ↔ "faktura/faktury/faktur/invoice/invoices/invoicing"), 
-                     the LLM should expand the terms to increase the likelihood of matches.
-                   - Example:
-                       "search: invoice | search: faktura | search: faktury search: faktur)"
-                     This ensures tasks referencing any of those variations are included.
-                
-                4) Fuzzy Matching or Partial Matching (optional enhancement):
-                   - You might integrate partial matches or wildcard expansions 
-                     (e.g., "factur" to capture “facture,” “factur,” “factury,” etc.).
-                   - Implement as relevant to your system’s capabilities.
-                
-                5) Multi-Condition Combining:
-                   - Combine synonyms with other logical filters.
-                   - Example:
-                       "(search: invoice | search: faktura | search: faktury) & !status: done"
-                     This finds tasks mentioning “invoice” or “faktura/faktury,” excluding completed ones.
-                
-                6) Additional Filtering Fields:
-                   - "project_id": Restrict results to a specific project by its ID.
-                   - "label": Filter by a specific label (like “urgent”).
-                   - "section_id": Filter tasks in a specific project section.
-                   - "ids": Retrieve a specific list of tasks by their unique IDs.
-                
-                Returns:
-                - A structured JSON list containing relevant task details 
-                  (task IDs, title, priority, due dates, labels, assignments, etc.).
-                
-                Example:
-                For a user request: “Mark as complete a task labeled pc related to invoice - faktury in project Inbox”
-                the system might expand synonyms and produce a filter:
-                  {
-                    "filter": "(search: invoice | search: faktura | search: faktury | search: faktur) & !status: done",
-                    "project_id": "2334150459",
-                    "label": "pc"
-                  }
-                This ensures capturing multiple linguistic variations of "invoice."
-             
-                Returns formatted list with task details including ids, title, priority, due dates, labels etc.
                 """
                 },
                 "update_tasks": {
