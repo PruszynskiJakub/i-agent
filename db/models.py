@@ -78,7 +78,7 @@ class TaskActionDocumentModel(BaseModel):
     created_at = DateTimeField(default=datetime.utcnow)
 
     class Meta:
-        table_name = 'action_documents'
+        table_name = 'task_action_documents'
         primary_key = CompositeKey('action', 'document')
 
 class ConversationDocumentModel(BaseModel):
