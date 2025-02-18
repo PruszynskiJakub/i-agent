@@ -185,7 +185,6 @@ def get_tools():
                     "instructions": """
                     {
                       "project_id": "Optional project ID to narrow down tasks",
-                      "label": "Optional label name to narrow down tasks",
                       "due_before": "Optional date in YYYY-MM-DD format",
                       "due_after": "Optional date in YYYY-MM-DD format"
                     }
@@ -199,7 +198,6 @@ def get_tools():
                     Example:
                     {
                       "project_id": "2334150459",
-                      "label": "urgent",
                       "due_before": "2024-12-31",
                       "due_after": "2024-01-01"
                     }
