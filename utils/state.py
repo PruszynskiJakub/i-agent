@@ -8,10 +8,11 @@ from utils.message import create_message
 
 
 def create_or_restore_state(conversation_uuid: str) -> AgentState:
+    from db.tasks import load_tasks
     return AgentState(
         conversation_uuid=conversation_uuid,
-        messages= find_messages_by_conversation(conversation_uuid),
-        tasks= load_tasks(conversation_uuid),
+        messages=find_messages_by_conversation(conversation_uuid),
+        tasks=load_tasks(conversation_uuid),
         conversation_documents=[],  # load_conversation_documents(conversation_uuid),
         current_step=0,
         max_steps=4,
