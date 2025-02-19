@@ -1,4 +1,5 @@
 import os
+from typing import Dict
 
 from agent.answer import agent_answer
 from agent.blueprint import agent_blueprint
@@ -11,16 +12,14 @@ from logger.logger import log_info, log_error
 from models.state import AgentState
 
 
-async def agent_run(initial_state: AgentState) -> AgentState:
+async def agent_run(initial_state: AgentState, metadata: Dict) -> AgentState:
     state = initial_state
     log_info(f"🚀 Starting agent run for query: {state.user_query[:200]}...")
 
     trace = create_trace(
         name=state.user_query[:45],  # First 45 chars of user input as trace name
         user_id=os.getenv("USER", "default_user"),
-        metadata={
-            'medium': 'slackk'
-        },
+        metadata=metadata,
         session_id=state.conversation_uuid,
         input=state.user_query
     )

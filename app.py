@@ -37,7 +37,10 @@ def handle_message(message, say):
                 ).add_message(
                     content=message["text"],
                     role="user"
-                )
+                ),
+                metadata={
+                    'medium': 'slack',
+                }
             )
         )
         response = json.loads(state.final_answer)
