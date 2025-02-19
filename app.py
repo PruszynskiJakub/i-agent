@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
-from agent.assistant import agent_run
+from agent.run import agent_run
 from db.conversation import create_conversation_if_not_exists
 from llm.tracing import flush
 from logger.logger import log_exception
