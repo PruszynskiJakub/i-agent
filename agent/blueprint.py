@@ -1,17 +1,16 @@
 import json
 import uuid
 
-from llm import open_ai
-from llm.format import format_facts, format_tools, format_tasks, format_thoughts
-from llm.prompts import get_prompt
-from llm.tracing import create_generation, end_generation
 from agent.state import (
     AgentState,
     AgentPhase,
     Task
 )
+from llm import open_ai
+from llm.format import format_facts, format_tools, format_tasks, format_thoughts
+from llm.prompts import get_prompt
+from llm.tracing import create_generation, end_generation
 from tools import get_tools
-from utils.state import update_tasks
 
 
 async def agent_blueprint(state: AgentState, trace) -> AgentState:
@@ -86,7 +85,7 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
                         actions=[]
                     ))
 
-            new_state = update_tasks(state, tasks)
+            new_state = state.update_tasks(tasks)
         except json.JSONDecodeError as e:
             generation.end(
                 output=None,

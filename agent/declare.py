@@ -76,9 +76,11 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
             new_state = update_current_task(
                 state,
                 selected_task
+            ).update_current_tool(
+                result["tool_name"]
+            ).update_current_action(
+                action.model_dump()
             )
-            new_state = new_state.update_current_tool(result["tool_name"])
-            new_state = update_current_action(new_state, action.model_dump())
 
         except json.JSONDecodeError as e:
             generation.end(

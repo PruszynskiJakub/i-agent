@@ -88,7 +88,53 @@ class AgentState(BaseModel):
             save_task(task)
         return self.copy(tasks=tasks)
 
+    def update_current_task(self, task):
+        return self.copy(current_task=task)
 
+    def update_current_action(self, action_updates: dict):
+        # Create a new TaskAction from the provided updates or update existing one
+        if self.current_action is not None:
+            new_action = self.current_action.model_copy(update=action_updates)
+        else:
+            new_action = TaskAction(**action_updates)
+        new_state = self.copy(current_action=new_action)
+
+        if self.current_task is not None:
+            # Determine the action uuid to update: prefer the one from action_updates, or use current_action's uuid if available.
+            action_uuid = action_updates.get("uuid")
+            if action_uuid is None and self.current_action is not None:
+                action_uuid = self.current_action.uuid
+
+            # Update the actions list: if an action with the same uuid exists, replace it; otherwise, append the new action.
+            found = False
+            new_actions = []
+            for act in self.current_task.actions:
+                if getattr(act, "uuid", None) == action_uuid:
+                    new_actions.append(new_action)
+                    found = True
+                else:
+                    new_actions.append(act)
+            if not found:
+                new_actions.append(new_action)
+
+            # Update current_task with the new actions list.
+            updated_task = self.current_task.model_copy(update={"actions": new_actions})
+            new_state = new_state.copy(current_task=updated_task)
+
+            # Also update the corresponding task in the tasks list.
+            updated_tasks = []
+            for task in self.tasks:
+                if task.uuid == updated_task.uuid:
+                    updated_tasks.append(updated_task)
+                else:
+                    updated_tasks.append(task.model_copy())
+            new_state = new_state.copy(tasks=updated_tasks)
+
+            # Persist changes to database
+            from db.tasks import save_task
+            save_task(updated_task)
+
+        return new_state
 
     @property
     def user_query(self) -> str:
