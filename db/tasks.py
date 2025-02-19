@@ -1,6 +1,7 @@
 from typing import List, Optional, Dict, Any
 
 from agent.state import Task, TaskAction
+from models.document import Document
 from .models import TaskModel, TaskActionModel, TaskActionDocumentModel, DocumentModel
 from . import connection
 
