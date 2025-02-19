@@ -11,7 +11,7 @@ from models.state import (
     Task
 )
 from tools import get_tools
-from utils.state import update_phase, update_tasks
+from utils.state import update_tasks
 
 
 async def agent_blueprint(state: AgentState, trace) -> AgentState:
@@ -21,7 +21,7 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
     """
     try:
         # Update phase to PLAN
-        state = update_phase(state, AgentPhase.PLAN)
+        state = state.update_phase(AgentPhase.PLAN)
 
         # Get the planning prompt from repository
         prompt = get_prompt(
@@ -62,10 +62,10 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
             for task_data in response_data["result"]:
                 # Check if task already exists by UUID
                 existing_task = next(
-                    (t for t in state.tasks if t.uuid == task_data.get("uuid")), 
+                    (t for t in state.tasks if t.uuid == task_data.get("uuid")),
                     None
                 )
-                
+
                 if existing_task:
                     # Merge new data with existing task, preserving actions
                     tasks.append(Task(
@@ -86,9 +86,9 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
                         conversation_uuid=state.conversation_uuid,
                         actions=[]
                     ))
-            
+
             new_state = update_tasks(state, tasks)
-            
+
             # Persist tasks to database
             from db.tasks import save_task
             for task in tasks:

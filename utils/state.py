@@ -1,27 +1,11 @@
 from typing import List, Optional, Dict, Any
 
-from db.message import save_message
 from models.document import Document
-from models.state import AgentState, AgentPhase, Task, TaskAction
-from utils.message import create_message
-
-
-def add_message(state: AgentState, content, role) -> AgentState:
-    message = create_message(state.conversation_uuid, content, role)
-    save_message(message)
-    return state.copy(messages=[*state.messages, message])
+from models.state import AgentState, Task, TaskAction
 
 
 def add_documents(state: AgentState, documents: List[Document]) -> AgentState:
     return state.copy(documents=[*state.conversation_documents, *documents])
-
-
-def update_phase(state: AgentState, new_phase: AgentPhase) -> AgentState:
-    return state.copy(phase=new_phase)
-
-
-def set__tool_dynamic_context(state: AgentState, context: str) -> AgentState:
-    return state.copy(tool_dynamic_context=context)
 
 
 def update_current_task(state: AgentState, task) -> AgentState:
@@ -76,15 +60,6 @@ def update_current_action(state: AgentState, action_updates: dict) -> AgentState
         save_task(updated_task)
 
     return new_state
-
-
-def update_current_tool(state: AgentState, tool) -> AgentState:
-    return state.copy(current_tool=tool)
-
-
-def update_thoughts(state: AgentState, thoughts) -> AgentState:
-    return state.copy(thoughts=thoughts)
-
 
 def update_task(state: AgentState, task_uuid: str, updates: Dict[str, Any]) -> AgentState:
     """Update a task with persistence"""

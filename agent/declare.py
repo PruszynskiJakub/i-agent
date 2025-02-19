@@ -1,6 +1,5 @@
 import json
 import uuid
-from argparse import Action
 
 from llm import open_ai
 from llm.format import format_facts, format_tools, format_tasks
@@ -9,8 +8,7 @@ from llm.tracing import create_generation, end_generation
 from models.state import AgentState, AgentPhase, TaskAction
 from tools import get_tools
 from utils.state import (
-    update_phase,
-    update_current_task, find_task, update_current_tool, update_current_action
+    update_current_task, find_task, update_current_action
 )
 
 
@@ -27,7 +25,7 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
     """
     try:
         # Update phase to DEFINE
-        state = update_phase(state, AgentPhase.DECIDE)
+        state = state.update_phase(AgentPhase.DECIDE)
 
         # Get the decision prompt
         prompt = get_prompt(
@@ -79,7 +77,7 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
                 state,
                 selected_task
             )
-            new_state = update_current_tool(new_state, result["tool_name"])
+            new_state = new_state.update_current_tool(result["tool_name"])
             new_state = update_current_action(new_state, action.model_dump())
 
         except json.JSONDecodeError as e:

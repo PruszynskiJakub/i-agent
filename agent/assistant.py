@@ -9,7 +9,6 @@ from agent.intent import agent_intent
 from llm.tracing import create_trace, end_trace
 from logger.logger import log_info, log_error
 from models.state import AgentState
-from utils.state import should_continue, complete_thinking_step
 
 
 async def agent_run(initial_state: AgentState) -> str:
@@ -31,7 +30,7 @@ async def agent_run(initial_state: AgentState) -> str:
         log_info("🧠 Starting brainstorming phase...")
         state = await agent_intent(state, trace)
 
-        while should_continue(state):
+        while state.should_continue():
             log_info(f"📍 Step {state.current_step + 1}/{state.max_steps}")
 
             state = await agent_blueprint(state, trace)
@@ -47,7 +46,7 @@ async def agent_run(initial_state: AgentState) -> str:
 
             state = await agent_define(state, trace)
             state = await agent_execute(state, trace)
-            state = complete_thinking_step(state)
+            state = state.complete_thinking_step()
 
         state = await agent_answer(state, trace)
         final_answer = state.assistant_response

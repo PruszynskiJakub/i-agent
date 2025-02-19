@@ -7,11 +7,10 @@ from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 from agent.assistant import agent_run
-from models.state import AgentState
-from utils.state import create_or_restore_state, add_message
-from llm.tracing import flush
 from db.conversation import create_conversation_if_not_exists
+from llm.tracing import flush
 from logger.logger import log_info, log_exception
+from models.state import AgentState
 from utils.slack import preprocess_message, get_conversation_id
 
 # Initialize core services
@@ -40,7 +39,6 @@ def handle_message(message, say):
             role="user"
         )
 
-
         # Log initial state counts
         log_info(
             f"Initial state - Tasks: {len(initial_state.tasks)}, Documents: {len(initial_state.conversation_documents)}, Messages: {len(initial_state.messages) - 1}")
@@ -50,14 +48,14 @@ def handle_message(message, say):
         # Send response back to Slack
         say(
             text=response['text'],
-            blocks = [
-              {
-                  "type": "section",
-                  "text": {
-                      "type": "mrkdwn",
-                      "text": f"{response['markdown']}"
-                  }
-              }
+            blocks=[
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"{response['markdown']}"
+                    }
+                }
             ],
             thread_ts=message.get("thread_ts", message["ts"])  # Reply in thread
         )

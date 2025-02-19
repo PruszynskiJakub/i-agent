@@ -1,13 +1,12 @@
 import json
 
-from openai._extras._common import format_instructions
-
 from llm import open_ai
 from llm.format import format_facts, format_tasks, format_tool
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
+from models.state import AgentPhase, AgentState
 from tools.todoist import get_dynamic_context
-from utils.state import AgentState, update_phase, AgentPhase, update_current_action
+from utils.state import update_current_action
 
 
 async def agent_define(state: AgentState, trace) -> AgentState:
@@ -20,7 +19,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
 
     try:
         # Update phase to DEFINE
-        state = update_phase(state, AgentPhase.DEFINE)
+        state = state.update_phase(AgentPhase.DEFINE)
         # Set dynamic context based on tool
         dynamic_context = ""
         if state.current_tool == "todoist":
@@ -67,12 +66,12 @@ async def agent_define(state: AgentState, trace) -> AgentState:
         try:
             response_data = json.loads(completion)
             result = response_data.get("result", {})
-            
+
             action_updates = {
                 "tool_action": result['action'],
                 "input_payload": result.get("payload", {})
             }
-            
+
             updated_state = update_current_action(state, action_updates)
 
         except (json.JSONDecodeError, ValueError) as e:

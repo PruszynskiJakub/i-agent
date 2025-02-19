@@ -93,6 +93,18 @@ class AgentState(BaseModel):
             current_tool=None,
         )
 
+    def update_phase(self, new_phase: AgentPhase):
+        return self.copy(phase=new_phase)
+
+    def set_tool_dynamic_context(self, context: str):
+        return self.copy(tool_dynamic_context=context)
+
+    def update_thoughts(self, thoughts):
+        return self.copy(thoughts=thoughts)
+
+    def update_current_tool(self, tool):
+        return self.copy(current_tool=tool)
+
     def add_message(self, content, role):
         message = create_message(self.conversation_uuid, content, role)
         save_message(message)

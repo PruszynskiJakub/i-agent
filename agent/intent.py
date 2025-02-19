@@ -4,9 +4,8 @@ from llm import open_ai
 from llm.format import format_facts, format_tools
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.state import AgentState, ToolThought, Thoughts
+from models.state import AgentState, ToolThought, Thoughts, AgentPhase
 from tools import get_tools
-from utils.state import update_phase, AgentPhase, update_thoughts
 
 
 async def agent_intent(state: AgentState, trace) -> AgentState:
@@ -16,7 +15,7 @@ async def agent_intent(state: AgentState, trace) -> AgentState:
       """
     try:
         # Update phase to PLAN
-        state = update_phase(state, AgentPhase.INTENT)
+        state = state.update_phase(AgentPhase.INTENT)
 
         # Get the planning prompt from repository
         prompt = get_prompt(
@@ -51,8 +50,7 @@ async def agent_intent(state: AgentState, trace) -> AgentState:
 
         try:
             response_data = json.loads(completion)
-            updated_state = update_thoughts(
-                state,
+            state = state.update_thoughts(
                 Thoughts(
                     tool_thoughts=[
                         ToolThought(
@@ -74,7 +72,7 @@ async def agent_intent(state: AgentState, trace) -> AgentState:
         # End the generation trace
         end_generation(generation, output=response_data)
 
-        return updated_state
+        return state
 
     except Exception as e:
         raise Exception(f"Error in agent plan: {str(e)}")
