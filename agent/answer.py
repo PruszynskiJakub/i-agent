@@ -2,7 +2,7 @@ from llm import open_ai
 from llm.format import format_documents, format_tools, format_tasks
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.state import AgentState
+from models.state import AgentState, AgentPhase
 from tools.__init__ import get_tools
 
 
@@ -18,6 +18,8 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
         str: Final answer for the user
     """
     try:
+        state = state.update_phase(AgentPhase.ANSWER)
+
         messages = [
             {"role": msg.role, "content": msg.content}
             for msg in state.messages
@@ -56,7 +58,10 @@ async def agent_answer(state: AgentState, parent_trace) -> AgentState:
 
         end_generation(generation, output=final_answer)
 
-        return state.add_message(content=final_answer, role="assistant")
+        return state.add_message(
+            content=final_answer,
+            role="assistant"
+        ).update_final_answer(final_answer)
 
     except Exception as e:
         raise Exception(f"Error generating final answer: {str(e)}")

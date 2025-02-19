@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/answer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/assistant.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/assistant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/blueprint.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/blueprint.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/declare.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/declare.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/define.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/define.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/intent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/intent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,14 +270,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00274" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739628810531</created>
-      <option name="number" value="00274" />
-      <option name="presentableId" value="LOCAL-00274" />
-      <option name="project" value="LOCAL" />
-      <updated>1739628810531</updated>
     </task>
     <task id="LOCAL-00275" summary="Improve">
       <option name="closed" value="true" />
@@ -671,7 +655,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739960393623</updated>
     </task>
-    <option name="localTasksCounter" value="323" />
+    <task id="LOCAL-00323" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739961795408</created>
+      <option name="number" value="00323" />
+      <option name="presentableId" value="LOCAL-00323" />
+      <option name="project" value="LOCAL" />
+      <updated>1739961795408</updated>
+    </task>
+    <option name="localTasksCounter" value="324" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

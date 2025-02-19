@@ -24,8 +24,7 @@ app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 def handle_message(message, say):
     """Handle incoming messages and respond using the agent"""
     try:
-        conversation_id = get_conversation_id(message)
-        # Create or restore conversation first
+        conversation_id = message.get("thread_ts", message.get("ts", ""))
         create_conversation_if_not_exists(conversation_id)
 
         # Preprocess the message
@@ -34,16 +33,18 @@ def handle_message(message, say):
         # Initialize state for this conversation
         initial_state = AgentState.create_or_restore_state(
             conversation_uuid=conversation_id
-        ).add_message(
-            content=message["text"],
-            role="user"
         )
 
         # Log initial state counts
         log_info(
-            f"Initial state - Tasks: {len(initial_state.tasks)}, Documents: {len(initial_state.conversation_documents)}, Messages: {len(initial_state.messages) - 1}")
+            f"Initial state - Tasks: {len(initial_state.tasks)}, Documents: {len(initial_state.conversation_documents)}, Messages: {len(initial_state.messages)}")
 
-        response = json.loads(asyncio.run(agent_run(initial_state=initial_state)))
+        end_state = asyncio.run(
+            agent_run(
+                initial_state=initial_state.add_message(content=message["text"], role="user")
+            )
+        )
+        response = json.loads(end_state.assistant_response)
         flush()
         # Send response back to Slack
         say(

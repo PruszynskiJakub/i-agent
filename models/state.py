@@ -75,6 +75,8 @@ class AgentState(BaseModel):
     current_tool: Optional[str]
     tool_dynamic_context: Optional[str]
 
+    final_answer:Optional[str] = None
+
     @staticmethod
     def create_or_restore_state(conversation_uuid: str):
         from db.tasks import load_tasks
@@ -91,6 +93,7 @@ class AgentState(BaseModel):
             thoughts=Thoughts(),
             tool_dynamic_context=None,
             current_tool=None,
+            final_answer=None
         )
 
     def update_phase(self, new_phase: AgentPhase):
@@ -104,6 +107,9 @@ class AgentState(BaseModel):
 
     def update_current_tool(self, tool):
         return self.copy(current_tool=tool)
+
+    def update_final_answer(self, final_answer):
+        return self.copy(final_answer=final_answer)
 
     def add_message(self, content, role):
         message = create_message(self.conversation_uuid, content, role)

@@ -11,7 +11,7 @@ from logger.logger import log_info, log_error
 from models.state import AgentState
 
 
-async def agent_run(initial_state: AgentState) -> str:
+async def agent_run(initial_state: AgentState) -> AgentState:
     state = initial_state
     log_info(f"🚀 Starting agent run for query: {state.user_query[:200]}...")
 
@@ -49,15 +49,13 @@ async def agent_run(initial_state: AgentState) -> str:
             state = state.complete_thinking_step()
 
         state = await agent_answer(state, trace)
-        final_answer = state.assistant_response
 
         log_info("✅ Agent run completed")
         log_info(f"📊 Stats: {state.current_step} steps, {len(state.tasks)} tasks")
-        log_info(f"💡 Final answer: {final_answer[:200]}...")
 
-        end_trace(trace, output=final_answer)
+        end_trace(trace, output=state)
     except Exception as e:
         error_msg = f"❌ Error during agent run: {str(e)}"
         log_error(error_msg)
         raise
-    return final_answer
+    return state

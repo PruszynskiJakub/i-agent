@@ -3,17 +3,12 @@ import uuid
 from typing import Dict, Any, List
 
 import requests
-from models.document import DocumentType
 
 from db.document import save_document
 from db.models import ConversationDocumentModel
 from logger.logger import log_info, log_error
+from models.document import DocumentType
 from utils.document import create_document
-
-
-def get_conversation_id(message: Dict[str, Any]) -> str:
-    """Extract conversation ID from a Slack message"""
-    return message.get("thread_ts", message.get("ts", ""))
 
 
 def preprocess_message(message: Dict[str, Any], conversation_uuid: str) -> None:
