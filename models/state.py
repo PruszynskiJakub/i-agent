@@ -1,12 +1,13 @@
 from dataclasses import field
 from enum import Enum
 from typing import List, Dict, Any, Optional
-from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
+from db.message import find_messages_by_conversation, save_message
 from models.document import Document
 from models.message import Message
+from utils.message import create_message
 
 
 class AgentPhase(str, Enum):
@@ -43,7 +44,7 @@ class TaskAction(BaseModel):
     input_payload: Dict[str, Any] = field(default_factory=dict)
     output_documents: List[Document] = field(default_factory=list)
     step: int
-    status: str # pending, done, failed
+    status: str  # pending, done, failed
 
     model_config = ConfigDict(frozen=True)
 
@@ -73,6 +74,41 @@ class AgentState(BaseModel):
     current_action: Optional[TaskAction]
     current_tool: Optional[str]
     tool_dynamic_context: Optional[str]
+
+    @staticmethod
+    def create_or_restore_state(conversation_uuid: str):
+        from db.tasks import load_tasks
+        return AgentState(
+            conversation_uuid=conversation_uuid,
+            messages=find_messages_by_conversation(conversation_uuid),
+            tasks=load_tasks(conversation_uuid),
+            conversation_documents=[],  # load_conversation_documents(conversation_uuid),
+            current_step=0,
+            max_steps=4,
+            phase=AgentPhase.INTENT,
+            current_task=None,
+            current_action=None,
+            thoughts=Thoughts(),
+            tool_dynamic_context=None,
+            current_tool=None,
+        )
+
+    def add_message(self, content, role):
+        message = create_message(self.conversation_uuid, content, role)
+        save_message(message)
+        return self.copy(messages=[*self.messages, message])
+
+    def complete_thinking_step(self):
+        return self.copy(
+            current_step=self.current_step + 1,
+            tool_dynamic_context="",
+            current_task=None,
+            current_action=None,
+            current_tool=None,
+        )
+
+    def should_continue(self) -> bool:
+        return self.current_step < self.max_steps
 
     @property
     def user_query(self) -> str:

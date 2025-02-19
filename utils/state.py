@@ -1,38 +1,9 @@
 from typing import List, Optional, Dict, Any
 
-from db.message import save_message, find_messages_by_conversation
-from db.tasks import load_tasks
+from db.message import save_message
 from models.document import Document
-from models.state import AgentState, AgentPhase, Thoughts, Task, TaskAction
+from models.state import AgentState, AgentPhase, Task, TaskAction
 from utils.message import create_message
-
-
-def create_or_restore_state(conversation_uuid: str) -> AgentState:
-    from db.tasks import load_tasks
-    return AgentState(
-        conversation_uuid=conversation_uuid,
-        messages=find_messages_by_conversation(conversation_uuid),
-        tasks=load_tasks(conversation_uuid),
-        conversation_documents=[],  # load_conversation_documents(conversation_uuid),
-        current_step=0,
-        max_steps=4,
-        phase=AgentPhase.INTENT,
-        current_task=None,
-        current_action=None,
-        thoughts=Thoughts(),
-        tool_dynamic_context=None,
-        current_tool=None,
-    )
-
-
-def complete_thinking_step(state: AgentState) -> AgentState:
-    return state.copy(
-        current_step=state.current_step + 1,
-        tool_dynamic_context="",
-        current_task=None,
-        current_action=None,
-        current_tool=None,
-    )
 
 
 def add_message(state: AgentState, content, role) -> AgentState:
@@ -118,15 +89,15 @@ def update_thoughts(state: AgentState, thoughts) -> AgentState:
 def update_task(state: AgentState, task_uuid: str, updates: Dict[str, Any]) -> AgentState:
     """Update a task with persistence"""
     from db.tasks import save_task
-    
+
     task = find_task(state, task_uuid)
     if task:
         updated_task = task.model_copy(update=updates)
         new_state = update_current_task(state, updated_task)
-        
+
         # Persist to database
         save_task(updated_task)
-        
+
         return new_state
     return state
 
@@ -134,15 +105,15 @@ def update_task(state: AgentState, task_uuid: str, updates: Dict[str, Any]) -> A
 def complete_task(state: AgentState, task_uuid: str) -> AgentState:
     """Mark a task as complete with persistence"""
     from db.tasks import update_task_status
-    
+
     task = find_task(state, task_uuid)
     if task:
         updated_task = task.model_copy(update={"status": "done"})
         new_state = update_current_task(state, updated_task)
-        
+
         # Persist to database
         update_task_status(task_uuid, "done")
-        
+
         return new_state
     return state
 
@@ -151,7 +122,3 @@ def find_task(state: AgentState, task_uuid: str) -> Optional[Task]:
     # First try to find by UUID
     task = next((task for task in state.tasks if task.uuid == task_uuid), None)
     return task
-
-
-def should_continue(state: AgentState) -> bool:
-    return state.current_step < state.max_steps

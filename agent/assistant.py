@@ -12,8 +12,8 @@ from models.state import AgentState
 from utils.state import should_continue, complete_thinking_step
 
 
-async def agent_run(in_state: AgentState) -> str:
-    state = in_state
+async def agent_run(initial_state: AgentState) -> str:
+    state = initial_state
     log_info(f"🚀 Starting agent run for query: {state.user_query[:200]}...")
 
     trace = create_trace(
