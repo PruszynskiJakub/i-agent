@@ -10,7 +10,7 @@ from agent.run import agent_run
 from db.conversation import create_conversation_if_not_exists
 from llm.tracing import flush
 from logger.logger import log_exception
-from models.state import AgentState
+from agent.state import AgentState
 from utils.slack import preprocess_message
 
 # Initialize core services

@@ -1,7 +1,7 @@
 from typing import List, Optional, Dict, Any
 
 from models.document import Document
-from models.state import AgentState, Task, TaskAction
+from agent.state import AgentState, Task, TaskAction
 
 
 def add_documents(state: AgentState, documents: List[Document]) -> AgentState:

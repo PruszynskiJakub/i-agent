@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List
 
 from models.document import Document
-from models.state import Task, Thoughts
+from agent.state import Task, Thoughts
 
 
 def format_tools(tools: List[Dict]) -> str:

@@ -5,7 +5,7 @@ from llm import open_ai
 from llm.format import format_facts, format_tools, format_tasks, format_thoughts
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.state import (
+from agent.state import (
     AgentState,
     AgentPhase,
     Task

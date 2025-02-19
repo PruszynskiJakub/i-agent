@@ -1,7 +1,6 @@
 from typing import List, Optional, Dict, Any
-from uuid import UUID
 
-from models.state import Task, TaskAction
+from agent.state import Task, TaskAction
 from .models import TaskModel, TaskActionModel, TaskActionDocumentModel, DocumentModel
 from . import connection
 

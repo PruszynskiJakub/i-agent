@@ -3,7 +3,7 @@ from datetime import datetime
 
 from llm.tracing import create_span, end_span
 from logger.logger import log_info, log_error, log_tool_call
-from models.state import AgentState
+from agent.state import AgentState
 from tools.__init__ import tool_handlers
 from utils.document import create_error_document
 from utils.state import update_current_action

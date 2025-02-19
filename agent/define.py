@@ -4,7 +4,7 @@ from llm import open_ai
 from llm.format import format_facts, format_tasks, format_tool
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
-from models.state import AgentPhase, AgentState
+from agent.state import AgentPhase, AgentState
 from tools.todoist import get_dynamic_context
 from utils.state import update_current_action
 

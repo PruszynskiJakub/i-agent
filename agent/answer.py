@@ -2,7 +2,7 @@ from llm import open_ai
 from llm.format import format_documents, format_tools, format_tasks
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.state import AgentState, AgentPhase
+from agent.state import AgentState, AgentPhase
 from tools.__init__ import get_tools
 
 

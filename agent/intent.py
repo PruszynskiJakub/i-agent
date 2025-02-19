@@ -4,7 +4,7 @@ from llm import open_ai
 from llm.format import format_facts, format_tools
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from models.state import AgentState, ToolThought, Thoughts, AgentPhase
+from agent.state import AgentState, ToolThought, Thoughts, AgentPhase
 from tools import get_tools
 
 

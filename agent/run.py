@@ -9,7 +9,7 @@ from agent.execute import agent_execute
 from agent.intent import agent_intent
 from llm.tracing import create_trace, end_trace
 from logger.logger import log_info, log_error
-from models.state import AgentState
+from agent.state import AgentState
 
 
 async def agent_run(initial_state: AgentState, metadata: Dict) -> AgentState:
