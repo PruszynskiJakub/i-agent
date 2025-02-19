@@ -10,7 +10,7 @@ from models.document import Document
 
 class AgentPhase(str, Enum):
     INTENT = "intent"
-    PLAN = "plan"
+    BLUEPRINT = "blueprint"
     DEFINE = "define"
     DECIDE = "decide"
     EXECUTE = "execute"

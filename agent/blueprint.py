@@ -21,7 +21,7 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
     """
     try:
         # Update phase to PLAN
-        state = state.update_phase(AgentPhase.PLAN)
+        state = state.update_phase(AgentPhase.BLUEPRINT)
 
         # Get the planning prompt from repository
         prompt = get_prompt(
@@ -29,7 +29,6 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
             label="latest"
         )
 
-        # TODO
         system_prompt = prompt.compile(
             facts=format_facts(),
             thoughts=format_thoughts(state.thoughts),
