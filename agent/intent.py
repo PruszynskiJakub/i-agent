@@ -1,10 +1,11 @@
 import json
 
+from agent.state import AgentState, Thoughts, AgentPhase
 from llm import open_ai
 from llm.format import format_facts, format_tools
 from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
-from agent.state import AgentState, ToolThought, Thoughts, AgentPhase
+from models.state import ToolThought
 from tools import get_tools
 
 

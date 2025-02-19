@@ -6,7 +6,6 @@ from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation, create_span, end_span, create_event
 from agent.state import AgentPhase, AgentState
 from tools.todoist import get_dynamic_context
-from utils.state import update_current_action
 
 
 async def agent_define(state: AgentState, trace) -> AgentState:
@@ -72,7 +71,7 @@ async def agent_define(state: AgentState, trace) -> AgentState:
                 "input_payload": result.get("payload", {})
             }
 
-            updated_state = update_current_action(state, action_updates)
+            updated_state = state.update_current_action(action_updates)
 
         except (json.JSONDecodeError, ValueError) as e:
             generation.end(

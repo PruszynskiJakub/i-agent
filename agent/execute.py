@@ -6,8 +6,6 @@ from logger.logger import log_info, log_error, log_tool_call
 from agent.state import AgentState
 from tools.__init__ import tool_handlers
 from utils.document import create_error_document
-from utils.state import update_current_action
-
 
 async def agent_execute(state: AgentState, trace) -> AgentState:
     """
@@ -45,7 +43,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'output_documents': documents,
         }
 
-        updated_state = update_current_action(state, action_dict)
+        updated_state = state.update_current_action(action_dict)
         
         # If all actions are completed, mark task as done
         if updated_state.current_task and all(a.status == 'completed' for a in updated_state.current_task.actions):
