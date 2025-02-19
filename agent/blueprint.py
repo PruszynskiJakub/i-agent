@@ -87,12 +87,6 @@ async def agent_blueprint(state: AgentState, trace) -> AgentState:
                     ))
 
             new_state = update_tasks(state, tasks)
-
-            # Persist tasks to database
-            from db.tasks import save_task
-            for task in tasks:
-                save_task(task)
-
         except json.JSONDecodeError as e:
             generation.end(
                 output=None,

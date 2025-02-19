@@ -30,7 +30,7 @@ def save_task(task: Task) -> None:
         
         for action in task.actions:
             if action.uuid in existing_actions:
-                # Update existing action
+                # Update existing actionw
                 action_model = existing_actions[action.uuid]
                 action_model.name = action.name
                 action_model.tool_uuid = action.tool_uuid

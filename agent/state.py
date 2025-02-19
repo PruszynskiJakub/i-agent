@@ -82,6 +82,12 @@ class AgentState(BaseModel):
     def should_continue(self) -> bool:
         return self.current_step < self.max_steps
 
+    def update_tasks(self, tasks: List[Task]):
+        for task in tasks:
+            from db.tasks import save_task
+            save_task(task)
+        return self.copy(tasks=tasks)
+
     @property
     def user_query(self) -> str:
         """Returns the content of the last user message"""
