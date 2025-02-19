@@ -5,6 +5,7 @@ from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, ConfigDict
 
 from db.message import find_messages_by_conversation, save_message
+from logger.logger import log_info
 from models.document import Document
 from models.message import Message
 from utils.message import create_message
@@ -75,12 +76,12 @@ class AgentState(BaseModel):
     current_tool: Optional[str]
     tool_dynamic_context: Optional[str]
 
-    final_answer:Optional[str] = None
+    final_answer: Optional[str] = None
 
     @staticmethod
     def create_or_restore_state(conversation_uuid: str):
         from db.tasks import load_tasks
-        return AgentState(
+        initial_state = AgentState(
             conversation_uuid=conversation_uuid,
             messages=find_messages_by_conversation(conversation_uuid),
             tasks=load_tasks(conversation_uuid),
@@ -95,6 +96,10 @@ class AgentState(BaseModel):
             current_tool=None,
             final_answer=None
         )
+        log_info(
+            f"Initial state - Tasks: {len(initial_state.tasks)}, Documents: {len(initial_state.conversation_documents)}, Messages: {len(initial_state.messages)}")
+
+        return initial_state
 
     def update_phase(self, new_phase: AgentPhase):
         return self.copy(phase=new_phase)
@@ -133,14 +138,6 @@ class AgentState(BaseModel):
         """Returns the content of the last user message"""
         for message in reversed(self.messages):
             if message.role == "user":
-                return message.content
-        return ""
-
-    @property
-    def assistant_response(self) -> str:
-        """Returns the content of the last assistant message"""
-        for message in reversed(self.messages):
-            if message.role == "assistant":
                 return message.content
         return ""
 

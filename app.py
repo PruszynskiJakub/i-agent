@@ -9,9 +9,9 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 from agent.assistant import agent_run
 from db.conversation import create_conversation_if_not_exists
 from llm.tracing import flush
-from logger.logger import log_info, log_exception
+from logger.logger import log_exception
 from models.state import AgentState
-from utils.slack import preprocess_message, get_conversation_id
+from utils.slack import preprocess_message
 
 # Initialize core services
 load_dotenv()
@@ -30,21 +30,17 @@ def handle_message(message, say):
         # Preprocess the message
         preprocess_message(message, conversation_id)
 
-        # Initialize state for this conversation
-        initial_state = AgentState.create_or_restore_state(
-            conversation_uuid=conversation_id
-        )
-
-        # Log initial state counts
-        log_info(
-            f"Initial state - Tasks: {len(initial_state.tasks)}, Documents: {len(initial_state.conversation_documents)}, Messages: {len(initial_state.messages)}")
-
-        end_state = asyncio.run(
+        state = asyncio.run(
             agent_run(
-                initial_state=initial_state.add_message(content=message["text"], role="user")
+                initial_state=AgentState.create_or_restore_state(
+                    conversation_uuid=conversation_id
+                ).add_message(
+                    content=message["text"],
+                    role="user"
+                )
             )
         )
-        response = json.loads(end_state.assistant_response)
+        response = json.loads(state.final_answer)
         flush()
         # Send response back to Slack
         say(
