@@ -2,9 +2,8 @@ from dataclasses import field
 from enum import Enum
 from typing import List, Dict, Any, Optional
 
-from pydantic import ConfigDict
+from pydantic import ConfigDict, BaseModel
 
-from db.models import BaseModel
 from models.document import Document
 
 

@@ -88,6 +88,8 @@ class AgentState(BaseModel):
             save_task(task)
         return self.copy(tasks=tasks)
 
+
+
     @property
     def user_query(self) -> str:
         """Returns the content of the last user message"""
