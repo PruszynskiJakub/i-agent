@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ac356738-3d90-4ac4-8213-2c1a93573aba" name="Changes" comment="Improve">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/blueprint.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/blueprint.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/declare.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/declare.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/intent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/intent.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +56,7 @@
   "keyToString": {
     "Python.app.executor": "Run",
     "Python.duckduckgo.executor": "Run",
+    "Python.intent.executor": "Run",
     "Python.main.executor": "Run",
     "Python.serper-dev.executor": "Run",
     "Python.test.executor": "Run",
@@ -117,28 +115,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="download_file_from_slack" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="iAgent" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_samples/download_file_from_slack.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="duckduckgo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="iAgent" />
       <option name="ENV_FILES" value="" />
@@ -153,6 +129,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_samples/duckduckgo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="intent" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="iAgent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/agent" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/agent/intent.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -239,19 +237,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.intent" />
       <item itemvalue="Python.todoist_complete_task" />
       <item itemvalue="Python.serper-dev" />
       <item itemvalue="Python.duckduckgo" />
       <item itemvalue="Python.app" />
-      <item itemvalue="Python.download_file_from_slack" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.intent" />
         <item itemvalue="Python.todoist_complete_task" />
         <item itemvalue="Python.serper-dev" />
         <item itemvalue="Python.duckduckgo" />
-        <item itemvalue="Python.download_file_from_slack" />
       </list>
     </recent_temporary>
   </component>
@@ -273,30 +271,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733147693417</updated>
-    </task>
-    <task id="LOCAL-00285" summary="Add final_asnwer tool">
-      <option name="closed" value="true" />
-      <created>1739826016849</created>
-      <option name="number" value="00285" />
-      <option name="presentableId" value="LOCAL-00285" />
-      <option name="project" value="LOCAL" />
-      <updated>1739826016849</updated>
-    </task>
-    <task id="LOCAL-00286" summary="Add final_asnwer tool">
-      <option name="closed" value="true" />
-      <created>1739826324494</created>
-      <option name="number" value="00286" />
-      <option name="presentableId" value="LOCAL-00286" />
-      <option name="project" value="LOCAL" />
-      <updated>1739826324494</updated>
-    </task>
-    <task id="LOCAL-00287" summary="Improve">
-      <option name="closed" value="true" />
-      <created>1739827330746</created>
-      <option name="number" value="00287" />
-      <option name="presentableId" value="LOCAL-00287" />
-      <option name="project" value="LOCAL" />
-      <updated>1739827330746</updated>
     </task>
     <task id="LOCAL-00288" summary="Improve">
       <option name="closed" value="true" />
@@ -666,7 +640,31 @@
       <option name="project" value="LOCAL" />
       <updated>1739967650199</updated>
     </task>
-    <option name="localTasksCounter" value="334" />
+    <task id="LOCAL-00334" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739968454993</created>
+      <option name="number" value="00334" />
+      <option name="presentableId" value="LOCAL-00334" />
+      <option name="project" value="LOCAL" />
+      <updated>1739968454993</updated>
+    </task>
+    <task id="LOCAL-00335" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739968527074</created>
+      <option name="number" value="00335" />
+      <option name="presentableId" value="LOCAL-00335" />
+      <option name="project" value="LOCAL" />
+      <updated>1739968527074</updated>
+    </task>
+    <task id="LOCAL-00336" summary="Improve">
+      <option name="closed" value="true" />
+      <created>1739968615041</created>
+      <option name="number" value="00336" />
+      <option name="presentableId" value="LOCAL-00336" />
+      <option name="project" value="LOCAL" />
+      <updated>1739968615041</updated>
+    </task>
+    <option name="localTasksCounter" value="337" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
