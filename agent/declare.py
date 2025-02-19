@@ -7,9 +7,6 @@ from llm.prompts import get_prompt
 from llm.tracing import create_generation, end_generation
 from agent.state import AgentState, AgentPhase, TaskAction
 from tools import get_tools
-from utils.state import (
-    update_current_task, find_task, update_current_action
-)
 
 
 async def agent_declare(state: AgentState, trace) -> AgentState:
@@ -61,7 +58,7 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
 
         try:
             result = json.loads(completion)['result']
-            selected_task = find_task(state, result["task_uuid"])
+            selected_task = state.find_task(result["task_uuid"])
 
             action = TaskAction(
                 uuid=str(uuid.uuid4()),
@@ -73,8 +70,7 @@ async def agent_declare(state: AgentState, trace) -> AgentState:
                 step=state.current_step,
                 tool_action=""
             )
-            new_state = update_current_task(
-                state,
+            new_state = state.update_current_task(
                 selected_task
             ).update_current_tool(
                 result["tool_name"]

@@ -136,6 +136,11 @@ class AgentState(BaseModel):
 
         return new_state
 
+    def find_task(self, task_uuid: str) -> Optional[Task]:
+        # First try to find by UUID
+        task = next((task for task in self.tasks if task.uuid == task_uuid), None)
+        return task
+
     @property
     def user_query(self) -> str:
         """Returns the content of the last user message"""
