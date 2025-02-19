@@ -33,13 +33,17 @@ def handle_message(message, say):
         preprocess_message(message, conversation_id)
 
         # Initialize state for this conversation
-        initial_state = AgentState.create_or_restore_state(conversation_uuid=conversation_id)
+        initial_state = AgentState.create_or_restore_state(
+            conversation_uuid=conversation_id
+        ).add_message(
+            content=message["text"],
+            role="user"
+        )
+
 
         # Log initial state counts
         log_info(
-            f"Initial state - Tasks: {len(initial_state.tasks)}, Documents: {len(initial_state.conversation_documents)}, Messages: {len(initial_state.messages)}")
-
-        initial_state = add_message(initial_state, content=message["text"], role="user")
+            f"Initial state - Tasks: {len(initial_state.tasks)}, Documents: {len(initial_state.conversation_documents)}, Messages: {len(initial_state.messages) - 1}")
 
         response = json.loads(asyncio.run(agent_run(initial_state=initial_state)))
         flush()
@@ -62,7 +66,7 @@ def handle_message(message, say):
         flush()
         # Log the full error with traceback
         log_exception("Error handling Slack message", e)
-        
+
         # Send simplified message to user
         error_message = f"Sorry, I encountered an error: {str(e)}"
         say(
