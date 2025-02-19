@@ -26,7 +26,6 @@ async def agent_run(initial_state: AgentState) -> AgentState:
     )
 
     try:
-        # Initial brainstorming phase
         log_info("🧠 Starting brainstorming phase...")
         state = await agent_intent(state, trace)
 
