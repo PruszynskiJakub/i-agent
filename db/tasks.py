@@ -124,11 +124,12 @@ def load_tasks(conversation_uuid: str) -> List[Task]:
                             .where(TaskActionDocumentModel.task_action == action_model))
                 
                 for doc_model in doc_models:
-                    documents.append({
-                        'uuid': doc_model.document.uuid,
-                        'text': doc_model.document.text,
-                        'metadata': doc_model.document.metadata
-                    })
+                    documents.append(Document(
+                        uuid=doc_model.document.uuid,
+                        conversation_uuid=doc_model.document.conversation_uuid,
+                        text=doc_model.document.text,
+                        metadata=doc_model.document.metadata
+                    ))
                 
                 actions.append(TaskAction(
                     uuid=action_model.uuid,
