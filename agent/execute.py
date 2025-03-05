@@ -79,7 +79,7 @@ async def agent_execute(state: AgentState, trace) -> AgentState:
             'documents': [error_doc],
         }
 
-        updated_state = update_current_action(state, action_dict)
+        updated_state = state.update_current_action(action_dict)
 
         end_span(
             execution_span,
