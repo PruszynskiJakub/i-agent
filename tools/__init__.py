@@ -2,6 +2,7 @@ from typing import Any, Dict, List
 from uuid import UUID
 
 from tools.document_processor.service import execute_document_processor
+from tools.make.service import execute_make
 from tools.resend.service import execute_resend
 from tools.todoist.service import execute_todoist
 from tools.web.service import execute_web
@@ -10,6 +11,32 @@ from tools.ynab.service import execute_ynab
 
 def get_tools():
     tools = [
+        {
+            "uuid": UUID("f8dd593f-8c9b-4e88-9beb-8de21c52ef74"),
+            "name": "make",
+            "description": "responsible for creating invoices and automating workflows",
+            "actions": {
+                "invoice": {
+                    "description": "Creates a new invoice based on the number of days worked in the current month and uploads it to Google Drive",
+                    "instructions": """
+                    {
+                        "days_worked": "Number of days worked in the current month (required)"
+                    }
+                    
+                    Field details:
+                    - days_worked: Required. Integer representing the number of days worked in the current month.
+                    
+                    Example:
+                    {
+                        "days_worked": 15
+                    }
+                    
+                    Returns:
+                    Information about the created invoice including confirmation of upload to Google Drive.
+                    """
+                }
+            }
+        },
         {
             "uuid": UUID("0852748f-6211-41bb-bcfa-d81716fe84e7"),
             "name": "final_answer",
@@ -399,5 +426,6 @@ tool_handlers = {
     "todoist": execute_todoist,
     "resend": execute_resend,
     "document_processor": execute_document_processor,
-    "web": execute_web
+    "web": execute_web,
+    "make": execute_make
 }
