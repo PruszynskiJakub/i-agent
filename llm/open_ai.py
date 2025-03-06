@@ -1,6 +1,7 @@
 import os
 from typing import List, Dict, Optional
 
+import openai
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
 
@@ -19,3 +20,8 @@ async def completion(
         response_format={"type": "json_object"} if json_mode else {"type": "text"}
     )
     return response.choices[0].message.content
+
+
+def embedding(text, model="text-embedding-3-large"):
+    response = openai.Embedding.create(input=text, model=model)
+    return response["data"][0]["embedding"]
